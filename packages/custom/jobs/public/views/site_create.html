@@ -1,0 +1,241 @@
+<section data-ng-controller="SiteController" data-ng-init="createSite()">
+<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper social-group-header">
+		<h3 class="pull-left ">{{ 'jobs.SITE' | translate }}</h3>
+	</div>
+	<div class="mainwrapper">
+		<form name="siteForm" class="form-horizontal formAlign" novalidate>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.websiteName.$invalid }">
+				<label mean-token="'create-websiteName'"
+					class="col-md-2 pull-left err-msg-websiteName">
+{{ 'jobs.SITE_NAME' | translate }}</label>
+				<div class="col-md-9">
+					<input name="websiteName" type="text" data-ng-model="site.websiteName"
+						id="websiteName" placeholder="{{ 'jobs.SITE_NAME' | translate }}"
+						class="form-control err-msg " required />
+					<div ng-show="submitted && siteForm.websiteName.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.websiteName.$error.required"> {{ 'jobs.error_messages.SITE_NAME' | translate }}</span>
+					</div>
+				</div>
+				<div ng-show="error" class="red col-md-offset-2 col-md-9 "
+		          ng-repeat="err in error.data">{{err.msg}}</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.websiteUrl.$invalid }">
+				<label mean-token="'create-websiteUrl'"
+					class="col-md-2 pull-left err-msg-websiteUrl">{{ 'jobs.SITE_URL' | translate }}</label>
+				<div class="col-md-9">
+					<input name="websiteUrl" type="url" data-ng-model="site.websiteUrl"
+						id="websiteUrl" placeholder="{{ 'jobs.SITE_URL_PLACEHOLDER' | translate }}"
+						class="form-control err-msg " required />
+					<div ng-show="submitted && siteForm.websiteUrl.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.websiteUrl.$error.required"> {{ 'jobs.error_messages.SITE_URL' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.siteUsername.$invalid }">
+				<label mean-token="'create-siteUsername'"
+					class="col-md-2 pull-left err-msg-siteUsername">{{ 'jobs.SITE_USERNAME' | translate }}</label>
+				<div class="col-md-9">
+					<input name="siteUsername" type="text" data-ng-model="site.siteUsername"
+						id="siteUsername" placeholder="{{ 'jobs.SITE_USERNAME' | translate }}"
+						class="form-control err-msg " required />
+					<div ng-show="submitted && siteForm.siteUsername.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.siteUsername.$error.required"> {{ 'jobs.error_messages.SITE_USERNAME' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.sitePassword.$invalid }">
+				<label mean-token="'create-sitePassword'"
+					class="col-md-2 pull-left err-msg-sitePassword">{{ 'jobs.PASSWORD' | translate }}</label>
+				<div class="col-md-9">
+					<input name="sitePassword" type="Password" data-ng-model="site.sitePassword"
+						id="sitePassword" placeholder="{{ 'jobs.PASSWORD' | translate }}"
+						class="form-control err-msg " required />
+					<div ng-show="submitted && siteForm.sitePassword.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.sitePassword.$error.required">{{ 'jobs.error_messages.PASSWORD' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.apiUrl.$invalid }">
+				<label mean-token="'create-apiUrl'"
+					class="col-md-2 pull-left err-msg-apiUrl">{{ 'jobs.API_URL' | translate }}</label>
+				<div class="col-md-9">
+					<input name="apiUrl" type="text" data-ng-model="site.apiUrl"
+						id="apiUrl" placeholder="{{ 'jobs.URL_PLACEHOLDER' | translate }}"
+						class="form-control err-msg " required />
+					<div ng-show="submitted && siteForm.apiUrl.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.apiUrl.$error.required"> {{ 'jobs.error_messages.API_URL' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.apiSecret.$invalid }">
+				<label mean-token="'create-apiSecret'"
+					class="col-md-2 pull-left err-msg-apiSecret">{{ 'jobs.API_SECRET' | translate }}</label>
+				<div class="col-md-9">
+					<input name="apiSecret" type="text" data-ng-model="site.apiSecret"
+						id="apiSecret" placeholder="{{ 'jobs.SECRET_CODE' | translate }}"
+						class="form-control err-msg " required />
+					<div ng-show="submitted && siteForm.apiSecret.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.apiSecret.$error.required"> {{ 'jobs.error_messages.API_SECRET' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.apiSiteId.$invalid }">
+				<label mean-token="'create-apiSiteId'"
+					class="col-md-2 pull-left err-msg-SiteId">{{ 'jobs.SITE_ID' | translate }}</label>
+				<div class="col-md-9">
+					<input name="apiSiteId" type="text" data-ng-model="site.apiSiteId"
+						id="apiSiteId" placeholder="{{ 'jobs.SITE_ID' | translate }}"
+						class="form-control err-msg " required />
+					<div ng-show="submitted && siteForm.apiSiteId.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.apiSiteId.$error.required"> {{ 'jobs.error_messages.SITE_ID' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.checkLoginAPIendpoint.$invalid }">
+				<label mean-token="'create-checkLoginAPIendpoint'"
+					class="col-md-2 pull-left err-msg-checkLoginAPIendpoint">{{ 'jobs.CHECK_LOGIN' | translate }}</label>
+				<div class="col-md-9">
+					<input name="checkLoginAPIendpoint" type="text" data-ng-model="site.checkLoginAPIendpoint"
+						id="checkLoginAPIendpoint" placeholder="{{ 'jobs.CHECKLOGIN_PLACEHOLDER' | translate }}"
+						class="form-control err-msg " required />
+					<div ng-show="submitted && siteForm.checkLoginAPIendpoint.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.checkLoginAPIendpoint.$error.required">{{ 'jobs.error_messages.CHECK_LOGIN' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.checkLoginAPIJSON.$invalid }">
+				<label mean-token="'create-checkLoginAPIJSON'"
+					class="col-md-2 pull-left err-msg-checkLoginAPIJSON">CheckLoginAPIJSON</label>
+				<div class="col-md-9">
+					<textarea name="checkLoginAPIJSON" data-ng-model="site.checkLoginAPIJSON"
+						id="checkLoginAPIJSON" cols="30" rows="3" placeholder="checkLoginAPIJSON"
+						class="form-control err-msg " required ></textarea>
+					<div ng-show="submitted && siteForm.checkLoginAPIJSON.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.checkLoginAPIJSON.$error.required"> Please
+							enter the checkLoginAPIJSON </span>
+					</div>
+				</div>
+			</div> -->
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.getUserInfoAPIendpoint.$invalid }">
+				<label mean-token="'create-getUserInfoAPIendpoint'"
+					class="col-md-2 pull-left err-msg-getUserInfoAPIendpoint">{{ 'jobs.GET_USER_API' | translate }}</label>
+				<div class="col-md-9">
+					<input name="getUserInfoAPIendpoint" type="text" data-ng-model="site.getUserInfoAPIendpoint"
+						id="getUserInfoAPIendpoint" placeholder="{{ 'jobs.USERAPI_PLACEHOLDER' | translate }}"
+						class="form-control err-msg " required />
+					<div ng-show="submitted && siteForm.getUserInfoAPIendpoint.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.getUserInfoAPIendpoint.$error.required"> {{ 'jobs.error_messages.GET_USER_API' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.getUserInfoAPIJSON.$invalid }">
+				<label mean-token="'create-getUserInfoAPIJSON'"
+					class="col-md-2 pull-left err-msg-getUserInfoAPIJSON">GetUserInfoAPIJSON</label>
+				<div class="col-md-9">
+					<textarea name="getUserInfoAPIJSON" data-ng-model="site.getUserInfoAPIJSON"
+						id="getUserInfoAPIJSON" cols="30" rows="3" placeholder="getUserInfoAPIJSON"
+						class="form-control err-msg " required ></textarea>
+					<div ng-show="submitted && siteForm.getUserInfoAPIJSON.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.getUserInfoAPIJSON.$error.required"> Please
+							enter the getUserInfoAPIJSON </span>
+					</div>
+				</div>
+			</div> -->
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.getSingleJobAPIendpoint.$invalid }">
+				<label mean-token="'create-getSingleJobAPIendpoint'"
+					class="col-md-2 pull-left err-msg-getSingleJobAPIendpoint">{{ 'jobs.GET_SINGLEJOB_API' | translate }}</label>
+				<div class="col-md-9">
+					<input name="getSingleJobAPIendpoint" type="text" data-ng-model="site.getSingleJobAPIendpoint"
+						id="getSingleJobAPIendpoint" placeholder="{{ 'jobs.GET_SINGLEJOB_API_PLACEHOLDER' | translate }}"
+						class="form-control err-msg " required />
+					<div ng-show="submitted && siteForm.getSingleJobAPIendpoint.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.getSingleJobAPIendpoint.$error.required"> {{ 'jobs.error_messages.GET_SINGLEJOB_API' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.getSingleJobAPIJSON.$invalid }">
+				<label mean-token="'create-getSingleJobAPIJSON'"
+					class="col-md-2 pull-left err-msg-getSingleJobAPIJSON">GetSingleJobAPIJSON</label>
+				<div class="col-md-9">
+					<textarea name="getSingleJobAPIJSON" data-ng-model="site.getSingleJobAPIJSON"
+						id="getSingleJobAPIJSON" cols="30" rows="3" placeholder="getSingleJobAPIJSON"
+						class="form-control err-msg " required ></textarea>
+					<div ng-show="submitted && siteForm.getSingleJobAPIJSON.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.getSingleJobAPIJSON.$error.required"> Please
+							enter the getSingleJobAPIJSON </span>
+					</div>
+				</div>
+			</div> -->
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.getAllJobsAPIendpoint.$invalid }">
+				<label mean-token="'create-getAllJobsAPIendpoint'"
+					class="col-md-2 pull-left err-msg-getAllJobsAPIendpoint">{{ 'jobs.GET_ALLJOB_API' | translate }}</label>
+				<div class="col-md-9">
+					<input name="getAllJobsAPIendpoint" type="text" data-ng-model="site.getAllJobsAPIendpoint"
+						id="getAllJobsAPIendpoint" placeholder="{{ 'jobs.GET_ALLJOB_API_PLACEHOLDER' | translate }}"
+						class="form-control err-msg " required />
+					<div ng-show="submitted && siteForm.getAllJobsAPIendpoint.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.getAllJobsAPIendpoint.$error.required"> {{ 'jobs.error_messages.GET_ALLJOB_API' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="form-group"
+				ng-class="{ 'has-error' : submitted && siteForm.getAllJobsAPIJSON.$invalid }">
+				<label mean-token="'create-getAllJobsAPIJSON'"
+					class="col-md-2 pull-left err-msg-getAllJobsAPIJSON">GetAllJobsAPIJSON</label>
+				<div class="col-md-9">
+					<textarea name="getAllJobsAPIJSON" data-ng-model="site.getAllJobsAPIJSON"
+						id="getAllJobsAPIJSON" cols="30" rows="3" placeholder="getAllJobsAPIJSON"
+						class="form-control err-msg " required ></textarea>
+					<div ng-show="submitted && siteForm.getAllJobsAPIJSON.$invalid">
+						<span class="err-msg errorRed"
+							ng-show="siteForm.getAllJobsAPIJSON.$error.required"> Please
+							enter the getAllJobsAPIJSON </span>
+					</div>
+				</div>
+			</div> -->
+			<div class="form-group ">
+			<div class="col-md-offset-2 col-md-9">
+					<input name="enabled" type="checkbox" data-ng-model="site.enabled"
+						id="enabled" class="">{{ 'jobs.ENABLE' | translate }}
+			</div>
+			</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-9 roleCreate text-center">
+				<button mean-token="'create-submit'" type="button"
+					class="btn btn-info" ng-click="create(siteForm.$valid)">{{ 'common.SUBMIT' | translate }}</button>
+				<button type="button" class="btn btn-info"
+					ng-click="cancelSite()">{{ 'common.CANCEL' | translate }}</button>
+			</div>
+		</div>
+		</form>
+	</div>
+</section>

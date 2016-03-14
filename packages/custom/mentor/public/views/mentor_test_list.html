@@ -1,0 +1,32 @@
+<section data-ng-controller="MentorController" data-ng-init="mentorProject();">
+	<div class="row margin-align">
+ 		<div class="col-md-12 row">	
+ 			<h3 class="pull-left">Online Tests</h3>
+ 		</div> <!-- End of mainwrapper h3 header -->
+ 		<!-- Content -->
+ 		<div class="col-md-8 row">
+ 			<table class="table table-bordered">
+	 			<thead>
+		 			<tr>
+		 				<th class="text-center">Test Name</th>
+		 				<th class="text-center">Test Duration</th>
+		 				<th class="text-center">Test Mode</th>
+		 				<th class="text-center">Action</th>
+		 			</tr>
+	 			</thead>
+	 			<tbody>
+		 			<tr data-ng-show="mentorRequest.onlineTest.length > 0" data-ng-repeat="test in mentorRequest.onlineTest">
+			 			<td><a href="#">{{test.name}}</a></td>
+			 			<td class="text-right">03 HRS</td>
+			 			<td>Online</td>
+			 			<td><a href="#">Take Test</a></td>
+		 			</tr>
+					<tr data-ng-show="!mentorRequest.onlineTest.length > 0">
+						<td colspan="4">No data available</td>
+					</tr>
+	 			</tbody>
+ 			</table>
+ 		</div>
+ 		<!-- End of Content -->
+ 	</div> <!-- End of row Line 2  -->
+</section> <!-- End of section Line 1 -->

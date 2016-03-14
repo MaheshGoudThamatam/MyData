@@ -1,0 +1,71 @@
+<section data-ng-controller="FeatureCategoryController" data-ng-init="createFeatureCategory();">
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper social-group-header">
+        <h3 class="pull-left ">{{ 'roles.feature.FEATURE_CATEGORY '| translate }}</h3>
+    </div>
+    <div class="mainwrapper">
+        <form name="featureCategoryForm" class="form-horizontal formAlign" novalidate>
+            <div class="form-group"
+                 ng-class="{ 'has-error' : submitted && featureCategoryForm.name.$invalid }">
+                <label mean-token="'create-name'"
+                       class="col-md-2 pull-left err-msg-name">{{ 'roles.role.NAME' | translate }}</label>
+
+                <div class="col-md-9">
+                    <input name="name" type="text" data-ng-model="featureCategory.name"
+                           id="name" placeholder="{{ 'roles.role.NAME' | translate }}" class="form-control err-msg "
+                           required/>
+
+                    <div ng-show="submitted && featureCategoryForm.name.$invalid">
+						<span class="err-msg errorRed"
+                              ng-show="featureCategoryForm.name.$error.required">{{ 'roles.role.error_messages.NAME' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group"
+                 ng-class="{ 'has-error' : submitted && featureCategoryForm.icon.$invalid }">
+                <label mean-token="'create-icon'"
+                       class="col-md-2 pull-left err-msg-icon">{{ 'roles.feature.ICON '| translate }}</label>
+
+                <div class="col-md-9">
+                    <input name="icon" type="text" data-ng-model="featureCategory.icon"
+                           id="icon" placeholder="{{ 'roles.feature.ICON '| translate }}" class="form-control err-msg "
+                           required/>
+
+                    <div ng-show="submitted && featureCategoryForm.icon.$invalid">
+						<span class="err-msg errorRed"
+                              ng-show="featureCategoryForm.icon.$error.required">{{ 'roles.feature.error_messages.ICON' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group"
+                 ng-class="{ 'has-error' : submitted && featureCategoryForm.description.$invalid }">
+                <label mean-token="'create-description'"
+                       class="col-md-2 pull-left err-msg-description">{{ 'roles.role.DESCRIPTION' | translate }}</label>
+
+                <div class="col-md-9">
+                    <textarea name="description" type="text"
+                              data-ng-model="featureCategory.description" id="description"
+                              cols="30" rows="3" placeholder="{{ 'roles.role.DESCRIPTION' | translate }}"
+                              class="form-control err-msg " required></textarea>
+
+                    <div
+                            ng-show="submitted && featureCategoryForm.description.$invalid">
+						<span class="err-msg errorRed"
+                              ng-show="featureCategoryForm.description.$error.required">
+							{{ 'roles.role.error_messages.DESCRIPTION' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-9 roleCreate">
+                    <button mean-token="'create-submit'" type="button"
+                            class="btn btn-info" ng-click="create(featureCategoryForm.$valid)">{{ 'common.SUBMIT' | translate }}
+                    </button>
+                    <button type="button" class="btn btn-info"
+                            ng-click="cancelFeatureCategory()">{{ 'common.CANCEL' | translate }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

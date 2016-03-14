@@ -1,0 +1,68 @@
+<section data-ng-controller="UserCourseController">
+<div class="row">
+		<ol class = "breadcrumb">
+      <li><i class="fa fa-home" data-ng-click="redirectdashboard()"></i></li>
+   </ol>
+</div>
+<div class="row online-top">
+<div class="col-md-12">
+ <h3 class="pull-left">Upcoming Test</h3>
+
+ <table class="table table-bordered table-condensed">
+  <thead>
+   <tr>
+    <th class="text-center">Test ID</th>
+    <th class="text-center">Date of Test</th>
+    <th class="text-center">Start Date</th>
+    <th class="text-center">Due Date</th>
+    <th class="text-center">Number of Attempts</th>
+    <th class="text-center">Status</th>
+    <th class="text-center">Complexity</th>
+    <th class="text-center">Prerequisites</th>
+     <th class="text-center">Action</th>
+     <th class="text-center">Result</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr class="text-center">
+    <td>111</td>
+    <td>17th November 2015</td>
+    <td>17th November 2015</td>
+    <td>17th December 2015</td>
+    <td>1</td>
+    <td>Fail</td>
+    <td>Beginner</td>
+    <td>Beginner</td>
+    <td><button  type="submit" class="btn btn-info" data-ng-click="courseOnline()">Retake Test</button></td>
+    <td>3/10</td>
+       </tr>
+  <tr class="text-center">
+    <td>112</td>
+    <td>17th November 2015</td>
+    <td>30th November 2015</td>
+    <td>17th December 2015</td>
+    <td>2</td>
+    <td>Pass</td>
+    <td>Intermediate</td>
+    <td>Beginner</td>
+    <td></td>
+    <td>10/10</td>
+       </tr>
+       <tr class="text-center">
+    <td>113</td>
+    <td>17th November 2015</td>
+    <td>10th December 2015</td>
+    <td>17th December 2015</td>
+    <td>0</td>
+    <td></td>
+    <td>Advanced</td>
+    <td>Intermediate</td>
+    <td><button  type="submit" class="btn btn-info" data-ng-click="courseOnline()">Take Test</button></td>
+    <td></td>
+       </tr>
+  </tbody>
+   </table>
+   </div>
+   </div>
+ 
+  </section>

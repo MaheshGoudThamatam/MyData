@@ -1,0 +1,27 @@
+<section >
+	<div data-ng-include="'/profile/views/profile-header.html'"></div><br/>
+	<div>
+	    <ul class="nav nav-tabs">
+			<li><a href="/profile/aboutme">About Me</a></li>
+			<li class="active"><a href="/profile/portfolio-content">Portfolio</a></li>
+			<li ><a href="/profile/reviews">Reviews</a></li>
+			<li><a href="/profile/resume">Resume</a></li>
+			<li><a href="/profile/badges">Badges</a></li>
+			<li><a href="/profile/performance">Performance</a></li>
+	   </ul>
+	</div>
+	<div class="mainwrapper">
+	    <div class="col-xs-12 imagesize1">
+		    <h3>Project details</h3>
+			 <p class="col-xs-4 row wor">
+			 	<img src={{project.projectPicture}} class="imagesize">
+				<h4 >{{project.projectName}}</h4>
+				<p>Price: {{project.price}}</p>
+				<p>Skill:<span data-ng-repeat="skill in project.skills">{{skill.name}}<span ng-hide = "$last">,&nbsp;</span></span></p>
+			    <p>{{project.description}}</p>
+			    <div ng-repeat="link in project.links">Url: {{link.url}}   <p>Platform: {{link.type}}</p></div>
+			</p>
+		</div>
+	</div>
+</br>
+</section>

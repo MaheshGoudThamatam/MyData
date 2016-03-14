@@ -1,0 +1,103 @@
+
+<section data-ng-controller="CourseBranchController" data-ng-init="loadCoursePaymentSchemesForBranch()">
+	<div>
+		<h1 class="pull-left">Course Payment Scheme</h1>
+	</div>
+	<div class="col-xs-12">
+		<form name="paymentForm" class="form-horizontal col-md-12 " novalidate>
+
+			<div class="form-group">
+				<label mean-token="'create-cost'" class="col-md-2 control-label">Cost :</label>
+				<div class="col-md-2 mt7">
+					{{paymentScheme.cost}}
+				</div>
+			</div>
+
+			<div data-ng-repeat="paymentScheme in course.paymentSchemes" data-ng-init="outerIndex = $index">
+				<div class="border-highlighter">
+					<div class="form-group">
+						<h3 class="col-md-2 control-label">Payment Scheme :</h3>
+						<h4 class="col-md-2 mt32">
+							{{paymentScheme.paymentSchemeName}}
+						</h4>
+					</div>
+					
+					<div data-ng-repeat="installment in paymentScheme.installments" data-ng-init="middleIndex = $index">
+						<ng-form name="installmentForm">
+							<div class="form-group">
+								<h3 class="col-md-2 control-label">{{getLabel($index)}}</h3>
+							</div>
+							<div class="row">
+								<div class="form-group">
+									<label mean-token="'create-installmentAmount'"
+										class="col-md-2 control-label">{{getLabel($index)}} Amount :</label>
+									<div class="col-md-2 mt7">
+										{{installment.installmentAmount}}
+									</div>
+									<div>
+										<label mean-token="'create-loan'" class="">Loan</label>
+										<input id="" type="checkbox" name="check" ng-model="installment.isLoan"  ng-disabled="true"> 
+									</div>
+								</div>
+								<div class="form-group" data-ng-if="$index != 0">
+									<div>
+										<label mean-token="'create-fineAmount'"
+											class="col-md-2 control-label">Fine Amount :</label>
+										<div class="col-md-2 mt7">
+											{{installment.fineAmount}}
+											
+										</div>
+									</div>
+									<div>
+										<label mean-token="'create-dueDate'"
+											class="col-md-2 control-label">Due Date :</label>
+										<div class="col-md-2 mt7">
+											{{installment.dueDate}} days
+										</div>
+									</div>
+								</div>
+								<div class="form-group" data-ng-if="installment.isLoan">
+									<h3 class="col-md-3 control-label">Loan Detail</h3>
+								</div>
+								<div class="form-group" data-ng-if="installment.isLoan">
+									<label mean-token="'create-loanAmount'"
+										class="col-md-3 control-label">Loan Amount :</label>
+									<div class="col-md-3 mt7">
+										{{installment.installmentAmount}}
+									</div>
+								</div>
+								<div class="form-group">
+									<h3 class="col-md-3 control-label">Discount</h3>
+								</div>
+								<div class="form-group" data-ng-repeat="discount in installment.discounts" data-ng-init="innerIndex = $index">
+									<div>
+										<label mean-token="'create-discount'"
+											class="col-md-3 control-label">Marks Range :</label>
+										<div class="col-md-2 mt7">
+											<span>{{discount.marks_form}} </span>
+											<span>  -  </span>
+											<span> {{discount.marks_to}}</span>
+										</div>
+									</div>
+									<div>
+										<label mean-token="'create-rate'"
+											class="col-md-1 control-label">Discount %  :</label>
+										<div class="col-md-2 mt7">
+											{{discount.rate}}
+										</div>
+									</div>
+								</div>
+							</div>
+							<hr ng-hide="$index == (paymentScheme.installments.length - 1)">
+						</ng-form>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9">
+					<button type="button" class="btn btn-info" ng-click="back()">Back</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>

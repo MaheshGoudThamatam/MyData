@@ -1,0 +1,55 @@
+<section  data-ng-controller ='AdminCounsellingScheduleListController' data-ng-init="scheduleEdit();loadUser();">
+    <div data-ng-include="'/system/views/alert.html'"></div>
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper">
+    <h3>Update Counselling Request</h3><br/>
+  <form name="" class="form-horizontal">
+   <div class="form-group">
+    <label class="col-md-2 ">{{ 'locations.branch.BRANCHNAME' | translate }}</label>
+    <div class="col-md-10 viewRole">
+     {{scheduledetails.branch.branchName}}
+    </div>
+   </div>
+   <div class="form-group countryAlign">
+    <label class="col-md-2">{{ 'course.COUNSELLING_DATE' | translate }} </label>
+    <div class="col-md-10 viewRole">
+     {{scheduledetails.callDate | date:'dd-MMM-yyyy'}}
+    </div>
+   </div>
+   <div class="form-group">
+    <label class="col-md-2 ">{{ 'common.DESCRIPTION' | translate }}</label>
+    <div class="col-md-10 viewRole">
+     {{scheduledetails.description}}
+    </div>
+   </div>
+   <div class="form-group">
+    <label class="col-md-2 ">{{ 'course.SCHEDULE_TIME' | translate }}</label>
+    <div class="col-md-10 viewRole">
+     {{scheduledetails.start_hr}}:{{scheduledetails.start_min}} - {{scheduledetails.end_hr}}:{{scheduledetails.end_min}}
+     </div>  
+   </div>
+   <div class="form-group">
+    <label class="col-md-2">{{ 'course.CHANGE_MENTOR' | translate }}</label>
+     <div class="col-md-5" ng-class="{ 'has-error' : submitted && scheduledetails.mentor.$invalid }">
+		<select name="mentor" ng-model="scheduledetails.mentor" ng-show="branchUser.length > 0" class="form-control">
+			<option value="" disabled>{{ 'course.SELECT_MENTOR' | translate }}</option>
+			<option value="{{user._id}}" ng-repeat="user in branchUser">{{user.name}}</option>
+		</select>
+		<div class="col-md-10 row" ng-show="branchUser.length == 0">
+    		<p>{{ 'course.error_messages.NO_MENTOR' | translate }}</p>
+    	</div>
+		<div ng-show="submitted && scheduledetails.mentor.$error.required || mentorErrorSelection">
+			<span class="err-msg red">{{ 'course.error_messages.MENTOR' | translate }}</span>
+		</div>
+     </div>  
+   </div>
+  <div class="form-group countryAlign">
+    <div class="form-group">
+     <div class="col-md-offset-5 col-md-7">
+     	<button class="btn btn-info" data-ng-click="update(scheduledetails)">Update</button>
+     	<button class="btn btn-info" data-ng-click="cancelScheduleEdit();">Back</button>
+     </div>
+    </div>
+  </div> 
+</div>
+</section>

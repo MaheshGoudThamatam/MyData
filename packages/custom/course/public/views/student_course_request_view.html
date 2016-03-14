@@ -1,0 +1,162 @@
+<section data-ng-controller="AdminCourseRequestController"
+	data-ng-init="viewBreadcrumb();showDetail();">
+	<div  data-ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper">
+		<h3 class="pull-left">Student Details</h3>
+
+	</div>
+	<div class="col-md-12">
+		<div class="col-md-4">
+			<h5 class="details-list">Student Name :
+				{{courseRequestObj.user.name}}</h5>
+			<h5 class="details-list">Email : {{courseRequestObj.user.email}}</h5>
+			<h5 class="details-list">User Name :
+				{{courseRequestObj.user.username}}</h5>
+			<h5 class="details-list">Gender :
+				{{courseRequestObj.user.gender}}</h5>
+			<h5 class="details-list">DOB : {{courseRequestObj.user.dob|date:'dd-MMM-yyyy'}}</h5>
+		</div>
+		<div class="col-md-4 row">
+			<h5 class="details-list">Phone Number :
+				{{courseRequestObj.user.phoneNumber}}</h5>
+			<h5 class="details-list">
+				Address :<span
+					data-ng-repeat="detail in courseRequestObj.user.address">{{detail.addressLine1}}</span>
+			</h5>
+			<h5 class="details-list">
+				Qualification Details : <span
+					data-ng-repeat="detail in courseRequestObj.user.qualification_details">{{detail.specialisation}}</span>
+			</h5>
+			<h5 class="details-list">
+				Experience Details : <span
+					data-ng-repeat="detail in courseRequestObj.user.experience_details">{{detail.end_date|date:'dd-MMM-yyyy'}}</span>
+			</h5>
+		</div>
+	</div>
+	<div class="mainwrapper">
+		<div>
+			<h3 class="pull-left">Course Details</h3>
+
+		</div>
+	</div>
+
+
+	<div class="col-md-12">
+		<div class="col-md-3">
+			<h5 class="details-list">Course Name :
+				{{courseRequestObj.course.name}}</h5>
+			<h5 class="details-list">Course Duration :
+				{{courseRequestObj.course.duration}}</h5>
+			<h5 class="details-list">Price :
+				{{courseRequestObj.course.cost}}</h5>
+		</div>
+		<div class="col-md-4 row">
+			<h5 class="details-list">Course Type :
+				{{courseRequestObj.course.course_type}}</h5>
+			<h5 class="details-list">Qualification Required :
+				{{courseRequestObj.course.qualification}}</h5>
+			<h5 class="details-list">Online Mentor Support :
+				{{courseRequestObj.course.online_mentor_support}}</h5>
+		</div>
+		<div class="col-md-4">
+			<h5 class="details-list">Project Based Learning :
+				{{courseRequestObj.course.project_based_learning}}</h5>
+			<h5 class="details-list">Delivery Method :
+				{{courseRequestObj.course.delivery_method}}</h5>
+			<h5 class="details-list">Counselling :
+				{{courseRequestObj.course.counselling}}</h5>
+			<h5 class="details-list">Cost Type :
+				{{courseRequestObj.course.costType}}</h5>
+		</div>
+
+	</div>
+	<div class="mainwrapper">
+
+<!-- 		<div class="mainwrapper social-group-header">
+			<div>
+				<h3 class="pull-left">Test Results</h3>
+
+			</div>
+		</div> -->
+		<div>
+<!-- 			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="text-center">Test Name</th>
+						<th class="text-center">Student Name</th>
+						<th class="text-center">Course Name</th>
+						<th class="text-center">Obtained Marks</th>
+					</tr>
+				</thead>
+				<tbody class="anchorTag">
+					<tr>
+						<td>{{courseRequestObj.assign_Test.name}}</td>
+						<td>{{courseRequestObj.user.name}}</td>
+						<td>{{courseRequestObj.course.name}}</td>
+						<td>{{courseRequestObj.obtainedMarks}}</td>
+
+					</tr>
+					<tr data-ng-hide="!collection || collection.length">
+						<td colspan="10">No Test Results available</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div> -->
+
+		<div class="mainwrapper">
+			<div>
+				<h3 class="pull-left">Payment Scheme</h3>
+
+			</div>
+		</div>
+		<div>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th class="text-center">Course Name</th>
+						<th class="text-center">Cost</th>
+						<th class="text-center">Down Payment</th>
+						<th class="text-center">Discount</th>
+					</tr>
+				</thead>
+				<tbody class="anchorTag">
+					<tr>
+						<td>{{courseRequestObj.course.name}}</td>
+						<td>{{courseRequestObj.paymentscheme.cost}}</td>
+						<td>{{courseRequestObj.paymentscheme.installments[0].installmentAmount}}</td>
+						<td>{{courseRequestObj.paymentscheme.installments[0].discounts[0].rate}}%</td>
+
+					</tr>
+					<tr data-ng-hide="!collection || collection.length">
+						<td colspan="10">No Payment Scheme available</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+     <div>
+     <h3 class="details-list">Status :
+				{{courseRequestObj.user_status}}</h3>
+     </div>
+
+		<!-- <div class="form-group" ng-if = "readPermission">
+			<label class="col-md-2 pull-left">Remarks</label>
+			<div class="col-md-6">
+				<textarea name="remarks" ng-model = "courseStudents.remarks" class="form-control input-sm" id="remarks"
+					placeholder="Remarks" cols="30" rows="5" required></textarea>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-8 mt15" ng-if = "courseRequestObj.user_status == 'Pending' ">
+				<button type="button" class="btn btn-info" 
+					data-ng-click="confirmUserAsCourseRequest(courseRequest, 'Accepted');" ng-if = "readPermission">Accept</button>
+				<button type="button" class="btn btn-info" data-ng-click="reject();" ng-if = "readPermission">Reject</button>
+			</div>
+		</div> -->
+	</div>
+
+
+
+</section>

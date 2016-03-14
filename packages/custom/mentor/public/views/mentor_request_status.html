@@ -1,0 +1,45 @@
+<section data-ng-controller="MentorController" data-ng-init="mentorProject();">
+<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="row margin-align">
+		<div class="col-md-12">
+			<div data-ng-include="'/system/views/alert.html'"></div>
+		</div>
+ 		<div class="mainwrapper">
+ 			<h3 class="pull-left">Request Status</h3>
+ 		</div> <!-- End of mainwrapper h3 header -->
+ 		<!-- Content -->
+ 		<div class="mainwrapper">
+ 			<table class="table table-bordered">
+	 			<thead>
+		 			<tr>
+		 				<th class="text-center">Request Type</th>
+		 				<th class="text-center" data-ng-if="mentorRequest.project.taskName">Project Name</th>
+		 				<th class="text-center" data-ng-if="mentorRequest.project.taskName">Project Status</th>
+		 				<!-- <th class="text-center" data-ng-if="mentorRequest.onlineTest.length > 0">Online Tests</th> -->
+		 				<th class="text-center">Date Applied</th>
+		 				<th class="text-center">Recent Status</th>
+		 				<th class="text-center">Last Action Date</th>
+		 				<th class="text-center">Comments</th>
+		 			</tr>
+	 			</thead>
+	 			<tbody>
+		 			<tr data-ng-show="mentorRequest.user">
+			 			<td data-ng-if="mentorRequest.project.taskName">Mentor Project</td>
+			 			<td data-ng-if="!mentorRequest.project.taskName">Mentorship</td>
+			 			<td data-ng-if="mentorRequest.project.taskName"><a href="/admin/project/{{mentorRequest.project._id}}/details">{{mentorRequest.project.taskName}}</a></td>
+			 			<td data-ng-if="mentorRequest.project.taskName">{{mentorRequest.project_status}}</td>
+			 			<!-- <td data-ng-if="mentorRequest.onlineTest.length > 0"><p class="p-floatleft" data-ng-repeat="test in mentorRequest.onlineTest">{{test.name}}</p>&nbsp;</td> -->
+			 			<td class="text-right">{{mentorRequest.request_posted|date:'dd-MMM-yyyy'}}</td>
+			 			<td>{{mentorRequest.user_status}}</td>
+			 			<td class="text-right">{{mentorRequest.updatedAt|date:'dd-MMM-yyyy'}}</td>
+			 			<td>{{mentorRequest.comments | limitTo: 20}}...</td>
+		 			</tr>
+					<tr data-ng-show="!mentorRequest.user" data-ng-init="check()">
+						<td colspan="5">No data available</td>
+					</tr>
+	 			</tbody>
+ 			</table>
+ 		</div>
+ 		<!-- End of Content -->
+ 	</div> <!-- End of row Line 2  -->
+</section> <!-- End of section Line 1 -->

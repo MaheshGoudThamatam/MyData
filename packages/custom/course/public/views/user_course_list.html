@@ -1,0 +1,35 @@
+<section data-ng-controller="CourseRequestController"
+	data-ng-init="find(); availablecourse();">
+	<div ng-if="USER" ng-include="'/system/views/breadcrum.html'"></div>
+	<div data-ng-include="'/system/views/alert.html'"></div>
+	<div class="col-sm-12 row">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="/admin/course">Available Courses</a></li>
+        	<li><a href="/mycourse/curriculum" ng-if = "USER">MyCourses</a></li>
+			<li><a href="/mycourse/courseRequests" ng-if = "USER">MyRequests</a></li>
+			<li><a href="/student/counsellingStatus" ng-if = "USER">My Counselling Requests</a></li>
+		</ul>
+	</div>
+	<div class="col-xs-12 row social-group-header">
+		<h3 class="pull-left ">Available Courses</h3>
+	</div>
+	<div class="col-sm-12 row">
+		<div class="col-sm-4 profiles" data-ng-repeat="course in collection">
+			<i class="fa fa-book user-font-course text-center"></i>
+			<p>
+				<b>Name:{{course.name}}</b>
+			</p>
+			<p>Cost Type:{{course.costType}}</p>
+			<p>
+				<a class="btn btn-info"
+					data-ng-click="showDetails(COURSE.URL_PATH.COURSEDETAILS ,course)">Details</a>
+			</p>
+		</div>
+	</div>
+	<div class="col-md-6" data-ng-show=" !collection || collection.length"
+		class="paginate usr">
+		<div ng-include="'system/views/paginationFilter.html'"></div>
+		<br>
+	</div>
+</section>
+

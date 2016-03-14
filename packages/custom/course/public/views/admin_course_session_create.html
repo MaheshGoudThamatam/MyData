@@ -1,0 +1,88 @@
+<section data-ng-controller="CourseController">
+	<div class="col-xs-12">
+		<ol class="breadcrumb">
+			<li><i class="fa fa-home link-pointer" data-ng-click="redirectdashboard()"></i></li>
+			<li><a href="/admin/course">Course</a></li>
+			<li><a href="/admin/course/curriculum">Curriculum</a></li>
+			<li><a href="/admin/course/curriculum/session">Session</a></li>
+			<li>Edit</li>
+			<li></li>
+		</ol>
+	</div>
+	<div class="col-xs-10">
+		<div>
+			<h1 class="text-left">Session</h1>
+		</div>
+	</div>
+	<div class="col-xs-10 mb65">
+		<form name="courseCurriculumForm" class="form-horizontal col-md-12"
+			data-ng-submit="" novalidate>
+			<div>
+				<div class="form-group">
+					<label mean-token="'create-name'" class="col-md-3 control-label">Name</label>
+					<div class="col-md-9">
+						<input name="name" type="text" class="form-control"
+							data-ng-model="" id="name" placeholder="Name" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label mean-token="'create-description'"
+						class="col-md-3 control-label">Description</label>
+					<div class="col-md-9">
+						<textarea name="description" data-ng-model=""
+							id="description" cols="30" rows="5" placeholder="Description"
+							class="form-control" required></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label mean-token="'create-hours'" class="col-md-3 control-label">Hours</label>
+					<div class="col-md-9">
+						<input name="hours" type="text" class="form-control"
+							data-ng-model="" id="hours" placeholder="Hours"
+							required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label mean-token="'create-Sessions'" class="col-md-3 control-label">Number of Sessions</label>
+					<div class="col-md-9">
+						<input name="sessions" type="text" class="form-control"
+							data-ng-model="" id="hours" placeholder="Sessions"
+							required>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label mean-token="'create-course_startDate'"
+						class="col-md-3 control-label"> Curriculum Start Date</label>
+					<div class="col-md-9">
+						<input name=" curriculum_startDate" type="date" class="form-control"
+							data-ng-model="" id=" curriculum_startDate"
+							placeholder=" Curriculum_startDate" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label mean-token="'create-Curriculum_endDate'"
+						class="col-md-3 control-label"> Curriculum End Date</label>
+					<div class="col-md-9">
+						<input name=" Curriculum_endDate" type="date" class="form-control"
+							data-ng-model="" id=" Curriculum_endDate"
+							placeholder=" Curriculum_endDate" required>
+					</div>
+				</div>
+
+				
+
+				<div class="form-group">
+					<div class="col-md-offset-3 col-md-9">
+						<button mean-token="'create-submit'" type="submit"
+							class="btn btn-info">Submit</button>
+						<button type="button" class="btn btn-info"
+							data-ng-click="newSessionCancel()">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+

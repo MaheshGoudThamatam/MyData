@@ -1,0 +1,36 @@
+<section data-ng-controller="CourseCounsellingChecklistController"
+	data-ng-init="findOne();DetailChecklist();">
+	<div data-ng-include="'/system/views/alert.html'"></div>
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper social-group-header">
+		<h3 class="pull-left ">Checklist</h3>
+	</div>
+	<div class="row col-md-12">
+		<div class="row col-md-12">
+			<h4 class="pull-left">Course:{{counsellingchecklist.course.name}}</h4>
+		</div>
+		<div data-ng-repeat="questions in counsellingchecklist.questions">
+			<label class="pull-left"><b>Question:&nbsp;{{$index+1}}</b></label>
+			<div class=" row col-md-12">
+				<label class="col-md-2"><b>Title:</b></label>
+				<div class="col-md-6">{{questions.title}}</div>
+			</div>
+			<div class=" row col-md-12">
+				<label class="col-md-2"><b>Description:</b></label>
+				<div class="col-md-6">{{questions.description}}</div>
+				</br> </br>
+			</div>
+
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-md-offset-3 col-md-9 ">
+			<button mean-token="'create-submit'" type="submit"
+				class="btn btn-info"
+				data-ng-click="editChecklist(COURSE.URL_PATH.COUNSELLINGCHECKLISTCEDIT,counsellingchecklist)">Update
+				Checklist</button>
+			<button type="button" class="btn btn-info"
+				ng-click="cancelChecklist()">Back</button>
+		</div>
+	</div>
+</section>

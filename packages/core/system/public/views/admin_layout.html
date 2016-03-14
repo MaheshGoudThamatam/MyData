@@ -1,0 +1,24 @@
+<!-- sidebar -->
+<div class="sidebar app-aside hidden-print" id="sidebar" toggleable parent-active-class="app-slide-off">
+    <div perfect-scrollbar wheel-propagation="false" suppress-scroll-x="true" class="sidebar-container">
+        <div data-ng-include=" '/system/views/sidebar.html' "></div>
+    </div>
+</div>
+<!-- / sidebar -->
+<div class="app-content" ng-class="{loading: loading}" ng-swipe-left="toggle('sidebar', 'off')"
+     ng-swipe-right="toggle('off-sidebar', 'off')">
+    <!-- top navbar -->
+    <div data-ng-include=" '/system/views/top-navbar.html' "></div>
+    <!-- / top navbar -->
+    <!-- main content -->
+    <div class="main-content">
+        <div class="wrap-content container fade-in-up" id="container">
+            <div ui-view></div>
+        </div>
+    </div>
+    <!-- / main content -->
+
+</div>
+<!-- footer -->
+<footer data-ng-include=" '/system/views/footer.html' " class="hidden-print"></footer>
+<!-- / footer -->

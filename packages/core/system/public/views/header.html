@@ -1,0 +1,52 @@
+<div data-role="navigation" ng-controller="HeaderController as hdrctr">
+
+    <div class='page-topbar '>
+        <a class="common-pointer" data-ng-click="redirectdashboard()" mean-token="'site-title'">
+            <div class='logo-area text-align'></div>
+        </a>
+        <div class='pull-left quick-area mentor'>
+            <a href="" ng-click="hdrctr.redirectMentorship()">Mentor</a>
+        </div>
+        <div class='pull-left quick-area course'>
+            <a href="" ng-click="hdrctr.redirectAvailableCourse()" >Course</a>
+        </div>
+        <div class='pull-right quick-area' ng-show="!hdrctr.hdrvars.authenticated">
+            <ul class="info-menu right-links list-inline list-unstyled">
+                <li class="divider-vertical"></li>
+                <li><a href="" ng-click="hdrctr.studentRegisteration()">Register</a></li>
+                <li class="divider-vertical"></li>
+                <li><a ui-sref='auth.login'>Log In</a></li>
+            </ul>
+        </div>
+        <div class='quick-area' ng-show="hdrctr.hdrvars.authenticated">
+            <div class='pull-left'>
+                <ul class="info-menu left-links list-inline list-unstyled">
+                    <li class="sidebar-toggle-wrap">
+                        <a href="#" data-toggle="sidebar" class="sidebar_toggle">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </li>
+                    <li ng-if="hdrctr.hdrvars.authenticated"
+                         data-ng-include="'/system/views/header-message.html'"></li>
+                    <li ng-if="hdrctr.hdrvars.authenticated"
+                         data-ng-include="'/system/views/header-notification.html'"></li>
+                    <li class="hidden-sm hidden-xs searchform">
+                        <div class="input-group">
+                            <span class="input-group-addon input-focus">
+                                <i class="fa fa-search"></i>
+                            </span>
+                            <form action="search-page.html" method="post">
+                                <input type="text" class="form-control animated fadeIn" placeholder="Search & Enter">
+                                <input type='submit' value="">
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div ng-if="hdrctr.hdrvars.authenticated"
+                data-ng-include="'/system/views/header-profile.html'"></div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/system/assets/js/bootstrap.min.js"></script>

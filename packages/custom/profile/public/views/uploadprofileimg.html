@@ -1,0 +1,51 @@
+<section data-ng-controller="ProfileController" data-ng-init="">
+	<div class="col-sm-4">
+		<div class="col-sm-12">
+			<img src="{{user.profilePicture}}" data-ng-if="user.profilePicture" width="100%" height="100%">
+		</div>
+		<div>
+			<form name="uploadImageForm" class="form-horizontal col-md-12"
+				role="form" novalidate>
+
+				<div class="form-group">
+
+					<div class="col-md-12">
+						<div class="btn btn-info" ngf-select
+							ngf-change="onFileSelect($files)" accept="image/png, image/jpeg" >
+							Upload</div>
+						<span data-ng-if="uploadInProgress">Upload progress: {{
+							uploadProgress }}</span>
+
+
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+</section>
+<!-- <section data-ng-controller="ProfileImageCtrl">
+<div class="col-sm-4 one">
+           <div class="col-sm-12  ">
+            <img src="{{user.profilePicture}}"
+                 data-ng-if="gallery.galleryImage" width="70%" height="70%">
+            </div>
+           <div >
+           <form name="uploadImageForm" class="form-horizontal col-md-12" role="form" novalidate>
+
+              <div class="form-group">
+                 
+                    <div class="col-md-12">
+                      <div class="btn btn-info" ngf-select ngf-change="onFileSelect($files)" accept="image/png, image/jpeg">
+                      Upload</div>
+                        <span data-ng-if="uploadInProgress">Upload progress: {{ uploadProgress }}</span>
+                       
+
+                      </div>
+                </div>
+
+                </form>
+                </div>
+          </div>
+</section> -->

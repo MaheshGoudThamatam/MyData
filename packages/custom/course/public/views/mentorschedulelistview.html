@@ -1,0 +1,59 @@
+<section  data-ng-controller = 'MentorCounsellingController' data-ng-init="loadmentorschedule();listCounsellingreqBreadcrumb();">
+    <div data-ng-include="'/system/views/alert.html'"></div>
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+ <div class="mainwrapper">
+  <h3 class="pull-left">Counselling Request</h3>
+ </div>
+ <table class="table table-bordered"  >
+  <thead>
+   <tr>
+    <th>Student Name</th>
+                <th class="text-center">Branch Name</th>
+                <th class="text-center">Course Name</th>
+                <th class="text-center">Counselling Date</th>
+                <th class="text-center">Counselling Slot</th>
+                <th class="text-center">Status</th>
+                <th class="text-center">Actions</th>
+   </tr>
+  </thead>
+  <tbody class="anchorTag">
+   <tr data-ng-repeat="counsellingreq in collection" class="" ng-class-odd="'odd'" ng-class-even="'even'" data-ng-show="collection || collection.length">
+    
+                 <td>{{counsellingreq.studentName.name}}</td>
+                 <td>{{counsellingreq.branch.branchName}}</td>
+                 <td>{{counsellingreq.course.name}}</td>
+                 <td class="text-right">{{counsellingreq.counsellingDate | date: 'dd-MMM-yyyy'}}</td>
+                 <td class="text-right">{{counsellingreq.counsellingSlot}}</td>
+                 <td>{{counsellingreq.status}}</td>
+     <td width="10%" align="center">
+                <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                    <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                        <i class="fa fa-arrow-circle-right"></i><span>Actions</span>
+                    </a>
+                    <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                            <li>
+                            <a class="menu-toggler" data-ng-click="viewreqScheduleDetails(counsellingreq)">
+                                <i class="fa fa-plus-circle"></i>
+                                <span>View</span>
+                            </a>
+                        </li> 
+                        <li>
+                            <a class="menu-toggler" data-ng-click="editChecklist(COURSE.URL_PATH.STUDENT_COUNSELLING_CHECKLIST,counsellingreq)">
+                                <i class="fa fa-users"></i>
+                                <span>Checklist</span>
+                            </a>
+                        </li>
+                        </ul>
+                </div>
+            </td>
+   </tr>
+            <tr data-ng-hide="collection.length > 0">
+                <td colspan="7">No Request Found...</td>
+            </tr>
+  </tbody>
+ </table>
+    <div data-ng-show="collection.length > 0" class="paginate usr">
+        <div ng-include="'system/views/paginationFilter.html'"></div>
+        <br>
+    </div>
+</section>

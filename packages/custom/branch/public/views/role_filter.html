@@ -1,0 +1,6 @@
+<section data-ng-init="loadRoles();">
+    <select ng-model="roleId" class="col-md-12" ng-change="roleFilter(roleId)">
+        <option value="">{{ 'roles.role.ROLE' | translate }}</option>
+        <option ng-repeat="role in roles" value="{{role._id}}">{{role.name}}</option>
+    </select>
+</section>

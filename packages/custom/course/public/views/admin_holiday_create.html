@@ -1,0 +1,105 @@
+<section data-ng-controller="HolidayController"
+	data-ng-init="createHoliday(); filter();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper social-group-header">
+		<h3 class="pull-left">Holiday</h3>
+	</div>
+	<div class="mainwrapper">
+		<form name="holidayForm" class="form-horizontal formAlign"
+			data-ng-submit="create(holidayForm.$valid)" novalidate>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && holidayForm.name.$invalid }">
+				<label mean-token="'create-name'" class="col-md-2 err-msg-name"> {{ 'common.NAME' | translate }}</label>
+				<div class="col-md-6">
+					<input name="name" type="text" class="form-control err-msg "
+						data-ng-model="holiday.name" id="name" placeholder=" {{ 'common.NAME' | translate }}" required>
+					<div class="errorRed" ng-repeat="err in error.data"
+						ng-if="err.param =='name'">{{err.msg}}</div>
+					<div ng-show="submitted && holidayForm.name.$invalid">
+						<span class="err-msg errorText"
+							ng-show="holidayForm.name.$error.required">{{ 'common.error_messages.NAME' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && holidayForm.description.$invalid }">
+				<label mean-token="'create-description'"
+					class="col-md-2 err-msg-description">{{ 'common.DESCRIPTION' | translate }}</label>
+				<div class="col-md-6">
+					<textarea name="description" data-ng-model="holiday.description"
+						id="description" cols="30" rows="5" placeholder="{{ 'common.DESCRIPTION' | translate }}"
+						class="form-control err-msg " required></textarea>
+					<div class="errorRed" ng-repeat="err in error.data"
+						ng-if="err.param =='description'">{{err.msg}}</div>
+					<div ng-show="submitted && holidayForm.description.$invalid">
+						<span class="err-msg errorText"
+							ng-show="holidayForm.description.$error.required"> {{ 'common.error_messages.DESCRIPTION' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && holidayForm.start_date.$invalid }">
+				<label mean-token="'create-start_date'"
+					class="col-md-2 err-msg-start_date">{{ 'course.branch.START_DATE' | translate }}</label>
+				<div class="col-md-6">
+					<input type="date" name="start_date"
+						data-ng-model="holiday.start_date" id="start_date"
+						placeholder="{{ 'course.branch.START_DATE' | translate }}" class="form-control err-msg"
+						ng-change='checkError(start_date)' required>
+					<div class="errorRed" ng-repeat="err in error.data"
+						ng-if="err.param =='start_date'">{{err.msg}}</div>
+					<div ng-show="submitted && holidayForm.start_date.$invalid">
+						<span class="err-msg errorText"
+							ng-show="holidayForm.start_date.$error.required">{{ 'course.error_messages.START_DATE' | translate }}</span>
+					</div>
+					<span class="err-msg errorText"
+						ng-show="holidayForm.end_date.$error.Lesserstartvalue">
+						{{ 'course.error_messages.START_DATE_VALID' | translate }}</span>
+
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && holidayForm.end_date.$invalid }">
+				<label mean-token="'create-end_date'"
+					class="col-md-2 err-msg-end_date">{{ 'course.END_DATE' | translate }}</label>
+				<div class="col-md-6">
+					<input name="end_date" type="date" class="form-control err-msg"
+						data-ng-model="holiday.end_date" id="end_date"
+						placeholder="End_date" ng-change='checkErr(start_date,end_date)'
+						required>
+					<div class="errorRed" ng-repeat="err in error.data"
+						ng-if="err.param =='end_date'">{{err.msg}}</div>
+					<div ng-show="submitted && holidayForm.end_date.$invalid">
+						<span class="err-msg errorText"
+							ng-show="holidayForm.end_date.$error.required"> {{ 'mentor.error_messages.END_DATE' | translate }} </span>
+
+					</div>
+					<span class="err-msg errorText"
+						ng-show="holidayForm.end_date.$error.Lesservalue">{{ 'course.error_messages.END_DATE' | translate }}</span>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-offset-2 col-md-6">
+					<select ng-model="country._id" ng-show="isCountry">
+						<option value="">{{ 'course.COUNTRIES' | translate }}</option>
+						<option ng-repeat="country in countries" value="{{country._id}}">{{country.countryName}}</option>
+					</select> <select ng-model="branch._id" ng-show="isBranch">
+						<option value="">{{ 'course.branch.BATCHES' | translate }}</option>
+						<option ng-repeat="branch in branches" value="{{branch._id}}">{{branch.branchName}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9 ">
+					<button mean-token="'create-submit'" type="submit"
+						class="btn btn-info">Create Holiday</button>
+					<button type="button" class="btn btn-info"
+						ng-click="cancelHoliday()">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+

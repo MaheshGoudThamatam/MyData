@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="en">
+{% include '../includes/head.html' %}
+<body data-ng-controller="HeaderController as hdrctr" data-ng-init="setLayout();">
+    {% block content %}{% endblock %}
+    {% include '../includes/foot.html' %}
+</body>
+</html>

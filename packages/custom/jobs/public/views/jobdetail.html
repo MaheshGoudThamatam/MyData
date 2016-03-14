@@ -1,0 +1,72 @@
+<section class="row bg_grey_light tlpanel-success page_content">
+    <div class="" data-ng-controller="JobsController" data-ng-init="completejobdetail()">
+        <div class="mainwrapper padding-allign-jobs anchorTag">
+            <ol class="breadcrumb">
+                <li><i data-ng-click="redirectdashboard()" class="fa fa-home link-pointer"></i></li>
+                <li><a href="/jobs">{{ 'jobs.JOBS' | translate }}</a></li>
+                <li ng-disabled="true">{{ 'jobs.JOBS_DETAILS' | translate }}</li>
+            </ol>
+        </div>
+        <div class="row col-md-12 padding-allign-jobs">
+            <h3 class="col-md-8">{{singlejobdetail.title}}</h3>
+        </div>
+        <div class="row col-md-12 padding-allign-jobs padding-allign-jobs-bottom">
+            <div class="col-md-12"><b>{{ 'jobs.JOBS_POST' | translate }}</b>&nbsp{{singlejobdetail.postedDate}}</div>
+        </div>
+        <div class="row col-md-12 padding-allign-jobs padding-allign-jobs-bottom">
+            <div class="col-md-8">
+                <div class="clearfix job-blog">
+                    <div class="text-center col-md-3">
+                        <span class="key"><h3>{{singlejobdetail.cost}}</h3></span>
+                        <span class="value">{{ 'jobs.JOBS_COST' | translate }}</span>
+                    </div>
+                    <div class="text-center col-md-3 border-right border-left">
+                        <span class="key"><h3>{{singlejobdetail.costCurrency}}</h3></span>
+                        <span class="value">{{ 'jobs.COST_CURRENCY' | translate }}</span>
+                    </div>
+                    <div class="text-center col-md-3 border-right">
+                        <span class="key"><h3>{{singlejobdetail.status}}</h3></span>
+                        <span class="value">{{ 'jobs.JOBS_STATUS' | translate }}</span>
+                    </div>
+                    <div class="text-center col-md-3 jobStatus">
+                        <span class="key"><h3>{{singlejobdetail.proposalCount}}</h3></span>
+                        <span class="value">{{ 'jobs.PROPOSAL_COUNT' | translate }}</span>
+                    </div>
+                </div>
+                <div class="row col-md-12 padding-allign-jobs-bottom">
+                    <b>{{ 'jobs.skill.SKILLS' | translate }}</b>
+                    <ul class="job-ul">
+                        <li class="job-li" data-ng-repeat="jobskills in singlejobdetail.skills">{{jobskills.toUpperCase()}}</li>
+                    </ul>
+                </div>
+                <div class="row col-md-12 padding-allign-jobs-bottom">
+                    <b>{{ 'jobs.JOBS_DESCRIPTION' | translate }}</b>
+                </div>
+                <div class="row col-md-12" ng-bind-html="singlejobdetail.description">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="row col-md-12 job-client">
+                    <!-- <b>Posted by: </b><span>{{singlejobdetail.client.name}}</span> -->
+                    <!-- <br /> -->
+                    <b>{{ 'jobs.JOBS_LOCATION' | translate }}</b><span>{{singlejobdetail.client.location}}</span>
+                    <br />
+                    <b>{{ 'jobs.JOBS_RATING' | translate }}</b>
+                    <span ng-show="singlejobdetail.client.rating === 'N/A'">{{singlejobdetail.client.rating}}</span>
+                    <span ng-show="singlejobdetail.client.rating != 'N/A'">{{singlejobdetail.client.rating}}/5.0</span>
+                    <br />
+                    <b>{{ 'jobs.JOBS_POSTED' | translate }}</b><span>{{singlejobdetail.client.totalJobs}}</span>
+                    <br />
+                    <b>{{ 'jobs.TOTAL_SPENT' | translate }}</b><span>{{singlejobdetail.client.totalSpent}}</span>
+                    <br />
+                </div>
+                <div class="row col-md-12">
+                    <a href="{{singlejobdetail.jobUrl}}">
+                        <input type="button" value="Send Proposal" class="job-proposal" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</section>

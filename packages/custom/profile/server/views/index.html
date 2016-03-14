@@ -1,0 +1,8 @@
+{% extends '../../../../core/system/server/views/layouts/admin.html' %}
+{% block content %}
+<div ui-view ></div>
+<script type="text/javascript">
+window.user = {{user|json|safe}};
+window.modules = null;
+</script>
+{% endblock %}

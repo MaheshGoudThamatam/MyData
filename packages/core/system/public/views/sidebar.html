@@ -1,0 +1,55 @@
+<!-- start: SEARCH FORM -->
+<div class="search-form hidden-md hidden-lg">
+    <form class="navbar-form" role="search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="{{ 'search.PLACEHOLDER' | translate }}">
+            <button class="btn search-button" type="submit">
+                <i class="ti-search"></i>
+            </button>
+        </div>
+    </form>
+</div>
+<!-- end: SEARCH FORM -->
+<!-- start: USER OPTIONS -->
+<div class="nav-user-wrapper">
+    <div class="media">
+        <div class="media-left">
+            <a class="img-circle" href="/profile/myProfile"><img alt="" src="/system/assets/img/avatar-1.jpg" class="img-circle"></a>
+        </div>
+        <div class="media-body">
+            <span class="media-heading text-white">{{currentuser.name}}</span>
+            <div class="text-small text-white-transparent">
+                UI Designer
+            </div>
+        </div>
+
+        <div class="media-right media-middle">
+            <div uib-dropdown is-open="status.isopen">
+                <a  class="dropdown-toggle btn btn-transparent text-white" uib-dropdown-toggle data-toggle='dropdown'><i class="fa fa-caret-down"></i> </a>
+                <ul class="dropdown-menu pull-right animated fadeInRight">
+                    <li>
+                        <a href="/profile/myProfile" translate="topbar.user.PROFILE"> My Profile </a>
+                    </li>
+                    <li>
+                        <a href="/profile/myCalender" translate="topbar.user.CALENDAR"> My Calendar </a>
+                    </li>
+                    <li>
+                        <a href="/profile/myMessage" translate="topbar.user.MESSAGES"> My Messages (3) </a>
+                    </li>
+                    <li>
+                        <a href="/profile/myTimeline" translate="topbar.user.TIMELINE"> My Timeline </a>
+                    </li>
+                    <li>
+                        <a data-ng-click="hdrctr.lockScreen();" translate="topbar.user.LOCKSCREEN"> Lock Screen </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a data-ng-click="hdrctr.logout();" translate="topbar.user.LOGOUT"> Log Out </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end: USER OPTIONS -->
+<div data-ng-include=" '/system/views/nav.html' "></div>

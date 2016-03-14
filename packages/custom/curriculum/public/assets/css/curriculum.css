@@ -1,0 +1,45 @@
+.curriculum-example h1 {
+  background-color: purple
+}
+.courseButtn{
+	margin-top: 10px;
+}
+	
+.drop{
+	min-height: 30px;
+	width: 90%;
+    padding: 0px 15%;
+}	
+
+.topicButtn{
+	padding-top: 30px;
+}
+
+.add{
+	 margin-top: 3px;
+}
+
+.test{
+	padding-top: 2%;	
+}
+
+.drop1{
+	min-height: 30px;
+	width: 150px;
+    padding: 0px 15%;
+}
+
+.subTopic{
+	  padding-top: 10px;
+}
+
+.skilldrop{
+	min-height: 30px;	   
+}
+
+.formAlignment{
+	margin-top: 30px;
+}
+.subtopicAlignment{
+	    padding: 0% 5%;
+}

@@ -1,0 +1,27 @@
+<section data-ng-init="loadAvailableCourse();">
+
+	<div class="col-sm-12" ng-show="isBranchSelected">
+		<div class="col-sm-12">
+			<div class="row" data-ng-repeat="course in availableCourses">
+				<div class="col-sm-2 jobs-bord job-blog1 social-group-individual no-padding">
+					<h3 class="col-md-6">
+						<a href="">{{course.name}}</a>
+					</h3>
+					<div class="col-md-12">
+						<h5 class="col-md-6"></h5>
+						<button class="btn btn-info col-md-4 pull-right" ng-disabled="course.assigned"
+							data-ng-click="assign(course._id)">Assign</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-12" ng-hide="isBranchSelected">
+		<div class="col-sm-12">
+			<div class="row">
+				<span> Select branch </span>
+			</div>
+		</div>
+	</div>
+
+</section>

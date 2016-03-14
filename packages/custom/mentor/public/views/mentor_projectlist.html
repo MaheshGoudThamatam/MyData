@@ -1,0 +1,64 @@
+<section data-ng-controller="MentorProjectController"
+	data-ng-init="findOne();detailBreadcrumb();">
+<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper">
+
+		<div class="col-xs-12">
+			<h3>Project Name: {{mentorproject.taskName}}</h3>
+		</div>
+	</div>
+	<div class="mainwrapper">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-md-2 pull-left">Name</label>
+				<div class="col-md-10">{{mentorproject.taskName}}</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-2 pull-left">Description</label>
+				<div class="col-md-10">{{mentorproject.description}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 pull-left">Skills</label>
+				<div class="col-md-10">
+					<div class="inlineskills"
+						data-ng-repeat="skill in mentorproject.skills">
+						{{skill.name.toUpperCase()}}<span ng-hide="$last">,&nbsp;</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 pull-left">Position</label>
+				<div class="col-md-10">{{mentorproject.position}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 pull-left">Cost</label>
+				<div class="col-md-10">{{mentorproject.cost}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 pull-left">Duration</label>
+				<div class="col-md-10">{{mentorproject.duration}}</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-2 pull-left">Availability</label>
+				<div class="col-md-10">{{mentorproject.availability}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 pull-left">Type</label>
+				<div class="col-md-10">{{mentorproject.type}}</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-10">
+
+					<button type="button" class="btn btn-info"
+						ng-click="cancelProject()">Cancel</button>
+				</div>
+			</div>
+
+		</form>
+
+
+	</div>
+</section>

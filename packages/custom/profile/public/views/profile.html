@@ -1,0 +1,207 @@
+<!-- <section  data-ng-controller="ProfileController" data-ng-init= "editProfile()">
+	<div class="row">
+	  		<div class="col-xs-12">
+  				<ol class="breadcrumb">
+		            <li><i class="fa fa-home link-pointer" data-ng-click="redirectdashboard()"></i></li>
+		            <li><a href="/profile/student_name">Profile</a></li>
+		            <li></li>
+        		</ol>
+ 			</div>
+	  		<div class="form-group">
+				</br>
+				
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="/editProfile">Profile</a></li>
+					<li><a href="#">CV / Resume</a></li>
+					<li><a href="#">Badges</a></li>
+					<li><a href="#">Skills</a></li>
+					<li><a href="#">Performance</a></li>
+				</ul>
+				<div><button type="button" class="btn btn-info" ng-click="redirectEdit(user)">Edit Profile</button></div>
+			 	<div class="info"></br>
+					<div class="col-md-11"><i class="fa fa-user user-font"></i><span>&nbsp;&nbsp;&nbsp;{{profileuser.name}}</span>		
+				</div></br></br></br>
+				<div></br></br></br>
+					<div class="col-md-4">
+						<div class="title"><label>Personal Details<label></div></br>
+						<div class="name">
+						<label>First name</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span>{{profileuser.firstName}}</span>
+						</div></br>
+						<div class="name"><label>Last name</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{profileuser.lastName}}</span></div></br>
+						<div class=""><label >Date of birth</label>&nbsp; <span>{{user.dob}}</span></div> </br>
+						<div class="country"><label>Country</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span>{{profileuser.country_user}}</span></div></br>
+						<div class="emailid"><label>Email Id </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>{{profileuser.email}}</span></div></br></br>
+					</div>
+					<form>
+						<div class="col-md-6">
+
+							<div class="title"><label>Skills and C.V</label></div></br></br></br></br>
+							<div><label>Your Skills: &nbsp; <label></div><span name="skills">Html, Css, Bootstrap, Ruby, Meanstack etc. </span>
+							</br></br>
+							<label>C.V is Uploaded.</label>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-12">
+					<div class="name">
+						<div class="title"><label>Education Details</label></div></br>
+						
+							<table class="table table-bordered edu-head">
+								<tr>		
+									<th>Degree Name</th>
+									<th>Institutaton</br> Name</th>
+									<th>Major /Group</th>
+									<th class="text-center">Passing year</th>
+									<th class="text-right">Division</br>/GPA</th>
+									<th>Status</th>
+								</tr>
+								<tr>
+									<td>SSC / Equivalent</td>
+									<td>Abc Public School</td>
+									<td>Maths, Science</td>
+									<td align="center">2012</td>
+									<td align="right">3.50 - 3.99</td>
+									<td>Completed</td>
+								</tr>
+								<tr>
+									<td>HSC / Equivalent</td>
+									<td>Abc Public School</td>
+									<td>Physics, Chemistry, Maths</td>
+									<td align="center">2014</td>
+									<td align="right">3.50 - 3.99</td>
+									<td>Completed</td>
+								</tr>
+								<tr>
+									<td>Honors / Equivalent</td>
+									<td>Xyz College of Science</td>
+									<td>Maths, Science</td>
+									<td align="center">2015</td>
+									<td align="right">3.50 - 3.99</td>
+									<td>On-going</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12">
+		<form name="editProfileForm" class="form-horizontal col-md-12" role="form" id="editProfileForm"
+			data-ng-submit="saveUsername(editProfileForm, profileuser)" novalidate>
+			<div >
+				<div class="form-group">
+			<label mean-token="'create-projectName'" class="col-md-3 control-label">Name</label>
+			<div class="col-md-9">
+			   <input name="name" type="text" data-ng-model="profileuser.name " id="name" placeholder="name"
+			   class="form-control err-msg " required>
+						<div ng-show="submitted && projectForm.projectName.$invalid">
+							<span class="err-msg"
+								ng-show="projectForm.projectName.$error.required"> Please
+								enter the Project Name </span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+			<label mean-token="'create-firstName'" class="col-md-3 control-label">First Name</label>
+			<div class="col-md-9">
+			   <input name="firstName" type="text" data-ng-model="profileuser.firstName " id="firstName" placeholder="First Name"
+			   class="form-control err-msg " required>
+						<div ng-show="submitted && projectForm.projectName.$invalid">
+							<span class="err-msg"
+								ng-show="projectForm.projectName.$error.required"> Please
+								enter the Project Name </span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+			<label mean-token="'create-lastName'" class="col-md-3 control-label">Last Name</label>
+			<div class="col-md-9">
+			   <input name="lastName" type="text" data-ng-model="profileuser.lastName " id="lastName" placeholder="Last Name"
+			   class="form-control err-msg " required>
+						<div ng-show="submitted && projectForm.projectName.$invalid">
+							<span class="err-msg"
+								ng-show="projectForm.projectName.$error.required"> Please
+								enter the Project Name </span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+			<label mean-token="'create-country'" class="col-md-3 control-label">Country</label>
+			<div class="col-md-9">
+			   <input name="country" type="text" data-ng-model="profileuser.country_user" id="name" placeholder="Country"
+			   class="form-control err-msg " required>
+						<div ng-show="submitted && projectForm.projectName.$invalid">
+							<span class="err-msg"
+								ng-show="projectForm.projectName.$error.required"> Please
+								enter the Project Name </span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+			<label mean-token="'create-email'" class="col-md-3 control-label">Email</label>
+			<div class="col-md-9">
+			   <input name="email" type="text" data-ng-model="profileuser.email " id="email" placeholder="email"
+			   class="form-control err-msg " disabled>
+						<div ng-show="submitted && projectForm.projectName.$invalid">
+							<span class="err-msg"
+								ng-show="projectForm.projectName.$error.required"> Please
+								enter the Project Name </span>
+						</div>
+					</div>
+				</div>
+				
+				
+				<div class="form-group">
+					<div class="col-md-offset-3 col-md-9">
+						<button mean-token="'create-submit'" type="submit"
+							class="btn btn-info">Update</button>
+						<button type="button" class="btn btn-info"
+							ng-click="">Cancel</button>
+					<div class="alert alert-success animated fadeIn" ng-show="profileUpateMessage">{{profileUpateMessage}}</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="col-md-12">
+					<div class="name">
+						<div class="title"><label>Education Details</label></div></br>
+						
+							<table class="table table-bordered edu-head">
+								<tr>		
+									<th>Degree Name</th>
+									<th>Institutaton</br> Name</th>
+									<th>Major /Group</th>
+									<th class="text-center">Passing year</th>
+									<th class="text-right">Division</br>/GPA</th>
+									<th>Status</th>
+								</tr>
+								<tr>
+									<td>SSC / Equivalent</td>
+									<td>Abc Public School</td>
+									<td>Maths, Science</td>
+									<td align="center">2012</td>
+									<td align="right">3.50 - 3.99</td>
+									<td>Completed</td>
+								</tr>
+								<tr>
+									<td>HSC / Equivalent</td>
+									<td>Abc Public School</td>
+									<td>Physics, Chemistry, Maths</td>
+									<td align="center">2014</td>
+									<td align="right">3.50 - 3.99</td>
+									<td>Completed</td>
+								</tr>
+								<tr>
+									<td>Honors / Equivalent</td>
+									<td>Xyz College of Science</td>
+									<td>Maths, Science</td>
+									<td align="center">2015</td>
+									<td align="right">3.50 - 3.99</td>
+									<td>On-going</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+			</div>
+		</div>
+
+</section> -->

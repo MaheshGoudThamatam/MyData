@@ -1,0 +1,841 @@
+.user-font{
+	
+	font-size:50px !important;
+}
+
+/*.profile-example h1 {
+    background-color: purple
+}
+
+div.cover_image {
+    background-image: url("https://placeholdit.imgix.net/~text?txtsize=75&txt=1200%C3%97300&w=1200&h=300");
+    height: 300px;
+    position: fixed;
+    left: 0;
+    top: 50px;
+    width: 100%;
+    z-index: 1;
+}
+
+.profile-image {
+    border: 2px solid white;
+    box-shadow: 2px 2px 2px 0px #696169;
+    background-image: url("https://placeholdit.imgix.net/~text?txtsize=33&txt=150%C3%97150&w=150&h=150");
+    width: 150px;
+    height: 150px;
+
+}
+
+.connection {
+    border-top: none !important;
+}
+
+.profile-name {
+    top: 50px;
+}
+
+.circle {
+    border-radius: 50%;
+    border-color: green;
+    border-style: solid;
+    margin: 0.2em;
+    font-size: 1.1em;
+    padding: 7px 10px;
+    display: inline-block;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-box-shadow: 0px 0px 2px #888;
+    -webkit-box-shadow: 0px 0px 2px #888;
+    box-shadow: 0px 0px 2px #888;
+    color: green;
+}
+
+.inactive {
+    border-radius: 50%;
+    border-color: grey;
+    border-style: solid;
+    margin: 0.2em;
+    font-size: 1.1em;
+    padding: 7px 10px;
+    display: inline-block;
+    -moz-border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-box-shadow: 0px 0px 2px #888;
+    -webkit-box-shadow: 0px 0px 2px #888;
+    box-shadow: 0px 0px 2px #888;
+    color: grey;
+}
+
+.profilerow {
+    position: absolute;
+    width: 75%;
+    left: 5%;
+    top: 7%;
+}
+
+.profile-detail {
+    height: 500px;
+}
+
+.review {
+    font-size: large;
+}
+
+.rating {
+    font-size: large;
+}
+
+.btn-xs {
+    border: 0px;
+}
+
+.profile-job-detail {
+    border: 2px solid green;
+    width: 70px;
+    height: 20px;
+}
+
+.score {
+    color: green;
+    font-weight: bold;
+}
+
+.score-n {
+    color: grey;
+    font-weight: bold;
+    border: 2px solid grey;
+    width: 70px;
+    height: 20px;
+}
+
+.score-detail {
+    padding-left: 25px;
+    font-size: 15px;
+}
+
+body {
+    position: relative;
+    padding-left: 25px;
+    font-size: 15px;
+}
+
+.nav-expander1 {
+    background: none repeat scroll 0 0 #000000;
+    margin-left: 0;
+    position: absolute;
+    left: 5%;
+    text-decoration: none;
+    top: 8%;
+    width: 0px;
+    z-index: 2;
+    transition: left 0.3s ease-in-out 0s;
+}
+
+.nav-expander1:hover {
+    cursor: pointer;
+}
+
+.nav-expanded .nav-expander1.fixed {
+    left: 11em;
+}
+
+.asd {
+    background: #FFFFFF;
+    display: block;
+    height: 32.25%;
+    overflow: auto;
+    position: fixed;
+    left: -20em;
+    font-size: 15px;
+    top: 7.9%;
+    width: 10em;
+    z-index: 2000;
+    transition: left 0.3s ease-in-out 0s;
+}
+
+.nav-expanded nav {
+    left: 0;
+}
+
+body.nav-expanded {
+    transition: left 0.4s ease-in-out 0s;
+}
+
+.main1 {
+    padding-top: 12px;
+}
+
+.main1 li {
+    border-bottom: 5px solid #323949;
+    font-size: 15px;
+    padding: 12px;
+}
+
+.main1 li a:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+/*a{
+  margin-left: 5%;
+  margin-bottom:2%;
+}*/
+/*div.cover_image {
+    background-image: url("https://placeholdit.imgix.net/~text?txtsize=75&txt=1200%C3%97300&w=1200&h=300");
+    height: 300px;
+    background-size: cover;
+}
+
+.profile-image {
+    border: 2px solid white;
+    box-shadow: 2px 2px 2px 0px #696169;
+    background-image: url("https://placeholdit.imgix.net/~text?txtsize=33&txt=150%C3%97150&w=150&h=150");
+    width: 150px;
+    height: 150px;
+}
+
+.connection {
+    border-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+.profile-name {
+    top: 11px;
+}
+
+.connection-top {
+    margin-left: 59px;
+}
+
+.profile_li {
+    height: 250px;
+    width: 250px;
+}
+
+.profile_btm50 {
+    margin-bottom: 70px !important;
+}
+
+.peer-table td th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.top {
+    margin-bottom: 20px;
+}
+
+.below {
+    text-align: center;
+}
+
+.profile-image {
+    text-decoration: none;
+}
+
+.forum-name {
+    text-decoration: none;
+}
+
+.list-reply {
+    margin-left: auto;
+}
+
+.form-reply {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}*/
+
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+
+/*#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 195px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+.tests {
+    border-bottom: 1px solid black;
+}
+
+.icon-font {
+    font-size: 60px;
+}
+
+.badge-list {
+    display: inline-block;
+}
+
+.head-width {
+    width: 100%;
+}
+
+.sidebar {
+    display: none;
+}*/
+
+/* Sidebar navigation */
+/*/*.nav-sidebar {
+    margin-right: -21px; /* 20px padding + 1px border */
+/*    margin-bottom: 20px;
+    margin-left: -20px;
+}
+
+.nav-sidebar > li > a {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+    color: #fff;
+    background-color: #428bca;
+}*/
+
+/*
+ * Main content
+ */
+
+/*.main {
+    padding: 20px;
+}
+
+.main .page-header {
+    margin-top: 0;
+}*/
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+/*.placeholders {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.placeholders h4 {
+    margin-bottom: 0;
+}
+
+.placeholder {
+    margin-bottom: 20px;
+}
+
+.placeholder img {
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.profile-dash {
+    height: 188px !important;
+    background-color: black;
+}
+
+.job-boder {
+    border: 1px solid black;
+    padding: 1px 6px 39px 20px;
+    margin-top: 14px;
+}
+
+.provider {
+    display: inline-block;
+}
+
+.mar-bottom {
+    margin-bottom: 4px;
+}
+
+.social-group-header {
+    border-bottom: 1px solid black;
+}
+
+.social-group-header-create {
+    margin-top: 16px;
+}
+
+.social-group-individual {
+    border: 1px solid black;
+    margin-top: 11px;
+}
+
+.social-group-show-details {
+    border-top: 1px solid black;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.user-font {
+    font-size: 60px !important;
+}
+
+.show-more {
+    margin-bottom: 3px;
+    margin-top: 5px;
+}
+
+.leeft {
+    margin-left: 40px;
+}
+
+.join {
+    margin-right: 5px;
+}
+
+.dashboard-font {
+    padding: 5px 5px 5px 5px;
+    font-size: 242px;
+}
+
+.font_dashboard {
+    font-size: 2vh;
+    color: black;
+}
+
+.message-userimg {
+    width: 30px;
+}*/
+
+/*
+ * Placeholder dashboard ideas
+ */
+/*
+.placeholders {
+    margin-bottom: 30px;
+    text-align: center;
+}*/
+
+/*
+    top: 7%;
+} */
+/*.social-group-header {
+    border-bottom: 1px solid black;
+}
+
+.social-group-header-create {
+    margin-top: 16px;
+}
+
+.social-group-individual {
+    border: 1px solid black;
+    margin-top: 11px;
+}
+
+.social-group-show-details {
+    border-top: 1px solid black;
+}
+
+.no-padding {
+    padding: 0;
+}
+
+.user-font {
+    font-size: 60px;
+}
+
+.leeft {
+    margin-left: 40px;
+}
+
+li.transform_dashboard:hover {
+    /* transform:scale(1.1,1.1);
+     -webkit-transition-delay: 0.25s; /* Safari
+       transition-delay: 0.25s;*/
+/*    border-color: #87CEEB;
+    cursor: pointer;
+}*/
+
+/*.join {
+    margin-right: 5px;
+}*/
+
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+
+/*#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 195px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+.tests {
+    border-bottom: 1px solid black;
+}
+
+.icon-font {
+    font-size: 60px;
+}
+
+.badge-list {
+    display: inline-block;
+}
+
+.head-width {
+    width: 100%;
+}
+
+.main {
+    padding: 20px;
+}
+
+.main .page-header {
+    margin-top: 0;
+}
+
+.placeholders {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.placeholder {
+    margin-bottom: 20px;
+}
+
+.placeholder img {
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.profile-dash {
+    height: 188px !important;
+    background-color: black;
+}
+
+.job-boder {
+    border: 1px solid black;
+    padding: 1px 6px 39px 20px;
+    margin-top: 14px;
+}
+
+.provider {
+    display: inline-block;
+}
+
+.mar-bottom {
+    margin-bottom: 4px;
+}
+
+.profile-top {
+    margin-left: 150px;
+
+}
+
+.score-badge {
+    text-shadow: none !important;
+}
+
+.line-badge {
+    margin-bottom: 10px;
+    border: 2px solid #5D5656;
+    margin-top: 0px;
+}
+
+.top-badge {
+    border: 2px solid grey;
+    background-color: white;
+    color: grey;
+    font-size: small;
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.student-resume {
+    margin: 0 auto;
+}
+
+.badge-change {
+    width: 75%;
+}
+
+.score-badge {
+    text-shadow: none !important;
+}
+
+.line-badge {
+    margin-bottom: 10px;
+    border: 2px solid #5D5656;
+    margin-top: 0px;
+}
+
+.top-badge {
+    border: 2px solid grey;
+    background-color: white;
+    color: grey;
+    font-size: small;
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.student-resume {
+    margin: 0 auto;
+}
+
+.join {
+    margin-right: 5px;
+}
+
+#sub {
+
+    left: 7em;
+}
+
+.showmore-point {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 195px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+.tests {
+    border-bottom: 1px solid black;
+}
+
+.icon-font {
+    font-size: 60px;
+}
+
+.badge-list {
+    display: inline-block;
+}
+
+.head-width {
+    width: 100%;
+}
+
+.main {
+    padding: 20px;
+}
+
+.main .page-header {
+    margin-top: 0;
+}
+
+.placeholders {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.placeholder {
+    margin-bottom: 20px;
+}
+
+.placeholder img {
+    display: inline-block;
+    border-radius: 50%;
+}
+
+.profile-dash {
+    height: 188px !important;
+    background-color: black;
+}
+
+.job-boder {
+    border: 1px solid black;
+    padding: 1px 6px 39px 20px;
+    margin-top: 14px;
+}
+
+.provider {
+    display: inline-block;
+}
+
+.mar-bottom {
+    margin-bottom: 4px;
+}
+
+.profile-top {
+    margin-left: 150px;
+
+}
+
+.score-badge {
+    text-shadow: none !important;
+}
+
+.line-badge {
+    margin-bottom: 10px;
+    border: 2px solid #5D5656;
+    margin-top: 0px;
+}
+
+.top-badge {
+    border: 2px solid grey;
+    background-color: white;
+    color: grey;
+    font-size: small;
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.student-resume {
+    margin: 0 auto;
+}
+
+.badge-change {
+    width: 75%;
+}
+
+.score-badge {
+    text-shadow: none !important;
+}
+
+.line-badge {
+    margin-bottom: 10px;
+    border: 2px solid #5D5656;
+    margin-top: 0px;
+}
+
+.top-badge {
+    border: 2px solid grey;
+    background-color: white;
+    color: grey;
+    font-size: small;
+    font-weight: 700;
+    padding: 5px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.student-resume {
+    margin: 0 auto;
+}
+
+.join {
+    margin-right: 5px;
+}
+
+#sub {
+
+    left: 7em;
+}
+
+.showmore-point {
+
+    cursor: pointer;
+}
+/*portfolio page*/
+/*.profile {
+    border: 1px solid black;
+    padding: 5px;
+    margin-top: 7px;
+    padding-top:2px;
+}
+
+.profile1 {
+ border: 1px solid black;
+    margin-top: 50px;
+    margin-left: 50px;
+
+}*/
+.padding-allign{
+	padding-left:20px !important;
+	padding-right:20px !important;
+}
+
+
+.horline{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,74 @@
+<section data-ng-controller="CountryController" class="container" data-ng-init="findOne()">
+<div class="mainwrapper anchorTag">
+		<ol class="breadcrumb">
+			<li><i class="fa fa-home link-pointer" data-ng-click="redirectdashboard()"></i></li>
+			<li><a href="/admin/country">{{ 'locations.branch.COUNTRY' | translate }}</a></li>
+			<li ng-disable = "true">{{ 'locations.country.SHOW' | translate }}</li>
+			<li></li>
+		</ol>
+	</div> 
+	<div class="mainwrapper">
+		<div>
+			<h3 class="text-center">{{ 'locations.branch.COUNTRY' | translate }}</h3>
+		</div>
+	</div>
+
+	<div class="col-xs-12">
+		<form name="countryForm" class="form-horizontal col-md-12" novalidate>
+			<div class="form-group">
+				<label mean-token="'show-country_name'" class="col-md-3 control-label">{{ 'common.NAME' | translate }}</label>
+				<div class="col-md-9">
+					{{country.countryName}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'show-country_code'" class="col-md-3 control-label">{{ 'locations.country.COUNTRY_CODE' | translate }}</label>
+				<div class="col-md-9">
+					{{country.countryCode}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'show-currency'" class="col-md-3 control-label">{{ 'locations.country.CURRENCY' | translate }}</label>
+				<div class="col-md-9">
+					{{country.currency}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'show-language_name'"
+					class="col-md-3 control-label">{{ 'locations.country.LANGUAGE_NAME' | translate }}</label>
+				<div class="col-md-9">
+					{{country.languageName}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'show-language_code'"
+					class="col-md-3 control-label">{{ 'locations.country.LANGUAGE_CODE' | translate }}</label>
+				<div class="col-md-9">
+					{{country.languageCode}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'show-created_at'"
+					class="col-md-3 control-label">{{ 'locations.country.CREATED' | translate }}</label>
+				<div class="col-md-9">
+					{{country.createdAt}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'show-updated_at'"
+					class="col-md-3 control-label">{{ 'locations.country.UPDATED' | translate }}</label>
+				<div class="col-md-9">
+					{{country.updatedAt}}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9">
+					<button type="button" class="btn btn-info" ng-click="cancel()">{{ 'common.CANCEL' | translate }}</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</section>
+

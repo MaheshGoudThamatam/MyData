@@ -1,0 +1,553 @@
+.courselist-border{
+	border:1px solid #eee;
+  margin-right: 10px;
+
+}
+
+.course-tab-align {
+	float: left;
+	margin-right: 21px;
+}
+
+ul.img-list {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+ul.img-list li {
+	display: inline-block;
+	position: relative;
+}
+
+span.text-content {
+	background: rgba(0, 0, 0, 0.5);
+	color: white !important;
+	cursor: pointer;
+	display: table;
+	height: 167px;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+span.text-content span {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+span.text-content {
+	background: rgba(0, 0, 0, 0.5);
+	color: white !important;
+	cursor: pointer;
+	display: table;
+	height: 167px;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	opacity: 0;
+}
+
+ul.img-list li:hover span.text-content {
+	opacity: 1;
+}
+
+span.text-content {
+	background: rgba(0, 0, 0, 0.5);
+	color: white !important;
+	cursor: pointer;
+	display: table;
+	height: 167px;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	opacity: 0;
+	-webkit-transition: opacity 500ms;
+	-moz-transition: opacity 500ms;
+	-o-transition: opacity 500ms;
+	transition: opacity 500ms;
+}
+
+.mb35 {
+	margin-bottom: 35px;
+    padding: 0px 0px 15px;
+}
+/*metrics page*/
+.metrics-top {
+	padding-top: 60px;
+	padding-left: 30px;
+}
+.select {
+	text-decoration: underline;
+	color: red;
+}
+
+.user-font-course {
+	font-size: 200px;
+}
+
+.enrol {
+	margin-top: 75px;
+	margin-right: 30px;
+}
+
+.tab-with {
+	width: 99% !important;
+}
+
+.thanku {
+	margin-top: 50px;
+}
+
+.mar-left {
+	margin-left: 25px;
+}
+
+.course-top1 {
+	padding-top: 50px;
+	padding-left: 20px;
+	padding-right: 60px;
+	margin-bottom: 50px;
+}
+
+.details1 {
+	border: 1px solid #A7A7A7;
+
+}
+
+.job-border {
+	border: 1px solid #A7A7A7;
+}
+
+.course-top1 {
+	padding-top: 60px;
+	padding-left: 30px;
+	padding-right: 20px;
+}
+
+.job-border {
+	border: 1px solid #A7A7A7;
+}
+
+.online-top
+{
+	padding:60px 20px 20px;
+}
+/*
+.details-course{
+    border: 1px solid #A7A7A7;
+    padding: 16px;
+}*/
+.margn
+{
+	margin-bottom:75px;
+}
+.mb65 {
+  margin-bottom: 65px;
+  margin-top: 20px;
+}
+.del{
+	border: 1px solid #A7A7A7;
+    padding-left: 0 !important;
+    padding-right: 0  !important;
+    width: 31%  !important;
+    margin-left: 14px  !important;
+}
+/*
+.details-course{
+    border: 1px solid #A7A7A7;
+    padding: 16px;
+}
+*/
+.online-top {
+	padding: 60px 20px 20px;
+}
+
+.details-course {
+	border: 1px solid #A7A7A7;
+	padding-bottom:15px;
+}
+
+.margin {
+	margin-bottom: 75px;
+}
+/*
+@media only screen and (max-width:1024px) {
+	.details-course {
+		height: 263px; 
+		width : 538px;
+		position: relative;
+		margin-top: 4px;
+		left: 10px;
+	right: 10px;
+	float:left;
+	}
+	.details1 {
+		height: 263px;
+		 width : 538px;
+	left:4px;
+	bottom:1px;
+}
+}*/
+.mar-bt{
+	margin-bottom:35px;
+}
+.marg-btm{
+	margin-bottom:10px;
+}
+.details-course1
+{
+	border: 1px solid #A7A7A7;
+	padding-bottom:262px;
+}
+.details-course2
+{
+	border: 1px solid #A7A7A7;
+	padding-bottom:50px;
+	padding-top:4px;
+}
+.request{
+	text-align: center;
+}
+
+.batch_timingswidth{
+	width: 15.0% !important;
+}
+.batch_btnwdth{
+	font-size: 1px !important;
+}
+.btnMargin{
+	 margin-bottom: 3px;
+     margin-top: -5px;
+}
+
+@media only screen and (max-width:1009px){
+	.level15{
+		padding-left:15px;
+	}
+	.showtable{
+		padding:inherit;
+	}
+}
+
+.mr150{
+	margin-right: 60px;
+}
+
+.skills-top{
+	width: 65%;
+}
+
+.pre-req{
+	margin-left: -40px!important;
+}
+
+.target{
+	width: 143%;
+}
+
+.levelerror{
+	margin-left: 298px;
+}
+
+.mar-top-bot{
+	margin: 20px 0 10px 0;
+}
+
+.mt27px{
+	margin-top: 27px;
+}
+
+.holitop{
+	margin-top: 21px;
+	margin-bottom: 17px;
+	width:52%!important;
+}
+
+.banner{
+	margin-left: 219px;
+}
+
+.courseimage{
+	margin-bottom: 10px;
+	margin-top: 22px;
+}
+.courseimage img{
+	padding: 0px!important;
+	width: 200px;
+	border: 3px solid black;
+    box-shadow: 3px 3px 3px 0 #7a7a7a;
+}
+
+.tab_content{
+	margin-right: -3%!important;
+	padding: 0px!important;
+	border:	0px!important;
+}
+.mrg-tp22{
+	margin-top: 20px;
+}
+.padding-align{
+	margin-left: -15px !important;
+	margin-right: -15px !important;
+}
+.addtime_leftmrg{
+    margin-left: 7% !important;
+}
+.brdr_top{
+	margin-top:6px !important;
+	border-bottom: 1px solid #ddd !important;
+}
+.break{
+	margin-top:10px;
+}
+.franchise{
+	margin-top: -10px;
+}
+
+.contact{
+	display: inline-block;
+}
+
+.franchisemargin{
+	margin-top: 20px;
+
+}
+
+.profiles {
+    border: 1px solid #828587;
+    margin-top: 7px;
+    width: 32%!important;
+    margin-right: 10px;
+}
+
+.mrgnleft_view{
+	margin-left: 1%;
+}
+.batch_mrgnleft{
+    margin-left: -13px !important;
+}
+.coursedetail_mrgbtm{
+	margin-bottom: 20px;
+}
+
+.border-highlighter{
+	border-top: 2px solid #C3C3C3;
+}
+
+.comment-textarea{
+   width:150px;
+   height:100px;
+}
+
+.mr0{
+	margin-top: 24px;
+}
+
+.branchImage{
+	width: 19%!important;
+	margin-top: 43px;
+}
+
+
+.mt15{
+	margin-top: 15px;
+}
+
+.w99{
+	width: 99%;
+}
+
+.cost{
+    margin-bottom: -3px;
+    margin-top: 15px;
+}
+
+.blog{
+	padding-bottom: 200px!important;
+}
+.mt-20{
+	margin-top: -20px!important;
+	margin-bottom: 0px!important;
+}
+
+.marks-from-to {
+	width: 45%;
+    display: inline;
+}
+
+.mb20{
+	margin-bottom: 20px;
+}
+.label-left{
+	margin-left:-25px;
+}
+.tableMar{
+	margin-top:27px;
+}
+
+/**
+  * @Akash Gupta
+  * Course Material Package Css
+  */
+
+.mt20{
+	margin-top: 20px;
+}
+
+.chapter-button{
+	margin-right: 15px;
+	display: inline;
+}
+
+.lessonHeader{
+	margin-left: 20px;
+}
+
+.topicHeader{
+	margin-left: 40px;
+}
+
+.subTopicHeader{
+	margin-left: 60px;
+}
+
+.indexPosition{
+	margin-top: 7px;
+    margin-right: -10px;
+    margin-left: 15px;
+}
+
+.materialAction{
+	margin-top: 7px;
+}
+
+.subTopicAction{
+	margin-left: 15px;
+	display: inline-flex;
+}
+
+.w100{
+	width: 100%;
+}
+
+.w90{
+	width: 90%;
+}
+
+.w88{
+	width: 88%;
+}
+
+.w86{
+	width: 86%;
+}
+
+.mb15{
+	margin-bottom: 15px;
+}
+
+.hoverClass {
+    background-color :#e0e0d1;
+    border-radius: 5px;
+}
+
+.topicAction{
+	margin-left: 17px;
+	display: inline-flex;
+}
+
+.chapterAction{
+	margin-left: 20px;
+	display: inline-flex;
+}
+
+.ml30{
+	margin-left: 30px;
+}
+
+.ml7{
+	margin-left: 7px;
+}
+
+/**
+  * @Akash Gupta
+  * Summernote Css
+  */
+
+.modal-dialog{
+	z-index: 9999 !important;
+}
+
+.modal-footer p a {
+	display: none !important;
+}
+
+.margintop15{
+	margin-top: 15px;
+}
+.marginleft10{
+	    margin-left: 10px;
+}
+.marginleft65{
+	margin-left: 65px;
+}
+.marginleft-30{
+	margin-left: -30px;
+}
+
+/**
+  * @<Anto Steffi><18-02-16>
+  * <Calendar Event Pop Up for Batch view page>
+  */
+.batchEvents{
+width: 350px; 
+height: 100px; 
+position: absolute; 	
+top: 100; 
+right: 300; 
+z-index: 10000;
+ margin-left: 10px; 
+ margin-top: 400px;
+ 
+}
+.batchEvents h5{
+	font-weight: bold;
+
+	}
+
+.mt7{
+	margin-top: 7px;
+}
+.mt32{
+	margin-top: 32px;
+}
+.pad-15{
+	padding: 0 15px;
+}
+.mar-top-bot{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.padding_courses{
+	padding: 100px;
+}
+
+.mar-top-left{
+	margin-bottom:5px;
+	margin-right:2px;
+}
+.margnleft{
+	margin-left:15px;
+}
+
+.batch-view{
+	margin-left: 145px;
+}
+

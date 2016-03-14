@@ -1,0 +1,118 @@
+<div class="mainwrapper col-md-10 col-md-offset-2 batch-view">
+			<div class="col-md-12">
+				<label mean-token="'viewBatchName'" class="col-md-2">Name</label>
+				<div class="col-md-3">{{selectedbatch.batch_name}}</div>
+			</div>
+			<div class="col-md-12">
+				<label mean-token="'viewStart_date'" class="col-md-2">Start_date </label>
+				<div class="col-md-3">{{selectedbatch.start_date | date : 'dd MMMMyyyy'}}</div>
+			</div>
+			<div class="col-md-12">
+				<label mean-token="'viewBranchName'" class="col-md-2">Branch Name</label>
+				<div class="col-md-3">{{selectedbatch.branch.branchName}}</div>
+			</div>
+			<div class="col-md-12">
+				<label mean-token="'viewMentorName'" class="col-md-2">Mentors</label>
+				<div data-ng-repeat="mentor in selectedbatch.mentor"><div class="col-md-3">{{mentor.name}}</div></div>
+			</div>
+		<div class=" col-md-12 ">
+				<label class="col-md-12"><b>Batch Timings</b></label>
+				<div class="col-xs-12">
+					<table class="table table-bordered"><thead>
+						<tr><th>Mon</th><th>Tue</th><th class="col-md-2">Wed</th><th>Thu</th>
+							<th>Fri</th><th>Sat</th><th>Sun</th></tr></thead>
+						<tbody class="anchorTag">
+							<tr><td><div class='brdr_top' ng-repeat='batchtime in selectedbatch.batchTimings.mon'>
+							 <div class="form-group">
+									<div class="col-md-2">{{batchtime.startHH}}</div>
+									<div class="col-md-2">{{batchtime.startMM}}</div>
+							 </div><br/>
+							 <div class="form-group">
+							     <div class="col-md-2">{{batchtime.endHH}}</div>
+							     <div class="col-md-2">{{batchtime.endMM}}</div>
+							 </div></div></td>
+							<td><div class='brdr_top' ng-repeat='batchtime in selectedbatch.batchTimings.tue'>
+							  <div class="form-group">
+									 <div class="col-md-2">{{batchtime.startHH}}</div>
+									 <div class="col-md-2">{{batchtime.startMM}}</div>
+							  </div><br/>
+							  <div class="form-group">
+									 <div class="col-md-2">{{batchtime.endHH}}</div>
+									 <div class="col-md-2">{{batchtime.endMM}}</div>
+							  </div></div></td>
+							<td><div class='brdr_top' ng-repeat='batchtime in selectedbatch.batchTimings.wed'>
+							   <div class="form-group">
+									 <div class="col-md-2">{{batchtime.startHH}}</div>
+									 <div class="col-md-2">{{batchtime.startMM}}</div>
+							  </div><br/>
+							 <div class="form-group">
+									 <div class="col-md-2">{{batchtime.endHH}}</div>
+									 <div class="col-md-2">{{batchtime.endMM}}</div>
+							  </div></div></td>
+								<td><div class='brdr_top' ng-repeat='batchtime in selectedbatch.batchTimings.thu'>
+									<div class="form-group">
+									    <div class="col-md-2">{{batchtime.startHH}}</div>
+									 <div class="col-md-2">{{batchtime.startMM}}</div>
+							         </div><br/>
+									 <div class="form-group">
+									    <div class="col-md-2">{{batchtime.endHH}}</div>
+									 <div class="col-md-2">{{batchtime.endMM}}</div>
+							  </div></div></td>
+								<td><div class='brdr_top' ng-repeat='batchtime in selectedbatch.batchTimings.fri'>
+									<div class="form-group">
+									 <div class="col-md-2">{{batchtime.startHH}}</div>
+									 <div class="col-md-2">{{batchtime.startMM}}</div>
+							    </div><br/>
+									  <div class="form-group">
+									 <div class="col-md-2">{{batchtime.endHH}}</div>
+									 <div class="col-md-2">{{batchtime.endMM}}</div>
+							  </div></div></td>
+								<td><div class='brdr_top' ng-repeat='batchtime in selectedbatch.batchTimings.sat'>
+									<div class="form-group">
+									 <div class="col-md-2">{{batchtime.startHH}}</div>
+									 <div class="col-md-2">{{batchtime.startMM}}</div>
+							  </div><br/>
+								   <div class="form-group">
+										 <div class="col-md-2">{{batchtime.endHH}}</div>
+										 <div class="col-md-2">{{batchtime.endMM}}</div>
+								  </div></div></td>
+								<td><div class='brdr_top' ng-repeat='batchtime in selectedbatch.batchTimings.sun'>
+									<div class="form-group">
+									 <div class="col-md-2">{{batchtime.startHH}}</div>
+									 <div class="col-md-2">{{batchtime.startMM}}</div>
+							  </div><br/>
+									 <div class="form-group">
+									 <div class="col-md-2">{{batchtime.endHH}}</div>
+									 <div class="col-md-2">{{batchtime.endMM}}</div>
+							  </div></div></td></tr>
+						   </tbody></table></div></div>
+       <div class="mainwrapper mar-bt col-md-12">
+		<label mean-token="'edit-name'" class="col-md-12"><b>Course Details</b></label>
+		   <div class="mainwrapper col-md-12">
+			<table class="table table-bordered">
+				<thead><tr>
+						<th class="text-center">Session Name</th>
+						<th class="text-center">Start Date</th>
+						<th class="text-center">End Date</th>
+						<th class="text-center">Start Time</th>
+						<th class="text-center">End Time</th>
+
+				</tr></thead>
+				<tbody>
+				<tr data-ng-repeat="session in selectedbatch.schedule" class="" ng-class-odd="'odd'" ng-class-even="'even'">
+                 <td>
+							<div>{{getSessionType(session).TestName}}</div>
+							<div>{{getSessionType(session).ProjectName}}</div>
+							<div>{{getSessionType(session).TopicName}}</div></td>
+				 <td>
+							<div>{{getSessionType(session).StartDate}}</div></td>
+				 <td>
+							<div>{{getSessionType(session).EndDate}}</div></td>
+				 <td>
+							<div>{{getSessionType(session).StartTime}}</div></td>
+				 <td>
+							<div>{{getSessionType(session).EndTime}}</div></td></tr>
+				</tbody>
+			    </table>
+		  </div></div>
+		</div>

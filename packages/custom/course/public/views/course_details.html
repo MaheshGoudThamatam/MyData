@@ -1,0 +1,350 @@
+<section data-ng-controller="CourseController" data-ng-init="findOne(); courseDetailBreadcrumb(); loadFranchise();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="col-md-12 row">
+		<div class="col-md-7 row">
+			<h2>{{course.name}}</h2>
+			<p>{{course.description}}</p>
+		</div>
+		<div class="btn btn-info pull-right" ng-disabled = "courseDisabled" data-ng-click = "publish();">{{Publish}}</div>
+		<div class="col-md-5 row pull-right courseimage">
+			<img class="pull-right img-responsive" src={{course.course_picture}}>
+		</div>
+	</div>
+	<div class="col-md-12 row">	
+		<ul class="nav nav-tabs tab_content">
+			<li class="active">
+				<a href="#1" data-toggle="tab">Course Details</a>
+			</li>
+			<li>
+				<a href="#2" data-toggle="tab">Course Curriculum</a>
+			</li>
+			<!-- <li>
+				<a href="#3" data-toggle="tab">Course Material</a>
+			</li> will implement later -->
+			<li>
+				<a href="#4" data-toggle="tab">Course Branch</a>
+			</li>
+			<li>
+				<a href="#5" data-toggle="tab">Payement Scheme</a>
+			</li>
+			<li>
+				<a href="#6" data-toggle="tab">Batches</a>
+			</li>
+		</ul>
+		<div class="tab-content tab_content">
+			<div class="tab-pane active" id="1"></br>
+				<div class="col-md-12 job-blog1 mb20">
+					<div class="col-md-5 row">
+						<h5 class="details-list"><b>Course Type :</b>{{course.course_type}}</h5>
+						<h5 class="details-list"><b>Qualification Required :</b>{{course.qualification}}</h5>
+						<h5 class="details-list"><b>Start Date :</b>{{course.course_startDate | date:'dd-MMM-yyyy'}}</h5>
+						<h5 class="details-list"><b>Online Mentor Support :</b>{{course.online_mentor_support}}</h5>
+					</div>
+					<div class="col-md-4">
+						<h5 class="details-list"><b>Project Based Learning :</b>{{course.project_based_learning}}</h5>
+						<h5 class="details-list"><b>Delivery Method :</b>{{course.delivery_method}}</h5>
+						<h5 class="details-list"><b>Counselling :</b>{{course.counselling}}</h5>
+						<h5 class="details-list"><b>Cost Type :</b>{{course.costType}}</h5>
+					</div>
+					<div class="col-md-2">
+						<h5 class="details-list"><b>Price: </b>$45</h5>
+						<h5 class="details-list"><b>Course :</b>90 Days</h5>
+						<h5 class="details-list"><b>Effort :</b>2 hours/day</h5>
+						<h5 class="details-list"><b>Online Class :</b>NO</h5>
+					</div>
+					<h4 class="col-md-12 row"><b>Skillsets</b></h4>
+					<div class="col-md-12 row franchise" data-ng-repeat="skillset in course.courseSkill">
+						<h5 class="col-md-4 row"><b>Skillset :</b>{{skillset.skillName.name.toUpperCase()}}</h5>
+						<h5 class="col-md-2"><b>Pre-requisite :</b>{{skillset.pre_requisite}}</h5>
+						<h5 class="col-md-2"><b>Target-Level :</b>{{skillset.target_value}}</h5>
+					</div>
+				</div>
+				<div class="col-md-12 row franchisemargin" data-ng-if="course.course_type == 'Franchise Course' || course.course_type == 'Third Party Course'">
+					<div class="col-md-12 row">
+						<h3 data-ng-if="course.course_type == 'Franchise Course'" class="mt-20">Franchise Details</h3>
+						<h3 data-ng-if="course.course_type == 'Third Party Course'" class="mt-20">Third Party Details</h3>
+						<div class="col-md-5 row" data-ng-if="course.course_type == 'Franchise Course'">
+							<h5 ><b>Franchise Name :</b>{{course.companyName.name}}</h5>
+							<h5 ><b>Franchise Website :</b>{{course.companyName.url}}</h5>
+						</div>
+						<div class="col-md-5 row" data-ng-if="course.course_type == 'Third Party Course'">
+							<h5><b>Third Party Name :</b>{{course.companyName.companyName}}</h5>
+							<h5><b>Website :</b>{{course.companyName.url}}</h5>
+						</div>
+						<div class="col-md-6 row">
+							<h5><b>Payement Url :</b>{{course.payment}}</h5>
+							<h5><b>Email :</b>{{course.companyName.email}}</h5>
+						</div>
+					</div>
+					<div class="col-md-12 row">
+						<h3>Contact Details</h3>
+						<div class="col-md-5 row contact" data-ng-repeat = "contact in course.companyName.contactDetails">
+							<div class="asd">
+								<h5><b>Contact Person :</b>{{contact.personName}}</h5>
+								<h5><b>Designation :</b>{{contact.designation}}</h5>
+								<h5><b>Email-Id :</b>{{contact.emailId}}</h5>
+								<h5><b>Primary Contact Number :</b>{{contact.phoneNumber}}</h5>
+								<h5><b>Secondary Contact Number :</b>{{contact.mobileNumber}}</h5>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+				
+			<div class="tab-pane" id="2" data-ng-init ="curriculum(course._id);"></br>
+				<div ng-if="!curriculums[0]"><h3 class="col-md-offset-3">Curriculum is not defined for this course.</h3></div>
+				<div class="col-md-12 row" ng-if="curriculums">
+					<div data-ng-repeat="curriculum in curriculums">
+						<h4 ng-if = "curriculum.topic.name">Topic: {{curriculum.topic.name}}</h4>
+						<h4 ng-if = "curriculum.test.name">Test: {{curriculum.test.name}}</h4>
+						<h4 ng-if = "curriculum.project.projectName">Project: {{curriculum.project.projectName}}</h4>
+						<table class="table table-bordered table-condensed"  ng-if = "curriculum.topic">
+							<thead>
+								<tr>
+									<th>SubTopic</th>
+									<th>Description</th>
+									<th>Assignment(hrs)</th>
+									<th>Lab(hrs)</th>
+									<th>Session(hrs)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="subtopic in subTopics" ng-if ="curriculum.topic._id == subtopic.parent">
+									<td>{{subtopic.name}}</td>
+									<td>{{subtopic.description | limitTo : 20}}...</td>
+									<td>{{subtopic.AssignmentHrs}}</td>
+									<td>{{subtopic.labHrs}}</td>
+									<td>{{subtopic.sessionHrs}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table table-bordered table-condensed"  ng-if = "curriculum.test">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Duration</th>
+									<th>No of Questions</th>
+									<th>Passing Marks</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{{curriculum.test.name}}</td>
+									<td>{{curriculum.test.description | limitTo : 20}}...</td>
+									<td>{{curriculum.test.duration}}</td>
+									<td>{{curriculum.test.numberOfQuestions}}</td>
+									<td>{{curriculum.test.passMark}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table table-bordered table-condensed"  ng-if = "curriculum.project">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Total Marks</th>
+									<th>Minimum Marks</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{{curriculum.project.projectName}}</td>
+									<td>{{curriculum.project.description | limitTo : 20}}...</td>
+									<td>{{curriculum.project.totalMarks}}</td>
+									<td>{{curriculum.project.minimumMarks}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<!-- <div class="tab-pane" id="3"></br>
+				<div class="col-md-12">
+					<div class="details-course1">
+						<h4 class="text-center">Apply For Counselling</h4>
+						<div class="form-group">
+							<div class="col-md-8">
+								<label for="Add Branch">Add Branch:</label>
+								<select class="form-control" id="add branch">
+									<option>Jayanagar</option>
+									<option>Whitefield</option>
+									<option>Kormangala</option>
+								</select>
+							</div>
+						</div>
+						<div class=" alert-success animated fadeIn text-center" ng-show="counsellingmessage">{{counsellingmessage}}</div>
+						<form name="counsellingForm" class="form-horizontal col-md-12" data-ng-submit="" novalidate>
+							<div class="form-group">
+								<div class="col-md-8">
+									<label>Select Available Date:</label>
+									<input name="Select Date" type="date" class="form-control" placeholder="Select Date">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-8">
+									<label for="sel1">Select Available Slot:</label>
+									<select	class="form-control" id="sel1">
+										<option>10am-11am</option>
+										<option>12pm-1pm</option>
+										<option>3pm-4pm</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-md-offset-3 col-md-8">
+									<button type="submit" class="btn btn-info" data-ng-click="Counselling()">Apply</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div> will implement when course material will be completed -->
+
+			<div class="tab-pane" id="4" data-ng-init = "branch();"></br>
+				<div ng-show = "!courseBranch[0]"><h3 class="col-md-offset-3">Course is not allocated to any branch.</h3></div>
+				<div data-ng-repeat = "branch in courseBranch">
+					<div class="job-blog1 blog">
+						<div class="col-md-5 row">
+							<h4 class="mr0"><b>{{branch.branchName}}</b></h4>
+							<h5><b>Branch Code :</b>{{branch.branchCode}}</h5>
+							<h5><b>Location :</b>{{branch.city.cityName}}</h5>
+							<h5><b>Contact Number :</b>{{branch.PhoneNumber.pre}}-{{branch.PhoneNumber.number}}</h5>
+							<h5><b>Email :</b>{{branch.email}}</h5>
+						</div>
+						<div class="col-md-5">
+							<h3>Address</h3>
+							<h5>{{branch.address.line1}}</h5>
+							<h5>{{branch.address.line2}}</h5>
+							<h5>{{branch.address.city}}, {{branch.address.state}}</h5>
+							<h5>{{branch.address.country}}, {{branch.address.pincode}}</h5>
+						</div>
+						<div class="col-md-2 pull-right branchImage">
+							<img class="pull-right img-responsive" src={{branch.picture}}>
+						</div>
+					</div>
+					<div class="col-md-9 row">
+						<h5><b>Description :</b>{{branch.description}}</h5></br></br>
+					</div>
+					<hr class="w99">
+				</div>
+			</div>
+
+			<div class="tab-pane" id="5" data-ng-init = "loadFilter();"></br>
+				<div class="col-md-12 msg-header">
+					<select ng-show="isBranchDropDown" ng-model="branch._id" class="col-md-2" ng-change="branchFilter(branch._id,course._id)">
+						<option value="" disabled selected>Branch</option>
+						<option ng-repeat="branch in branches" value="{{branch._id}}">{{branch.branchName}}</option>
+					</select>
+					<select ng-show="isCountryDropDown" ng-model="country._id" class="col-md-2 mb20" ng-change="countryFilter(country._id,course._id)">
+						<option value="" disabled selected>Country</option>
+						<option ng-repeat="country in countries" value="{{country._id}}">{{country.countryName}}</option>
+					</select>
+				</div>
+				<div ng-if = "branch._id && !payments[0]"><h3 class="col-md-offset-3">Course is not allocated to this Branch.</h3></div>
+				<div ng-if = "country._id && !payments[0]"><h3 class="col-md-offset-3">Course is not allocated to this Country.</h3></div>
+
+				<table class="table table-bordered table-responsive table-condensed" ng-if = "payments[0]">
+					<thead>
+						<tr>
+							<th class="text-center">Payment Type</th>
+							<th class="text-center">Installment Amount</th>
+							<th class="text-center">DueDate in(days)</th>
+							<th class="text-center">Fine</th>
+							<th colspan="3" class="text-center">Discount</th>
+							<th class="text-center">Loan Amount</th>
+						</tr>
+						<tr>
+							<th colspan="1"></th>
+							<th colspan="1"></th>
+							<th colspan="1"></th>
+							<th colspan="1"></th>
+							<th colspan="1" class="text-center">From(Marks)</th>
+							<th colspan="1" class="text-center">To(Marks)</th>
+							<th colspan="1" class="text-center">Discount(%)</th>
+							<th colspan="1"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr data-ng-repeat="installment in payments[0].installments" class="" ng-class-odd="'odd'" ng-class-even="'even'">
+							<td>{{installment.paymentFor}}</td>
+							<td>{{installment.installmentAmount}}</td>
+							<td class="text-center">{{installment.dueDate || '-'}}</td>
+							<td class="text-center">{{installment.fineAmount ||'-'}}</td>
+							<td class="text-center"><div data-ng-repeat = "discount in installment.discounts">{{discount.marks_form || '-'}}</div></td>
+							<td class="text-center"><div data-ng-repeat = "discount in installment.discounts">{{discount.marks_to ||'-'}}</div></td>
+							<td class="text-center"><div data-ng-repeat = "discount in installment.discounts">{{discount.rate||'-'}}</div></td>
+							<td class="text-center">{{installment.loanId.loan_amount||'-'}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="tab-pane" id="6"></br>
+				<div class="col-md-12 msg-header">
+					<select ng-show="isBranchDropDown" ng-model="branch._id" class="col-md-2 mb20" ng-change="branchFilter(branch._id,course._id)">
+						<option value="" disabled selected>Branch</option>
+						<option ng-repeat="branch in branches" value="{{branch._id}}">{{branch.branchName}}</option>
+					</select>
+				</div>
+				<div ng-if = "!courseBatchList[0] && branch._id">
+					<h3 class="col-md-offset-3">Batch is not allocated to this Course in this Branch.</h3>
+				</div>
+				<div data-ng-repeat = "batch in courseBatchList">
+					<div class="col-md-12 mb20">
+						<h3 class="col-md-6 margintop10"><b>{{batch.batch_name}}</b></h3>
+						<h3 class="col-md-6 text-right margintop10"><b>{{batch.start_date|date:'dd-MMM-yyyy'}}</b></h3>
+						<table class="table table-bordered table-responsive table-condensed col-md-12 row">
+							<thead>
+								<tr>
+									<th colspan="2" class="text-center">Monday</th>
+									<th colspan="2" class="text-center">Tuesday</th>
+									<th colspan="2" class="text-center">Wednusday</th>
+									<th colspan="2" class="text-center">Thursday</th>
+									<th colspan="2" class="text-center">Friday</th>
+									<th colspan="2" class="text-center">Saturday</th>
+									<th colspan="2" class="text-center">Sunday</th>
+								</tr>
+								<tr>
+									<th colspan="1" class="text-center">Start</th>
+									<th colspan="1" class="text-center">End</th>
+									<th colspan="1" class="text-center">Start</th>
+									<th colspan="1" class="text-center">End</th>
+									<th colspan="1" class="text-center">Start</th>
+									<th colspan="1" class="text-center">End</th>
+									<th colspan="1" class="text-center">Start</th>
+									<th colspan="1" class="text-center">End</th>
+									<th colspan="1" class="text-center">Start</th>
+									<th colspan="1" class="text-center">End</th>
+									<th colspan="1" class="text-center">Start</th>
+									<th colspan="1" class="text-center">End</th>
+									<th colspan="1" class="text-center">Start</th>
+									<th colspan="1" class="text-center">End</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-class-odd="'odd'" ng-class-even="'even'">
+									<td class="text-center"><div data-ng-repeat = "mon in batch.batchTimings.mon">{{(mon.start_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "mon in batch.batchTimings.mon">{{(mon.end_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "tue in batch.batchTimings.tue">{{(tue.start_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "tue in batch.batchTimings.tue">{{(tue.end_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "wed in batch.batchTimings.wed">{{(wed.start_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "wed in batch.batchTimings.wed">{{(wed.end_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "thu in batch.batchTimings.thu">{{(thu.start_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "thu in batch.batchTimings.thu">{{(thu.end_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "fri in batch.batchTimings.fri">{{(fri.start_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "fri in batch.batchTimings.fri">{{(fri.end_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "sat in batch.batchTimings.sat">{{(sat.start_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "sat in batch.batchTimings.sat">{{(sat.end_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "sun in batch.batchTimings.sun">{{(sun.start_time| limitTo:5)||'-'}}</div></td>
+									<td class="text-center"><div data-ng-repeat = "sun in batch.batchTimings.sun">{{(sun.end_time| limitTo:5)||'-'}}</div></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

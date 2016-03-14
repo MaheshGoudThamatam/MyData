@@ -1,0 +1,128 @@
+<section data-ng-controller="MentorProjectController" data-ng-init="findOne(); loadSkills(); editBreadcrumb();">
+<div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper">
+        <h3>Update Project</h3>
+		<div ng-show="error" class="col-md-8 col-md-offset-3 red badgebtm20" ng-repeat="err in error.data">{{err.msg}}</div>
+		<form name="taskForm" novalidate>
+			<div class="form-group"	ng-class="{ 'has-error' : submitted && taskForm.taskName.$invalid }">
+				<label mean-token="'edit-taskName'" class="col-md-2 err-msg-taskName ">{{ 'profile.project.PROJECTNAME' | translate }}</label>
+				<div class="col-md-10 badgebtm20">
+					<div class="col-md-8">
+						<input name="taskName" type="text" data-ng-model="mentorproject.taskName " id="tasktName" placeholder="{{ 'profile.project.PROJECTNAME' | translate }}" class="form-control  err-msg" required>
+						<div ng-show="submitted && taskForm.taskName.$invalid">
+							<span class="err-msg red" ng-show="taskForm.taskName.$error.required">{{ 'profile.project.error_messages.PROJECTNAME' | translate }} </span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{ 'has-error' : submitted && taskForm.description.$invalid }">
+				<label mean-token="'edit-description'" class="col-md-2  err-msg-description">{{ 'profile.project.DESCRIPTION' | translate }}</label>
+				<div class="col-md-10 badgebtm20">
+					<div class="col-md-8">
+						<textarea name="description" data-ng-model="mentorproject.description" id="description" cols="30" rows="5" placeholder="{{ 'profile.project.DESCRIPTION' | translate }}" class="form-control err-msg " required></textarea>
+						<div ng-show="submitted && taskForm.description.$invalid">
+							<span class="err-msg red" ng-show="taskForm.description.$error.required">{{ 'profile.project.error_messages.DESCRIPTION' | translate }} </span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{ 'has-error' : submitted && taskForm.skills.$invalid }">
+				<label mean-token="'edit-skills'" class="col-md-2 err-msg-skills">{{ 'mentor.project.SKILL_REQUIRED' | translate }}</label>
+				<div class="col-md-10 badgebtm20"> 
+					<div class="col-md-8 input-skills">
+						<tags-input class="col-md-9" data-ng-model="mentorproject.skills" id="skills" name="skills" class="form-control err-msg" replace-spaces-with-dashes="false" display-property="name" placeholder="{{ 'profile.project.SKILL' | translate }}" required>
+							<auto-complete source="loadTags($query)" min-length="1" load-on-focus="true" required></auto-complete>
+						</tags-input>
+						<div ng-show="submitted && taskForm.skills.$invalid" class="col-md-12">
+							<span class="err-msg red" ng-show="taskForm.skills.$error.required">{{ 'profile.project.error_messages.SKILL' | translate }}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{ 'has-error' : submitted && taskForm.duration.$invalid }">
+				<label mean-token="'edit-duration'" class="col-md-2 err-msg-duration">{{ 'onlinetest.DURATION' | translate }}</label>
+				<div class="col-md-10 badgebtm20">
+					<div class="col-md-8">
+						<input name="duration" type="number" data-ng-model="mentorproject.duration" id="duration" placeholder="{{ 'onlinetest.DURATION' | translate }}" class="form-control err-msg" min="0" required>
+						<div class="col-md-12 row">
+						    <label class="radio-inline"><input type="radio" name="Week" data-ng-model="mentorproject.durationType" value="Week">{{ 'mentor.project.WEEK' | translate }}</label>
+						    <label class="radio-inline"><input type="radio" name="Month" data-ng-model="mentorproject.durationType" value="Month">{{ 'mentor.project.MONTH' | translate }}</label>
+						    <label class="radio-inline"><input type="radio" name="Year" data-ng-model="mentorproject.durationType" value="Year">{{ 'mentor.project.YEAR' | translate }}</label>
+						</div>
+						<div ng-show="submitted && taskForm.duration.$invalid">
+							<span class="err-msg red" ng-show="taskForm.duration.$error.required">
+								Please enter the Duration</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{ 'has-error' : submitted && taskForm.cost.$invalid }">
+				<label mean-token="'edit-cost'" class="col-md-2 err-msg-cost">Cost (INR)</label>
+				<div class="col-md-10 badgebtm20">
+					<div class="col-md-8">
+						<input name="cost" type="number" min="0" data-ng-model="mentorproject.cost" id="cost" placeholder="Cost" class="form-control err-msg " required>
+						<div ng-show="submitted && taskForm.cost.$invalid">
+							<span class="err-msg red" ng-show="taskForm.cost.$error.required">
+								Please enter the Cost</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group" ng-class="{ 'has-error' : submitted && taskForm.position.$invalid }">
+				<label mean-token="'edit-position'" class="col-md-2 err-msg-position">Position</label>
+				<div class="col-md-10 badgebtm20">
+					<div class="col-md-8">
+						<input name="position" type="number" min="0" data-ng-model="mentorproject.position" id="position" placeholder="Vacancy" class="form-control err-msg " required>
+						<div ng-show="submitted && taskForm.position.$invalid">
+							<span class="err-msg red" ng-show="taskForm.position.$error.required">
+								Please enter the Position</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div>
+					<label mean-token="'edit-availability'" class="col-md-2">Availability</label>
+					<div class="col-md-3 badgebtm20">
+						<div class="col-md-12">
+						    <label class="radio-inline"><input type="radio" name="availability" data-ng-model="mentorproject.availability" value="Full Time">Full Time</label>
+						    <label class="radio-inline"><input type="radio" name="availability" data-ng-model="mentorproject.availability" value="Part Time">Part Time</label>
+						</div>
+					</div>
+				</div>
+				<div>
+					<label mean-token="'edit-type'" class="col-md-1">Type</label>
+					<div class="col-md-3 badgebtm20">
+						<div class="col-md-12">
+						    <label class="radio-inline"><input type="radio" name="type" data-ng-model="mentorproject.type" value="Online">Online</label>
+						    <label class="radio-inline"><input type="radio" name="type" data-ng-model="mentorproject.type" value="Offline">Offline</label>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+		<div class="form-group">
+			<div class="col-md-12">
+				<label mean-token="'create-taskImage'" class="col-md-2 pull-left fetureAlign err-msg-url">Picture</label>
+				<div class="col-md-2 projectimage row">
+					<div class="btn btn-info badgebtm20 uploadbtn" ngf-select ngf-change="onFileSelect($files)" accept="image/png, image/jpeg">Upload</div>
+					<span data-ng-if="uploadInProgress">Upload progress:{{uploadProgress }}</span>
+				</div>
+				<div class="col-md-1">
+					<img src="{{mentorproject.taskImage}}" data-ng-if="mentorproject.taskImage" width="50px" height="50px" />
+				</div>
+				<div class="col-md-6">
+					<div data-ng-include="'/system/views/alert.html'"></div>
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<div class="col-md-8 projectsubbutton">
+					<button mean-token="'create-submit'" type="button" class="btn btn-info" ng-click="update(taskForm.$valid)">Submit</button>
+					<button type="button" class="btn btn-info cancelprojectbutton" ng-click="cancelTask()">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

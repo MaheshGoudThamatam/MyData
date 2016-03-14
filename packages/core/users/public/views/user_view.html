@@ -1,0 +1,75 @@
+<section data-ng-controller="UserController" data-ng-init="findOne(); showUser();">
+<div ng-include="'/system/views/breadcrum.html'"></div>
+<div class="mainwrapper social-group-header">
+		<div>
+			<h3 class="pull-left">User   {{user.name}}</h3>
+			<div class="pull-right">
+				<a class="btn btn-info" href="/admin/user/{{user._id}}/edit" ng-if="updatePermission">Edit User</a>
+                <a  href="" class="btn btn-info" ng-click = "modalDeletePopup(user)" ng-if="updatePermission">Delete User</a>			</div>
+		</div>
+	</div>
+   	<div class="mainwrapper">
+		<!-- User Form (edit) -->
+		<form name="userForm" class="form-horizontal leftAlign formAlign">
+			<!-- User Name (input) -->
+			<div class="form-group">
+				<label mean-token="'edit-name'" class="col-md-2 ">Name</label>
+				<div class="col-md-10 viewRole">
+					{{user.name}}
+				</div>
+			</div>
+
+			<!-- User Email -->
+			<div class="form-group">
+				<label mean-token="'edit-email'" class="col-md-2 ">Email</label>
+				<div class="col-md-10 viewRole">
+					{{user.email}}
+				</div>
+			</div>
+
+			<!-- Username -->
+			<div class="form-group">
+				<label mean-token="'edit-username'" class="col-md-2 ">Username</label>
+				<div class="col-md-10 viewRole">
+					{{user.username}}
+					</div>		
+			</div>
+			<div class="form-group countryAlign">
+				<label mean-token="'edit-username'" class="col-md-2">Created At</label>
+				<div class="col-md-10 viewRole">
+					{{user.confirmedAt | date:'medium'}}
+				</div>
+			</div>
+			</form>
+			</div>
+			<div class="mainwrapper row">
+			<div class="form-group">
+				<label mean-token="'edit-role'" class="col-md-2">Role</label>
+			       <div class="col-md-10 viewRole">			 
+			            <form method="post" class="form-horizontal">		            			                 
+			                        <div data-ng-repeat="role in user.role">
+			                            {{role.name}}
+			                        </div>			                  		              
+			            </form>	
+			         </div>		        
+    			</div>
+    			</div>
+<div class="mainwrapper row">
+    			<div class="form-group">
+    			<label mean-token="'edit-country'" class="col-md-2 pull-left">Country</label>    		
+				        <div class="col-md-10 viewRole" >
+				            <form method="post" class="form-horizontal">				               
+				                        <div data-ng-repeat="country in user.country">
+				                            {{country.countryName}}</div>
+				                
+				            </form>	
+				            </div>			      
+				    </div>
+				</div>
+			
+		<div class="form-group">
+				<div class="col-md-offset-2 col-md-10">
+					<button type="button" class="btn btn-info" ng-click="cancelUsers()">Back</button>
+				</div>
+			</div>
+</section>

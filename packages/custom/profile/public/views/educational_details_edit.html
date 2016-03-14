@@ -1,0 +1,89 @@
+<section data-ng-controller="ProfileController" data-ng-init="findOneEducationalDetail()">
+<div class="row">
+<div class="col-xs-12">
+  				<ol class="breadcrumb">
+		            <li><i class="fa fa-home link-pointer" data-ng-click="redirectdashboard()"></i></li>
+		            <li><a href="#" data-ng-click="redirectEdit()">EditProfile</a></li>
+		            <li>Education Details Edit</li>
+		            <li></li>
+        		</ol>
+ 			</div>
+ <div class="title">
+		<label class="size tabalign">Education Details Edit</label></div></br>			
+	<div class="mainwrapper">
+		<form name="educationalDetailEditForm" class="form-horizontal col-md-12" novalidate>
+			<div class="form-group" ng-class="{ 'has-error' : submitted && educationalDetailEditForm.name.$invalid }">
+			<label mean-token="'edit-name'"class="col-md-2 pull-left err-msg-projectName ">{{ 'profile.educational_details.LABLE_NAME' | translate }}</label>
+			<div class="col-md-6">
+				<input name="name" type="text" data-ng-model="educationalDetail.name " id="Name"
+						placeholder="{{ 'profile.educational_details.NAME' | translate }}" class="form-control err-msg " required>
+			    <div ng-show="submitted && educationalDetailEditForm.name.$invalid">
+				<span class="err-msg errorRed" ng-show="educationalDetailEditForm.name.$error.required"> {{ 'profile.educational_details.error_messages.LABLE_NAME' | translate }}</span>
+			    </div>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : submitted && educationalDetailEditForm.board.$invalid }">
+			<label mean-token="'edit-board'"class="col-md-2 pull-left err-msg-projectName ">{{ 'profile.educational_details.LABLE_BOARD' | translate }}</label>
+			<div class="col-md-6">
+				<input name="board" type="text" data-ng-model="educationalDetail.board " id="board"
+						placeholder="{{ 'profile.educational_details.BOARD' | translate }}" class="form-control err-msg " required>
+			    <div ng-show="submitted && educationalDetailEditForm.board.$invalid">
+				<span class="err-msg errorRed" ng-show="educationalDetailEditForm.board.$error.required"> {{ 'profile.educational_details.error_messages.LABLE_BOARD' | translate }}</span>
+			    </div>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : submitted && educationalDetailEditForm.university.$invalid }">
+			<label mean-token="'edit-university'"class="col-md-2 pull-left err-msg-projectName ">{{ 'profile.educational_details.UNVERSITY' | translate }}</label>
+			<div class="col-md-6">
+				<input name="university" type="text" data-ng-model="educationalDetail.university " id="University"
+						placeholder="{{ 'profile.educational_details.UNVERSITY' | translate }}" class="form-control err-msg " required>
+			    <div ng-show="submitted && educationalDetailEditForm.university.$invalid">
+				<span class="err-msg errorRed" ng-show="educationalDetailEditForm.university.$error.required">{{ 'profile.educational_details.error_messages.UNVERSITY' | translate }}</span>
+			    </div>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : submitted && educationalDetailEditForm.percentage.$invalid }">
+			<label mean-token="'edit-percentage'"class="col-md-2 pull-left err-msg-projectName ">{{ 'profile.educational_details.PERCENTAGE' | translate }}</label>
+			<div class="col-md-6">
+				<input name="percentage" type="number" data-ng-model="educationalDetail.percentage " id="Percentage"
+						placeholder="{{ 'profile.educational_details.PERCENTAGE' | translate }}" class="form-control err-msg " required>
+			    <div ng-show="submitted && educationalDetailEditForm.percentage.$invalid">
+				<span class="err-msg errorRed" ng-show="educationalDetailEditForm.percentage.$error.required"> {{ 'profile.educational_details.error_messages.PERCENTAGE' | translate }} </span>
+			    </div>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : submitted && educationalDetailEditForm.yearOfPassing.$invalid }">
+			<label mean-token="'edit-yearOfPassing'"class="col-md-2 pull-left err-msg-projectName ">{{ 'profile.educational_details.YEAROFPASSING' | translate }}</label>
+			<div class="col-md-6">
+				<input name="yearOfPassing" type="text" data-ng-model="educationalDetail.yearOfPassing " id="yearOfPassing"
+						placeholder="{{ 'profile.educational_details.YEAROFPASSING' | translate }}" class="form-control err-msg " required>
+			    <div ng-show="submitted && educationalDetailEditForm.yearOfPassing.$invalid">
+				<span class="err-msg errorRed" ng-show="educationalDetailEditForm.yearOfPassing.$error.required">  {{ 'profile.educational_details.error_messages.YEAROFPASSING' | translate }} </span>
+			    </div>
+			</div>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error' : submitted && educationalDetailEditForm.subjects.$invalid }">
+			<label mean-token="'edit-subjects'"class="col-md-2 pull-left err-msg-projectName ">{{ 'profile.educational_details.SUBJECTS' | translate }}</label>
+			<div class="col-md-6">
+				<input name="subjects " type="text" data-ng-model="educationalDetail.subjects " id="Subjects"
+						placeholder="{{ 'profile.educational_details.SUBJECTS' | translate }}" class="form-control err-msg " required>
+			    <div ng-show="submitted && educationalDetailEditForm.subjects.$invalid">
+				<span class="err-msg errorRed" ng-show="educationalDetailEditForm.subjects.$error.required"> {{ 'profile.educational_details.error_messages.SUBJECTS' | translate }} </span>
+			    </div>
+			</div>
+		</div>
+		<div class="form-group">
+				<div class="col-md-offset-2 col-md-9">
+					<button mean-token="'create-submit'" type="button"
+						class="btn btn-info" ng-click="updateEducationalDetail(educationalDetailEditForm.$valid)">Submit</button>
+					<button type="button" class="btn btn-info"
+						ng-click="canceleducationalDetail()">Cancel</button>
+				</div>
+			</div>
+		</form>
+		</div>
+		</div>
+
+</section>
+
+

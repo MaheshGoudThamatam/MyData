@@ -1,0 +1,36 @@
+<!--  Location Allocation for User -->
+<section data-ng-init="listCountry()">
+    <div class="row">
+        <div class="col-md-12 filteralign row">
+            <!-- <div class="col-md-12 row"> -->
+            <div class="col-md-3">
+                <select ng-model="countryId" class="col-md-12 branchwidth" ng-change="listZone(countryId)">
+                    <option value="">{{ 'locations.branch.COUNTRY' | translate }}</option>
+                    <option ng-repeat="country in countries" value="{{country._id}}">{{country.countryName}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select ng-model="zoneId" class="col-md-12 branchwidth" ng-disabled="!countries"
+                        ng-change="listCity(zoneId)">
+                    <option value="">{{ 'locations.zone.ZONE' | translate }}</option>
+                    <option ng-repeat="zone in zones" value="{{zone._id}}">{{zone.zoneName}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select ng-model="cityId" class="col-md-12 branchwidth" ng-disabled="!countries && !zones"
+                        ng-change="listBranches(cityId)">
+                    <option value="">{{ 'locations.branch.CITY' | translate }}</option>
+                    <option ng-repeat="city in cities" value="{{city._id}}">{{city.cityName}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select ng-model="branchId" class="col-md-12 branchwidth"
+                        ng-disabled="!countries && !zones && !cities" ng-change="branchFilter(branchId)">
+                    <option value="">{{ 'course.city.BRANCH' | translate }}</option>
+                    <option ng-repeat="branch in branches" value="{{branch._id}}">{{branch.branchName}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</section>
+  

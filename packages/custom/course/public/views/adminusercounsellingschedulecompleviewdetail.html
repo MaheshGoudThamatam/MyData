@@ -1,0 +1,92 @@
+<section  data-ng-controller = 'AdminCounsellingScheduleListController' data-ng-init="list()">
+    <div ng-include="'/system/views/breadcrum.html'">
+    </div>
+    <div data-ng-include="'/system/views/alert.html'">
+    </div>
+    <div class="mainwrapper social-group-header">
+        <h3 class="pull-left">
+            Counselling Schedule
+        </h3>
+        <button class="btn btn-info pull-right" ng-if="writePermission" data-ng-click="createNewSchedule()">
+            Create Schedule
+        </button>
+    </div>
+    <table class="table table-bordered"  >
+        <thead>
+            <tr>
+                <th class="text-center">
+                    Branch
+                </th>
+                <th class="text-center">
+                    Mentor Assigned
+                </th>
+                <th class="text-center">
+                    Counselling Date
+                </th>
+                <th class="text-center">
+                    Slot
+                </th>
+                <th class="text-center">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody class="anchorTag">
+            <tr data-ng-repeat="scheduledetails in collection" class="" ng-class-odd="'odd'" ng-class-even="'even'" data-ng-show="collection || collection.length">
+                <td>
+                    {{scheduledetails.branch.branchName}}
+                </td>
+                <td>
+                    {{scheduledetails.mentorAssigned.name}}
+                </td>
+                <td class="text-right">
+                    {{scheduledetails.callDate | date: 'dd-MMM-yyyy'}}
+                </td>
+                <td class="text-right">
+                    {{scheduledetails.start_hr}}:{{scheduledetails.start_min}} to {{scheduledetails.end_hr}}:{{scheduledetails.end_min}}
+                    <td width="10%" align="center">
+                        <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                            <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                                <i class="fa fa-arrow-circle-right">
+                                </i>
+                                <span>
+                                    Actions
+                                </span>
+                            </a>
+                            <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                                <li ng-if="updatePermission">
+                                    <a class="menu-toggler" ng-click="admineditcounsellingschedule(COURSE.URL_PATH.ADMIN_USERCOUNSELLING_SCHEDULE_CREATE_COMPLETE_LIST_EDIT,scheduledetails);">
+                                        <i class="fa fa-pencil-square-o">
+                                        </i>
+                                        <span>
+                                            Edit Info
+                                        </span>
+                                    </a>
+                                </li>
+                                <li ng-if="updatePermission">
+                                    <a class="menu-toggler" ng-click="openDeletePopupModel(scheduledetails);">
+                                        <i class="fa fa-minus-square-o">
+                                        </i>
+                                        <span>
+                                            Delete
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr data-ng-hide="collection.length >0">
+                    <td colspan="4">
+                        No schedule found...
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div data-ng-show="collection.length >0" class="paginate usr">
+            <div ng-include="'system/views/paginationFilter.html'">
+            </div>
+            <br/>
+        </div>
+    </section>
+

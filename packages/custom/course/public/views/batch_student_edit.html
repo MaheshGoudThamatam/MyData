@@ -1,0 +1,59 @@
+<section data-ng-controller="StudentCourseController" data-ng-init="loadStudentCourse(); batchBreadCrumEdit();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper social-group-header">
+		<h3 class="pull-left ">Student Batch</h3>
+	</div>
+	<div class="mainwrapper">
+		<form name="studentBatchForm"
+			class="form-horizontal leftAlign formAlign" novalidate>
+			<div class="form-group">
+				<label mean-token="'show-Name'" class="col-md-2">{{ 'common.NAME' | translate }} :</label>
+				<div class="col-md-8">
+					<div>{{studentCourse.user.name}}</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'show-course'" class="col-md-2">Course :</label>
+				<div class="col-md-8">
+					{{studentCourse.course.name}}
+				</div>
+			</div>
+			
+		  <div class="form-group">
+			<label mean-token="'show-branch'" class="col-md-2">{{ 'course.branch.BRANCH' | translate }} :</label>
+				<div class="col-md-2" data-ng-repeat="branch in branches">
+				    <div >
+						<input type="radio" name="branch" data-ng-click = "selectBranch(branch._id)"
+						 data-ng-checked="branch.isBranchSelected"> <span >{{branch.branchName}}</span>
+			        </div>
+			  </div>
+		</div>
+
+		<div class="form-group" ng-class="{ 'has-error' : submitted && studentBatchForm.batch.$invalid }">
+			<label mean-token="'show-batch'" class="col-md-2">{{ 'course.BATCH' | translate }} :</label>
+				<div class="col-md-2" data-ng-repeat="batch in batches">
+					 <div data-ng-if="studentCourse.batch._id == batch._id ">
+						<input type="radio" name="batch"  data-ng-click="selectBatch(batch._id)" data-ng-checked="true" class="err-msg" required>
+						<span >{{batch.batch_name}}</span>
+					  </div>
+					  <div data-ng-if="studentCourse.batch._id != batch._id">
+						<input type="radio" name="batch"  data-ng-click="selectBatch(batch._id)" class="err-msg" required>
+						<span>{{batch.batch_name}}</span>
+					</div>
+				</div>
+				 <div ng-show="errorCheck">
+					  <span class="err-msg errorText red">{{ 'course.error_messages.BATCH' | translate }} </span>
+				  </div>
+		</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+				   <button type="button" class="btn btn-info"
+						ng-click="updateStudentCourse(studentBatchForm.$valid)">Update</button>
+					<button type="button" class="btn btn-info"
+						data-ng-click="cancelStudentCourse()">Back</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+

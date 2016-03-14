@@ -1,0 +1,131 @@
+<section data-ng-controller="RoleController" data-ng-init="roleEdit();featureList();findOne();">
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper">
+        <h3 class="pull-left ">{{ 'roles.role.ROLE' | translate }}</h3>
+    </div>
+    <div class="mainwrapper">
+        <div ng-show="error" class="red col-md-9 col-md-offset-2" ng-repeat="err in error.data">{{err.msg}}</div>
+        <div class="mainwrapper">
+            <form name="roleForm" class="form-horizontal formAlign" data-ng-submit="update(roleForm.$valid)" novalidate>
+                <div class="form-group">
+                    <label mean-token="'edit-role_name'" class="col-md-2 pull-left">{{ 'roles.role.NAME' | translate }}</label>
+                    <div class="col-md-6">
+                        <input name="name" type="text" class="form-control" data-ng-model="role.name" id="name" placeholder="{{ 'roles.role.NAME' | translate }}" required>
+                        <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='name'">{{err.msg}}</div>
+                        <div ng-show="submitted && roleForm.name.$invalid">
+                            <span class="err-msg errorText errorRed" ng-show="roleForm.name.$error.required"> {{ 'roles.role.error_messages.NAME' | translate }} </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label mean-token="'edit-role_code'" class="col-md-2 pull-left">{{ 'roles.role.ROLE_CODE' | translate }}</label>
+                    <div class="col-md-6">
+                        <input name="role_code" type="text" class="form-control" data-ng-model="role.roleCode" id="role_code" placeholder="{{ 'roles.role.ROLE_CODE' | translate }}" required>
+                        <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='roleCode'">{{err.msg}}</div>
+                        <div ng-show="submitted && roleForm.role_code.$invalid">
+                            <span class="err-msg errorText errorRed" ng-show="roleForm.role_code.$error.required">{{ 'roles.role.error_messages.ROLE_CODE' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label mean-token="'edit-description'" class="col-md-2 pull-left">{{ 'roles.role.DESCRIPTION' | translate }}</label>
+                    <div class="col-md-6">
+                        <textarea name="description" cols="30" rows="5" class="form-control"
+                                  data-ng-model="role.description" id="description" placeholder="{{ 'roles.role.DESCRIPTION' | translate }}"
+                                  required></textarea>
+
+                        <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='description'">
+                            {{err.msg}}
+                        </div>
+                        <div ng-show="submitted && roleForm.description.$invalid">
+                            <span class="err-msg errorText errorRed" ng-show="roleForm.description.$error.required">{{ 'roles.role.error_messages.DESCRIPTION' | translate }}  </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label mean-token="'create-description'" class="col-md-2 pull-left ">{{ 'roles.role.FEATURES' | translate }}</label>
+                    <div class="col-md-10">
+                        <div role="navigation">
+                            <ul>
+                                <div data-ng-repeat="roleFeature in roleFeatures" ng-if="!roleFeature.feature.isComponent" class="">
+                                    <div class="checkbox">
+                                        <div class="col-md-6">
+                                            <input data-ng-click="addFeature(roleFeature)" id="feature{{roleFeature.feature._id}}" ng-model="roleFeature.selected" type="checkbox" name="check" value="true">
+                                            <label for="feature{{roleFeature.feature._id}}">{{roleFeature.feature.name}}</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="checkbox-inline">
+                                                <input data-ng-model="roleFeature.isRead" type="checkbox" name="check" value="true" id="isRead{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
+                                                <label for="isRead{{roleFeature.feature._id}}">{{ 'roles.role.READ' | translate }}</label>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input data-ng-model="roleFeature.isWrite" type="checkbox" name="check" value="true" id="isWrite{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
+                                                <label for="isWrite{{roleFeature.feature._id}}">{{ 'roles.role.WRITE' | translate }}</label>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input data-ng-model="roleFeature.isUpdate" type="checkbox" name="check" value="true" id="isUpdate{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
+                                                <label for="isUpdate{{roleFeature.feature._id}}">{{ 'roles.role.UPDATE' | translate }}</label>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input data-ng-model="roleFeature.isDelete" type="checkbox" name="check" value="true" id="isDelete{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
+                                                <label for="isDelete{{roleFeature.feature._id}}">{{ 'roles.role.DELETE' | translate }}</label>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label mean-token="'create-description'" class="col-md-2 pull-left ">{{ 'roles.role.COMPONENTS' | translate }}</label>
+                    <div class="col-md-10">
+                        <div role="navigation">
+                            <ul>
+                                <div data-ng-repeat="roleFeature in roleFeatures" ng-if="roleFeature.feature.isComponent" class="">
+                                    <div class="checkbox">
+                                        <div class="col-md-6">
+                                            <input data-ng-click="addFeature(roleFeature)" id="component{{roleFeature.feature._id}}" ng-model="roleFeature.selected" type="checkbox" name="check" value="true">
+                                            <label for="feature{{roleFeature.feature._id}}">{{roleFeature.feature.name}}</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="checkbox-inline">
+                                                <input data-ng-model="roleFeature.isRead" type="checkbox" name="check" value="true" id="isRead{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
+                                                <label for="isRead{{roleFeature.feature._id}}">{{ 'roles.role.READ' | translate }}</label>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input data-ng-model="roleFeature.isWrite" type="checkbox" name="check" value="true" id="isWrite{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
+                                                <label for="isWrite{{roleFeature.feature._id}}">{{ 'roles.role.WRITE' | translate }}</label>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input data-ng-model="roleFeature.isUpdate" type="checkbox" name="check" value="true" id="isUpdate{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
+                                                <label for="isUpdate{{roleFeature.feature._id}}">{{ 'roles.role.UPDATE' | translate }}</label>
+                                            </label>
+                                            <label class="checkbox-inline">
+                                                <input data-ng-model="roleFeature.isDelete" type="checkbox" name="check" value="true" id="isDelete{{roleFeature.feature._id}}" ng-disabled="!roleFeature.selected">
+                                                <label for="isDelete{{roleFeature.feature._id}}">{{ 'roles.role.DELETE' | translate }}</label>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label mean-token="'create-isAdmin'" class="col-md-2 pull-left">{{ 'roles.role.IS_ADMIN' | translate }}</label>
+                    <div class="col-md-6">
+                        <input name="role_isAdmin" type="checkbox" class="" ng-checked="role.isAdmin"
+                               data-ng-model="role.isAdmin" id="isAdmin">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button mean-token="'edit-submit'" type="submit" class="btn btn-info">{{ 'common.SUBMIT' | translate }}</button>
+                        <button type="button" class="btn btn-info" ng-click="cancel()">{{ 'common.CANCEL' | translate }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,565 @@
+<section data-ng-controller="BatchController" ng-init = 'createBatchBreadCrumbs(); branchesBasedOnCourse();'>
+    <div data-ng-include="'/system/views/alert.html'">
+    </div>
+    <div ng-include="'/system/views/breadcrum.html'">
+    </div>
+    <div class="mainwrapper">
+    <form name="batchForm" class="form-horizontal"  data-ng-submit="create(COURSE.URL_PATH.ADMIN_BATCH_LIST,batchForm.$valid)" novalidate>
+        <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='course'">
+            {{err.msg}}
+        </div>
+        <div class="col-xs-12 padding-align">
+            <div class="col-md-4 padding-align">
+                <h3 class="pull-left">
+                    Batch
+                </h3>
+            </div>
+            <div class="col-md-4" ng-if = "cobj.name">
+                <h3 class="text-center">
+                    Course: {{cobj.name}}
+                </h3>
+            </div>
+            <div class="col-md-4" ng-if = "branchobj.branchName">
+                <h3 class="text-center">
+                    Branch: {{branchobj.branchName}}
+                </h3>
+            </div>
+            <div class="col-md-4 pull-right mrg-tp22" ng-if = "!branchobj.course || branchobj.course.length == 0 " ng-class="{ 'has-error' : submitted && batchForm.level.$invalid }">
+                <select name="level" ng-model="batch.branch" class="col-md-10 pull-right"  required>
+                    <option value="">
+                        {{ 'course.branch.BATCHES' | translate }}
+                    </option>
+                    <option ng-repeat="branch in brancheslist" value="{{branch._id}}">
+                        {{branch.branchName}}
+                    </option>
+                </select>
+                <div ng-show="submitted &&batchForm.level.$error.required">
+                    <span class="err-msg red">
+                        {{ 'course.error_messages.BATCHES' | translate }}
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-4 pull-right mrg-tp22" ng-if = "branchobj.course" ng-class="{ 'has-error' : submitted && batchForm.level.$invalid }">
+                <select name="branch_drp" ng-options="branchcourse as branchcourse.name  for branchcourse in branchobj.course" ng-change = "getMentors(branchcourse)" ng-model="batch.course" class="col-md-10 pull-right"  required>
+                 <option style="display:none" value=""> {{ 'course.branch.COURSES' | translate }}</option>
+                    <!-- <option value="">
+                        Courses
+                    </option>
+                    <option ng-repeat="branchcourse in branchobj.course" value="{{branchcourse._id}}">
+                        {{branchcourse.name}}
+                    </option> -->
+                </select>
+                <div ng-show="submitted &&batchForm.branch_drp.$error.required">
+                    <span class="err-msg red">
+                        {{ 'course.error_messages.COURSES' | translate }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 padding-align">
+            <label mean-token="'create-name'" class="col-md-3 padding-align">
+                {{ 'common.NAME' | translate }}
+            </label>
+            <div class="col-md-6">
+                <input name="name" type="text" class="form-control" data-ng-model="batch.batch_name" id="name" placeholder="{{ 'common.NAME' | translate }}" required/>
+                <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='batch_name'">
+                    {{err.msg}}
+                </div>
+                <div ng-show="submitted && batchForm.name.$invalid">
+                    <span class="err-msg errorText red" ng-show="batchForm.name.$error.required">
+                       {{ 'common.error_messages.NAME' | translate }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12 "
+            ng-class="{ 'has-error' : submitted && batchForm.start_date.$invalid }">
+            <label mean-token="'edit-start_date'" class="col-md-3 padding-align">
+              {{ 'course.branch.START_DATE' | translate }}
+            </label>
+            <div class="col-md-6">
+                <input type="date" name="start_date"
+                    data-ng-model="batch.start_date" id="start_date"
+                    placeholder="{{ 'course.branch.START_DATE' | translate }}" class="form-control"
+                    ng-change='checkError(start_date)' required/>
+                    <div class="errorRed" ng-repeat="err in error.data"
+                        ng-if="err.param =='start_date'">
+                        {{err.msg}}
+                    </div>
+                    <div ng-show="submitted && batchForm.start_date.$invalid">
+                        <span class="err-msg errorText"
+                            ng-show="batchForm.start_date.$error.required">
+                            {{ 'course.error_messages.START_DATE' | translate }}
+                        </span>
+                    </div>
+                    <span class="err-msg errorText"
+                        ng-show="Lesserstartvalue">
+                         {{ 'course.error_messages.START_DATE_VALID' | translate }}
+                    </span>
+                </div>
+            </div>
+        <div class="form-group col-xs-12">
+            <label mean-token="'create-description'" class="col-md-2 pull-left ">{{ 'course.branch.MENTORS' | translate }}</label>
+            <div class="col-md-3">
+                <div role="navigation">
+                    <ul>
+                        <div data-ng-repeat="mentor in mentors" class="">
+                                <div class="col-md-6">
+                                    <input data-ng-click="addMentor(mentor)" type="checkbox" name="check" value="true">
+                                    <label for="">{{mentor.name}}</label>
+                                </div>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-xs-12">
+            <div class= "col-md-2">
+                <h3 class="text-left">
+                    {{ 'course.branch.TIMINGS' | translate }}
+                </h3>
+            </div>
+            <div class = "col-md-10 ">
+                <table class="table table-bordered padding-align" >
+                    <thead>
+                        <tr>
+                            <th class="text-center ">
+                                 {{ 'course.branch.MON' | translate }}
+                            </th>
+                             <th class="text-center " >
+                               {{ 'course.branch.TUE' | translate }}
+                            </th>
+                            <th class="text-center ">
+                               {{ 'course.branch.WED' | translate }}
+                            </th>
+                            <th class="text-center " >
+                                {{ 'course.branch.THU' | translate }}
+                            </th>
+                            <th class="text-center " >
+                               {{ 'course.branch.FRI' | translate }}
+                            </th>
+                            <th class="text-center ">
+                               {{ 'course.branch.SAT' | translate }}
+                            </th>
+                            <th class="text-center " >
+                               {{ 'course.branch.SUN' | translate }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="anchorTag">
+                        <tr>
+                            <td >
+                                <div class = 'brdr_top'  ng-repeat = 'batchtime in batch.batchTimings.mon'>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.mon, $index)' ng-model="batchtime.startHH">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.mon, $index)' ng-model="batchtime.startMM">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.mon, $index)' ng-model="batchtime.endHH">
+                                                <option style="display:none" value="">
+                                                    {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.mon, $index)' ng-model="batchtime.endMM">
+                                                <option style="display:none" value="">
+                                                  {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div ng-show="$last">
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.mon)" ng-show="$index>0" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                            <a data-ng-click="addbatchtimingsrow(batch.batchTimings.mon)" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                                </i>
+                                            </a>
+                                        </div>
+                                        <div >
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.mon)" ng-hide="$last" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="err-msg errorText"  ng-show="batch.batchTimings.mon.dateErr">
+                                        {{ 'course.error_messages.TIMINGS' | translate }}
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td >
+                                <div class = 'brdr_top' ng-repeat = 'batchtime in batch.batchTimings.tue'>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.tue, $index)' ng-model="batchtime.startHH">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.tue, $index)' ng-model="batchtime.startMM">
+                                                <option style="display:none" value="">
+                                                    {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.tue, $index)' ng-model="batchtime.endHH">
+                                                <option style="display:none" value="">
+                                                  {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.tue, $index)' ng-model="batchtime.endMM">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div ng-show="$last">
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.tue)" ng-show="$index>0" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                            <a data-ng-click="addbatchtimingsrow(batch.batchTimings.tue)" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                                </i>
+                                            </a>
+                                        </div>
+                                        <div >
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.tue)" ng-hide="$last" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="err-msg errorText"  ng-show="batch.batchTimings.tue.dateErr">
+                                       {{ 'course.error_messages.TIMINGS' | translate }}
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td >
+                                <div class = 'brdr_top' ng-repeat = 'batchtime in batch.batchTimings.wed'>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.wed, $index)' ng-model="batchtime.startHH">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.wed, $index)' ng-model="batchtime.startMM">
+                                                <option style="display:none" value="">
+                                                    {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.wed, $index)' ng-model="batchtime.endHH">
+                                                <option style="display:none" value="">
+                                                {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.wed, $index)' ng-model="batchtime.endMM">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div ng-show="$last">
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.wed)" ng-show="$index>0" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                            <a data-ng-click="addbatchtimingsrow(batch.batchTimings.wed)" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                                </i>
+                                            </a>
+                                        </div>
+                                        <div >
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.wed)" ng-hide="$last" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="err-msg errorText"  ng-show="batch.batchTimings.wed.dateErr">
+                                       {{ 'course.error_messages.TIMINGS' | translate }}
+                                    </div>
+                                </div>
+                            </td>
+                            <td >
+                                <div class = 'brdr_top' ng-repeat = 'batchtime in batch.batchTimings.thu'>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.thu, $index)' ng-model="batchtime.startHH">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"  ng-change = 'formatTime(batch.batchTimings.thu, $index)' ng-model="batchtime.startMM">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.thu, $index)' ng-model="batchtime.endHH">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.thu, $index)' ng-model="batchtime.endMM">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div ng-show="$last">
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.thu)" ng-show="$index>0" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                            <a data-ng-click="addbatchtimingsrow(batch.batchTimings.thu)" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                                </i>
+                                            </a>
+                                        </div>
+                                        <div >
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.thu)" ng-hide="$last" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="err-msg errorText"  ng-show="batch.batchTimings.thu.dateErr">
+                                       {{ 'course.error_messages.TIMINGS' | translate }}
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td >
+                                <div class = 'brdr_top' ng-repeat = 'batchtime in batch.batchTimings.fri'>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.fri, $index)' ng-model="batchtime.startHH">
+                                                <option style="display:none" value="">
+                                                  {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.fri, $index)' ng-model="batchtime.startMM">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.fri, $index)' ng-model="batchtime.endHH">
+                                                <option style="display:none" value="">
+                                                  {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.fri, $index)' ng-change = 'formatTime(batch.batchTimings.fri, $index)' ng-model="batchtime.endMM">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div ng-show="$last">
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.fri)" ng-show="$index>0" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                            <a data-ng-click="addbatchtimingsrow(batch.batchTimings.fri)" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                                </i>
+                                            </a>
+                                        </div>
+                                        <div >
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.fri)" ng-hide="$last" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="err-msg errorText"  ng-show="batch.batchTimings.fri.dateErr">
+                                       {{ 'course.error_messages.TIMINGS' | translate }}
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td >
+                                <div class = 'brdr_top' ng-repeat = 'batchtime in batch.batchTimings.sat'>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.sat, $index)' ng-model="batchtime.startHH">
+                                                <option style="display:none" value="">
+                                                 {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.sat, $index)' ng-model="batchtime.startMM">
+                                                <option style="display:none" value="">
+                                                  {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.sat, $index)' ng-model="batchtime.endHH">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.sat, $index)' ng-model="batchtime.endMM">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div ng-show="$last">
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.sat)" ng-show="$index>0" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                            <a data-ng-click="addbatchtimingsrow(batch.batchTimings.sat)" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                                </i>
+                                            </a>
+                                        </div>
+                                        <div >
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.sat)" ng-hide="$last" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="err-msg errorText"  ng-show="batch.batchTimings.sat.dateErr">
+                                       {{ 'course.error_messages.TIMINGS' | translate }}
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td >
+                                <div class = 'brdr_top' ng-repeat = 'batchtime in batch.batchTimings.sun'>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.sun, $index)' ng-model="batchtime.startHH">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.sun, $index)' ng-model="batchtime.startMM">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs" ng-change = 'formatTime(batch.batchTimings.sun, $index)' ng-model="batchtime.endHH">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.HH' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <select ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins" ng-change = 'formatTime(batch.batchTimings.sun, $index)' ng-model="batchtime.endMM">
+                                                <option style="display:none" value="">
+                                                   {{ 'course.branch.MM' | translate }}
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <div ng-show="$last">
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.sun)" ng-show="$index>0" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                            <a data-ng-click="addbatchtimingsrow(batch.batchTimings.sun)" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                                </i>
+                                            </a>
+                                        </div>
+                                        <div >
+                                            <a data-ng-click="removebatchtimingsrow($index,batch.batchTimings.sun)" ng-hide="$last" class="linksGap addtime_leftmrg">
+                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="err-msg errorText"  ng-show="batch.batchTimings.sun.dateErr">
+                                       {{ 'course.error_messages.TIMINGS' | translate }}
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <div class="col-md-offset-3 col-md-9 text-center">
+                <button mean-token="'create-submit'" type="submit" class="btn btn-info">
+                    Submit
+                </button>
+                <button type="button" class="btn btn-info" data-ng-Click="cancel(COURSE.URL_PATH.ADMIN_BATCH_LIST)">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </form>
+    </div>
+</section>

@@ -1,0 +1,177 @@
+<section data-ng-controller="ProjectController"
+	data-ng-init="findOne(); loadSkills();projectEditBreadcrumb();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div ng-show="error" class="red col-md-9 col-md-offset-3"
+		ng-repeat="err in error.data">{{err.msg}}</div>
+	<div class="row">
+		<ul class="nav nav-tabs tabalign">
+			<li><a href="" data-ng-click="redirectEdit()">Profile</a></li>
+			<li><a href="#" data-ng-click="redirectResume()">CV / Resume</a></li>
+			<li class="active"><a href="#" data-ng-click="portfolioEdit()">Portfolio</a></li>
+		</ul>
+	</div>
+	<div class="mainwrapper">
+		<br></br>
+		<form name="projectForm" class="form-horizontal" novalidate>
+			<div class="form-group">
+				<label mean-token="'create-projectName'" class="col-md-2 pull-left">{{ 'profile.project.PROJECTNAME' | translate }}</label>
+				<div class="col-md-9">
+					<input name="projectName" type="text"
+						data-ng-model="project.projectName " id="projectName"
+						placeholder="{{ 'profile.project.PROJECTNAME' | translate }}" class="form-control err-msg "
+						ng-pattern="/^[a-zA-Z-0-9][ -a-zA-Z0-9-_\.]{1,50}$/" required>
+					<div class="errorRed" ng-repeat="err in error.data"
+						ng-if="err.param =='projectName'">{{err.msg}}</div>
+					<div ng-show="submitted && projectForm.projectName.$invalid">
+						<span class="errorRed"
+							ng-show="projectForm.projectName.$error.required">{{ 'profile.project.error_messages.PROJECTNAME' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'create-price'" class="col-md-2 pull-left">{{ 'profile.project.PRICE' | translate }}</label>
+				<div class="col-md-5">
+					<input name="price" type="number" data-ng-model="project.price"
+						id="price" placeholder="{{ 'profile.project.PRICE' | translate }}" min="0" max=""
+						class="form-control err-msg " required>
+					<div class="errorRed" ng-repeat="err in error.data"
+						ng-if="err.param =='price'">{{err.msg}}</div>
+					<div ng-show="submitted && projectForm.price.$invalid">
+						<span class="errorRed" ng-show="projectForm.price.$error.required">
+							{{ 'profile.project.error_messages.PRICE' | translate }} </span>
+					</div>
+				</div>
+				<label mean-token="'create-currency'" class="col-md-1 pull-left">{{ 'profile.project.CURRENCY' | translate }}</label>
+				<div class="col-md-3">
+					<select class="form-control err-msg"
+						data-ng-model="project.currency" required>
+						<option value="" class="selected">{{ 'profile.project.SELECT' | translate }}</option>
+						<option value="INR">{{ 'profile.project.INR' | translate }}</option>
+						<option value="EURO">{{ 'profile.project.EURO' | translate }}</option>
+						<option value="DOLLAR">{{ 'profile.project.DOLLAR' | translate }}</option>
+						<option value="FRANC">{{ 'profile.project.FRANC' | translate }}</option>
+						<option value="POUND">{{ 'profile.project.POUND' | translate }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'create-skills'" class="col-md-2 pull-left">{{ 'profile.project.LABLE_SKILL' | translate }}</label>
+				<tags-input class="col-md-9" data-ng-model="project.skills"
+					id="skills" name="skills" class="form-control err-msg"
+					replace-spaces-with-dashes="false" display-property="name"
+					placeholder="{{ 'profile.project.SKILL' | translate }}"> <auto-complete
+					source="loadTags($query)" min-length="1" load-on-focus="true"
+					required> </auto-complete> </tags-input>
+				<div class="errorRed" ng-repeat="err in error.data"
+					ng-if="err.param =='skills'">{{err.msg}}</div>
+				<div ng-show="submitted && projectForm.skills.$invalid">
+					<span class="errorRed" ng-show="projectForm.skills.$error.required">
+						{{ 'profile.project.error_messages.SKILL' | translate }}</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'create-description'" class="col-md-2 pull-left">{{ 'profile.project.DESCRIPTION' | translate }}</label>
+				<div class="col-md-9">
+					<textarea name="description" data-ng-model="project.description"
+						id="description" cols="30" rows="5" placeholder="{{ 'profile.project.DESCRIPTION' | translate }}"
+						class="form-control err-msg " required></textarea>
+					<div class="errorRed" ng-repeat="err in error.data"
+						ng-if="err.param =='description'">{{err.msg}}</div>
+					<div ng-show="submitted && projectForm.description.$invalid">
+						<span class="errorRed"
+							ng-show="projectForm.description.$error.required">{{ 'profile.project.error_messages.DESCRIPTION' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'create-url'"
+						class="col-md-2 pull-left">{{ 'profile.project.URL' | translate }}</label>
+				<div class="col-md-10 pull-right rolesA" ng-repeat="link in project.links">
+					<div class="col-md-5 row">
+						<input name="url" type="url" data-ng-model="link.url" id="url"
+							placeholder="{{ 'profile.project.URL' | translate }}" class="form-control err-msg"
+							required>
+						<div ng-show="submitted && projectForm.url.$invalid">
+							<span class="errorRed" ng-show="projectForm.url.$error.required">
+								{{ 'profile.project.error_messages.URL' | translate }}</span>
+						</div>
+					</div>
+					<div class="col-md-2">
+						<select class="form-control err-msg" ng-model="link.type" required>
+						<option value="" class="selected">{{ 'profile.project.SELECT' | translate }}</option>
+							<option value="APP">{{ 'profile.project.APP' | translate }}</option>
+							<option value="Web">{{ 'profile.project.WEB' | translate }}</option>
+							<option value="Other">{{ 'profile.project.OTHER' | translate }}</option>
+						</select>
+					</div>
+					<div class="col-md-2">
+						<div ng-show="$last">
+							<button type="button" ng-click="addUrl()">
+								<i class="fa edu-action fa-plus-circle"></i>
+							</button>
+							<button type="button" ng-click="removeUrl(link)"
+								ng-show="$index>0">
+								<i class="fa edu-action fa-minus-circle"></i>
+							</button>
+
+						</div>
+						<button type="button" ng-click="removeUrl(link)" ng-hide="$last">
+							<i class="fa edu-action fa-minus-circle"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			<!-- <form name="projectForm" class="form-horizontal col-md-12"
+			role="form"  novalidate>
+			<div class="col-md-12">
+				<img src="{{project.projectPicture}}" data-ng-if="project.projectPicture" width="30%" height="20%" />
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-12">
+					<div class="btn btn-info" ngf-select
+						ngf-change="onFileSelectProject($files)" accept="image/png, image/jpeg">
+						Upload</div>
+					<span data-ng-if="uploadInProgress">Upload progress: {{uploadProgress }}</span>
+				</div>
+			</div>
+		</form>
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9">
+					<button mean-token="'create-submit'" type="button"
+						class="btn btn-info" ng-click="update(projectForm.$valid)">Update</button>
+					<button type="button" class="btn btn-info"
+						ng-click="cancelProject()">Cancel</button>
+				</div>
+			</div>
+ -->
+		</form>
+		<form name="uploadImageForm" class="form-horizontal mainwrapper"
+			role="form" novalidate>
+			<label mean-token="'edit-picture'"
+				class="col-md-2 row wor pull-left err-msg-url">{{ 'profile.project.PICTURE' | translate }}</label>
+			<div class="col-md-9">
+				<img src="{{project.projectPicture}}"
+					data-ng-if="project.projectPicture" width="50px" height="50px" />
+
+				<div class="btn btn-info userList" ngf-select
+					ngf-change="onFileSelectProject($files)"
+					accept="image/png, image/jpeg">Upload</div>
+				<span data-ng-if="uploadInProgress">Upload progress:
+					{{uploadProgress }}</span>
+			</div>
+
+		</form>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-9 roleCreate text-center">
+				<button mean-token="'create-submit'" type="button"
+					class="btn btn-info" ng-click="update(projectForm.$valid)">Submit</button>
+				<button type="button" class="btn btn-info"
+					ng-click="cancelProject()">Cancel</button>
+			</div>
+		</div>
+
+	</div>
+</section>
+
+

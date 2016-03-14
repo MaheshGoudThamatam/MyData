@@ -1,0 +1,18 @@
+ <section data-ng-controller="UserCourseController" data-ng-init="myCourse()">
+	<div data-ng-include="'/course/views/course_tabs.html'"></div>
+	<div class="col-xs-10">
+		<ul class="row img-list">
+			<li data-ng-repeat="usercourse in userCourses" class="col-sm-4 courselist-border">
+			<img src="staticpage/assets/img/course.jpg" class="img-responsive" alt="courseImage">
+			<span class="text-content">
+			<span data-ng-click="showCourseDetails(course)">See Details</span>
+			</span>
+				<div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+					<a href="">{{usercourse.course.name}}</a>
+					{{usercourse.payment_method}}
+				</div></li>
+		</ul>
+
+	</div>
+
+</section> 

@@ -1,0 +1,18 @@
+<section data-ng-controller="ChapterController"	data-ng-init="listchapterDetail();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper">
+		<h3 class="pull-left ">{{chapter.name}}</h3>
+		<p class="col-md-12 row">{{chapter.description}}</p>
+	</div>
+	<div class="col-md-12 row">
+		<ul data-ng-repeat = "lesson in lessonList">
+			<li>{{lesson.name}}</li>
+			<ul data-ng-repeat ="topic in topicList">
+				<li ng-if = "topic.parentId == lesson._id " ng-show = "topic.parentId != null">{{topic.name}}</li>
+				<ul data-ng-repeat = "content in contentList"  ng-show = "topic.parentId != null">
+					<li ng-if = "content.topic == topic._id"  ng-show = "topic.parentId != null">{{content.notes}}</li>
+				</ul>
+			</ul>
+		</ul>
+	</div>
+</section>

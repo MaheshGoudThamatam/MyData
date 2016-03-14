@@ -1,0 +1,111 @@
+ .tab-nav-width{
+ 	width:100%;
+ }
+
+ .jobs-not-found{
+ 	text-align:center;
+ }
+
+ .job-blog{
+    background: #eee;
+    padding: 5px; 
+    border-radius: 8px; 
+    margin-bottom: 5px;
+ }
+
+ .job-client {
+ 	margin: 0 0 10px 0;
+ 	background: #eee;
+ 	padding:  5px 5px 5px 20px;
+ 	border-radius: 8px;
+ }
+
+ .padding-allign-jobs{
+
+ 	padding-left:20px;
+ }
+
+ .padding-allign-jobs-bottom{
+ 	padding-bottom:10px;
+ }
+
+.skills{
+	border: 1px solid #dddddd;
+	border-radius: 4px;
+	display: inline-block;
+	/*padding: 3px 5px;*/
+	margin-right: 10px;
+	background-color: #D1DEDD;
+	margin-top: 11px;
+}
+
+.jobs-bord{
+	border: 1px solid;
+	border-radius: 1px;
+	margin-bottom: 10px;
+	/*background-color: #D0D5D6;*/
+	/*width: 98% !important;*/
+
+}
+
+.job-blog1{
+    background: #eee;
+    padding: 5px 10px 20px 30px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+ }
+
+
+ .job-proposal
+ {
+ 	background-color:#5cb85c;
+ 	/*width:200px;*/
+ 	padding:18px;
+    font-size:20px;
+    color:white;
+    margin-top:8px;
+ }
+
+ .job-ul
+ {
+ 	margin-top: 5px;
+ 	list-style: none;
+ 	padding: 0;
+ }
+
+ .job-li
+ {
+ 	border: 1px solid #dddddd;
+ 	border-radius: 4px;
+ 	display: inline-block;
+ 	padding: 3px 5px;
+ 	margin-right:2px;
+ }
+
+.provider{
+	margin-left: -15px;
+	margin-top: -4px;
+}
+
+.price{
+	margin-left: -15px;
+}
+
+.black{
+	color: #ACB0B0;
+}
+
+.provider-name{
+	margin-right: 10px;
+}
+
+.skillset-select{
+  height:3vh;
+}
+
+.mr12p{
+	margin-left: 12%;
+}
+.tags > input.input{
+ min-width: 170px;
+}

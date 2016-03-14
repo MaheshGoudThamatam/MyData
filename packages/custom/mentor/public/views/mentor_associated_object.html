@@ -1,0 +1,75 @@
+<section data-ng-controller="AdminsMentorController" data-ng-init="find(); associatedBreadcrumb();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class=" mainwrapper pro-top">
+	    <ul class="nav nav-tabs">
+		    <li ><a href="" data-ng-click="requestlist()">Request List</a></li>
+		    <li ><a href="" data-ng-click="mentorlist()">Mentor List</a></li>
+		    <li ><a href="" data-ng-click="projectlist()">Project List</a></li>
+		    <li><a href="" data-ng-click="feedback()">Mentor Feedback</a></li>
+		    <li class="active"><a href="" data-ng-click="ascobject()">Associated Object</a></li>
+	   </ul>
+   </div></br>
+	<div class="filterAlign col-md-12 usr">
+		<div class="col-md-2">
+			<div ng-include="'mentor/views/statusFilter.html'"></div>
+		</div>
+		<div class="col-md-2">
+			<div ng-include="'mentor/views/periodFilter.html'"></div>
+		</div>
+		<div class="col-md-8">
+			<div ng-include="'branch/views/locationFilter.html'"></div>
+		</div>
+	</div>
+	<h3 class="pull-left">Associated Objects</h3>
+	<table class="table table-bordered">
+		<tr>
+			<th>Name</th>
+			<th>Skills</th>
+			<th>Email Id</th>
+			<th>Username</th>
+			<th>Contact Number</th>
+			<th>Confirmed</th>
+			<th>Role</th>
+			<th>Status</th>
+			<th>Confirmed at</th>
+			<th>Actions</th>
+		</tr>
+		<tbody>
+			<tr data-ng-repeat="mentorRequest in collection" class="anchorTag" data-ng-show="collection.length > 0">
+				<td>{{mentorRequest.user.name}}</td>
+				<td><div data-ng-repeat="skill in task.skills">{{mentorRequest.user.skills.name}}<span ng-hide = "$last">,&nbsp;</span></div></td>
+				<td>{{mentorRequest.user.email}}</td>
+				<td>{{mentorRequest.user.username}}</td>
+				<td>{{mentorRequest.user.contactNumber}}</td>
+				<td><div ng-show="{{mentorRequest.user.confirmed}}">True</div>
+					<div ng-hide="{{mentorRequest.user.confirmed}}">False</div></td>
+				<td><span ng-repeat="role in user.role">{{mentorRequest.role.name}}<span ng-hide="$last">,&nbsp;</span></span></td>
+				<td>{{mentorRequest.status}}</td>
+				<td>{{mentorRequest.user.confirmedAt | date:'dd-MMM-yyyy'}}</td>
+
+				<td><a href="/admin/user/{{mentorRequest.user._id}}/view" class="linksGap">
+						<i class="fa fa-eye tooltip-right" data-toggle="tooltip"
+							data-placement="bottom" data-tooltip="View">
+						</i> </a> 
+					<a href="/admin/user/{{mentorRequest.user._id}}/edit" class="linksGap">
+						<i class="fa fa-pencil-square-o" class="tooltip-right"
+							data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit">
+						</i> </a>
+					<a href="" ng-click="modalDeleteUser(user)" class="linksGap">
+						<i class="fa fa-minus-circle  tooltip-right" data-toggle="tooltip"
+							data-placement="bottom" data-tooltip="Delete">
+						</i></a>
+				</td>
+			</tr>
+			<tr data-ng-show="!collection.length> 0">
+				<td colspan="10">No Users available</td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<!-- <div class="paginate usr">
+		<div ng-include="'system/views/paginationFilter.html'"></div>
+		<br>
+	</div> -->
+
+</section>

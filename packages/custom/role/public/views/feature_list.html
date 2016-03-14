@@ -1,0 +1,69 @@
+<section data-ng-controller="FeatureController" data-ng-init="list()">
+    <div data-ng-include="'/system/views/alert.html'"></div>
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper social-group-header">
+        <button class="btn btn-info pull-right social-group-header-create " data-ng-click="newFeature()"
+                ng-if="writePermission">
+           {{ 'roles.feature.CREATE_FEATURE '| translate }}
+        </button>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+
+            <th class="text-center">{{ 'common.NAME' | translate }}</th>
+            <th class="text-center">{{ 'roles.feature.URL' | translate }}</th>
+            <th class="text-center">{{ 'common.DESCRIPTION' | translate }}</th>
+            <th class="text-center">{{ 'roles.feature.ICON' | translate }}</th>
+            <th class="text-center">{{ 'roles.feature.COLOR' | translate }}</th>
+            <th class="text-center">{{ 'roles.feature.IS_COMPONENT' | translate }}</th>
+            <th class="text-center">{{ 'common.ACTIONS' | translate }}</th>
+        </tr>
+        </thead>
+        <tbody class="anchorTag">
+        <tr data-ng-repeat="feature in collection" class="" ng-class-odd="'odd'"
+            ng-class-even="'even'">
+            <td>{{feature.name}}</td>
+            <td>{{feature.url}}</td>
+            <td>{{feature.description | limitTo: 20}}...</td>
+            <td>{{feature.icon}}</td>
+            <td>{{feature.color}}</td>
+            <td ng-if="feature.isComponent" class="text-center"><span class="glyphicon glyphicon-ok"></span></td>
+            <td ng-if="!feature.isComponent" class="text-center"><span class="glyphicon glyphicon-remove"></span></td>
+            <td width="10%" align="center">
+                <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                    <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                        <i class="fa fa-arrow-circle-right"></i><span>{{ 'common.ACTIONS' | translate }}</span>
+                    </a>
+                    <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                        <li ng-if="readPermission">
+                            <a class="menu-toggler" href="/admin/feature/{{feature._id}}/view">
+                                <i class="fa fa-eye"></i>
+                                <span>{{ 'common.VIEW' | translate }} </span>
+                            </a>
+                        </li>
+                        <li ng-if="updatePermission">
+                            <a class="menu-toggler" href="/admin/feature/{{feature._id}}/edit">
+                                <i class="fa fa-pencil-square-o"></i>
+                                <span>{{ 'common.EDITINFO' | translate }}</span>
+                            </a>
+                        </li>
+                        <li ng-if="deletePermission">
+                            <a class="menu-toggler" ng-click="modalDeletePopup(feature)">
+                                <i class="fa fa-minus-circle"></i>
+                                <span>{{ 'common.DELETE' | translate }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr data-ng-hide="!collection || collection.length">
+            <td colspan="8">{{ 'roles.feature.NO_FEATURES '| translate }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <div data-ng-show="!collection || collection.length" class="paginate usr">
+        <div ng-include="'system/views/paginationFilter.html'"></div>
+    </div>
+</section>

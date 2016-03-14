@@ -1,0 +1,39 @@
+
+<!-- <section data-ng-controller="ProfileController" data-ng-init="success()">
+ <div>
+    <ul class="nav nav-tabs">
+	<li><a href="" data-ng-click="aboutme()">About Me</a></li>
+	<li ><a href="" data-ng-click="Portfolio()">Portfolio</a></li>
+	<li ><a href="" data-ng-click="review()">Reviews</a></li>
+	<li class="active"><a href="" data-ng-click="resume()">Resume</a></li>
+	<li class=""><a href="" data-ng-click="badge()">Badges</a></li>
+	<li><a href="" data-ng-click="performance()">Performance</a></li>
+   </ul>
+   </div>	
+<div class="col-md-12">
+<a href={{user.Resume}}>Click here to download the resume</a></div>
+{{user.name}}
+<!-- <embed src={{user.Resume}} width="800px" height="2100px">
+<object width="400" height="400" data="{{user.Resume}}">
+</object>
+
+<meta HTTP-EQUIV="REFRESH" content="0; url={{user.Resume}}"> 
+</section> -->
+<section data-ng-controller="ProfileController">
+	<div data-ng-include="'/profile/views/profile-header.html'"></div>
+	<div class = "mainwrapper pro-top">
+		<ul class="nav nav-tabs">
+			<li><a href="" data-ng-click="aboutme()">About Me</a></li>
+			<li ><a href="" data-ng-click="Portfolio()">Portfolio</a></li>
+			<li ><a href="" data-ng-click="review()">Reviews</a></li>
+			<li class="active"><a href="" data-ng-click="resume()">Resume</a></li>
+			<li class=""><a href="" data-ng-click="badge()">Badges</a></li>
+			<li><a href="" data-ng-click="performance()">Performance</a></li>
+	   </ul>
+   </div>
+   <div class="col-xs-9 col-md-10 pro-top san">
+		<div class="col-md-12">
+			<img class="img-responsive student-resume" src="profile/assets/img/student_resume.jpg"/>
+		</div>
+	</div>
+</section>

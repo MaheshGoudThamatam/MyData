@@ -1,0 +1,32 @@
+<!-- SIDEBAR - START -->
+<div ng-controller = "userDashboardCtrl" data-ng-init = "features();" class="page-sidebar page-data">
+    <!-- MAIN MENU - START -->
+    <div class="page-sidebar-wrapper" id="main-menu-wrapper">
+        <!-- USER INFO - START -->
+        <div class="profile-info row">
+            <div class="profile-image_theme col-md-4 col-sm-4 col-xs-4">
+                <a href="/profile/aboutme"> <i
+                class="sidebar-imagedata  fa fa-user "></i></a>
+            </div>
+            <div class="profile-details col-md-8 col-sm-8 col-xs-8">
+                <h3>
+                <a href="/profile/aboutme">{{loggedinUser.name}}</a>
+                <!-- Available statuses: online, idle, busy, away and offline -->
+                <span class="profile-status online"></span>
+                </h3>
+               <!--  <p class="profile-title">Web Developer</p> -->
+            </div>
+        </div>
+        <!-- USER INFO - END -->
+        <ul class='wraplist' ng-show="userisValid">
+            <li class="" data-ng-repeat="features in userFeaturesList | orderBy: 'feature.name'"><a href= "{{features.feature.url}}" ng-hide = {{features.feature.isComponent}}> <i class="fa {{features.feature.icon}}"></i> <span class="title">{{features.feature.name}}</span> <!-- <span class="arrow "></span> --></a>
+                <ul class="sub-menu">
+                    <!-- <li><a class="" href="/mentor/student">Students</a></li>
+                    <li><a class="" href="/mentor/list">Mentors</a></li>
+                    <li><a class="" href="/admin/investor/investorlist">Investors</a></li>
+                    <li><a class="" href="/admin/user">Admins</a></li> -->
+                </ul>
+            </li>
+         </div>
+                                </div>
+<script type="text/javascript" src="/system/assets/js/scripts.js"></script>

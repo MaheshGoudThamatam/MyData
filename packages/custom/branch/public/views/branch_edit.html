@@ -1,0 +1,157 @@
+<section data-ng-controller="BranchController" data-ng-init="findOne();">
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper">
+        <h3 class="pull-left ">{{ 'course.branch.BRANCH' | translate }}</h3>
+    </div>
+    <div class="mainwrapper">
+        <form name="branchForm" class="form-horizontal formAlign "
+              novalidate>
+            <div class="form-group">
+                <label mean-token="'edit-branchName'" class="col-md-2 pull-left">{{ 'locations.branch.BRANCH_NAME' | translate }}</label>
+
+                <div class="col-md-6">
+                    <input name="branchName" type="text" class="form-control"
+                           data-ng-model="branch.branchName" id="branchName" placeholder="{{ 'locations.branch.BRANCH_NAME' | translate }}" required>
+
+                    <div ng-show="submitted && branchForm.branchName.$invalid">
+						<span class="err-msg errorText red"
+                              ng-show="branchForm.branchName.$error.required"> {{ 'locations.error_messages.BRANCH_NAME' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'edit-branchCode'"
+                       class="col-md-2 pull-left">{{ 'locations.branch.BRANCH_CODE' | translate }}</label>
+
+                <div class="col-md-6">
+                    <textarea name="branchCode" data-ng-model="branch.branchCode"
+                              id="branchCode" cols="30" rows="5" placeholder="{{ 'locations.branch.BRANCH_CODE' | translate }}"
+                              class="form-control" required></textarea>
+
+                    <div ng-show="submitted && branchForm.branchCode.$invalid">
+						<span class="err-msg errorText red"
+                              ng-show="branchForm.branchCode.$error.required">{{ 'locations.error_messages.BRANCH_CODE' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'edit-description'"
+                       class="col-md-2 pull-left">{{ 'locations.branch.DESCRIPTION' | translate }}</label>
+
+                <div class="col-md-6">
+                    <textarea name="description" data-ng-model="branch.description"
+                              id="description" cols="30" rows="5" placeholder="{{ 'locations.branch.DESCRIPTION' | translate }}"
+                              class="form-control"></textarea>
+
+                    <div ng-show="submitted && branchForm.description.$invalid">
+							<span class="err-msg errorText red"
+                                  ng-show="branchForm.description.$error.required"> {{ 'locations.error_messages.DESCRIPTION' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{ 'has-error' : submitted && branchForm.name.$invalid }">
+                <label mean-token="'create-address'" class="col-md-2 pull-left">{{ 'locations.branch.ADDRESS' | translate }}</label>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="col-md-2 pull-left rolesA">
+                            <label mean-token="'new-title'">{{ 'locations.branch.ADDRESS_LINE' | translate }} 1</label>
+                        </div>
+                        <div class="col-md-4 roleAB">
+                            <input name="line1" type="text" class="form-control"
+                                   data-ng-model="branch.address.line1" id="addressline1"
+                                   placeholder="{{ 'locations.branch.LINE1' | translate }}" required>
+                        </div>
+                        <div class="col-md-2 pull-left roleAB">
+                            <label mean-token="'new-title'">{{ 'locations.branch.ADDRESS_LINE' | translate }} 2</label>
+                        </div>
+                        <div class="col-md-4 roleAB">
+                            <input name="line2" type="text" class="form-control"
+                                   data-ng-model="branch.address.line2" id="addressline2"
+                                   placeholder="{{ 'locations.branch.LINE2' | translate }}" required>
+                        </div>
+                        <div class="col-md-2 pull-left roleAB">
+                            <label mean-token="'new-title'">{{ 'locations.branch.CITY' | translate }}</label>
+                        </div>
+                        <div class="col-md-4 roleAB">
+                            <input name="city" type="text"
+                                   class="form-control col-md-3" data-ng-model="branch.address.city"
+                                   id="address.city" placeholder="{{ 'locations.branch.CITY' | translate }}" required>
+                        </div>
+                        <div class="col-md-2 pull-left roleAB">
+                            <label mean-token="'new-title'">{{ 'locations.branch.STATE' | translate }}</label>
+                        </div>
+                        <div class="col-md-4 roleAB">
+                            <input name="state" type="text"
+                                   class="form-control col-md-3" data-ng-model="branch.address.state"
+                                   id="branch.address.state" placeholder="{{ 'locations.branch.STATE' | translate }}" required>
+                        </div>
+                        <div class="col-md-2 pull-left roleAB">
+                            <label mean-token="'new-title'">{{ 'locations.branch.COUNTRY' | translate }}</label>
+                        </div>
+                        <div class="col-md-4 roleAB">
+                            <input name="country" type="text"
+                                   class="form-control col-md-3" data-ng-model="branch.address.country"
+                                   id="branch.address.country" placeholder="{{ 'locations.branch.COUNTRY' | translate }}" required>
+                        </div>
+                        <div class="col-md-2 pull-left roleAB">
+                            <label mean-token="'new-title'">{{ 'locations.branch.PINCODE' | translate }}</label>
+                        </div>
+                        <div class="col-md-4 roleAB">
+                            <input name="pincode" type="text"
+                                   class="form-control col-md-3" data-ng-model="branch.address.pincode"
+                                   id="address.pincode" placeholder="{{ 'locations.branch.PINCODE' | translate }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error' : submitted && branchForm.name.$invalid }">
+                <label mean-token="'create-PhoneNumber'" class="col-md-2 pull-left">{{ 'locations.branch.PHONE_NUMBER' | translate }}</label>
+
+                <div class="col-md-1 ">
+                    <input name="line1" type="text" class="form-control"
+                           data-ng-model="branch.PhoneNumber.pre" id="addressline1"
+                           placeholder="{{ 'locations.branch.PRE' | translate }}" required>
+                </div>
+
+                <div class="col-md-3">
+                    <input name="line2" type="number" class="form-control"
+                           data-ng-model="branch.PhoneNumber.number" id="addressline2"
+                           placeholder="{{ 'locations.branch.NUMBER' | translate }}" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'create-picture'" class="col-md-2 pull-left">{{ 'locations.branch.PICTURE' | translate }}</label>
+
+                <div class="col-md-6">
+                    <div class="col-sm-4">
+                        <img src="{{branch.picture}}" data-ng-if="branch.picture" width="50px" height="50px">
+                    </div>
+                    <div>
+                        <form name="uploadPictureForm" class="form-horizontal col-md-12" role="form" novalidate>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="btn btn-info" ngf-select ngf-change="onBranchFileSelect($files)" accept="image/png, image/jpeg"> {{ 'common.UPLOAD' | translate }}</div>
+                                    <span data-ng-if="uploadInProgress">{{ 'common.UPLOAD_PROGRSS' | translate }}: {{uploadProgress }}</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div ng-include="'/branch/views/availableAdmins.html'"></div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-9">
+                    <button mean-token="'edit-submit'" type="submit" class="btn btn-info" ng-click="update(BRANCH.URL_PATH.LISTBRANCH, branchForm.$valid)">{{ 'common.SUBMIT' | translate }}</button>
+                    <button type="button" class="btn btn-info" ng-click="cancel(BRANCH.URL_PATH.LISTBRANCH,cityId)">
+                         {{ 'common.CANCEL' | translate }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+

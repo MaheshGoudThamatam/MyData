@@ -1,0 +1,200 @@
+<section data-ng-controller="AdminsMentorController" data-ng-init=" loadMentor()">
+ 	<div data-ng-include="'/profile/views/profile-header.html'"></div>
+	<div class="anchorTag mainwrapper san">
+		<div class="col-md-4">
+ 			<button href="#" class="btn btn-default"><i class="fa fa-users"></i>&nbsp;&nbsp;200</button>
+        	<a href="#" class="btn btn-default pull-right"><i class="fa fa-thumbs-o-up">&nbsp;&nbsp;200</i></a>
+	        <hr>
+    	    <h3><p align="center"><i class="fa fa-flag">&nbsp;{{profileuser.country_user}}</i></p></h3>
+		</div>
+    	<div class="col-md-4">
+    		<h5 class="pull-left fullwidth"><b>First Name:  </b>{{mentor.firstName}}</h5><br>
+    		<h5 class="pull-left fullwidth"><b>Date of birth:  </b>{{mentor.dob|date:'dd-MMM-yyyy'}}</h5>
+    		<h5 class="pull-left fullwidth"><b>Email id:  </b>{{mentor.email}}</h5>
+    	</div>
+    	<div class="col-md-4">
+        	<h5 class="pull-left fullwidth"><b>Last Name:  </b>{{mentor.lastName}}</h5>
+        	<h5 class="pull-left fullwidth"><b>Contact Number: </b>{{mentor.phonePre}}-{{mentor.phoneNumber}}</h5>
+        	<h5 class="pull-left fullwidth"><b>Gender:  </b>{{mentor.gender}}</h5>
+        </div>
+        <hr class="line_break">
+	</div>
+	<div class="mainwrapper anchorTag margnbottom">
+ 		<h3>Contact Details</h3>
+		<div ng-repeat="address in mentor.address">
+			<div class="mainwrapper anchorTag">
+				<div class="col-md-4 row wor">
+					<p class="fullwidth"><label>Address Type:&nbsp;</label>{{address.addressType}}</p>
+				</div>
+				<div class="col-md-4">
+					<p class="fullwidth"><label>Address 1:&nbsp;</label>{{address.addressLine1}}</p>
+				</div>
+				<div class="col-md-4">
+					<p class="fullwidth"><label>Address 2:&nbsp;</label>{{address.addressLine2}}</p>
+				</div>					
+			</div>
+			<div class="mainwrapper anchortag qualification">
+				<div class="col-md-4 row wor">
+					<p><label>City:&nbsp;</label>{{address.city}}&nbsp;&nbsp;<label>State:&nbsp;</label>{{address.state}}</p>
+				</div>
+				<div class="col-md-4">
+					<p class="fullwidth"><label>Country:&nbsp;</label>{{address.country}}</p>
+				</div>
+				<div class="col-md-4">
+					<p class="fullwidth"><label>Pincode:&nbsp;</label>{{address.pincode}}</p>
+				</div>
+			</div>
+			<hr class="line_break">
+		</div>
+	</div>
+  	<div class="anchorTag mainwrapper margnbottom">
+  		<h3>Qualifications</h3>
+		<div ng-repeat="qualification in mentor.qualification_details">
+			<div class="mainwrapper anchorTag">
+				<div class="col-md-4 row wor">
+					<p class="fullwidth"><label>Examination:&nbsp;</label>{{qualification.examination}}</p>
+				</div>
+				<div class="col-md-4">
+					<p class="fullwidth"><label>Institution:&nbsp;</label>{{qualification.institution}}</p>
+				</div>
+				<div class="col-md-4">
+					<p class="fullwidth"><label>University:&nbsp;</label>{{qualification.university}}</p>
+				</div>
+			</div>
+			<div class="mainwrapper anchortag qualification">
+				<div class="col-md-4 row wor">
+					<p class="fullwidth"><label>Year of Passing:&nbsp;</label>{{qualification.year_of_passing}}</p>
+				</div>
+				<div class="col-md-2">
+					<p class="fullwidth"><label>Grade:&nbsp;</label>{{qualification.grade_obtained}}</p>
+				</div>
+				<div class="col-md-2">
+					<p class="fullwidth"><label>Marks:&nbsp;</label>{{qualification.percentage_of_marks}}</p>
+				</div>
+				<div class="col-md-4">
+					<p class="fullwidth"><label>Specialisation:&nbsp;</label>{{qualification.specialisation}}</p>
+				</div>
+				<hr class="line_break">
+			</div>
+		</div>
+	</div>
+	<div class="anchorTag mainwrapper margnbottom">
+		<h3>Experience Details</h3>
+		<div ng-repeat="experience in mentor.experience_details">
+			<div class="mainwrapper anchorTag">
+				<div class="col-md-4 row wor">
+					<p class="fullwidth"><label>Employer:&nbsp;</label>{{experience.employer}}</p>
+				</div>
+				<div class="col-md-6">
+					<p class="fullwidth"><label>Designation:&nbsp;</label>{{experience.designation}}</p>
+				</div>
+			</div>
+			<div class="mainwrapper anchorTag qualification">
+				<div class="col-md-4 row wor">
+					<p class="fullwidth"><label>Start Date:&nbsp;</label>{{experience.start_date|date:'dd-MMM-yyyy'}}</p>
+				</div>
+				<div class="col-md-4">
+					<p class="fullwidth"><label>End Date:&nbsp;</label>{{experience.end_date|date:'dd-MMM-yyyy'}}</p>
+				</div>
+				<!-- <div class="col-md-3">
+					<p>Duration: {{getDuration(experience.start_date, experience.end_date)}}</p>
+				</div> -->
+				<hr class="line_break">
+			</div>
+		</div>
+	</div>
+	<div class="anchorTag mainwrapper margnbottom">
+		<h3>References/Recommendation</h3>
+		<div ng-repeat="reference in mentor.references">
+			<div class="col-md-4 row wor">
+				<p class="fullwidth"><label>Reference Name:&nbsp;</label>{{reference.ref_name}}</p>
+			</div>
+			<div class="col-md-4">
+				<p class="fullwidth"><label>Reference Phone Number:&nbsp;</label>{{reference.ref_phno}}</p>
+			</div>	
+			<div class="col-md-4">
+				<p class="fullwidth"><label>Comments:&nbsp;</label>{{reference.comments}}</p>
+			</div>
+			<hr class="line_break">
+		</div>
+	</div>
+	<div class="anchorTag mainwrapper margnbottom">
+		<h3 class="pull-left">Skills</h3>
+		<div class="col-md-12 row"><li class="mentorskill" ng-repeat="skill in mentor.skills">{{skill.name}}</li></div>
+		<hr class="line_break">
+	</div>
+	<div class="col-md-12 row">
+		<h3>Documents</h3>
+		<div data-ng-repeat="document in mentor.additional_documents">
+			<p class="fullwidth"><label>Name:&nbsp;</label>{{document.doc_name}}&nbsp;&nbsp;&nbsp;
+			<a target="_blank" class="btn btn-info" href="{{document.doc_file}}">Click here</a></p>
+			<hr class="line_break">
+		</div>
+	</div>
+	<div class="col-md-12 row">
+		<h3>Projects</h3>
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th class="text-center">Project Id</th>
+					<th class="text-center">Project Title</th>
+					<th class="text-center">Start Date</th>
+					<th class="text-center">End Date</th>
+					<th class="text-center">Feedback</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="text-right">1287</td>
+					<td>Android Application</td>
+					<td>12 Nov 2005</td>
+					<td>15 Feb 2006</td>
+					<td>Very </td>
+				</tr>
+			</tbody>
+		</table>
+		<hr class="line_break">
+	</div>
+	<div class="col-md-12 row">
+		<h3>Online Tests</h3>
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th class="text-center">Test Id</th>
+					<th class="text-center">Assessment Title</th>
+					<th class="text-center">Technology</th>
+					<th class="text-center">Taken on</th>
+					<th class="text-center">Score (out of 100)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="text-center">1398</td>
+					<td>Android Application Learner</td>
+					<td>Javascript, Android adb tools</td>
+					<td>15 Oct 2005</td>
+					<td class="text-center">77</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div data-ng-hide="mentorRequest.user_status == 'Accepted'">
+		<form name="mentorshipCommentForm" novalidate>
+			<div class="col-md-10 row" ng-class="{ 'has-error' : submitted && mentorshipCommentForm.mentorcomment.$invalid }">
+				<textarea name="mentorcomment" type="text" ng-model="comments" class="form-control" placeholder="{{ 'mentor.COMMENTS' | translate }}" rows="4" cols="50" id="mentorcomment" ng-required="true"></textarea>
+				<div ng-show="submitted && mentorshipCommentForm.mentorcomment.$invalid">
+					<span class="err-msg red"> {{ 'mentor.error_messages.COMMENTS' | translate }}</span>
+				</div>
+			</div>
+		</form>
+		</br>
+		<div class="col-md-10 row">
+			<div class="btn btn-info mentor_request" ng-disabled="mentorshipCommentForm.$invalid" ng-click="acceptOrDecline(mentorshipCommentForm.$valid, comments, 'Accepted')" type="submit">Accept</div>
+			<div class="btn btn-info mentor_request" ng-disabled="mentorshipCommentForm.$invalid" ng-click="acceptOrDecline(mentorshipCommentForm.$valid, comments, 'Declined')" type="submit">Decline</div>
+			<div class="btn btn-info mentor_request" ng-click="testAssignment()">Assign Test</div>
+		</div>
+	</div>
+	<div data-ng-show="mentorRequest.user_status == 'Accepted'" class="col-md-6">
+		<div class="btn btn-info pull-right" ng-click="mentorlist()">Go Back</div>
+	</div>
+</div>

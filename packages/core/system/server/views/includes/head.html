@@ -1,0 +1,55 @@
+<head>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="fragment" content="!">
+
+    <title>{{appName}} - {{title}}</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta name="keywords" content="node.js, express, mongoose, mongodb, angularjs, swig">
+    <meta name="description" content="CodersTrust : A public portal get study and find jobs.">
+
+    <meta property="fb:app_id" content="APP_ID">
+    <meta property="og:title" content="{{appName}} - {{title}}">
+    <meta property="og:description" content="CodersTrust : A public portal get study and find jobs.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="APP_URL">
+    <meta property="og:image" content="APP_LOGO">
+    <meta property="og:site_name" content="CodersTrust : A public portal get study and find jobs.">
+    <meta property="fb:admins" content="APP_ADMIN">
+
+    <!-- {{locals.config.cssFramework}} -->
+    <link rel="stylesheet" href="/system/assets/css/font-awesome.min.css">
+    <link href="/system/assets/css/pace-theme-flash.css" rel="stylesheet" type="text/css" media="screen"/>
+
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/system/assets/css/app.css">
+    <link rel="stylesheet" data-ng-href="/system/assets/css/themes/lyt1-theme-5.css" />
+
+    <!-- CORE CSS FRAMEWORK - END -->
+
+    <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - START -->
+    <!-- OTHER SCRIPTS INCLUDED ON THIS PAGE - END -->
+
+    <!-- CORE CSS TEMPLATE - START -->
+
+    <link href="/system/assets/css/responsive.css" rel="stylesheet" type="text/css"/>
+
+
+    {% for file in aggregatedassets.header.css %}
+    <link rel="stylesheet" href="{{file}}">
+    {% endfor %} {% for file in aggregatedassets.footer.css %}
+    <link rel="stylesheet" href="{{file}}">
+    {% endfor %} {% for file in aggregatedassets.header.js %}
+    <script type="text/javascript" src="{{file}}"></script>
+    {% endfor %}
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+
+<link rel="stylesheet" href="/bower_components/jquery-ui/themes/base/jquery-ui.min.css">
+
+</head>

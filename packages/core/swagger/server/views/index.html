@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Swagger UI</title>
+    <link href='//fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'/>
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link href='/swagger/assets/css/reset.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='/swagger/assets/css/screen.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='/swagger/assets/css/reset.css' media='print' rel='stylesheet' type='text/css'/>
+    <link href='/swagger/assets/css/screen.css' media='print' rel='stylesheet' type='text/css'/>
+    <link href='/system/assets/css/common.css' media='screen' rel='stylesheet' type='text/css'/>
+    <link href='/system/assets/css/common.css' media='print' rel='stylesheet' type='text/css'/>
+    <script type="text/javascript" src="/swagger/assets/js/lib/shred.bundle.js"></script>
+    <script src='/swagger/assets/js/lib/jquery-1.8.0.min.js' type='text/javascript'></script>
+    <script src='/swagger/assets/js/lib/jquery.slideto.min.js' type='text/javascript'></script>
+    <script src='/swagger/assets/js/lib/jquery.wiggle.min.js' type='text/javascript'></script>
+    <script src='/swagger/assets/js/lib/jquery.ba-bbq.min.js' type='text/javascript'></script>
+    <script src='/swagger/assets/js/lib/handlebars-1.0.0.js' type='text/javascript'></script>
+    <script src='/swagger/assets/js/lib/underscore-min.js' type='text/javascript'></script>
+    <script src='/swagger/assets/js/lib/backbone-min.js' type='text/javascript'></script>
+    <script src='/swagger/assets/js/lib/swagger.js' type='text/javascript'></script>
+    <script src='/swagger/assets/js/swagger-ui.js' type='text/javascript'></script>
+    <script src='/swagger/assets/js/lib/highlight.7.3.pack.js' type='text/javascript'></script>
+
+    <!-- enabling this will enable oauth2 implicit scope support -->
+    <script src='/swagger/assets/js/lib/swagger-oauth.js' type='text/javascript'></script>
+
+    <script type="text/javascript">
+        $(function () {
+            window.swaggerUi = new SwaggerUi({
+                url: '{{endpoint}}',
+                dom_id: "swagger-ui-container",
+                supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
+                onComplete: function (swaggerApi, swaggerUi) {
+                    log("Loaded SwaggerUI");
+
+                    if (typeof initOAuth == "function") {
+                        /*
+                         initOAuth({
+                         clientId: "your-client-id",
+                         realm: "your-realms",
+                         appName: "your-app-name"
+                         });
+                         */
+                    }
+                    $('pre code').each(function (i, e) {
+                        hljs.highlightBlock(e)
+                    });
+                },
+                onFailure: function (data) {
+                    log("Unable to Load SwaggerUI");
+                },
+                docExpansion: "none",
+                sorter: "alpha"
+            });
+
+            window.authorizations.add("key", new ApiKeyAuthorization("authorization", 'Bearer ' + window.localStorage.getItem('JWT'), "header"));
+            window.swaggerUi.load();
+        });
+    </script>
+</head>
+
+<body class="swagger-section">
+<nav class="navbar navbar-inverse navbar-fixed-top" data-role="navigation">
+    <div class="page-header">
+        <div class="navbar-header">
+            <div class="logo pull-left">
+                <button type="button" class="navbar-toggle" ng-click="isCollapsed = !isCollapsed">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" ui-sref="home" mean-token="'site-title'"><img
+                        src="/system/assets/img/codertrustlogo.png" width="180"/> </a>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse" ng-class="!isCollapsed && 'in'">
+            <div class="left pull-left">
+                <ul class="navbar-nav nav">
+                    <li><a href="/course/courseList">Courses</a></li>
+                    <li><a href="">Students</a></li>
+                    <li><a href="">Press</a></li>
+                    <li><a href="">Events</a></li>
+                    <li><a href="">Quotes</a></li>
+                    <li><a href="">About</a></li>
+                    <li><a href="">How it works</a></li>
+                    <li><a href="">Career</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="swagger-title">
+    <div class="project-title">CoderTrust API</div>
+    <div class="project-desc">CoderTrust API</div>
+</div>
+<div id="message-bar" class="swagger-ui-wrap">&nbsp;</div>
+<div class="swagger-title">
+    <div class="api-title">API Details</div>
+</div>
+<div id="swagger-ui-container" class="swagger-ui-wrap"></div>
+<div class="show-div footer">
+    <div  class="copyright">&copy; Copyright Coder Trust</div>
+</div>
+</body>
+</html>

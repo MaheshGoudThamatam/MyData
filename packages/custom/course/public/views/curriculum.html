@@ -1,0 +1,82 @@
+<section data-ng-controller="ListCourseUserController" ng-init = "coursesBasedonUsers();listonUsers();">
+<div class="col-sm-12">
+<div ng-if="USER" ng-include="'/system/views/breadcrum.html'"></div>
+ <ul class="nav nav-tabs">
+    <li><a href="/course/courseList">Available Courses</a></li>
+    <li class="active"><a href="/mycourse/curriculum">MyCourses</a></li>
+    <li><a href="/mycourse/courseRequests" ng-if = "USER">MyRequests</a></li>
+    <li><a href="/student/counsellingStatus" ng-if = "USER">My Counselling Requests</a></li>
+  </ul>
+ </div>
+   <div class="col-xs-12 row social-group-header">
+			<h3 class="pull-left ">My Courses</h3>
+			
+		</div>
+		<div class="col-sm-12 row">
+				<div class="col-sm-4 profiles"
+					data-ng-repeat="course in courses">
+					<i class="fa fa-book user-font-course text-center"></i>
+					<p>   {{course.course.paymentschedule}}  
+						<b>Name:{{course.course.name}}</b>
+					</p>
+					<p>Description:{{course.course.description | limitTo:
+						20}}</p>
+					<p>Cost Type:{{course.course.costType}}</p>
+					<p> 
+					<a class="btn btn-info" data-ng-click="myCourseDetails(COURSE.URL_PATH.MYCOURSEDETAILS ,course.course)">Details</a>
+					</p>
+				<!-- 	<p>
+						<a class="btn btn-info" data-ng-click="loguser(course._id)">Enroll</a>
+					</p> -->
+				</div>
+		</div>
+<!-- FUTURE REFERENCE     <ul class="nav nav-tabs">
+	<li class="active"><a href="/mycourse/curriculum">Curriculum</a></li>
+	<li><a href="/course/coursematerials" data-toggle="tab">Course
+			materials</a></li>
+	<li><a href="/course/schedule">Schedule</a></li>
+	<li><a href="/course/mentor">Mentor</a></li>
+	<li><a href="/course/batchmates">Batchmates</a></li>
+	<li><a href="/course/test">Test</a></li>
+</ul> -->
+<!-- <div class="row course-top1">
+	<div class="col-md-12">
+		<h3>Curriculum</h3>
+		<table class="table table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>Session</th>
+					<th>Duration</th>
+					<th>Hours/day</th>
+					<th>Start Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="">
+					<td>Session 1(HTML)</td>
+					<td>30 Days</td>
+					<td>3hrs</td>
+					<td>15th December 2015</td>
+				</tr>
+				<tr class="">
+					<td>Session 2(CSS)</td>
+					<td>30 Days</td>
+					<td>3hrs</td>
+					<td>15th January 2015</td>
+				</tr>
+				<tr class="">
+					<td>Session 3(Boostrap)</td>
+					<td>30 Days</td>
+					<td>3hrs</td>
+					<td>15th March 2016</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div> -->
+<div class="col-md-6" data-ng-show=" !courses || courses.length"
+		class="paginate usr">
+		<div ng-include="'system/views/paginationFilter.html'"></div>
+		<br>
+	</div>
+</section>

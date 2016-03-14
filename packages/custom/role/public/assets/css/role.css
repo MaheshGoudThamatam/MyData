@@ -1,0 +1,54 @@
+.role-example h1 {
+  background-color: purple
+}
+/**
+**
+To display Error Messages-Steffi
+*/
+.errorRed{
+	color:red;
+}
+
+.showModal{
+	z-index:9999;
+	width: 350px;
+}
+.viewRole{
+    margin-top: 6px;
+}
+
+
+.roleCreate{
+margin-top: 10px;
+
+}
+.modal-margntop{
+	margin-top:50%;
+}
+
+.fetureAlign{
+	margin-left:-13px;
+}
+.leftAlign{
+	    margin-top: 61px;
+}
+.formAlign{
+margin-top: 80px;
+}
+
+.formCountry{
+	margin-top: 20px;
+	margin-left: -13px;
+}
+
+
+.projectUrl{
+	margin-left:15px;
+}
+
+.editfeature{
+	    margin-top: 50px;
+}
+.roleAB{
+	margin-bottom:10px;
+}

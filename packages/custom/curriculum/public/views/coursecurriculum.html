@@ -1,0 +1,808 @@
+<div data-ng-controller="CourseTopicController"
+	ng-init="findCourse();findCurriculum();curriculumBreadCrum();findProject();">
+	<div data-ng-include="'/system/views/alert.html'"></div>
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div>
+		<h2 class="mainwrapper">{{course.name}} Curriculum</h2>
+	</div>
+	<div>
+		<div ng-repeat="topics in collection | orderBy:'sequence'">
+			<div class="col-md-12">
+				<div class="col-md-6" ng-show="topics.topic">
+				<div class="col-md-12">
+					<div class="col-md-6"><h3>{{$index+1}}. {{topics.topic.name}}</h3></div>
+					<div class="col-md-4 test"><h4>{{topics.topic.topicSkill.name}}</h4></div>
+					<div class="col-md-2 test"><h4>{{topics.topic.level}}</h4></div>
+				</div>	
+					
+				</div>
+				<div class="col-md-6" ng-show="topics.test">
+					<div class="col-md-12">
+						<div class="col-md-12">
+							<h3>{{$index+1}}. {{topics.test.name}}</h3>							
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6" ng-show="topics.project">
+					<div class="col-md-12">
+						<div class="col-md-12"><h3>{{$index+1}}. {{topics.project.projectName}}</h3></div>
+					</div>
+				</div>
+				<div class="col-md-6 test">
+					<div class="col-md-1">
+						<a href="" ng-click="editTopic(topics._id,$index)"
+							ng-if="updatePermission" ng-show="topics.topic"> <i
+							class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip"
+							data-placement="bottom" data-tooltip="Edit"></i>
+						</a> <a href="" ng-click="Testedit(topics._id,$index)"
+							ng-if="updatePermission" ng-show="topics.test"> <i
+							class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip"
+							data-placement="bottom" data-tooltip="Edit"></i>
+						</a> <a href="" ng-click="projectedit(topics._id,$index)"
+							ng-if="updatePermission" ng-show="topics.project"> <i
+							class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip"
+							data-placement="bottom" data-tooltip="Edit"></i>
+						</a>
+					</div>
+					<div class="col-md-1">
+						<a href="" class="linksGap"><i
+							data-ng-click="modalDeletePopup(topics)" ng-if="deletePermission"
+							class="fa fa-minus-circle tooltip-right" data-toggle="tooltip"
+							data-placement="bottom" data-tooltip="Delete"></i> </a>
+					</div>
+					<div class="col-md-2" ng-show="topics.topic">
+						<a ng-click="addSubTopic(topics.sequence,topics.topic._id,$index)"
+							ng-if="writePermission"
+							data-ng-init="findSubTopics(topics,$index)"> <span
+							class="fa fa-plus-circle" data-toggle="tooltip"
+							data-placement="bottom" data-tooltip="Add SubTopic"></span>
+						</a>
+					</div>
+				</div>
+				<div ng-show="isEdit[$index]" class="col-md-12">
+					<div class="col-md-12">
+						<ng-form name="editTopicForm" novalidate>
+						<div class="col-md-4 test">
+							<label mean-token="'new-title'" class="col-md-4">Topic
+								Name</label> <input name="topicName" type="text"
+								class="skilldrop col-md-8" data-ng-model="topics.topic.name"
+								id="topicName" placeholder="Topic Name" required>
+							<div data-ng-show="submitted && editTopicForm.topicName.$invalid">
+								<span class="err-msg red"
+									ng-show="editTopicForm.topicName.$error.required">
+									Please enter the Topic Name </span>
+							</div>
+						</div>
+						<div class="col-md-3 test">
+							<label mean-token="'new-title'" class="col-md-4">Skill</label> <select
+								name="topicSkill" class="skilldrop col-md-8" ng-options="skilllist.name for skilllist in courseSkill track by skilllist._id"
+								ng-model="topics.topic.topicSkill" required><option
+									style="display: none" value="">{{topics.topic.topicSkill}}</option>
+								<!-- <option ng-repeat="skilllist in courseSkill"
+									value="{{skilllist._id}}">{{skilllist.name}}</option> -->
+							</select>
+							<div
+								data-ng-show="submitted && editTopicForm.topicSkill.$invalid">
+								<span class="err-msg red"
+									ng-show="editTopicForm.topicSkill.$error.required">
+									Please select the skill </span>
+							</div>
+						</div>
+						<div class="col-md-2 test">
+							<label mean-token="'new-title'">Level</label> <select
+								class="skilldrop" name="level"
+								ng-options="level.option as level.value for level in skillLevel"
+								name="level" ng-model="topics.topic.level" required><option
+									style="display: none" value="">{{topics.topic.level}}</option>
+							</select>
+							<div data-ng-show="submitted && editTopicForm.level.$invalid">
+								<span class="err-msg red"
+									ng-show="editTopicForm.level.$error.required"> Please
+									select the level </span>
+							</div>
+						</div>
+
+
+						<div class="col-md-3 test">
+							<button
+								ng-click="update(topics,$index,CURRICULUM.URL_PATH.CURRICULUMLIST,editTopicForm)">
+								Update Topic</button>
+							<button ng-click="cancel(CURRICULUM.URL_PATH.CURRICULUMLIST)">Cancel</button>
+						</div>
+					</div>
+					</ng-form>
+				</div>
+			</div>
+			<!-- 	End of edit topic -->
+
+			<div ng-show="testEdit[$index]">
+				<span ng-init="topicIndex=$index"></span>
+				<div class="row">
+					<ng-form name="optionTestEdit" class="col-md-12">
+					<div class="col-md-3 test">						
+						<label mean-token="'new-title'">Test</label> <select class="skilldrop"
+							name="testName" ng-model="topics.test._id" required>
+							<option ng-repeat="onlinetest in onlinetests"
+								value="{{onlinetest.test._id}}">{{onlinetest.test.name}},{{onlinetest.skill}},{{onlinetest.start}},{{onlinetest.end}}</option>
+						</select>
+						<div data-ng-show="submitted && optionTestEdit.testName.$invalid">
+							<span class="err-msg red"
+								ng-show="optionTestEdit.testName.$error.required"> Please
+								enter the Test Name </span>
+						</div>
+					</div>
+
+					<div class="col-md-5 test">
+						<label mean-token="'new-title'" class="col-md-2">TestType</label>
+						<div class="col-md-10">{{topics.testType}}</div>						
+					</div>
+
+					<div class="col-md-2 test">
+						<button
+							ng-click="update(topics,$index,CURRICULUM.URL_PATH.CURRICULUMLIST,optionTestEdit)">
+							Update Test</button>
+						<button ng-click="cancel(CURRICULUM.URL_PATH.CURRICULUMLIST)">Cancel</button>
+					</div>
+					</ng-form>
+				</div>
+			</div>
+			<!-- 	EDit test form -->
+
+			<!-- /********edit project into the course********/  -->
+
+			<div class="row col-md-12" ng-show="projectEdit[$index]"
+				class="courseButtn">
+
+				<ng-form name="assignmentFormEdit">
+				<div class="col-md-3 test">
+					<label mean-token="'new-title'">Project</label> <select
+						class="drop1" name="projectName" ng-model="topics.project._id"
+						required>
+						<option value=""></option>
+						<option ng-repeat="assignment in courseProjects"
+							value="{{assignment._id}}">{{assignment.projectName}}</option>
+					</select>
+					<div
+						data-ng-show="submitted && assignmentFormEdit.projectName.$invalid">
+						<span class="err-msg red"
+							ng-show="assignmentFormEdit.projectName.$error.required">
+							Please enter the Project Name </span>
+					</div>
+
+				</div>
+				<div class="col-md-4 test">
+					<button
+						ng-click="update(topics,$index,CURRICULUM.URL_PATH.CURRICULUMLIST,assignmentFormEdit)">
+						Update Project</button>
+					<button ng-click="cancel(CURRICULUM.URL_PATH.CURRICULUMLIST)">Cancel</button>
+				</div>
+				</ng-form>
+			</div>
+			<!-- 	EDit project form -->
+
+			<div class="col-md-12">
+			<div ng-repeat="subtopic in topics.topic.subtopic" class="col-md-12">
+				<div ng-show="topics.topic._id == subtopic.parent._id" class="subtopicAlignment">
+					<div class="col-md-12">
+						<div class="col-md-4">
+							<h4>{{$index+1}}.{{subtopic.name}}</h4>
+						</div>
+						<div class="col-md-8">
+							<div class="col-md-1 subTopic">
+								<a href="" ng-if="updatePermission"
+									ng-click="EditSubTopic(topics.sequence,subtopic._id,$index)">
+									<i class="fa fa-pencil-square-o tooltip-right"
+									data-toggle="tooltip" data-placement="bottom"
+									data-tooltip="Edit"></i>
+								</a>
+							</div>
+							<div class="col-md-1 subTopic">
+								<a href="" ng-if="deletePermission" class="linksGap"> <i
+									data-ng-click="modalDeletePopup(subtopic)"
+									class="fa fa-minus-circle tooltip-right" data-toggle="tooltip"
+									data-placement="bottom" data-tooltip="Delete"></i>
+								</a>
+							</div>
+						</div>
+						<div ng-show="isEditSub[$index]&&topicSequence[topics.sequence]">
+							<span ng-init="subtopicIndex=$index"></span>
+							<div class="row">							
+								<div class="col-md-12">
+									<ng-form name="subTopicFormEdit">
+									<div class="form-group col-md-12">
+										<label mean-token="'-name'" class="col-md-2 pull-left">Topic
+											Name</label>
+										<div class="col-md-6">
+											<input name="topicName" type="text" class="form-control"
+												data-ng-model="topic.name" id="topicName"
+												placeholder="Topic Name" required>
+											<div
+												ng-show="submitted && subTopicFormEdit.topicName.$invalid">
+												<span class="err-msg red"
+													ng-show="subTopicFormEdit.topicName.$error.required">
+													Please enter the Topic Name </span>
+											</div>
+										</div>
+									</div>
+									<div class="form-group col-md-12">
+										<label mean-token="'create-description'"
+											class="col-md-2 pull-left">Description</label>
+										<div class="col-md-6">
+											<textarea name="description"
+												data-ng-model="topic.description" id="description" cols="30"
+												rows="5" placeholder="Description" class="form-control"
+												required></textarea>
+											<div
+												ng-show="submitted && subTopicFormEdit.description.$invalid">
+												<span class="err-msg red"
+													ng-show="subTopicFormEdit.description.$error.required">
+													Please enter the Description </span>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group col-md-12">
+										<label mean-token="'create-branchCode'"
+											class="col-md-2 pull-left">Session Hours</label>
+										<div class="col-md-6">
+											<div class="col-md-4">
+												<input name="sessionHrs" type="number" min="0"
+													data-ng-model="topic.sHr" id="sessionHrs"
+													placeholder="Hours" class="form-control" required>
+												<div
+													ng-show="submitted && subTopicFormEdit.sessionHrs.$invalid">
+													<span class="err-msg red"
+														ng-show="subTopicFormEdit.sessionHrs.$error.required">
+														Please enter the Hours </span>
+												</div>
+											</div>
+											<div class="col-md-4">
+											 <select class="form-control" ng-options="minitues.option as minitues.value for minitues in minitues" name="sessionMin" data-ng-model="topic.sMin" placeholder="Minitues" id="sessionMin" required>		
+											 <option
+									style="display: none" value="">{{topic.sMin}}</option>										
+											</select>												
+												<div
+													ng-show="submitted && subTopicFormEdit.sessionMin.$invalid">
+													<span class="err-msg red"
+														ng-show="subTopicFormEdit.sessionMin.$error.required">
+														Please enter the Minutes </span>
+												</div>
+
+											</div>
+										</div>
+									</div>
+									<div class="form-group col-md-12">
+										<label mean-token="'create-branchCode'"
+											class="col-md-2 pull-left">Lab Hours</label>
+										<div class="col-md-6">
+											<div class="col-md-4">
+												<input name="labHrs" type="number" min="0"
+													data-ng-model="topic.lHr" id="labHrs" cols="30" rows="5"
+													placeholder="Hours" class="form-control" required>
+												<div ng-show="submitted && subTopicFormEdit.labHrs.$invalid">
+													<span class="err-msg red"
+														ng-show="subTopicFormEdit.labHrs.$error.required">
+														Please enter the Hours </span>
+												</div>
+											</div>
+											<div class="col-md-4">
+											 <select class="form-control" name="labMin" ng-options="minitues.option as minitues.value for minitues in minitues" data-ng-model="topic.lMin" placeholder="Minitues" id="labMin" required>												
+											 <option
+									style="display: none" value="">{{topic.lMin}}</option>		
+											</select>												
+												<div ng-show="submitted && subTopicFormEdit.labMin.$invalid">
+													<span class="err-msg red"
+														ng-show="subTopicFormEdit.labMin.$error.required">
+
+														Please enter the Minutes </span>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="form-group col-md-12">
+										<label mean-token="'create-branchCode'"
+											class="col-md-2 pull-left">Assignment Hours</label>
+										<div class="col-md-6">
+											<div class="col-md-4">										
+												<input name="assignmentHrs" type="number" min="0"
+													data-ng-model="topic.aHr" id="assignmentHrs" cols="30"
+													rows="5" placeholder="Hours" class="form-control" required>
+												<div
+													ng-show="submitted && subTopicFormEdit.assignmentHrs.$invalid">
+													<span class="err-msg red"
+														ng-show="subTopicFormEdit.assignmentHrs.$error.required">
+														Please enter the Hours </span>
+												</div>
+
+											</div>
+											<div class="col-md-4">
+												<select class="form-control" ng-options="minitues.option as minitues.value for minitues in minitues" name="assignmentMin" data-ng-model="topic.aMin" placeholder="Minitues" id="assignmentMin" required>												
+											 <option
+									style="display: none" value="">{{topic.aMin}}</option>		
+											</select>													
+												<div
+													ng-show="submitted && subTopicFormEdit.assignmentMin.$invalid">
+													<span class="err-msg red"
+														ng-show="subTopicFormEdit.assignmentMin.$error.required">
+														Please enter the Minutes </span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6 text-center">
+										<button
+											ng-click="updateSubtopic(topics.sequence,$index,CURRICULUM.URL_PATH.CURRICULUMLIST,subTopicFormEdit.$valid)">
+											Update Subtopic</button>
+										<button ng-click="cancel(CURRICULUM.URL_PATH.CURRICULUMLIST)">Cancel</button>
+									</div>
+									</ng-form>
+								</div>
+
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			</div>
+			
+
+
+			<div ng-show="isVisible[$index]&&topicSequence[topics.sequence]">
+				<span ng-init="subtopicIndex=$index"></span>
+				<div class="row">
+					<div class="col-md-12">
+						<div ng-repeat="topic in TopicArray.subtopics">
+							<ng-form name="subTopicFormCreate">
+							<div class="form-group col-md-12">
+								<label mean-token="'create-name'" class="col-md-2 pull-left">Topic
+									Name</label>
+								<div class="col-md-6">
+									<input name="topicName" type="text" class="form-control"
+										data-ng-model="topic.name" id="topicName"
+										placeholder="Topic Name" required>
+									<div
+										ng-show="submitted && subTopicFormCreate.topicName.$invalid">
+										<span class="err-msg red"
+											ng-show="subTopicFormCreate.topicName.$error.required">
+											Please enter the Topic Name </span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-md-12">
+								<label mean-token="'create-description'"
+									class="col-md-2 pull-left">Description</label>
+								<div class="col-md-6">
+									<textarea name="description" data-ng-model="topic.description"
+										id="description" cols="30" rows="5" placeholder="Description"
+										class="form-control" required></textarea>
+									<div
+										ng-show="submitted && subTopicFormCreate.description.$invalid">
+										<span class="err-msg red"
+											ng-show="subTopicFormCreate.description.$error.required">
+											Please enter the Description </span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-md-12">
+								<label mean-token="'create-branchCode'"
+									class="col-md-2 pull-left">Session Hours</label>
+								<div class="col-md-6">
+									<div class="col-md-4">
+										<input name="sessionHrs" type="number" min="0"
+											data-ng-model="topic.sHr" id="sessionHrs" placeholder="Hours"
+											class="form-control" required>
+										<div
+											ng-show="submitted && subTopicFormCreate.sessionHrs.$invalid">
+											<span class="err-msg red"
+												ng-show="subTopicFormCreate.sessionHrs.$error.required">
+												Please enter the Hours </span>
+										</div>
+									</div>
+									<div class="col-md-4">
+									 <select class="form-control" name="sessionMin" ng-options="minitues.option as minitues.value for minitues in minitues" data-ng-model="topic.sMin" placeholder="Minitues" id="sessionMin" required>												
+											</select>
+										<div
+											ng-show="submitted && subTopicFormCreate.sessionMin.$invalid">
+											<span class="err-msg red"
+												ng-show="subTopicFormCreate.sessionMin.$error.required">
+												Please enter the Minutes </span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-md-12">
+								<label mean-token="'create-branchCode'"
+									class="col-md-2 pull-left">Lab Hours</label>
+								<div class="col-md-6">
+									<div class="col-md-4">
+										<input name="labHrs" type="number" min="0"
+											data-ng-model="topic.lHr" id="labHrs" cols="30" rows="5"
+											placeholder="Hours" class="form-control" required>
+										<div ng-show="submitted && subTopicFormCreate.labHrs.$invalid">
+											<span class="err-msg red"
+												ng-show="subTopicFormCreate.labHrs.$error.required">
+												Please enter the Hours </span>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<select class="form-control" name="labMin" ng-options="minitues.option as minitues.value for minitues in minitues" data-ng-model="topic.lMin" placeholder="Minitues" id="labMin" required>												
+											</select>
+										<div ng-show="submitted && subTopicFormCreate.labMin.$invalid">
+											<span class="err-msg red"
+												ng-show="subTopicFormCreate.labMin.$error.required">
+												Please enter the Minutes </span>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="form-group col-md-12">
+								<label mean-token="'create-branchCode'"
+									class="col-md-2 pull-left">Assignment Hours</label>
+								<div class="col-md-6">
+									<div class="col-md-4">
+										<input name="assignmentHrs" type="number" min="0"
+											data-ng-model="topic.aHr" id="assignmentHrs" cols="30"
+											rows="5" placeholder="Hours" class="form-control" required>
+										<div
+											ng-show="submitted && subTopicFormCreate.assignmentHrs.$invalid">
+											<span class="err-msg red"
+												ng-show="subTopicFormCreate.assignmentHrs.$error.required">
+												Please enter the Hours </span>
+										</div>
+									</div>
+									<div class="col-md-4">
+										<select name="assignmentMin" class="form-control"
+												ng-options="minitues.option as minitues.value for minitues in minitues"
+												 ng-model="topic.aMin" required>
+											</select> 	
+										<div
+											ng-show="submitted && subTopicFormCreate.assignmentMin.$invalid">
+											<span class="err-msg red"
+												ng-show="subTopicFormCreate.assignmentMin.$error.required">
+												Please enter the Minutes </span>
+										</div>
+									</div>
+								</div>
+								<div ng-show="$last">
+									<div class="col-md-1 test">
+										<button
+											ng-click="topicSubtopics(topics.sequence,topics.topic._id,$index,subTopicFormCreate)">
+											<span class="fa fa-plus-circle" data-toggle="tooltip"
+												data-placement="bottom" data-tooltip="Add Subtopic"></span>
+
+										</button>
+									</div>
+									<div class="col-md-1 test">
+										<button ng-click="removeSubtopic(subtopics)" ng-hide="$first">
+											<span class="fa fa-minus-circle" data-toggle="tooltip"
+												data-placement="bottom" data-tooltip="remove Subtopic"></span>
+
+										</button>
+									</div>
+								</div>
+								<div class="col-md-2 test">
+									<button ng-click="removeSubtopic(subtopics)" ng-hide="$last">
+										<span class="fa fa-minus-circle" data-toggle="tooltip"
+											data-placement="bottom" data-tooltip="remove Subtopic"></span>
+
+									</button>
+								</div>
+							</div>
+
+							<div class="col-md-8 text-center" ng-show="$last">
+								<button
+									ng-click="createSubtopic(topics,TopicArray.subtopics,$index,CURRICULUM.URL_PATH.CURRICULUMLIST,subTopicFormCreate)">
+									Create</button>
+								<button ng-click="cancel(CURRICULUM.URL_PATH.CURRICULUMLIST)">Cancel</button>
+							</div>
+
+							</ng-form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- crate subtopic form end -->
+		</div>
+	</div>
+	<div class="subTopic">
+		<form name="addForm" novalidate>
+			<div ng-repeat="curriculum in curriculumArray.topics"
+				class="col-md-12">
+				<div class="col-md-2 formAlignment">
+					<label mean-token="'new-title'"></label> <select class="drop"
+						name="typename" ng-model="add.name" ng-change="addC(add,$index)">
+						<option value="Topic" ng-selected="true"
+							ng-init="addTopic($index)">Topic</option>
+						<option value="Project">Project</option>
+						<option value="Test">Test</option>
+						<option value="Subtopic">Subtopic</option>
+					</select>
+				</div>
+				<div class="col-md-10">
+					<div ng-show="isTopicSelected && isMore[$index]">
+						<span ng-init="topicIndex=$index"></span>
+
+						<ng-form name="topicForm" novalidate>
+						<div class="form-group">
+							<div class="col-md-4 test">
+								<label mean-token="'new-title'">Topic Name</label> <input
+									name="topicName" type="text" class="skilldrop"
+									data-ng-model="curriculum.name" id="topicName"
+									placeholder="Topic Name" required>
+								<div data-ng-show="submitted && topicForm.topicName.$invalid">
+									<span class="err-msg red"
+										ng-show="topicForm.topicName.$error.required"> Please
+										enter the Topic Name </span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-3 test">
+							<label mean-token="'new-title'">Skill</label> <select
+								name="topicSkill" class="skilldrop skillBox"
+								ng-model="curriculum.topicSkill" required>
+								<option ng-repeat="skilllist in courseSkill"
+									value="{{skilllist._id}}">{{skilllist.name}}</option>
+							</select>
+							<div data-ng-show="submitted && topicForm.topicSkill.$invalid">
+								<span class="err-msg red"
+									ng-show="topicForm.topicSkill.$error.required"> Please
+									select the skill</span>
+							</div>
+						</div>
+						<div class="col-md-2 test">
+							<label mean-token="'new-title'">Level</label> <select
+								name="level" class="skilldrop skillBox"
+								ng-options="level.option as level.value for level in skillLevel"
+								name="level" ng-model="curriculum.level" required>
+							</select>
+							<div data-ng-show="submitted && topicForm.level.$invalid">
+								<span class="err-msg red"
+									ng-show="topicForm.level.$error.required"> Please select
+									the level </span>
+							</div>
+						</div>
+						<div ng-show="$last">
+							<div class="col-md-1 test">
+								<button
+									ng-click="addCurriculum(curriculum,topicForm.$valid,$index+1)">
+									<span class="fa fa-plus-circle" data-toggle="tooltip"
+										data-placement="bottom" data-tooltip="Add Curriculum"></span>
+
+								</button>
+							</div>
+						</div>
+						</ng-form>
+					</div>
+				</div>
+
+				<!-- ********Add test into the course********  -->
+				<div class="col-md-10">
+					<div ng-show="isTestSelected&&isTest[$index]">
+						<span ng-init="topicIndex=$index"></span>
+						<div class="row">
+							<ng-form name="optionTest" novalidate>
+							<div class="col-md-3 formAlignment">
+								<label mean-token="'new-title'">Test</label> <select
+									class="skilldrop" name="testName" ng-model="curriculum.test"
+									required>
+
+									<option ng-repeat="onlinetest in onlinetests"
+										value="{{onlinetest.test._id}}">{{onlinetest.test.name}},{{onlinetest.skill}},{{onlinetest.start}},{{onlinetest.end}}</option>
+								</select>
+								<div data-ng-show="submitted && optionTest.testName.$invalid">
+									<span class="err-msg red"
+										ng-show="optionTest.testName.$error.required"> Please
+										enter the Test Name </span>
+								</div>
+
+							</div>
+							<div class="col-md-5 formAlignment">
+								<label mean-token="'new-title'">TestType</label> <select
+									class="skilldrop" name="typename" ng-model="curriculum.testType" required>
+									<option value="General">General Test</option>
+									<option value="Pre-Assesement">Pre-Assesement Test</option>
+									<option value="Post-Assesement">Post-Assesement Test</option>
+								</select>
+								<div data-ng-show="submitted && optionTest.typename.$invalid">
+									<span class="err-msg red"
+										ng-show="optionTest.typename.$error.required"> Please
+										enter the Test type </span>
+								</div>
+							</div>
+							<div ng-show="$last">
+								<div class="col-md-1 formAlignment">
+									<button
+										ng-click="addCurriculum(curriculum,optionTest.$valid,$index+1)">
+										<span class="fa fa-plus-circle" data-toggle="tooltip"
+											data-placement="bottom" data-tooltip="Add Curriculum"></span>
+
+									</button>
+								</div>
+							</div>
+							</ng-form>
+						</div>
+					</div>
+				</div>
+
+				<!-- ********Add project into the course********  -->
+
+				<div class="col-md-10" ng-show="add.name=='Project'"
+					class="courseButtn">
+					<ng-form name="assignmentForm" novalidate>
+					<div class="col-md-4 test courseButtn">
+						<label mean-token="'new-title'">Project</label> <select
+							class="drop1" name="projectName" ng-model="curriculum.project"
+							required>
+							<option value=""></option>
+							<option ng-repeat="assignment in courseProjects"
+								value="{{assignment.project._id}}">{{assignment.project.projectName}},{{assignment.skill}},{{assignment.level}}								
+								</option>
+						</select>
+						<div
+							data-ng-show="submitted && assignmentForm.projectName.$invalid">
+							<span class="err-msg red"
+								ng-show="assignmentForm.projectName.$error.required">
+								Please enter the Project Name </span>
+						</div>
+					</div>
+					<div ng-show="$last">
+						<div class="col-md-1 test courseButtn">
+							<button
+								ng-click="addCurriculum(curriculum,assignmentForm.$valid,$index+1)">
+								<span class="fa fa-plus-circle" data-toggle="tooltip"
+									data-placement="bottom" data-tooltip="Add Curriculum"></span>
+
+							</button>
+						</div>
+					</div>
+					</ng-form>
+				</div>
+
+				<div ng-show="isSubtopic[$index]">
+					<span ng-init="subtopicIndex=$index"></span>
+					<div class="row">
+						<div class="col-md-12">
+							<div ng-repeat="topic in TopicArray.subtopics">
+								<ng-form name="subTopicFormCreate">
+								<div class="form-group col-md-12">
+									<label mean-token="'create-name'" class="col-md-2 pull-left">Topic
+										Name</label>
+									<div class="col-md-6">
+										<input name="topicName" type="text" class="form-control"
+											data-ng-model="topic.name" id="topicName"
+											placeholder="Topic Name" required>
+										<div
+											ng-show="submitted && subTopicFormCreate.topicName.$invalid">
+											<span class="err-msg red"
+												ng-show="subTopicFormCreate.topicName.$error.required">
+												Please enter the Topic Name </span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-12">
+									<label mean-token="'create-description'"
+										class="col-md-2 pull-left">Description</label>
+									<div class="col-md-6">
+										<textarea name="description" data-ng-model="topic.description"
+											id="description" cols="30" rows="5" placeholder="Description"
+											class="form-control" required></textarea>
+										<div
+											ng-show="submitted && subTopicFormCreate.description.$invalid">
+											<span class="err-msg red"
+												ng-show="subTopicFormCreate.description.$error.required">
+												Please enter the Description </span>
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-12">
+									<label mean-token="'create-branchCode'"
+										class="col-md-2 pull-left">Session Hours</label>
+									<div class="col-md-6">
+										<div class="col-md-4">
+											<input name="sessionHrs" type="number" min="0"
+												data-ng-model="topic.sHr" id="sessionHrs"
+												placeholder="Hours" class="form-control" required>
+											<div
+												ng-show="submitted && subTopicFormCreate.sessionHrs.$invalid">
+												<span class="err-msg red"
+													ng-show="subTopicFormCreate.sessionHrs.$error.required">
+													Please enter the Hours </span>
+											</div>
+										</div>
+										<div class="col-md-4">
+											 <select class="form-control" name="sessionMin" ng-options="minitues.option as minitues.value for minitues in minitues" data-ng-model="topic.sMin" placeholder="Minitues" id="sessionMin" required>												
+											</select>
+											<div
+												ng-show="submitted && subTopicFormCreate.sessionMin.$invalid">
+												<span class="err-msg red"
+													ng-show="subTopicFormCreate.sessionMin.$error.required">
+													Please enter the Minutes </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-12">
+									<label mean-token="'create-branchCode'"
+										class="col-md-2 pull-left">Lab Hours</label>
+									<div class="col-md-6">
+										<div class="col-md-4">
+											<input name="labHrs" type="number" min="0"
+												data-ng-model="topic.lHr" id="labHrs" cols="30" rows="5"
+												placeholder="Hours" class="form-control" required>
+											<div
+												ng-show="submitted && subTopicFormCreate.labHrs.$invalid">
+												<span class="err-msg red"
+													ng-show="subTopicFormCreate.labHrs.$error.required">
+													Please enter the Hours </span>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<select class="form-control" name="labMin" ng-options="minitues.option as minitues.value for minitues in minitues" data-ng-model="topic.lMin" placeholder="Minitues" id="labMin" required>												
+											</select>
+											<div
+												ng-show="submitted && subTopicFormCreate.labMin.$invalid">
+												<span class="err-msg red"
+													ng-show="subTopicFormCreate.labMin.$error.required">
+													Please enter the Minutes </span>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<div class="form-group col-md-12">
+									<label mean-token="'create-branchCode'"
+										class="col-md-2 pull-left">Assignment Hours</label>
+									<div class="col-md-6">
+										<div class="col-md-4">
+												<input name="assignmentHrs" type="number" min="0"
+													data-ng-model="topic.aHr" id="assignmentHrs" cols="30"
+													rows="5" placeholder="Hours" class="form-control" required>
+											<div
+												ng-show="submitted && subTopicFormCreate.assignmentHrs.$invalid">
+												<span class="err-msg red"
+													ng-show="subTopicFormCreate.assignmentHrs.$error.required">
+													Please enter the Hours </span>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<select name="assignmentMin" class="form-control"
+												ng-options="minitues.option as minitues.value for minitues in minitues"
+												 ng-model="topic.aMin" required>
+											</select> 
+											<div
+												ng-show="submitted && subTopicFormCreate.assignmentMin.$invalid">
+												<span class="err-msg red"
+													ng-show="subTopicFormCreate.assignmentMin.$error.required">
+													Please enter the Minutes </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div ng-show="$last">
+									<div class="col-md-1 test">
+										<button
+											ng-click="curriculumSubtopics(ParentCurriculum,SubtopicParent,$index,subTopicFormCreate)">
+											<span class="fa fa-plus-circle" data-toggle="tooltip"
+												data-placement="bottom" data-tooltip="Add Subtopic"></span>
+
+										</button>
+									</div>
+
+								</div>
+								</ng-form>
+							</div>
+						</div>
+					</div>
+					<!--  subtopic ng-repeat-->
+				</div>
+			</div>
+		</form>
+	</div>
+
+<!-- drop down for adding the curriculum end -->
+</div>
+<!-- contoller -->

@@ -1,0 +1,12 @@
+<div ng-if="!slot.userTaken" id="testing" class="modal-header conf"><h4><b>Submit Request</b></h4></div>
+<div ng-if="!slot.userTaken" class="modal-body conf">
+<form name="counsellingReqObj">
+	<div class="col-md-12 coursedetail_mrgbtm">
+			<label class="pull-left">{{ 'mentor.COMMENTS' | translate }}</label>
+			<textarea rows="4" cols="100" class="form-control" name="counsellingQuery" ng-model="reqObject.counsellingQuery"></textarea>
+	</div>
+	<br/>
+	<button type="submit" class="btn btn-primary" ng-click="create(reqObject.counsellingQuery)">Submit</button>
+	<button type="button" class="btn btn-primary" ng-click="cancel(modalInstance)">Cancel</button>	
+	</form>
+</div>

@@ -1,0 +1,38 @@
+<section data-ng-controller="SkillSetController" data-ng-init="findskillSet();loadfilterSkills();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+   	<div class="mainwrapper">
+		<div class="form-group col-md-12 row">
+			<label mean-token="'edit-name'" class="col-md-2 row">{{ 'common.NAME' | translate }}</label>
+			<div class="col-md-10">
+				{{singleskillsetdetail.name}}
+			</div>
+		</div>
+
+		<!-- User Email -->
+		<div class="form-group col-md-12 row">
+			<label mean-token="'edit-cost'" class="col-md-2 row">{{ 'jobs.skill.COST' | translate }}</label>
+			<div class="col-md-10">
+				{{singleskillsetdetail.cost}}
+			</div>
+		</div>
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>{{ 'jobs.skill.SKILLS' | translate }}</th>
+		                <th>{{ 'jobs.skill.LEVEL' | translate }}</th>
+					</tr>
+				</thead>
+				<tbody class="anchorTag">
+					<tr data-ng-repeat="skill in singleskillsetdetail.skill" ng-class-odd="'odd'" ng-class-even="'even'">
+				 		<td>{{skill.name}}</td>
+				 		<td>{{skill.skilllevel}}</td>
+				 	</tr>
+				 </tbody>
+			</table>
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10">
+				<button type="button" class="btn btn-info" ng-click="cancelSkillSet();">{{ 'offsidebar.chat.BACK' | translate }}</button>
+			</div>
+		</div>
+	</div>
+</section>

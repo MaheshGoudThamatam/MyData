@@ -1,0 +1,88 @@
+<section data-ng-controller="ChapterController" data-ng-init="materialList(); listMaterial();">
+    <div data-ng-include="'/system/views/alert.html'">
+    </div>
+    <div ng-include="'/system/views/breadcrum.html'">
+    </div>
+    <div class="col-md-12 row social-group-header">
+        <h3 class="mt7 col-md-4">
+            Material List
+        </h3>
+        <div class="col-md-4 col-md-offset-4">
+            <div class="btn btn-info pull-right mt7" data-ng-click="addMaterial();">
+                Add Material
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 row">
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        Title
+                    </th>
+                    <th class="text-center">
+                        Description
+                    </th>
+                    <th class="text-center">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="material in materials" class="" ng-class-odd="'odd'" ng-class-even="'even'" data-ng-show="materials.length >0">
+                    <td data-ng-click = "materialIndex(material._id);">
+                        <a href="">
+                            {{material.title}}
+                        </a>
+                    </td>
+                    <td>
+                        {{material.description | limitTo:20}}
+                    </td>
+                    <td width="10%" align="center">
+                        <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                            <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                                <i class="fa fa-arrow-circle-right">
+                                </i>
+                                <span>
+                                    Actions
+                                </span>
+                            </a>
+                            <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                                <li ng-if="updatePermission">
+                                    <a class="menu-toggler" data-ng-click="updateMaterial(material._id)">
+                                        <i class="fa fa-pencil-square-o">
+                                        </i>
+                                        <span>
+                                            Edit Info
+                                        </span>
+                                    </a>
+                                </li>
+                                <li ng-if="updatePermission">
+                                    <a class="menu-toggler" ng-click = "modalDeletePopup(material)">
+                                        <i class="fa fa-minus-square-o">
+                                        </i>
+                                        <span>
+                                            Delete
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                <tr data-ng-show="!materials.length>0">
+                    <td colspan="6">
+                        <h5>
+                            No Materials available
+                        </h5>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="paginate usr">
+        <div data-ng-include="'system/views/paginationFilter.html'">
+        </div>
+    </div>
+</section>
+

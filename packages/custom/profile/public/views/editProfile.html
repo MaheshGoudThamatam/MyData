@@ -1,0 +1,125 @@
+ <section  data-ng-controller="ProfileController" data-ng-init= "editProfile();findEducationalDetail();editProfileBreadcrumb();">
+ <div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="row">
+	  		<div class="form-group">
+				</br>
+				
+				<ul class="nav nav-tabs tabalign">
+					<li class="active"><a href="" data-ng-click="redirectEdit()">Profile</a></li>
+					<li><a href="#" data-ng-click="redirectResume()">CV / Resume</a></li>
+					<li><a href="#" data-ng-click="portfolioEdit()">Portfolio</a></li>
+				</ul>
+				<div class="mainwrapper">
+		<form name="editProfileForm" class="form-horizontal col-md-12 top-ma" role="form" id="editProfileForm"
+			data-ng-submit="saveUsername(editProfileForm.$valid, profileuser)" novalidate>
+			<div >
+				<div class="form-group" ng-class="{ 'has-error' : submitted && editProfileForm.name.$invalid }">
+			<label mean-token="'create-projectName'" class="col-md-1">{{ 'profile.edit_profile.NAME' | translate }}</label>
+			<div class="col-md-6">
+			   <input name="name" type="text" data-ng-model="profileuser.name " id="name" placeholder="{{ 'profile.edit_profile.NAME' | translate }}"
+			   class="form-control err-msg " required>
+						<div ng-show="submitted && editProfileForm.name.$invalid">
+							<span class="err-msg"
+								ng-show="editProfileForm.name.$error.required">{{ 'profile.edit_profile.error_messages.NAME' | translate }} </span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : submitted && editProfileForm.firstName.$invalid }">
+			<label mean-token="'create-firstName'" class="col-md-1">{{ 'profile.edit_profile.FIRSTNAME' | translate }}</label>
+			<div class="col-md-6">
+			   <input name="firstName" type="text" data-ng-model="profileuser.firstName " id="firstName" placeholder="{{ 'profile.edit_profile.FIRSTNAME' | translate }}"
+			   class="form-control err-msg " required>
+						<div ng-show="submitted && editProfileForm.firstName.$invalid">
+							<span class="err-msg"
+								ng-show="editProfileForm.firstName.$error.required"> {{ 'profile.edit_profile.error_messages.FIRSTNAME' | translate }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : submitted && editProfileForm.lastName.$invalid }">
+			<label mean-token="'create-lastName'" class="col-md-1">{{ 'profile.edit_profile.LASTNAME' | translate }}</label>
+			<div class="col-md-6">
+			   <input name="lastName" type="text" data-ng-model="profileuser.lastName " id="lastName" placeholder="{{ 'profile.edit_profile.LASTNAME' | translate }}"
+			   class="form-control err-msg " required>
+						<div ng-show="submitted && editProfileForm.lastName.$invalid">
+							<span class="err-msg"
+								ng-show="editProfileForm.lastName.$error.required">{{ 'profile.edit_profile.error_messages.LASTNAME' | translate }} </span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : submitted && editProfileForm.country_user.$invalid }">
+			<label mean-token="'create-country_user'" class="col-md-1">{{ 'profile.edit_profile.COUNTRY' | translate }}</label>
+			<div class="col-md-6">
+			   <input name="country" type="text" data-ng-model="profileuser.country_user" id="country_user" placeholder="{{ 'profile.edit_profile.COUNTRY' | translate }}"
+			   class="form-control err-msg " required>
+						<div ng-show="submitted && editProfileForm.country_user.$invalid">
+							<span class="err-msg"
+								ng-show="editProfileForm.country_user.$error.required"> {{ 'profile.edit_profile.error_messages.COUNTRY' | translate }}</span>
+						</div> 
+					</div>
+				</div>
+				<div class="form-group" >
+			<label mean-token="'create-email'" class="col-md-1">{{ 'profile.edit_profile.EMAIL' | translate }}</label>
+			<div class="col-md-6">
+			   <input name="email" type="text" data-ng-model="profileuser.email " id="email" placeholder="{{ 'profile.edit_profile.EMAIL' | translate }}"
+			   class="form-control err-msg " disabled>
+					</div>
+				</div>
+				<div class="form-group" ng-class="{ 'has-error' : submitted && editProfileForm.dob.$invalid }">
+			<label mean-token="'create-dob'" class="col-md-1">{{ 'profile.edit_profile.DOB' | translate }}</label>
+			<div class="col-md-6">
+			   <input name="dob" type="date" data-ng-model="profileuser.dob " id="dob" placeholder="{{ 'profile.edit_profile.DOB' | translate }}"
+			   class="form-control err-msg " min="1900-01-01"  required>
+						 <div ng-show="submitted && editProfileForm.dob.$invalid">
+							<span class="err-msg"
+								ng-show="editProfileForm.dob.$error.required">{{ 'profile.edit_profile.error_messages.DOB' | translate }}</span>
+						</div> 
+					</div>
+				</div>				
+				<div class="form-group">
+					<div class="col-md-offset-3 col-md-6">
+						<button mean-token="'create-submit'" type="submit"
+							class="btn btn-info">Update</button>
+					<div class="alert alert-success animated fadeIn top-ma" ng-show="profileUpateMessage">{{profileUpateMessage}}</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="col-md-12">
+					<div class="name">
+						<div class="title">
+						<label class="size">Education Details</label>
+						<button mean-token="'create-submit'" type="submit" class="btn btn-info pull-right"
+						 data-ng-click="neweducationalDetail()">Add Education Details</button>
+						</div></br>
+						
+							<table class="table table-bordered edu-head">
+								<tr>		
+									<th class="text-center">Examination</th>
+									<th class="text-center">Institutiton</th>
+									<th class="text-center">University</th>
+									<th class="text-center">Grade</th>
+									<th class="text-center">Marks</th>
+									<th class="text-center">Passing year</th>
+									<th class="text-center">Specialisation</th>
+									<th class="text-center">Action</th>
+									
+								</tr>
+								<tr data-ng-repeat="educationalDetail in profileuser.qualification_details" class="">
+									<td>{{educationalDetail.examination}}</td>
+									<td>{{educationalDetail.institution}}</td>
+									<td>{{educationalDetail.university}}</td>
+									<td>{{educationalDetail.grade_obtained}}</td>
+									<td class="text-right">{{educationalDetail.percentage_of_marks}}</td>
+									<td class="text-right">{{educationalDetail.year_of_passing}}</td>
+									<td>{{educationalDetail.specialisation}}</td>
+									<td><a class="" href=""data-ng-click="editEducation(PROFILE.URL_PATH.EDUCATIONALDETAILSEDIT,educationalDetail._id)" class="linksGap"><i class="fa fa-pencil-square-o tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit"></i></a>
+									<a class="" href="" data-ng-click="modalDeleteEducationalDetail(educationalDetail)" class="linksGap"><i class="fa fa-minus-circle tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Delete"></i></a></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+			</div>
+		</div>
+		<div ng-include="'profile/views/delete-education.html'"></div>
+</section>

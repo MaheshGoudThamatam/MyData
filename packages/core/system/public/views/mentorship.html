@@ -1,0 +1,69 @@
+<div data-ng-controller="HeaderController as hdrctr" data-ng-init="findMentorProject();find();success(); loadNewMentorship();">
+<div ng-show="hdrctr.hdrvars.authenticated" ng-include="'/system/views/breadcrum.html'"></div>
+<div class="col-xs-12">	
+<button class="btn btn-info pull-right mentor-button" ng-click="hdrctr.redirectMentorDetails()" 
+data-ng-show="!user.isMentor && hdrctr.hdrvars.authenticated">Join as Mentor</button>
+ <button class="btn btn-info pull-right mentor-button" ng-click="hdrctr.mentorRegisteration()" 
+ ng-show= "!hdrctr.hdrvars.authenticated">Join as Mentor</button>
+</div>
+
+<div class="mainwrapper social-group-header">
+		
+<h3><span class="mentor-role">What is the role of a mentor?</span></h3> 
+<p class="mentor-para">	
+A mentor may help with exploring careers, setting goals, developing contacts, and identifying resources.
+The knowledge, advice, and resources a mentor shares depend on the format and goals of a specific mentoring relationship.				
+ A mentor may share with a mentee (or protege) information about his or her own career path, as well as provide guidance, motivation, emotional support, and role modeling.
+</p>
+
+<h3><span class="mentor-role">Benefits for Mentors</span></h3>
+<p class="mentor-para">
+1. Recognition as a subject matter expert and leader.</br>
+2. Exposure to fresh perspectives, ideas and approaches.</br>
+3. Extension of their professional development record.</br>
+4. Opportunity to reflect on their own goals and practices.</br>
+5. Development of their personal leadership and coaching styles.
+</p>
+
+
+</div>
+<div class="mainwrapper social-group-header">
+<h3>Projects</h3>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="text-center">Project Name</th>
+					<th class="text-center">Description</th>
+					<th class="text-center">Skills</th>
+					<th class="text-center">Duration</th>
+					<th class="text-center">Cost (INR)</th>
+					<th class="text-center">No of Vacancy</th>
+					<th class="text-center">Availability</th>
+					<th class="text-center">Type</th>
+					<th class="text-center">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="mentorproject in mentorprojects" class="" ng-class-odd="'odd'" ng-class-even="'even'">
+					<td><a href="/admin/project/{{mentorproject._id}}/details">{{mentorproject.taskName}}</a></td>
+					<td>{{mentorproject.description | limitTo: 20}}...</td>
+					<td><div data-ng-repeat="skill in mentorproject.skills">
+				{{skill.name}}<span ng-hide = "$last">,&nbsp;</span></div></td>
+					<td>{{mentorproject.duration}}</td>
+					<td align="right">{{mentorproject.cost}}</td>
+					<td align="right">{{mentorproject.position}}</td>
+					<td>{{mentorproject.availability}}</td>
+					<td>{{mentorproject.type}}</td>
+					<td><button class="btn btn-info" ng-click="hdrctr.mentorRegisterationBasedOnProject(mentorproject)" ng-disabled="isDisabled">{{apply}}</button></td>
+				</tr>
+				<tr data-ng-hide="!tasks || tasks.length">
+				<td colspan="10">No projects found!</td>
+			</tr>
+			</tbody>
+		</table>
+		<div data-ng-show="!tasks || tasks.length" class="paginate usr">
+		<div data-ng-include="'system/views/paginationFilter.html'"></div>
+		<br>
+	</div>
+	</div>
+	</div>		 

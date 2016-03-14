@@ -1,0 +1,53 @@
+<section data-ng-controller="CityController" data-ng-init="createCity();">
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper">
+        <h3 class="pull-left ">{{ 'locations.branch.CITY' | translate }}</h3>
+    </div>
+
+    <div class="mainwrapper">
+        <form name="cityForm" class="form-horizontal formAlign"
+              data-ng-submit="create(BRANCH.URL_PATH.LISTCITY,cityForm.$valid)" novalidate>
+            <div class="form-group">
+                <label mean-token="'create-city_name'" class="col-md-2 pull-left">{{ 'locations.city.CITY_NAME' | translate }}</label>
+
+                <div class="col-md-6">
+                    <input name="name" type="text" class="form-control"
+                           data-ng-model="city.cityName" id="name" placeholder="{{ 'locations.city.CITY_NAME' | translate }}" required>
+
+                    <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='cityName'">{{err.msg}}</div>
+                    <div ng-show="submitted && cityForm.name.$invalid">
+						<span class="err-msg errorText red"
+                              ng-show="cityForm.name.$error.required"> {{ 'locations.error_messages.CITY_NAME' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'create-city_code'" class="col-md-2 pull-left">{{ 'locations.city.CITY_CODE' | translate }}</label>
+
+                <div class="col-md-6">
+                    <input name="city_code" type="text" class="form-control"
+                           data-ng-model="city.cityCode" id="city_code
+						" placeholder="{{ 'locations.city.CITY_CODE' | translate }}" required>
+
+                    <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='cityCode'">{{err.msg}}</div>
+                    <div ng-show="submitted && cityForm.city_code.$invalid">
+						<span class="err-msg errorText red"
+                              ng-show="cityForm.city_code.$error.required"> {{ 'locations.error_messages.CITY_CODE' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+            <div ng-include="'/branch/views/availableAdmins.html'"></div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-9">
+                    <button mean-token="'create-submit'" type="submit"
+                            class="btn btn-info">{{ 'common.SUBMIT' | translate }}
+                    </button>
+                    <button type="button" class="btn btn-info" ng-click="cancel(BRANCH.URL_PATH.LISTCITY,zoneId)">
+                        {{ 'common.CANCEL' | translate }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</section>

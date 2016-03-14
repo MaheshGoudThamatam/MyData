@@ -1,0 +1,40 @@
+<section data-ng-controller="CourseCounsellingChecklistController"
+	data-ng-init="find();">
+	<div data-ng-include="'/system/views/alert.html'"></div>
+	<div ng-show =" collection.length>0">
+	<div ng-include="'/system/views/breadcrum.html'"></div></div>
+	<div class="mainwrapper social-group-header">
+		<h3 class="pull-left ">Checklist</h3>
+	</div>
+	
+	 <div data-ng-if=" !collection || !collection.length>0">
+		<div ng-include="'course/views/counselling_checklist_create.html'"></div>
+		<br>
+	</div>
+	<div data-ng-repeat="checklist in collection">
+		<button class="btn btn-info mar-top-left pull-right"
+			ng-if="writePermission"
+			data-ng-click="editChecklist(COURSE.URL_PATH.COUNSELLINGCHECKLISTCEDIT,checklist)">Edit
+			Checklist</button>
+		<button class="btn btn-info mar-top-left pull-right"
+			ng-if="writePermission"
+			data-ng-click="viewChecklist(COURSE.URL_PATH.COUNSELLINGCHECKLISTVIEW,checklist)">View
+			Checklist</button>
+		<table class="table table-bordered">
+			<h4 class="pull-left">Course:{{checklist.course.name}}</h4>
+			<tr>
+				<th>Title</th>
+				<th>Description</th>
+			</tr>
+			<tr data-ng-repeat="counsellingquestions in checklist.questions">
+				<td>{{counsellingquestions.title}}</td>
+				<td>{{counsellingquestions.description}}</td>
+			</tr>
+		</table>
+	</div>
+	<div data-ng-show=" !collection || collection.length"
+		class="paginate usr">
+		<div ng-include="'system/views/paginationFilter.html'"></div>
+		<br>
+	</div>
+</section>

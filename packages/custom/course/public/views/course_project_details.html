@@ -1,0 +1,89 @@
+<section data-ng-controller="CourseprojectController"
+	data-ng-init="findOne(); detailCourseproject();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper social-group-header">
+		<div>
+			<h3 class="pull-left">Course Project Detail</h3>
+			<div class="pull-right">
+				<a class="btn btn-info" href="" ng-if="updatePermission"
+					data-ng-click="editCourseproject(COURSE.URL_PATH.COURSEPROJECTEDIT,courseproject._id)">Edit</a>
+				<a href="" class="btn btn-info" ng-if="deletePermission"
+					ng-click="modalDeletePopup(courseproject)">Delete</a>
+			</div>
+		</div>
+	</div>
+	<div class="mainwrapper">
+		<form name="courseprojectForm"
+			class="form-horizontal leftAlign formAlign" novalidate>
+			<div class="form-group">
+				<label mean-token="'show-projectName'" class="col-md-2">Project
+					Name :</label>
+				<div class="col-md-8">
+					<div class="row level15">{{courseproject.projectName}}</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'show-description'" class="col-md-2">Description
+					:</label>
+				<div class="col-md-8">
+					<div class="row level15">{{courseproject.description}}</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'show-totalMarks'" class="col-md-2">Total
+					Marks :</label>
+				<div class="col-md-8 ">
+					<div class="row level15">{{courseproject.totalMarks}}</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'show-minimumMarks'" class="col-md-2">Minimum
+					Marks :</label>
+				<div class="col-md-8">
+					<div class="row level15">{{courseproject.minimumMarks}}</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'show-question'" class="col-md-2">Question
+					:</label>
+				<div class="col-md-8 ">
+					<div class="row level15"
+						ng-repeat="questionsfield in courseproject.questionsfields">
+						{{$index+1}}. {{questionsfield.question}}</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label mean-token="'show-requiredSkill'" class="col-md-2">Required
+					Skill :</label>
+				<div class="col-md-8 ">
+					<div class="row showtable">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th class="text-center">Skill</th>
+									<th class="text-center">Level</th>
+									<th class="text-center">Reward Point</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="rSkill in courseproject.requiredSkill"
+									class="" ng-class-odd="'odd'" ng-class-even="'even'">
+									<td>{{rSkill.skill.name}}</td>
+									<td class="text-right">{{rSkill.level}}</td>
+									<td class="text-right">{{rSkill.rewardPoint}}</td>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<button type="button" class="btn btn-info"
+						ng-click="cancelCourseproject()">Back</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>

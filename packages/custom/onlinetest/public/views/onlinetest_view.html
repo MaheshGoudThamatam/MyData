@@ -1,0 +1,62 @@
+<section data-ng-controller="OnlinetestController" data-ng-init="findOne(); detailOnlinetest();">
+<div ng-include="'/system/views/breadcrum.html'"></div>
+<div class="mainwrapper social-group-header">
+		<div>
+			<h3>{{ 'onlinetest.ONLINE_TEST' | translate }} </h3>
+		</div>
+	</div>
+   	<div class="mainwrapper">
+		<form name="onlinetestForm" class="form-horizontal" novalidate>
+			<div class="form-group">
+				<label mean-token="'edit-name'" class="col-md-2 ">{{ 'common.NAME' | translate }}</label>
+				<div class="col-md-10 viewRole">
+					{{onlinetest.name}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'edit-description'" class="col-md-2 ">{{ 'common.DESCRIPTION' | translate }}</label>
+				<div class="col-md-10 viewRole">
+					{{onlinetest.description}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'edit-instructions'" class="col-md-2 ">{{ 'onlinetest.INSTRUCTION' | translate }}</label>
+				<div class="col-md-10 viewRole">
+					{{onlinetest.instructions}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'edit-duration'" class="col-md-2 ">{{ 'onlinetest.DURATION' | translate }}</label>
+				<div class="col-md-10 viewRole">
+					{{onlinetest.duration}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'edit-noofquestions'" class="col-md-2 ">{{ 'onlinetest.NUMBER_OF_QUESTIONS' | translate }}</label>
+				<div class="col-md-10 viewRole">
+					{{onlinetest.numberOfQuestions}}
+					</div>		
+			</div>
+			<div class="form-group">
+				<label mean-token="'edit-passmark'" class="col-md-2">{{ 'onlinetest.PASS_MARK' | translate }}</label>
+				<div class="col-md-10 viewRole">
+					{{onlinetest.passMark}}
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'edit-testskills'" class="col-md-2">{{ 'onlinetest.TEST_SKILLS' | translate }}</label>
+				<div class="col-md-5 viewRole">
+					<table class="table table-bordered">
+						<tr>
+							<th class="text-center">{{ 'course.courses.SKILL' | translate }}</th>
+							<th class="text-center">{{ 'onlinetest.SUB_SKILL' | translate }}</th>
+						</tr>
+						<tr ng-repeat="testSkill in onlinetest.testSkills">
+							<td>{{testSkill.skill}}</td><td>{{testSkill.subSkillName}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			</form>
+			</div>
+</section>

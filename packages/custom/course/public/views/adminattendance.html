@@ -1,0 +1,104 @@
+<section data-ng-controller="AttendanceController" data-ng-init="liststudents();">
+    <div data-ng-include="'/system/views/alert.html'">
+    </div>
+    <div ng-include="'/system/views/breadcrum.html'">
+    </div>
+    <div class="mainwrapper row" ng-show="hidemyattendance >0 && hasattendance.length == 0">
+        <h3 class="text-center">
+            {{batch.batch_name}} Batch Attendance for {{attendancedate}}
+        </h3>
+    </div>
+    <div class="mainwrapper row"  ng-show="hidemyattendance >0 && hasattendance.length >0">
+        <h3 class="text-center">
+            {{Batchname}} Batch Attendance for {{attendancedate}}
+        </h3>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div style="width: 400px;" ui-calendar="uiConfig.calendar" ng-model="eventSources">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div  ng-show="hidemyattendance >0 && hasattendance.length == 0">
+                <form name="attendanceForm" class="form-horizontal formAlign" data-ng-submit="saveattendance()" >
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Present
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="anchorTag">
+                            <tr data-ng-repeat="student in batch.students" class="" ng-class-odd="'odd'" ng-class-even="'even'" >
+                                <td>
+                                    {{student.name}}
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="studentattendance" value="{{student._id}}" data-ng-model="student.attended"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group left1">
+                        <div class="col-md-offset-2 col-md-9">
+                            <button mean-token="'create-submit'" type="submit"
+                                class="btn btn-info">
+                                Submit
+                            </button>
+                            <button type="button" class="btn btn-info" data-ng-click="cancelattendance()">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div ng-show="hidemyattendance >0 && hasattendance.length >0">
+                <form name="attendanceForm" class="form-horizontal formAlign" data-ng-submit="updateattendance()" >
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Present
+                                </th>
+                                <th ng-show="showheadercomment">
+                                    Reason for change
+                               </th>
+                            </tr>
+                        </thead>
+                        <tbody class="anchorTag">
+                            <tr data-ng-repeat="student in hasattendance" class="" ng-class-odd="'odd'" ng-class-even="'even'" >
+                                <td>
+                                    {{student.student_id.name}}
+                                </td>
+                                <td>
+                                 <input type="checkbox" name="studentattendance" value="{{student.student_id._id}}" data-ng-model="student.attended" data-ng-change="addcomment(student);"/>
+                                 </td>
+                                 <td ng-show="student.addcomment">
+                                 <textarea class="comment-textarea" data-ng-model="student.comment"  placeholder="addcomment"></textarea>
+                               </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group left1">
+                        <div class="col-md-offset-2 col-md-9">
+                            <button mean-token="'create-submit'" type="submit"
+                                class="btn btn-info">
+                                Update Attendance
+                            </button>
+                            <button type="button" class="btn btn-info" data-ng-click="cancelattendance()">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

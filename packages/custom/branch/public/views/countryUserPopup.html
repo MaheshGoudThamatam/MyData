@@ -1,0 +1,97 @@
+<section>
+	<div class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="frgtpswdlabel" id="userCreate">
+		<div class="modal-dialog modelShow" role="document">
+			<div class="modal-content modal-margntop modal-margntop1">
+				<div class="modal-header center">
+					<h3 class="text-center">{{ 'roles.feature.SELECT' | translate }} {{ 'locations.country.USER' | translate }}</h3>
+				</div>
+				<div class="modal-body">
+					<h5></h5>
+					<!-- 	<button ng-click="remove(role)" class="btn btn-info">Delete</button>
+	       			<button ng-click="cancelRole()" class="btn btn-info">Cancel</button> -->
+					<div class="form-group">
+						<div class="col-md-5  bord" ng-show="addadmins1">
+							<h4>{{ 'locations.country.NEW' | translate }} {{ 'locations.country.USER' | translate }}</h4>
+							<form name="userForm1" class="form-horizontal"
+			data-ng-submit="addadmin2(userForm1)" novalidate>
+							<!-- <a id= "addadmin" class="btn btn-info pull-left"
+						data-ng-click="addadmin1()">New User</a> -->
+							<input name="name" type="text" class="form-control" id="name"
+								placeholder="{{ 'common.NAME' | translate }}" data-ng-model="newuser.name" required>
+							<input name="name" type="text" class="form-control pad"
+								data-ng-model="newuser.email" id="name" placeholder="Email"
+								required>
+								 <a class="btn btn-info pad"
+								>{{ 'common.SUBMIT' | translate }}</a>
+								</form>
+
+						</div>
+					</div>
+					<div class="col-md-5" ng-show="addadmins4">
+						<!-- <a id= "addadmin" class="btn btn-info pull-right"
+						data-ng-click="addadmin3()">Existing User</a> -->
+						<h4>{{ 'locations.country.EXISTING' | translate }} {{ 'locations.country.USER' | translate }}</h4>
+						<input name="Search" type="text" class="form-control" id="Search"
+							placeholder="{{ 'locations.country.SEARCH' | translate }}" required> <a
+							class="btn btn-info padd1" data-ng-click="addadmin4()">{{ 'course.branch.ASSIGN' | translate }}
+							 {{ 'locations.country.USER' | translate }}</a>
+
+					</div>
+				</div>
+
+				<!-- <div class="form-group" ng-show="addadmins3">
+			<h3>Assign a Admin</h3>
+			<div class="row">
+				<label mean-token="'create-user_name'" class="col-md-2">Name</label>
+				<div class="col-md-6">
+					<input name="name" type="text" class="form-control"
+						 id="name" placeholder="Name" data-ng-model="newuser.name"
+						required>
+					</div>
+					</div>
+			</div>
+			<div class="form-group" ng-show="addadmins3">
+			<div class="row">
+				<label mean-token="'create-user_email'" class="col-md-2">Email</label>
+				<div class="col-md-6">
+					<input name="name" type="text" class="form-control" data-ng-model="newuser.email"
+						 id="name" placeholder="Email"
+						required>
+					</div>
+					</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9" ng-show = "addadmins3" >
+					<a  class="btn btn-info"
+						data-ng-click="addadmin2()">Submit</a>
+					
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9 " ng-show = "addadmins4">
+					<a id= "addadmin" class="btn btn-info padd1 pull-right"
+						data-ng-click="addadmin3()">Existing User</a>
+				</div>
+			</div>
+				<div class="form-group" ng-show="addadmins5">
+			<h3>Searching for the existing User</h3>
+				<label mean-token="'create-search'" class="col-md-2 pull-left">Search</label>
+				<div class="col-md-6">
+					<input name="Search" type="text" class="form-control"
+						 id="Search" placeholder="Search"
+						required>
+					</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9" ng-show = "addadmins5" >
+					<a  class="btn btn-info padd1"
+						data-ng-click="addadmin4()">Assign User</a>
+					
+				</div>
+			</div>
+ -->
+			</div>
+		</div>
+	</div>
+</section>

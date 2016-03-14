@@ -1,0 +1,55 @@
+<section  data-ng-controller = 'MentorCounsellingController' data-ng-init="viewreqBreadcrumb();viewMentorScheduleDetail();">
+<div data-ng-include="'/system/views/alert.html'"></div>
+<div ng-include="'/system/views/breadcrum.html'"></div>
+<div class="mainwrapper">
+    <h3>Counselling Request Detail</h3><br/>
+  <form name="" class="form-horizontal">
+   <div class="form-group">
+    <label class="col-md-2 ">Student Name</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingreq.studentName.name}}
+    </div>
+   </div>
+   <div class="form-group">
+    <label class="col-md-2 ">Branch</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingreq.branch.branchName}}
+    </div>
+   </div>
+   <div class="form-group">
+    <label class="col-md-2 ">Course</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingreq.course.name}}
+     </div>  
+   </div>
+   <div class="form-group countryAlign">
+    <label class="col-md-2">Counselling Date</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingreq.counsellingDate | date:'dd-MMM-yyyy'}}
+    </div>
+   </div>
+   <div class="form-group countryAlign">
+    <label class="col-md-2">Counselling Slot</label>
+             <div class="col-md-10 viewRole">
+                 {{counsellingreq.counsellingSlot}}
+             </div>        
+      </div>
+      <div class="form-group countryAlign">
+    <label class="col-md-2">Student Query</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingreq.counsellingQuery}}
+    </div>
+   </div>
+  <div class="form-group countryAlign">
+    <label class="col-md-2">Request Date</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingreq.createdAt | date:'dd-MMM-yyyy'}}
+    </div>
+   </div>
+  </div>
+    <div class="form-group">
+    <div class="col-md-offset-5 col-md-7">
+    <button class="btn btn-info" data-ng-click="cancelCounsellingreq();">Cancel</button>
+    </div>
+    </div>    
+</section>

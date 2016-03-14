@@ -1,0 +1,83 @@
+<div data-ng-controller="ProfileController">
+	<div data-ng-include="'/profile/views/profile-header.html'"></div>
+		<div class = "mainwrapper pro-top">
+		    <ul class="nav nav-tabs">
+				<li><a href="" data-ng-click="aboutme()">About Me</a></li>
+				<li ><a href="" data-ng-click="Portfolio()">Portfolio</a></li>
+				<li ><a href="" data-ng-click="review()">Reviews</a></li>
+				<li><a href="" data-ng-click="resume()">Resume</a></li>
+				<li class="active"><a href="" data-ng-click="badge()">Badges</a></li>
+				<li><a href="" data-ng-click="performance()">Performance</a></li>
+		   </ul>
+		</div>	
+   		<div class="pro-top san">
+			<div class="col-xs-9 col-md-6">
+				<h4><i class="fa fa-puzzle-piece"></i>Tests</h4>
+				<hr class="line-badge"/>
+				<table class="table table-hover peer-table  table-responsive table-bordered">
+					<thead>
+						<tr>
+							<th class="text-center">Name</th>
+							<th class="text-center">Score (Out Of 5)</th>
+							<th class="text-center">Time To Complete</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>HTML</td>
+							<td class="text-right">5.0 <label class="score-badge label label-primary">Top 10%</label></td>
+							<td class="text-right">21 Min</td>
+						</tr>
+						<tr>
+							<td>PHP</td>
+							<td class="text-right">5.0 <label class="score-badge label label-primary">Top 10%</label></td>
+							<td class="text-right">25 Min</td>
+						</tr>
+						<tr>
+							<td>PERL</td>
+							<td class="text-right">5.0 <label class="score-badge label label-primary">Top 10%</label></td>
+							<td class="text-right">30 Min</td>
+						</tr>
+						<tr>
+							<td>ROR</td>
+							<td class="text-right">5.0 <label class="score-badge label label-primary">Top 10%</label></td>
+							<td class="text-right">50 Min</td>
+						</tr>
+						<tr>
+							<td>Python</td>
+							<td class="text-right">5.0 <label class="score-badge label label-primary">Top 20%</label></td>
+							<td class="text-right">55 Min</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-xs-9 col-md-6 badge-right1">
+				<h4><i class="fa fa-puzzle-piece"></i> Top Skills</h4>
+				<hr class="line-badge"/>
+				<p><label class="score-badge top-badge">PHP</label>
+				<label class="score-badge top-badge">HTML</label>
+				<label class="score-badge top-badge">PERL</label>
+				<label class="score-badge top-badge">Python</label>
+				<label class="score-badge top-badge">CGI</label>
+				<label class="score-badge top-badge">XHTML</label>
+				<label class="score-badge top-badge">JavaScript</label></p>
+			<!-- </div>
+			<div class="col-xs-9 col-md-5 badge-right1"> -->
+				<h4><i class="fa fa-puzzle-piece"></i> Badges</h4>
+				<hr class="line-badge"/>
+				<div class="col-md-3 text-center">
+					<a href=""><img src="https://placeholdit.imgix.net/~text?txtsize=10&txt=75%C3%9775&w=75&h=75" class="img-circle" alt=""><h5><strong>PHP Master</strong></h5>
+					<h5>Reached Level 5</h5></a>
+				</div>
+				<div class="col-md-3 text-center">
+					<a href=""><img src="https://placeholdit.imgix.net/~text?txtsize=10&txt=75%C3%9775&w=75&h=75" class="img-circle" alt=""><h5><strong>HTML Beginner</strong></h5>
+					<h5>Reached Level 2</h5></a>
+				</div>
+				<div class="col-md-3 text-center">
+					<a href=""><img src="https://placeholdit.imgix.net/~text?txtsize=10&txt=75%C3%9775&w=75&h=75" class="img-circle" alt=""><h5><strong>PERL Expert</strong></h5>
+					<h5>Reached Level 10</h5></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

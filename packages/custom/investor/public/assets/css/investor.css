@@ -1,0 +1,18 @@
+.investor-example h1 {
+  background-color: purple
+}
+.policy-padding{
+	padding: 5px;
+}
+.marg-policy{
+	margin-bottom: 5px;
+}
+.marg-btm5{
+	margin-bottom: 5px;
+}
+.marg-top10{
+	margin-top: 10px
+}
+.paddinglft4{
+	padding-left: 30px !important;
+}

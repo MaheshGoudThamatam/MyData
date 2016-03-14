@@ -1,0 +1,50 @@
+<section  data-ng-controller="CourseRequestController" data-ng-init=" findCoursePaymentSchema();createCoursepayment();">
+<div ng-include="'/system/views/breadcrum.html'"></div>
+<div data-ng-include="'/system/views/alert.html'"></div>
+<div class="mainwrapper">
+  <h3>Payment Scheme</h3>
+ </div>
+ <div><h3>Course Name: {{courserequest.course.name}}</h3></div>
+ <div class="mainwrapper">
+ <table class="table table-bordered table-condensed">
+ <thead>
+ <tr>
+ <th>Select</th>
+ <th>Cost</th>
+ <th>Down Payment/Installments scheme</th>
+ </tr>
+ </thead>
+ <tbody>
+ <tr data-ng-repeat="paymentScheme in paymentSchemes">
+ <td ng-if="$index==0"><input type="radio" name="select" value ="select" data-ng-init="coursePaymentScheme(paymentScheme)" ng-checked="true" ></td>
+ <td ng-if="$index>0"><input type="radio" name="select" data-ng-click="coursePaymentScheme(paymentScheme)" value ="select" ></td>
+ <td>$ {{paymentScheme.cost}}</td>
+ <td>
+        <table  class="table table-bordered table-condensed" 
+      data-ng-repeat="installment in paymentScheme.installments" ng-init="disLength = checkLength(installment.discounts.length)">
+      <tr>
+      <th data-ng-show="installment.isDownPayment" rowspan="{{disLength}}">Down Payment</th>
+      <th data-ng-hide="installment.isDownPayment"  rowspan="{{disLength}}">Installment {{$index}}  </th>
+      <th rowspan="2">Amount</th>
+      <th rowspan="2">FineCharge /Day</th>
+      <th colspan="3">Discounts</th></tr>
+      <tr>
+      <th>marks from</th>
+      <th >marks to</th>
+      <th >Rate</th>
+      </tr>
+      <tr data-ng-repeat="discount in installment.discounts">
+       <td ng-if="$index == 0" rowspan="{{disLength}}">{{installment.installmentAmount}}</td>
+       <td ng-if="$index == 0" rowspan="{{disLength}}">{{installment.fineAmount}}</td>
+       <td >{{discount.marks_form}}</td>
+       <td >{{discount.marks_to}}</td>
+       <td >{{discount.rate}}%</td>
+       </tr>
+      </table>
+ </td>
+ </tr>
+ </tbody>
+ </table>
+ </div>
+ <div class="mainwrapper col-md-offset-5 " ><button type="button" class="btn btn-info" data-ng-click="coursePaymentRedirect()">Select</button></div>
+</section>

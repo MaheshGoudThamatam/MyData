@@ -1,0 +1,77 @@
+<section data-ng-controller="InstallmentController">
+	<div class="col-xs-12">
+		<ol class="breadcrumb">
+			<li><i class="fa fa-home link-pointer" data-ng-click="redirectdashboard()"></i></li>
+			<li><a href="/admin/course">Course</a></li>
+			<li>Course Installment</li>
+			<li></li>
+		</ol>
+	</div>
+	<div class="row mb20">
+		<div class="col-xs-12">
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="/admin/course/course-management">Course Installment</a></li>
+				<li><a href="/admin/course/loans">Course Loan</a></li>
+				<li><a href="/admin/course/discount">Course Discount</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-xs-12">
+		<h3 class="pull-left ">Course Installment</h3>
+	</div>
+	<div class="col-xs-10">
+		<form name="installmentForm" class="form-horizontal col-md-12"
+			data-ng-submit="create(installmentForm.$valid)" novalidate>
+			<div class="form-group">
+				<label mean-token="'show-description'" class="col-md-3 control-label">Course Amount : </label>
+				<div class="col-md-9">
+					${{course.cost}}
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="mb35" data-ng-repeat="installment in course.installments">
+					<label mean-token="'create-installment_amount'"
+						class="col-md-3 control-label">{{ 'course.installmemts.INSTALLMENT' | translate }}</label>
+					<div class="col-md-3">
+						<input name="installment_amount" type="number"
+							class="form-control" data-ng-model="installment.amount"
+							id="installment_amount" placeholder="{{ 'course.installmemts.INSTALLMENT' | translate }}" required>
+					</div>
+
+					<label mean-token="'create-mandatory'" class="col-md-2 control-label">{{ 'course.installmemts.MANDATORY' | translate }} 
+					<input name="mandatory" type="checkbox" id="mandatory"
+						data-ng-model="installment.mandatory" placeholder="{{ 'course.installmemts.MANDATORY' | translate }}"
+						required>
+					</label> 
+					
+					<label mean-token="'create-period'" class="col-md-1 control-label">{{ 'course.installmemts.PEROID' | translate }}</label>
+					<div class="col-md-2">
+						<input name="period" type="number" class="form-control"
+							data-ng-model="installment.period" id="period"
+							placeholder="{{ 'course.installmemts.PEROID' | translate }}" required>
+					</div>
+					<div class="col-md-1" ng-hide="$last">
+						<a href="" data-ng-click="removeInstallment(installment)"> 
+						<i class="fa fa-minus-square-o"></i></a>
+					</div>
+
+					<div class="col-md-1" ng-show="$last">
+						<a href="" data-ng-click="addInstallment()">
+						<i class="fa fa-plus-square-o"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9">
+					<button mean-token="'create-submit'" type="submit"
+						class="btn btn-info">Submit</button>
+					<button type="button" class="btn btn-info"
+						data-ng-click="cancelCourseInstallment()">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+</section>
+
+

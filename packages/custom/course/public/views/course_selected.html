@@ -1,0 +1,52 @@
+<section data-ng-controller="UserCourseController">
+      <div class="col-xs-12">
+         <ol class="breadcrumb">
+            <li><i class="fa fa-home link-pointer" data-ng-click="redirectdashboard()"></i></li>
+            <li><a href="/course/courseList">Available Courses</a></li>
+            <li><a href="/course/courseDetails">Course Details</a></li>
+        </ol>
+ </div>
+
+	<div class="row">
+		<div class="col-md-8 ">
+			<h1>SELECTED COURSE</h1>
+			<table class="table table-bordered table-condensed">
+				<thead>
+
+				</thead>
+				<tbody>
+				    <tr>
+						<th>Course Name</th>
+						<td>Frontend</td>
+					</tr>
+					<tr>
+						<th>Course Duration</th>
+						<td>90 Days</td>
+					</tr>
+					<tr>
+						<th>Course Fee</th>
+						<td>$45</td>
+					</tr>
+					<tr>
+						<th>Security Deposit</th>
+						<td>$10</td>
+					</tr>
+					<tr>
+						<th>Service Charge</th>
+						<td>2%</td>
+					</tr>
+					<tr>
+						<th>Payment</th>
+						<td>Loan Applicable</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><button type="button" class="btn btn-info"  data-ng-click="coursePayment()">Select</button></td>
+						
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+</section>

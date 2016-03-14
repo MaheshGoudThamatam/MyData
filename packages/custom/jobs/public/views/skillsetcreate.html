@@ -1,0 +1,100 @@
+<section data-ng-controller="SkillSetController" data-ng-init="loadfilterSkills();createSkillSet();">
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper">
+        <h3 class="pull-left ">{{ 'jobs.skill.SKILL_SET' | translate }}</h3>
+    </div>
+    <div class="mainwrapper">
+        <form name="skillsetForm" class="form-horizontal formAlign"
+            data-ng-submit="create(skillsetForm.$valid)" novalidate>
+            <div class="form-group "
+                ng-class="{ 'has-error' : submitted && skillsetForm.name.$invalid }">
+                <label mean-token="'create-name'"
+                class="col-md-2 pull-left err-msg-name"> 
+{{ 'common.NAME' | translate }}</label>
+                <div class="col-md-9">
+                    <input name="name" type="text" data-ng-model="skillset.name"
+                    id="name" placeholder="{{ 'common.NAME' | translate }}" class="form-control err-msg "
+                    required>
+                    <div class="errorRed" ng-repeat="err in error.data"
+                    ng-if="err.param =='name' || err.param == 'normalizedname'">{{err.msg}}</div>
+                    <div ng-show="submitted && skillsetForm.name.$invalid">
+                        <span class="err-msg" ng-show="skillsetForm.name.$error.required">
+                        {{ 'common.error_messages.NAME' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group "
+                ng-class="{ 'has-error' : submitted && skillsetForm.cost.$invalid }">
+                <label mean-token="'create-cost'"
+                class="col-md-2 pull-left err-msg-cost">{{ 'course.payment.COST' | translate }}</label>
+                <div class="col-md-9">
+                    <input name="cost" type="number" data-ng-model="skillset.cost"
+                    id="cost" placeholder="{{ 'jobs.skill.COST' | translate }}" class="form-control err-msg "
+                    required>
+                    <div class="errorRed" ng-repeat="err in error.data"
+                    ng-if="err.param =='cost'">{{err.msg}}</div>
+                    <div ng-show="submitted && skillsetForm.cost.$invalid">
+                        <span class="err-msg"
+                        ng-show="skillsetForm.cost.$error.required"> {{ 'jobs.error_messages.COST' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 pull-left "></label>
+                <div class="col-md-9">
+                     <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='autocompleteemptyerror'">{{err.msg}}</div>
+                     <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='skillserror'">{{err.msg}}</div>
+                </div>
+            </div>
+            <div  ng-repeat="skill in skillsetarray track by $index">
+                <div class="form-group">
+                    <label mean-token="'create-keywords'"
+                    class="col-md-2 pull-left err-msg-keywords"><p ng-hide="$index > 0">{{ 'jobs.skill.SKILLS' | translate }}</p></label>
+                    <div class="col-md-5">
+                        <angucomplete-alt id="ex1" name="skillautoselect" placeholder="{{ 'jobs.skill.SKILLS_PLACEHOLDER' | translate }}"  pause="100"  selected-object="skillselected"  local-data="skillsetskilllist" search-fields="name" title-field="name" minlength="1" input-class="form-control form-control-small" required/>
+                    </div>
+                    <div class="col-md-1">
+                        <select class="skillset-select" name="level" data-ng-model="skill.skilllevel" required>
+                            <option value="">{{ 'jobs.skill.LEVEL' | translate }}</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <div ng-show="submitted && skill.skilllevel === undefined">
+                            <span class="err-msg"> {{ 'jobs.error_messages.LEVEL' | translate }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        {{ 'jobs.skill.MAINSKILL' | translate }} <input type="checkbox" name="maincourse" data-ng-model="skill.main">
+                    </div>
+                    <div class="ulPagnate">
+                        <label>&nbsp;</label>
+                        <div class="col-md-2" ng-show="$last">
+                            <button class="pull-left" type="button" ng-click="removeskillrow($index)"
+                            ng-show="$index>0">
+                            <i class="fa edu-action fa-minus-circle"></i>
+                            </button>
+                            <button type="button" ng-click="addskillrow($index)">
+                            <i class="fa edu-action fa-plus-circle"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" ng-click="removeskillrow($index)" ng-hide="$last">
+                            <i class="fa edu-action fa-minus-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group left1">
+                <div class="col-md-offset-2 col-md-9">
+                    <button mean-token="'create-submit'" type="submit"
+                    class="btn btn-info">{{ 'common.SUBMIT' | translate }}</button>
+                    <button type="button" class="btn btn-info" ng-click="cancelSkillSet()">{{ 'common.CANCEL' | translate }}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

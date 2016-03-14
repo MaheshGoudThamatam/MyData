@@ -1,0 +1,99 @@
+<section data-ng-controller="UserController" data-ng-init="findOne(); editUser();">
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+
+    <div class="mainwrapper">
+        <h3>Edit User</h3>
+    </div>
+    <div class="mainwrapper">
+        <!-- User Form (edit) -->
+        <form name="userForm" class="form-horizontal" data-ng-submit="updateUser(userForm.$valid)" novalidate>
+            <!-- User Name (input) -->
+            <div class="form-group">
+                <label mean-token="'edit-name'" class="col-md-2 pull-left">{{ 'common.NAME' | translate }}</label>
+
+                <div class="col-md-6">
+                    <input name="name" type="text" class="form-control" data-ng-model="user.name" id="name"
+                           placeholder="{{ 'common.NAME' | translate }}" required/>
+
+                    <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='name'">{{err.msg}}</div>
+                    <div ng-show="submitted && userForm.name.$invalid">
+                        <span class="err-msg errorText red" ng-show="userForm.name.$error.required">{{ 'common.error_messages.NAME' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Email -->
+            <div class="form-group">
+                <label mean-token="'edit-email'" class="col-md-2 pull-left">{{ 'locations.branch.EMAIL' | translate }}</label>
+
+                <div class="col-md-6">
+                    <input name="email" type="email" class="form-control" data-ng-model="user.email" id="email"
+                           placeholder="{{ 'locations.branch.EMAIL' | translate }}" aria-describedby="user-email-help" required/>
+
+                    <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='email'">{{err.msg}}</div>
+                    <div ng-show="submitted && userForm.email.$invalid">
+                        <span class="err-msg errorText red" ng-show="userForm.email.$error.required"> {{ 'users.error_messages.EMAIL' | translate }}</span>
+                    </div>
+                    <div ng-show="submitted && userForm.email.$invalid">
+                        <span class="err-msg errorText red" ng-show="userForm.email.$error.pattern"> {{ 'mentor.error_messages.VALID_EMAIL' | translate }}  </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Username -->
+            <div class="form-group">
+                <label mean-token="'edit-username'" class="col-md-2 pull-left">{{ 'users.USER_NAME' | translate }}</label>
+
+                <div class="col-md-6">
+                    <input name="username" type="text" class="form-control" data-ng-model="user.username" id="username"
+                           placeholder="{{ 'users.USER_NAME' | translate }}" required/>
+
+                    <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='username'">{{err.msg}}</div>
+                    <div ng-show="submitted && userForm.username.$invalid">
+                        <span class="err-msg errorText red" ng-show="userForm.username.$error.required"> {{ 'users.error_messages.USER_NAME' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'edit-role'" class="col-md-2 pull-left mainwrapper">{{ 'users.ROLE' | translate }}</label>
+                <div class="col-md-10">
+                    <form method="post">
+                        <div class="row">
+                            <ul>
+                                <div data-ng-repeat="role in roles " class="">
+                                    <div class="checkbox">
+                                        <input data-ng-click="addRole(role,user)" id="check{{role._id}}" type="checkbox"
+                                               name="check" ng-checked="checkedRole(role)" value="{{role.name}}">
+                                        <label for="check{{role._id}}">{{role.name}}</label>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'edit-location'" class="col-md-2 pull-left mainwrapper">{{ 'users.LOCATION' | translate }}</label>
+
+                <div class="col-md-6">
+                    <form method="post">
+                        <div id="tree" class="row">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Form Submit -->
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-9">
+                    <button mean-token="'edit-cancel'" type="button" class="btn btn-info"
+                            ng-click="updateUser(userForm.$valid)">Update User
+                    </button>
+                    <button mean-token="'edit-cancel'" type="button" class="btn btn-info" ng-click="cancelUsers()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

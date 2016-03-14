@@ -1,0 +1,47 @@
+.branch-example h1 {
+  background-color: purple
+}
+ /* error validation msg text color */
+.red{
+	color:red;
+}
+.modelShow{
+	z-index:9999;
+	width:350px !important;
+}
+/*
+.anchorTag a:hover{
+	text-decoration:none;
+}*/
+.has-error .form-control.err-msg  {
+    border-color: red;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+/* active checkbox align */
+.activeBranch{
+	margin-left: -15px;
+}
+.modal-margntop1{
+	width:550px;
+	height:400px;
+}
+.padd1{
+	margin-top:31px;
+}
+.bord{
+	border-right:1px solid #e5e5e5;
+	
+}
+.pad {
+	margin-top:2px;
+}
+
+.branchAdmin{
+	margin-left:-20px;
+}
+.adminCheck{
+	    margin-left: -10px;
+}
+.branchwidth{
+	width: 110%;
+}

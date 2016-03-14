@@ -1,0 +1,47 @@
+<section data-ng-controller="ProjectController" data-ng-init="find()">
+	<div class="col-xs-12 social-group-header">
+		<h3 class="pull-left ">Project</h3>
+		<button class="btn btn-info pull-right " data-ng-click="newProject()">Create
+			Project</button>
+	</div>
+
+	<table class="table table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th>Project Name</th>
+				<th>Price</th>
+				<th>Currency</th>
+				<th>Skills</th>
+				<th>Description</th>
+				<th>Project picture</th>
+				<th>Links</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="project in projects" class=""
+				ng-class-odd="'odd'" ng-class-even="'even'">
+				<td>{{project.projectName}}</td>
+				<td>{{project.price}}</td>
+				<td>{{project.currency}}</td>
+				<td><div data-ng-repeat="skill in project.skills">
+				{{skill.name}}<span ng-hide = "$last">,&nbsp;</span></div></td>
+				<td>{{project.description}}</td>
+               <td><img src = {{project.projectPicture}} width="30%" height="20%" /></td>
+				<td><div data-ng-repeat="link in project.links">
+				{{link.url}}, {{link.type}}</div>
+				</td>
+				<td><a href="/project/{{project._id}}/edit" class="linksGap">
+						<i class="fa fa-pencil-square-o"></i></a> 
+						<a href="" ng-click ="modalDeleteProject(project)" data-target="#deleteProject" class="linksGap">
+				 <i class="fa fa-minus-circle"></i></a>
+				 </td>
+			</tr>
+		</tbody>
+	</table>
+	<h1 data-ng-hide="!projects || projects.length">
+		No projects yet. <br> Why don't you 
+		<a href="/project/create">Create One</a>?
+	</h1>
+	<div ng-include="'profile/views/deleteproject.html'"></div>
+</section>

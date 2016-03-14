@@ -1,0 +1,131 @@
+<section data-ng-controller="ListCourseUserController" data-ng-init=" coursesBasedonUsers();findCourse();findTopics();findCourseProject();findOnlineTest();">
+    <div ng-include="'/system/views/breadcrum.html'">
+    </div>
+      <div class="row">
+    <div class="col-sm-12">
+      <div class="col-sm-3 social-group-individual no-padding">
+          <i class="fa fa-book user-font-course text-center"></i>
+      </div>
+      <div class="col-sm-6">
+      <h4>Course Name:</h4>
+      <p>{{course.name}}</p>
+      <h4>Description:</h4>
+      <p>{{course.description}}</p>
+      </div>
+    </div>    
+    </div>
+    <div>
+    <table class="table table-bordered table-condensed">
+    <thead>
+    <tr>
+    <th>Qualification Required</th>
+    <th>Cost Type</th>
+    <th>Online Class</th>
+    <th>Skill Set</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td> {{course.qualification}}</td>
+    <td> {{course.costType}}</td>
+    <td> {{course.online_mentor_support}}</td>
+    <td>
+    <span data-ng-repeat="skill in course.courseSkill">
+    {{skill.skillName.name}}
+     <span data-ng-hide="$last"> ,</span>
+    </span>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <div class="col-md-12 mar-bt mrg-tp22">
+    <label class="col-md-2 label-left">Select Branch </label>
+    <div class="col-md-2" ng-repeat="branch in branches">
+    <span ng-if="$index==0"><input type="radio" name="select" value="select" ng-init = "branchSelectedCourse(branch._id)" ng-checked="true" >{{branch.branchName}}</span>
+     <span ng-if="$index>0"><input type="radio" name="select" value="select"  ng-click = "branchSelectedCourse(branch._id)">{{branch.branchName}}</span>
+    </div>
+    </div>
+    <div>
+   <ul class="nav nav-tabs">
+	<li class="active"><a href="" data-ng-click="myCoursetab(COURSE.URL_PATH.MYCOURSEDETAILS ,course)">Curriculum</a></li>
+	<li data-ng-hide="true"><a href="/course/coursematerials" data-toggle="tab">Course
+			materials</a></li>
+	<li ><a href="" data-ng-click="showSchedule(COURSE.URL_PATH.MYCOURSEPAYMENTSCHEDULE,course)">Payment Schedule</a></li>
+	<li data-ng-hide="true"><a href="/course/mentor">Mentor</a></li>
+	<li data-ng-hide="true"><a href="/course/batchmates">Batchmates</a></li>
+	<li data-ng-hide="true"><a href="/course/test">Test</a></li>
+</ul>
+    </div>
+    <div class="tab-content tab_content">
+ <div class="" id="2" data-ng-init ="curriculum(course._id);"></br>
+				<div ng-if="!curriculums[0]"><h3 class="col-md-offset-3">Curriculum is not defined for this course.</h3></div>
+				<div class="col-md-12 row" ng-if="curriculums">
+					<div data-ng-repeat="curriculum in curriculums">
+						<h3 ng-if = "curriculum.topic.name"> {{curriculum.topic.name}}</h3>
+						<h3 ng-if = "curriculum.test.name">Test: {{curriculum.test.name}}</h3>
+						<h3 ng-if = "curriculum.project.projectName">Project: {{curriculum.project.projectName}}</h3>
+						<table class="table table-bordered table-condensed"  ng-if = "curriculum.topic">
+							<thead>
+								<tr>
+									<th>SubTopic</th>
+									<th>Description</th>
+									<th>Assignment(hrs)</th>
+									<th>Lab(hrs)</th>
+									<th>Session(hrs)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="subtopic in subTopics" ng-if ="curriculum.topic._id == subtopic.parent">
+									<td>{{subtopic.name}}</td>
+									<td>{{subtopic.description | limitTo : 20}}...</td>
+									<td>{{subtopic.AssignmentHrs}}</td>
+									<td>{{subtopic.labHrs}}</td>
+									<td>{{subtopic.sessionHrs}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table table-bordered table-condensed"  ng-if = "curriculum.test">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Duration</th>
+									<th>No of Questions</th>
+									<th>Passing Marks</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{{curriculum.test.name}}</td>
+									<td>{{curriculum.test.description | limitTo : 20}}...</td>
+									<td>{{curriculum.test.duration}}</td>
+									<td>{{curriculum.test.numberOfQuestions}}</td>
+									<td>{{curriculum.test.passMark}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table table-bordered table-condensed"  ng-if = "curriculum.project">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Description</th>
+									<th>Total Marks</th>
+									<th>Minimum Marks</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{{curriculum.project.projectName}}</td>
+									<td>{{curriculum.project.description | limitTo : 20}}...</td>
+									<td>{{curriculum.project.totalMarks}}</td>
+									<td>{{curriculum.project.minimumMarks}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			</div>
+</section>
+

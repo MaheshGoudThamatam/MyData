@@ -1,0 +1,52 @@
+<section data-ng-controller="SkillController" data-ng-init="list();">
+	<div data-ng-include="'/system/views/alert.html'"></div>
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper social-group-header">
+		<button class="btn btn-info pull-right" ng-if="writePermission"
+			data-ng-click="newSkill()">{{ 'skills.CREATE_SKILL' | translate }}</button>
+	</div>
+	<table class="table table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th class="text-center">{{ 'common.NAME' | translate }}</th>
+				<th class="text-center">{{ 'common.DESCRIPTION' | translate }}</th>
+				<th class="text-center">{{ 'common.ACTIONS' | translate }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="skill in collection" class=""
+				ng-class-odd="'odd'" ng-class-even="'even'">
+				<td>{{skill.name}}</td>
+				<td>{{skill.description | limitTo: 20}}...</td>
+				<td width="10%" align="center">
+					<div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+						<a href class="dropdown-toggle btn btn-wide btn-default"
+							uib-dropdown-toggle> <i class="fa fa-arrow-circle-right"></i><span>{{
+								'common.ACTIONS' | translate }}</span>
+						</a>
+						<ul role="menu"
+							class="dropdown-menu dropdown-light animated fadeInUpShort ">
+							<li ng-if="updatePermission"><a class="menu-toggler"
+								data-ng-click="editSkill(URLFactory.SKILL.PATH.SKILL_EDIT,skill._id)">
+									<i class="fa fa-pencil-square-o"></i> <span>{{
+										'common.EDIT' | translate }}</span>
+							</a></li>
+							<li ng-if="deletePermission"><a class="menu-toggler"
+								data-ng-click="modalDeletePopup(skill)"> <i
+									class="fa fa-minus-circle"></i> <span> {{
+										'common.DELETE' | translate }}</span>
+							</a></li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			<tr data-ng-hide="!collection || collection.length">
+				<td colspan="8">{{ 'skills.NO_SKILL' | translate }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<div data-ng-show=" !collection || collection.length"
+		class="paginate usr">
+		<div ng-include="'system/views/paginationFilter.html'"></div>
+	</div>
+</section>

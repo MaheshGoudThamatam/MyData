@@ -1,0 +1,93 @@
+<section data-ng-controller="RiskFactorController" data-ng-init="list();">
+    <div data-ng-include="'/system/views/alert.html'">
+    </div>
+    <div ng-include="'/system/views/breadcrum.html'">
+    </div>
+    <div class="mainwrapper social-group-header">
+        <h3 class="pull-left">
+            Risk Factors
+        </h3>
+        <button class="btn btn-info pull-right social-group-header-create "
+            data-ng-click="newRiskFactor()">
+            Create RiskFactor
+        </button>
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    Name
+                </th>
+                <th class="text-center">
+                    Description
+                </th>
+                <th class="text-center">
+                    Technology
+                </th>
+                <th class="text-center">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="riskfactor in collection" class="" ng-class-odd="'odd'"
+                ng-class-even="'even'">
+                <td>
+                    {{riskfactor.name}}
+                </td>
+                <td>
+                    {{riskfactor.description | limitTo: 20}}...
+                </td>
+                <td ng-if="riskfactor.technology" class="text-center">
+                    <span class="glyphicon glyphicon-ok">
+                    </span>
+                </td>
+                <td ng-if="!riskfactor.technology" class="text-center">
+                    <span class="glyphicon glyphicon-remove">
+                    </span>
+                </td>
+                <td width="10%" align="center">
+                    <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                        <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-arrow-circle-right">
+                            </i>
+                            <span>
+                                Actions
+                            </span>
+                        </a>
+                        <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                            <li ng-if="updatePermission">
+                                <a class="menu-toggler" data-ng-click=editRiskFactor(INVESTOR.URL_PATH.RISKFACTORVIEW,riskfactor._id)>
+                                    <i class="fa fa-pencil-square-o">
+                                    </i>
+                                    <span>
+                                        Edit Info
+                                    </span>
+                                </a>
+                            </li>
+                            <li ng-if="deletePermission">
+                                <a class="menu-toggler" ng-click="modalDeletePopup(riskfactor)">
+                                    <i class="fa fa-minus-square-o">
+                                    </i>
+                                    <span>
+                                        Delete
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            <tr data-ng-hide="!collection || collection.length">
+                <td colspan="8">
+                    No RiskFactors found...
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div data-ng-show=" !collection || collection.length" class="paginate usr">
+        <div ng-include="'system/views/paginationFilter.html'">
+        </div>
+        <br/>
+    </div>
+</section>

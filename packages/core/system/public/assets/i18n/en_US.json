@@ -1,0 +1,963 @@
+{
+    "flagstyle": "flag-icon-us",
+    "dashboard": {
+        "WELCOME": "Welcome to CodersTrust",
+        "TITLE_DESC": "Summarized data as on platform"
+    },
+    "search": {
+        "PLACEHOLDER": "Enter search text here..."
+    },
+    "topbar": {
+        "messages": {
+            "MAIN": "Messages",
+            "HEADER": "Unread messages",
+            "SEEALL": "See All"
+        },
+
+        "activities": {
+            "MAIN": "Activities",
+            "HEADER": "You have new notifications",
+            "SEEALL": "See All"
+        },
+        "user": {
+            "PROFILE": "My Profile",
+            "CALENDAR": "My Calendar",
+            "MESSAGES": "My Messages",
+            "LOCKSCREEN": "Lock Screen",
+            "TIMELINE": "My Timeline",
+            "LOGOUT": "Log Out"
+        }
+    },
+    "offsidebar": {
+        "chat": {
+            "ONLINE": "On-Line",
+            "OFFLINE": "Off-Line",
+            "BACK": "Back",
+            "SEND": "Send",
+            "PLACEHOLDER": "Message"
+        },
+        "favorites": {
+            "MAIN": "Favorites"
+        },
+        "settings": {
+            "MAIN": "General Settings",
+            "NOTIFICATIONS": "Enable Notifications",
+            "SHOWEMAIL": "Show your E-mail",
+            "SHOWUSERS": "Show Offline Users",
+            "EMAILALERT": "E-mail Alerts",
+            "SMSALERT": "SMS Alerts",
+            "SAVE": "Save Changes"
+        }
+    },
+    "sidebar": {
+        "heading": {
+            "NAVIGATION": "Main Navigation",
+            "FEATURES": "Core Features",
+            "DOCUMENTATION": "Documentation"
+        },
+        "nav": {
+            "dashboard": {
+                "MAIN": "Dashboard"
+            },
+            "pagelayouts": {
+                "MAIN": "Page Layouts",
+                "FIXEDHEADER": "Fixed Header",
+                "FIXEDSIDEBAR": "Fixed Sidebar",
+                "FIXEDHEADERSIDEBAR": "Fixed Header &amp; Sidebar",
+                "FIXEDFOOTER": "Fixed Footer",
+                "BOXEDPAGE": "Boxed Page"
+            },
+            "layouts": {
+                "MAIN": "Layouts"
+            },
+            "components": {
+                "MAIN": "Components"
+            },
+            "element": {
+                "MAIN": "UI Elements",
+                "ELEMENTS": "Elements",
+                "BUTTONS": "Buttons",
+                "LINKS": "Link Effects",
+                "FONTAWESOME": "Font Awesome Icons",
+                "LINEARICONS": "Linear Icons",
+                "LETTERICONS": "Letter Icons",
+                "MODALS": "Modals",
+                "TOGGLE": "Toggle",
+                "TABS": "Tabs & Accordions",
+                "PANELS": "Panels",
+                "NOTIFICATIONS": "Notifications",
+                "SLIDERS": "Sliders",
+                "KNOB": "Knob component",
+                "TREEVIEW": "TreeView",
+                "MEDIA": "Media",
+                "NESTABLE": "Nestable List",
+                "TYPOGRAPHY": "Typography"
+            },
+            "tables": {
+                "MAIN": "Tables",
+                "BASIC": "Basic Tables",
+                "RESPONSIVE": "Responsive Tables",
+                "DYNAMIC": "Dynamic Tables",
+                "DATA": "ngTable"
+            },
+            "forms": {
+                "MAIN": "Forms",
+                "ELEMENTS": "Form Elements",
+                "PICKERS": "Pickers",
+                "XEDITABLE": "X-Editable Elements",
+                "TEXTEDITOR": "Text Editor",
+                "WIZARD": "Form Wizard",
+                "VALIDATION": "Form Validation",
+                "CROPPING": "Image Cropping",
+                "UPLOAD": "Multiple File Upload"
+            },
+            "login": {
+                "MAIN": "Login",
+                "LOGIN": "Login Form",
+                "REGISTRATION": "Registration Form",
+                "FORGOT": "Forgot Password Form",
+                "LOCKSCREEN": "Lock Screen"
+            },
+            "pages": {
+                "MAIN": "Pages",
+                "USERPROFILE": "User Profile",
+                "INVOICE": "Invoice",
+                "TIMELINE": "Timeline",
+                "CALENDAR": "Calendar",
+                "MESSAGES": "Messages",
+                "BLANKPAGE": "Starter Page"
+            },
+            "utilities": {
+                "MAIN": "Utilities",
+                "SEARCHRESULT": "Search Results",
+                "ERROR404": "Error 404",
+                "ERROR500": "Error 500",
+                "PRICING": "Pricing Table"
+            },
+            "3level": {
+                "MAIN": "3 Level Menu",
+                "Item1": {
+                    "MAIN": "Item 1",
+                    "LINK1": "Sample Link 1",
+                    "LINK2": "Sample Link 2",
+                    "LINK3": "Sample Link 3"
+                },
+                "Item2": {
+                    "MAIN": "Item 2",
+                    "LINK1": "Sample Link 1",
+                    "LINK2": "Sample Link 2",
+                    "LINK3": "Sample Link 3"
+                },
+                "Item3": {
+                    "MAIN": "Item 3",
+                    "LINK1": "Sample Link 1",
+                    "LINK2": "Sample Link 2",
+                    "LINK3": "Sample Link 3"
+                }
+            },
+            "4level": {
+                "MAIN": "4 Level Menu",
+                "Item1": {
+                    "MAIN": "Item 1",
+                    "link1": {
+                        "MAIN": "Sample Link 1",
+                        "LINK1": "Link 1",
+                        "LINK2": "Link 2",
+                        "LINK3": "Link 3"
+                    },
+                    "link2": {
+                        "MAIN": "Sample Link 2",
+                        "LINK1": "Link 1",
+                        "LINK2": "Link 2",
+                        "LINK3": "Link 3"
+                    },
+                    "link3": {
+                        "MAIN": "Sample Link 3",
+                        "LINK1": "Link 1",
+                        "LINK2": "Link 2",
+                        "LINK3": "Link 3"
+                    }
+                },
+                "Item2": {
+                    "MAIN": "Item 2",
+                    "link1": {
+                        "MAIN": "Sample Link 1",
+                        "LINK1": "Link 1",
+                        "LINK2": "Link 2",
+                        "LINK3": "Link 3"
+                    },
+                    "link2": {
+                        "MAIN": "Sample Link 2",
+                        "LINK1": "Link 1",
+                        "LINK2": "Link 2",
+                        "LINK3": "Link 3"
+                    },
+                    "link3": {
+                        "MAIN": "Sample Link 3",
+                        "LINK1": "Link 1",
+                        "LINK2": "Link 2",
+                        "LINK3": "Link 3"
+                    }
+                },
+                "Item3": {
+                    "MAIN": "Item 3",
+                    "link1": {
+                        "MAIN": "Sample Link 1",
+                        "LINK1": "Link 1",
+                        "LINK2": "Link 2",
+                        "LINK3": "Link 3"
+                    },
+                    "link2": {
+                        "MAIN": "Sample Link 2",
+                        "LINK1": "Link 1",
+                        "LINK2": "Link 2",
+                        "LINK3": "Link 3"
+                    },
+                    "link3": {
+                        "MAIN": "Sample Link 3",
+                        "LINK1": "Link 1",
+                        "LINK2": "Link 2",
+                        "LINK3": "Link 3"
+                    }
+                }
+            },
+            "maps": {
+                "MAIN": "Maps"
+            },
+            "charts": {
+                "MAIN": "Charts"
+            },
+            "landing": {
+                "MAIN": "Landing Page"
+            },
+            "rtl": {
+                "MAIN": "RTL Version"
+            },
+            "ltr": {
+                "MAIN": "LTR Version"
+            }
+        }
+    },
+    "footer": {
+        "copyright": {
+            "MAIN": "Copyright",
+            "MESSAGE": "All rights reserved"
+        }
+    },
+    "setting": {
+        "MAIN": "Style Selector",
+        "FIXEDHEADER": "Fixed header",
+        "FIXEDSIDEBAR": "Fixed sidebar",
+        "CLOSEDSIDEBAR": "Closed sidebar",
+        "FIXEDFOOTER": "Fixed footer"
+    },
+    "locations": {
+        "branch": {
+            "BRANCH_NAME": "Branch Name",
+            "BRANCH_CODE": "Branch Code",
+            "EMAIL": "Email",
+            "DESCRIPTION": "Description",
+            "PINCODE": "Pincode",
+            "PICTURE": "Picture",
+            "LINE1": "Line1",
+            "LINE2": "Line2",
+            "CITY": "City",
+            "STATE": "State",
+            "COUNTRY": "Country",
+            "PRE": "Pre",
+            "NUMBER": "number",
+            "PHONE_NUMBER": "Phone Number",
+            "ADDRESS_LINE": "Address Line",
+            "ADDRESS": "Address",
+            "IS_ACTIVE": "Is Active",
+            "TRUE": "True",
+            "FALSE": "False",
+            "BATCHES": "Batches",
+            "CREATE_BRANCH": "Create Branch",
+            "CREATE_CITY": "Create City",
+            "CREATE_COUNTRY": "Create Country"
+        },
+        "city": {
+            "CITY_NAME": "City Name",
+            "CITY_CODE": "City Code"
+        },
+        "zone": {
+            "ZONE_NAME": "Zone Name",
+            "ZONE_CODE": "Zone Code",
+            "ZONE": "Zone",
+            "CREATE_ZONE": "Create Zone"
+        },
+        "country": {
+            "COUNTRY_NAME": "Country Name",
+            "COUNTRY_CODE": "Country Code",
+            "CURRENCY": "Currency",
+            "LANGUAGE_NAME": "Language Name",
+            "LANGUAGE_CODE": "Language Code",
+            "ADMINS": "Available Admins",
+            "UPDATED": "Updated At",
+            "CREATED": "Created At",
+            "SHOW": "Show",
+            "USER": "User",
+            "NEW": "New",
+            "EXISTING": "Existing",
+            "SEARCH": "Search"
+        },
+        "error_messages": {
+            "CITY": "Please enter City",
+            "STATE": "Please enter State",
+            "COUNTRY": "Please enter Country",
+            "PINCODE": "Please enter Pincode",
+            "PRE": "Please enter Prefix",
+            "BRANCH_NAME": "Please enter Branch Name",
+            "BRANCH_CODE": "Please enter Branch Code",
+            "EMAIL": "Please enter Email",
+            "DESCRIPTION": "Please enter Description",
+            "PICTURE": "Please enter Picture",
+            "VALID_EMAIL": "Please enter correct email address",
+            "CITY_NAME": "Please enter  City Name",
+            "CITY_CODE": "Please enter  City Code",
+            "ZONE_NAME": "Please enter Zone Name",
+            "ZONE_CODE": "Please enter Zone Code",
+            "COUNTRY_NAME": "Please enter Country Name",
+            "COUNTRY_CODE": "Please enter Country Code",
+            "CURRENCY": "Please enter Currency",
+            "LANGUAGE_NAME": "Please enter Language Name",
+            "LANGUAGE_CODE": "Please enter Language Code",
+            "PHONE_NUMBER": "Please enter Phone Number"
+        },
+        "NO_BRANCH": "No Branches available for this city",
+        "NO_CITY": "No Cities available for this Zone",
+        "NO_COUNTRY": "No Countries available",
+        "NO_ZONE": "No zones available for this country"
+
+    },
+
+    "skills": {
+        "WELCOME": "Skill Management",
+        "TITLE_DESC": "Skill Management",
+        "SKILL_NAME": "Skill Name",
+        "DESCRIPTION": "Description",
+        "KEYWORDS": "Add a Skill",
+        "SUB_SKILL": "Sub Skills Name (Optional)",
+        "NO_SKILL": "No Skill found...",
+        "QUALIFIED_SKILLS": "Qualified Skills",
+        "QUALIFIED_POINS": "Qualified Points",
+        "NO_BADGE": "No Badge found...",
+        "CREATE_SKILL": "Create skill",
+        "error_messages": {
+            "SKILL_NAME": "Please enter Skill Name",
+            "DESCRIPTION": "Please enter Description",
+            "KEYWORDS": "Please add a Skill",
+            "BADGE_NAME": "Please enter Badge Name",
+            "QUALIFIED_POINS": "Please enter the Qualified Points"
+        },
+        "badge": {
+            "WELCOME": "Badge Management",
+            "TITLE_DESC": "Badge Management",
+            "BADGE_NAME": "Badge Name",
+            "BADGE": "Badge",
+            "EDIT_BADGE": "Edit Badge",
+            "CREATE_BADGE": "Create Badge"
+        }
+    },
+
+    "roles": {
+        "role": {
+            "ROLE": "Role",
+            "ROLES": "Roles",
+            "NAME": "Name",
+            "ROLE_CODE": "Role Code",
+            "DESCRIPTION": "Description",
+            "FEATURES": "Features",
+            "READ": "Read",
+            "WRITE": "Write",
+            "UPDATE": "Update",
+            "DELETE": "Delete",
+            "COMPONENTS": "Components",
+            "IS_ADMIN": "isAdmin",
+            "NO_ROLES": "No roles found...",
+            "CREATE_ROLE": "Create Role",
+            "error_messages": {
+                "NAME": "Please enter the Name",
+                "ROLE_CODE": "Please enter role code",
+                "DESCRIPTION": "Please enter description!"
+            }
+        },
+        "feature": {
+            "URL": "URL",
+            "ICON": "Icon",
+            "COLOR_CODE": "Color Code",
+            "SELECT": "Select",
+            "IS_COMPONENT": "isComponent",
+            "SELECT_WIDTH": "Select Width",
+            "WIDTH": "Width",
+            "FEATURE_CATEGORY": "Feature Category",
+            "FEATURE": "Feature",
+            "COLOR": "Color",
+            "NO_FEATURES": "No Features found...",
+            "NO_FEATURE_CATEGORY": "No Feature Category found...",
+            "NO_FEATURE_ROLE": "No Features available for this role",
+            "NO_COMPONENT": "No Component available for this role",
+            "PERMISSIONS": "Permissions",
+            "COMPONENT": "Component",
+            "CREATE_FEATURE": "Create Feature",
+            "error_messages": {
+                "URL": "Please enter the Url",
+                "URL_PATTERN": "Please enter the valid URL!(ex: /example)",
+                "ICON": "Please enter icon",
+                "COLOR_CODE": "Please enter color!"
+            }
+        },
+        "admin_list": {
+            "ADMINS": "Admins",
+            "EMAIL": "Email",
+            "USERNAME": "Username",
+            "CONFIRMED": "Confirmed",
+            "ROLES": "Roles",
+            "JOINING_DATE": "Joining Date",
+            "TRUE": "True",
+            "FALSE": "False",
+            "NO_ADMIN_CATEGORY": "No Admins available"
+
+
+        }
+    },
+
+    "profile": {
+        "project": {
+            "PROJECT_NAME": "Project Name",
+            "PRICE": "Price",
+            "SKILL": "Add a Skill",
+            "LABLE_SKILL": "Skills",
+            "DESCRIPTION": "Description",
+            "URL": "http://www.example.com",
+            "CURRENCY": "Currency",
+            "SELECT": "Select",
+            "INR": "INR",
+            "EURO": "EURO",
+            "DOLLAR": "DOLLAR",
+            "FRANC": "FRANC",
+            "POUND": "POUND",
+            "PICTURE": "Picture",
+            "APP": "APP",
+            "WEB": "web",
+            "OTHER": "Other",
+            "error_messages": {
+                "PROJECTNAME": " Please enter the Project Name ",
+                "PRICE": "Please enter the Price & Currency ",
+                "SKILL": "Please enter the Skills",
+                "DESCRIPTION": " Please enter the Description",
+                "URL": "Please enter the URL",
+                "CURRENCY": "Please enter the currency"
+            }
+        },
+
+        "educational_details": {
+            "LABLE_NAME": "Name",
+            "LABLE_BOARD": "Board",
+            "NAME": "Educational Detail Name",
+            "BOARD": "Education Board",
+            "UNVERSITY": "University",
+            "PERCENTAGE": "Percentage",
+            "YEAROFPASSING": "Year Of Passing",
+            "SUBJECTS": "Subjects",
+            "error_messages": {
+                "LABLE_NAME": " Please enter the Name",
+                "LABLE_BOARD": "Please enter the Board",
+                "UNVERSITY": " Please enter the University",
+                "PERCENTAGE": "Please enter the Percentage",
+                "YEAROFPASSING": " Please enter the Year of Passing",
+                "SUBJECTS": "Please enter the subjects "
+            }
+        },
+
+        "edit_profile": {
+            "NAME": "name",
+            "FIRSTNAME": "First Name",
+            "LASTNAME": "Last Name",
+            "COUNTRY": "Country",
+            "EMAIL": "Email",
+            "DOB": "DOB",
+            "error_messages": {
+                "NAME": "Please enter the Name",
+                "FIRSTNAME": "Please enter First Name",
+                "LASTNAME": "Please enter Last Name",
+                "COUNTRY": "Please enter Country",
+                "DOB": "Please enter correct  DOB",
+                "EMAIL": "Please enter email address"
+            }
+        }
+    },
+
+    "common": {
+        "DESCRIPTION": "Description",
+        "NAME": "Name",
+        "PLEASE_SELECT": "Please select",
+        "SUBMIT": "Submit",
+        "CANCEL": "Cancel",
+        "CREATE": "Create",
+        "UPLOAD": "Upload",
+        "UPLOAD_PROGRSS": "Upload progress",
+        "ACTIONS": "Actions",
+        "OPTIONAL": "Optional",
+        "VIEW": "View",
+        "EDIT": "Edit",
+        "DELETE": "Delete",
+        "INFO": "Info",
+        "ONE": "One",
+        "ADD": "Add",
+        "EDITINFO": "Edit Info",
+        "PERFORMANCE": "Performance",
+        "BACK": "Back",
+        "error_messages": {
+            "NAME": "Please enter the Name",
+            "DESCRIPTION": " Please enter the Description"
+        }
+    },
+    "onlinetest": {
+        "TESTS": "Tests",
+        "TEST": "Test",
+        "INSTRUCTION": "Instruction",
+        "DURATION": "Duration (In Hrs)",
+        "NUMBER_OF_QUESTIONS": "Number of Questions",
+        "PASS_MARK": "Pass Mark",
+        "TEST_SKILLS": "Test Skills",
+        "SKILL_NAME": "Skill Name",
+        "SUB_SKILL": "Sub Skill",
+        "NO_OF_QUS": "No. of questions",
+        "COMPLEXITY_START": "Complexity Start",
+        "COMPLEXITY_END": "Complexity End",
+        "NO_TESTS": "No onlinetests available",
+        "ONLINE_TEST": "Online Test",
+        "CREATE_ONLINE": "Create Onlinetest",
+        "error_messages": {
+            "INSTRUCTION": "Please enter the Instruction",
+            "DURATION": " Please enter the Duration",
+            "NUMBER_OF_QUESTIONS": "Please enter number of Questions",
+            "PASS_MARK": "Please enter Pass marks",
+            "PICTURE": "Please upload project image"
+        }
+    },
+    "mentor": {
+        "AVAILABLE_TESTS": "Available Online Tests",
+        "SELECTED_TESTS": "Selected Online Tests",
+        "ALL": "All",
+        "GENDER": "Gender",
+        "FEMALE": "Female",
+        "MALE": "Male",
+        "DATE_OF_BIRTH": "Date of Birth",
+        "PHONENUMBER": "Phone Number",
+        "CONTACT_DETAILS": "Contact Details",
+        "ADDRESS_TYPE": "Address Type",
+        "PERMANENT": "Permanent Address",
+        "TEMPORARY": "Temporary Address",
+        "OFFICE": "Office Address",
+
+        "ADDRESS1": "Address 1",
+        "ADDRESS2": "Address 2",
+        "QUALIFICATION": "Qualification Details",
+        "EXAMINATION": "Examination",
+        "EXAM_APPEARED": "Exam Appeared",
+        "INSTITUTION": "Institution",
+        "GRADE": "Grade",
+        "CGPA": "CGPA",
+        "SGPA": "SGPA",
+        "MARKS": "Marks",
+        "EXPERIANCE": "Experience Details",
+        "EMPLOYER": "Employer",
+        "EMPLOYER_NAME": "Employee Name",
+        "SPECIALIZATION": "Specialization if any",
+
+        "DESIGNATION": "Designation",
+        "START_DATE": "Start Date",
+        "END_DATE": "End Date",
+        "REFERENCE": "Recommendation / References",
+        "REFERENCE_NAME": "Reference Name",
+        "REFERENCE_NUMBER": "Reference Phone Number",
+        "COMMENTS": "Comments",
+        "SKILLS": "Skills",
+        "DOCUMENTS": "Documents",
+        "DOCUMENT": "Document",
+        "RESUME": "Resume",
+        "REFERENCE_LETTER": "Reference Letter",
+        "COVER_LETTER": "Cover Letter",
+        "OTHER": "Others",
+        "DOCUMENT_NAME": "Document Name",
+        "PREVIEW": "Preview",
+        "project": {
+            "SKILL_REQUIRED": "Skills Required",
+            "WEEK": "Week",
+            "MONTH": "Month",
+            "YEAR": "Year",
+            "COST": "Cost (INR)",
+            "POSITION": "Position",
+            "AVAILABLE": "Availability",
+            "FULL_TIME": "Full Time",
+            "PART_TIME": "Part Time",
+            "TYPE": "Type",
+            "ONLINE": "Online",
+            "OFFLINE": "Offline",
+            "VACANCY": "Vacancy"
+        },
+        "error_messages": {
+            "DATE_OF_BIRTH": "Please enter date of birth",
+            "VALID_EMAIL": "Please enter the valid email (ex: coderstrust@coderstrust.com)",
+            "ADDRESS_TYPE": " Please select address type",
+            "PHONENUMBER": "Please enter phone number",
+            "ADDRESS1": "Please enter address line 1",
+            "ADDRESS2": " Please enter address line 2",
+            "PERMANENT": "Only one permanent address is allowed ",
+            "EXAM_APPEARED": "Please enter Appeared Exam",
+            "INSTITUTION": "Please enter institution name",
+            "GRADE": "Please select grade",
+            "MARKS": "Please enter marks obtained",
+            "EMPLOYER": "Please enter employer name",
+            "DESIGNATION": "Please enter designation",
+            "START_DATE": "Please enter start date",
+            "END_DATE": "Please enter end date",
+            "DOCUMENT_TYPE": "Please select document type",
+            "DOCUMENT_NAME": " Please enter document name",
+            "UPLOAD": "Please upload document",
+            "REFERENCE_NAME": "Please enter Reference Name",
+            "REFERENCE_NUMBER": "Please enter Reference Number",
+            "COMMENTS": "Please enter comments",
+            "COST": "Please enter the Cost",
+            "DESIGNATION": "Please enter Designation",
+            "POSITION": "Please enter the Position"
+        }
+    },
+    "job_sites": {
+        "DOMAIN": "Domain",
+        "URL_LOGIN": "urlLogin",
+        "URL_PLACEHOLDER": "example@abc.com",
+        "URL_PROFILE": "urlProfile",
+        "URL_PROJECT": "urlProject",
+        "PROPOSAL": "Proposal",
+        "API_AVAILABLE": "apiAvailable",
+        "NO_JOBSITES": "No Jobsites found...",
+        "JOB_SITES": "Job sites",
+        "CREATE_JOB": "Create Jobsite",
+        "error_messages": {
+            "DOMAIN": " Please enter the domain ",
+            "URL_LOGIN": "Please enter a valid urlLogin",
+            "URL_PROFILE": "Please enter a valid urlProfile",
+            "URL_PROJECT": "Please enter a valid urlProject",
+            "PROPOSAL": "Please enter the proposal"
+        }
+    },
+
+    "jobs": {
+        "SITE": "Site",
+        "SITES": "Sites",
+        "SITE_NAME": "Site Name",
+        "SITE_URL": "Site Url",
+        "SITE_URL_PLACEHOLDER": "http://www.site.com",
+        "SITE_USERNAME": "Site Username",
+        "PASSWORD": "Site Password",
+        "API_URL": "API Url",
+        "URL_PLACEHOLDER": "job.coderstrust.idc.tarento.com",
+        "API_SECRET": "API Secret",
+        "SECRET_CODE": "API-SECRET-CODE",
+        "SITE_ID": "API Site Id",
+        "CHECK_LOGIN": "CheckLogin API Endpoint",
+        "CHECKLOGIN_PLACEHOLDER": "/checkLogin.py",
+        "GET_USER_API": "GetUserInfo API endpoint",
+        "USERAPI_PLACEHOLDER": "/getUserInfo.py",
+        "GET_SINGLEJOB_API": "GetSingleJob API Endpoint",
+        "GET_SINGLEJOB_API_PLACEHOLDER": "/getSingleJob.py",
+        "GET_ALLJOB_API": "GetAllJobs API Endpoint",
+        "GET_ALLJOB_API_PLACEHOLDER": "/getAllJobs.py",
+        "ENABLE": "Enabled",
+        "ADD_JOBS": "Add jobs to db",
+        "SKILLS_FILTER": "Filter with Skill",
+        "NO_JOBS": "No Jobs Found...",
+        "JOBS_LIST": "List Of Jobs",
+        "JOBS_POST": "Posted On:",
+        "JOBS_RECOMMENDED": "Recommended Jobs",
+        "JOBS_ALL": "All Jobs",
+        "SITE": "Site",
+        "JOBS": "Jobs",
+        "JOB": "Job",
+        "POSTED": "Posted",
+        "STATUS": "Status",
+        "COUNT": "Count",
+        "ON": "On",
+        "RATING": "Rating",
+        "JOBS_DETAILS": "Job Detail",
+        "JOBS_COST": "Jobs Cost",
+        "COST_CURRENCY": "Cost Currency",
+        "JOBS_STATUS": "Jobs Status",
+        "PROPOSAL_COUNT": "Proposal Count",
+        "JOBS_DESCRIPTION": "Job Description",
+        "JOBS_LOCATION": "Location:",
+        "JOBS_RATING": "Rating:",
+        "JOBS_POSTED": "Jobs Posted:",
+        "TOTAL_SPENT": "Total Spent:",
+        "SITE_DETAIL": "Site Detail",
+        "WEB_NAME": "WebsiteName",
+        "WEB_URL": "WebsiteUrl",
+        "NO_SITES": "No Sites found...",
+        "VIEWINFO": "View Info",
+        "skill": {
+            "COST": "Cost in $",
+            "SKILLS": "Skills",
+            "SKILLS_PLACEHOLDER": "Search Skill",
+            "LEVEL": "Select Level",
+            "MAINSKILL": "Main Skill",
+            "SKILL_SET": "Skill Set",
+            "NO_SKILLSET": "No Skillset found..."
+        },
+        "error_messages": {
+            "SITE_NAME": " Please enter the Site Name",
+            "SITE_URL": "Please enter the Site Url",
+            "SITE_USERNAME": "Please enter the Site Username",
+            "PASSWORD": "Please enter the Site Password",
+            "API_URL": "Please enter the API Url",
+            "API_SECRET": "Please enter the API Secret",
+            "SITE_ID": " Please enter the API Site Id",
+            "CHECK_LOGIN": "Please enter the CheckLogin API Endpoint ",
+            "GET_USER_API": "Please enter the GetUserInfo API Endpoint",
+            "GET_SINGLEJOB_API": "Please enter the GetSingleJob API Endpoint",
+            "GET_ALLJOB_API": "Please enter the GetAllJobs API Endpoint",
+            "LEVEL": "Please select the level",
+            "COST": "Please enter the cost"
+        }
+    },
+
+    "curriculum": {
+        "TOPIC_NAME": "Topic Name",
+        "TEST": "Test",
+        "PROJECT": "Project",
+        "SUBTOPIC": "Subtopic",
+        "MATERIAL": "Material",
+        "SESSION": "Session Hours",
+        "LAB": "Lab Hours",
+        "ASSIGNMENT": "Assignment Hours",
+        "HOURES": "Hours",
+        "TESTTYPE": "TestType",
+        "PRE": "Pre-Assesement Test",
+        "POST": "Post-Assesement Test",
+        "GENERAL": "General Test",
+
+        "MIN": "Mins",
+        "error_messages": {
+            "TOPIC_NAME": "Please enter Topic Name",
+            "TEST": "Please enter Test",
+            "PROJECT": "Please enter Project",
+            "SUBTOPIC": "Please enter Subtopic",
+            "MATERIAL": "Please enter Material",
+            "SESSION": "Please enter Session Hours",
+            "LAB": "Please enter Lab Hours",
+            "ASSIGNMENT": "Please enter Assignment Hours",
+            "HOURES": "Please enter Hours",
+            "MIN": "Please enter Mins"
+        }
+    },
+    "users": {
+        "FULL_NAME": "Full Name",
+        "USER_NAME": "User Name",
+        "AGREE": "I Agree",
+        "EMAIL_ADDRESS": "Email Address",
+        "PASSWORD": "Password",
+        "KEEP_SIGNIN": "Keep me signed in",
+        "ROLE": "Choose a Role",
+        "LOCATION": "Location",
+        "error_messages": {
+            "EMAIL_ADDRESS": "Email is required",
+            "PASSWORD": "Password is required.",
+            "EMAIL": " Please enter email(ex: coderstrust@coderstrust.com)",
+            "USER_NAME": "Please enter User Name"
+        }
+    },
+
+    "course": {
+        "COUNTRIES": "Countries",
+        "END_DATE": "End_date",
+        "MENTOR": "Mentor",
+        "CHANGE_MENTOR": "Change Mentor",
+        "SELECT_MENTOR": "Select Mentor",
+        "COUNSELLING_DATE": "Counselling Date",
+        "SCHEDULE_TIME": "Schedule Time",
+        "BATCH": "Batch",
+        "branch": {
+            "BATCHES": "Branches",
+            "COURSES": "Courses",
+            "START_DATE": "Start_date",
+            "MENTORS": "Mentors",
+            "TIMINGS": "Batch Timings",
+            "MON": "Mon",
+            "TUE": "Tue",
+            "WED": "Wed",
+            "THU": "Thu",
+            "FRI": "Fri",
+            "SAT": "Sat",
+            "SUN": "Sun",
+            "HH": "HH",
+            "MM": "MM",
+            "AVAILABLE_COURSE": "Available Course",
+            "SELECTED_COURSE": "Selected Course",
+            "SELECT_LOCATION": "Select location",
+            "NOT_AVAILBLE": " No course available",
+            "ASSIGN": "Assign",
+            "BRANCH": "Branch"
+        },
+        "courses": {
+            "COURSE_TYPE": "Course Type",
+            "CODERSTRUST": "CodersTrust Course",
+            "FRANCHISE": "Franchise Course",
+            "3RDPARTY": "3rd Party Course",
+            "QUALIFICATION": "Qualification",
+            "DELIVERY_METHOD": "Delivery Method",
+            "ONLINE_SUPPORT": "Online Mentor Support",
+            "YES": "YES",
+            "NO": "NO",
+            "PROJECT_LEARNING": "Project Based Learning",
+            "COUNCELLING": "Counselling",
+            "COST_TYPE": "Cost Type",
+            "SKILL_SET": "Skill-Set",
+            "PREREQISITE": "Pre-requisite Level",
+            "TARGET": "Target Level",
+            "COMPANY_NAME": "Company Name",
+            "PAYMENT_URL": "Payement url",
+            "BANNER": "Banner",
+            "FREE": "Free",
+            "PAID": "Paid",
+            "SKILL": "Skill"
+        },
+        "counselling_schedule": {
+            "SELECT_BRANCH": "Select Branch",
+            "SELECT_MENTOR": "Select Mentor",
+            "SELECT_COURSE": "Select Course",
+            "SELECT_DATE": "Select date",
+            "START_HOUR": "Start Hour",
+            "START_MIN": "Start Min",
+            "END_HOUR": "End Hour",
+            "END_MIN": "End Min",
+            "INTERVAL": "Interval",
+            "CAPACITY": "Capacity"
+        },
+        "installmemts": {
+            "INSTALLMENT": "Installment Amount",
+            "MANDATORY": "Mandatory",
+            "PEROID": "Period"
+        },
+        "loans": {
+            "LOAN_TERM": "Loan Term (months)",
+            "LOAN_INTEREST": "Loan Interest Rate (%)",
+            "LOAN_AMOUNT": "Loan Amount ($)",
+            "LIVING_EXPENCE": "Living Expenses ($)",
+            "ACCESSORIES_EXPENSES": "Accessories Expenses ($)",
+            "ALLOW_LIVING_EXPENSES": "Allow for living expenses with this loan? If any amount is set, student will be able to opt for it during loan request.",
+            "ALLOW_ACCESSORIES_EXPENSES": "Allow for accessories expenses with this loan? If any amount is set, student will be able to opt for it during loan request.",
+            "PRE_EMI": "Pre-EMI period (months)",
+            "PRE_EMI_PEROID": "The period of time between the loan disbursement date and the first loan EMI date.",
+            "MAX_LOAN_AMOUNT": "Maximum amount that can be disbursed for this loan is <b>$300</b> (Full course fee)."
+        },
+        "payment": {
+            "COST": "Cost",
+            "INSTALLMEMT_VALIDATION": "Down-payment and installments should be summed up to Course cost for {{paymentSchemeIndex + 1}}st Payment Scheme",
+            "PAYMENT": "Payment Scheme",
+            "AMOUNT": "Amount",
+            "LOAN": "Loan",
+            "FINE_AMOUNT": "Fine Amount",
+            "DUE_DATE": "Due Date",
+            "DAYS": "days",
+            "LOAD_DETAILS": "Loan Detail",
+            "LOAN_AMOUNT": "Loan Amount",
+            "DISCOUNT": "Discount",
+            "RANGE": "Marks Range",
+            "RATE": "Rate",
+            "FROM": "From",
+            "TO": "TO"
+
+        },
+
+        "franchise": {
+            "FRANCHISE_TYPE": "Franchise Type",
+            "FRANCHISE": "Franchise",
+            "3RDPARTY": "Third Party Provider",
+            "WEBSITE_URL": "WebSite URL",
+            "CONTACT_DETAILS": "Contact Details",
+            "PERSON_NAME": "Person Name",
+            "PRIMARY_NUMBER": "Primary Contact Number",
+            "ALTERNATE_NUMBER": "Alternate Contact Number",
+            "EMAIL_ID": "Email Id"
+        },
+        "course_discount": {
+            "MIN_RESULT": "Minimum Result",
+            "APPLICABLE_DISCOUNT": "Discount ApplicabLe",
+            "TEST_RESULT": "Test Result"
+        },
+        "project": {
+            "LEVEL": "Level",
+            "REWARD_POINTS": "Reward Point",
+            "QUESTION": "Question",
+            "REQUIRED_SKILL": "Required skill",
+            "MINIMUM_MARKS": "Minimum Marks",
+            "TOTAL_MARKS": "Total Marks"
+        },
+        "error_messages": {
+            "BATCHES": "Please select branch",
+            "COURSES": "Please select course",
+            "START_DATE": "Please enter the Start_date",
+            "START_DATE_VALID": "Start date should not be greater than current date.",
+            "TIMINGS": "End time should greater than start time.",
+
+            "SELECT_BRANCH": "Please select Branch",
+            "SELECT_MENTOR": "Please select Mentor",
+            "SELECT_COURSE": "Please select Course",
+            "SELECT_DATE": "Please select date",
+            "DATE_VALID": "Counselling date must be greater than current date",
+            "START_HOUR": "Please select start hour ",
+            "START_MIN": "Please select start minutes",
+            "END_HOUR": "Please select end hour",
+            "END_MIN": "Please select end min",
+            "END_HOUR_VALID": "End hour cannot be lesser than start hour",
+            "END_HOUR_EQUAL_VALID": "End hour cannot be equal to start hour",
+            "INTERVAL": "Please enter interval",
+            "INTERVAL_VALID": "Interval cannot be greater than time slot",
+            "CAPACITY": "Please enter capacity",
+
+            "QUALIFICATION": "Please enter the Qualification",
+            "SKILL_COUNT": "Please enter only one Skill",
+            "SKILL": "Please enter Skill",
+            "PREREQISITE": "Please enter the Pre-requisite level",
+            "TARGET": "Please enter the Target level",
+            "TARGET_VALID": "Target level must be greater than Pre-requisite level",
+            "PAYMENT_URL": "Please enter website in format http://www.example.com",
+            "PAYMENT_VALID": "Please enter the Payement Url",
+            "BANNER": "Please upload course banner",
+            "ICON": "Please upload course icon",
+            "COMPANY_NAME": "Please enter company name",
+
+            "COST": "Please enter the Cost",
+            "PAYMENT": "Please enter the Payment Scheme",
+            "AMOUNT": "Please enter the Installment Amount ",
+            "AMOUNT_EXCEEDS": "amount exceeds the Cost",
+            "FINE_AMOUNT": "Please enter the fine amount ",
+            "DUE_DATE": "Please enter the Due Date",
+            "LOWER_RANGE": "Lower limit for Marks exceeds the range",
+            "UPPER_RANGE": "Upper limit for Marks exceeds the range",
+            "DISCOUNT": "Discount % exceeds the boundry value",
+
+            "WEBSITE_URL": "Please enter WebSite URL",
+            "WEBSITE_VALID": " Please enter the valid WebSite URL",
+            "CONTACT_DETAILS": "Please enter Contact Details",
+            "PERSON_NAME": "Please enter Person Name",
+            "PRIMARY_NUMBER": "Please enter valid Phone Number",
+            "VALID_EMAIL": " Please enter the valid Email Id ",
+            "EMAIL_ID": "Please enter Email Id",
+            "END_DATE": " End_date should be greater than start date.",
+            "MENTOR": "Please enter mentor name",
+            "NO_MENTOR": "No mentors available..!",
+            "BATCH": "Please select Batch name",
+            "NO_DISCOUNT": "No discounts applicable for the course.",
+            "QUESTION": "Please Enter Question",
+            "REWARD_POINTS": "Please enter Reward Point",
+            "LEVEL": "Please Enter Level",
+            "MINIMUM_MARKS": "Please enter minimum marks",
+            "TOTAL_MARKS": "Total Marks must be greater than Minimum Marks",
+            "MARKS_ENTER": "Enter the Total Marks"
+        }
+    }
+}

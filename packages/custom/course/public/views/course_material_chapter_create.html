@@ -1,0 +1,30 @@
+<section data-ng-controller="ChapterController" data-ng-init="createChapter();">
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper social-group-header">
+        <h3 class="pull-left ">Chapter</h3>
+    </div>
+    <div class="mainwrapper">
+        <form name="chapterForm" class="form-horizontal formAlign" novalidate>
+            <div class="form-group ">
+                <label mean-token="'create-name'" class="col-md-2 ">{{ 'common.NAME' | translate }}</label>
+                <div class="col-md-8">
+                    <input name="name" type="text" data-ng-model="chapter.name" id="name" placeholder="{{ 'common.NAME' | translate }}" class="form-control" required>
+                    <input name="level" type="hidden" data-ng-model="chapter.level" data-ng-value="chapter" id="level">
+                </div>
+            </div>
+            <div class="form-group ">
+                <label mean-token="'create-description'" class="col-md-2 ">{{ 'common.DESCRIPTION' | translate }}</label>
+                <div class="col-md-8">
+                    <textarea name="description" type="text" data-ng-model="chapter.description" id="description" cols="30" rows="3" placeholder="{{ 'common.DESCRIPTION' | translate }}" class="form-control" required></textarea>
+                </div>
+            </div>
+            <div class="form-group left1">
+                <div class="col-md-offset-2 col-md-8">
+                    <button mean-token="'create-submit'" type="button" class="btn btn-info" ng-click="create(chapterForm.$valid)">Submit</button>
+                    <button type="button" class="btn btn-info" ng-click="cancelChapter()">Cancel</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</section>

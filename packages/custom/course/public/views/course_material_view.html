@@ -1,0 +1,222 @@
+<section data-ng-controller="ChapterController" data-ng-init="findMaterialList(); viewMaterial();">
+    <div data-ng-include="'/system/views/alert.html'"></div>
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper social-group-header">
+        <h3 class="pull-left ">{{material.title}}</h3>
+        <div data-ng-repeat="skill in material.skills"><h6>{{skill.name}}</h6></div>
+    </div>
+    <div ng-repeat="chapterList in chaptersList" data-ng-init="chapterListIndex = $index" >
+        <div class="col-md-11" ng-class={hoverClass:chapterList[chapterListIndex]}>
+            <div class="col-md-11 row" data-ng-mouseover="testwidth()">
+                <h3 class="mb15 mt7" tooltip-placement="bottom-left" uib-tooltip="{{chapterList.name}}">{{chapterListIndex+1}}.&nbsp;{{chapterList.name | limitTo:65}}<span ng-if="chapterList.name.length>65">...</span></h3>
+            </div>
+            <div class="col-md-1 chapterAction mt7">
+                <div class="col-md-1" ng-if="updatePermission" >
+                    <a href="" ng-click="updateChapter(chapterList._id)">
+                        <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit" ng-mouseover="chapterList[chapterListIndex]=true" ng-mouseleave="chapterList[chapterListIndex]=false"></i>
+                    </a>
+                </div>
+                <div class="col-md-1" ng-if="deletePermission && chapterList.childId.length == 0">
+                    <a href="" class="linksGap">
+                        <i data-ng-click="modalDeletePopup(chapterList)" class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Delete" ng-mouseover="chapterList[chapterListIndex]=true" ng-mouseleave="chapterList[chapterListIndex]=false"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div ng-repeat="lessonList in chapterList.childId" data-ng-init="lessonListIndex = $index">
+            <div class="col-md-12 row mt7 lessonHeader w90" ng-class={hoverClass:lessonList[lessonListIndex]}>
+                <div class="col-md-11 row" data-ng-mouseover="testwidth()">
+                    <h4 class="mb15 mt7" tooltip-placement="bottom-left" uib-tooltip="{{lessonList.name}}">{{chapterListIndex+1}}.{{lessonListIndex+1}}.&nbsp;{{lessonList.name | limitTo:79}}<span ng-if="lessonList.name.length>79">...</span></h4>
+                </div>
+                <div class="col-md-1 topicAction mt7">
+                    <div class="col-md-6" ng-if="updatePermission">
+                        <a href="" ng-click="updateLesson(lessonList._id)">
+                            <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit" ng-mouseover="lessonList[lessonListIndex]=true" ng-mouseleave="lessonList[lessonListIndex]=false"></i>
+                        </a>
+                    </div>
+                    <div class="col-md-6" ng-if="deletePermission && lessonList.childId.length == 0">
+                        <a href="" class="linksGap">
+                            <i data-ng-click="modalDeletePopup(lessonList)" class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Delete" ng-mouseover="lessonList[lessonListIndex]=true" ng-mouseleave="lessonList[lessonListIndex]=false"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div ng-repeat="topicList in lessonList.childId" data-ng-init="topicListIndex = $index">
+                <div class="col-md-11 topicHeader w88 mt7" ng-class={hoverClass:topicList[topicListIndex]}>
+                    <div class="col-md-11 row" data-ng-mouseover="testwidth()">
+                        <h5 class="mb15 mt7" tooltip-placement="bottom-left" uib-tooltip="{{topicList.name}}">{{chapterListIndex+1}}.{{lessonListIndex+1}}.{{topicListIndex+1}}.&nbsp;{{topicList.name| limitTo:98}}<span ng-if="topicList.name.length>98">...</span></h5>
+                    </div>
+                    <div class="col-md-1 topicAction mt7">
+                        <div class="col-md-6" ng-if="updatePermission">
+                            <a href="" ng-click="updateTopic(topicList._id)">
+                                <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit" ng-mouseover="topicList[topicListIndex]=true" ng-mouseleave="topicList[topicListIndex]=false"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-6" ng-if="deletePermission && topicList.pages.length == 0">
+                            <a href="" class="linksGap">
+                                <i data-ng-click="modalDeletePopup(topicList)" class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Delete" ng-mouseover="topicList[topicListIndex]=true" ng-mouseleave="topicList[topicListIndex]=false"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div ng-repeat="subTopicList in topicList.pages | orderBy:'pageNo'" data-ng-init="subTopicListIndex = $index">
+                    <div class="col-md-11 row subTopicHeader w86 mt7" ng-class={hoverClass:subTopicList[subTopicListIndex]}>
+                        <div class="col-md-11 row" data-ng-mouseover="testwidth()">
+                            <h6 class="mb15" tooltip-placement="bottom-left" uib-tooltip="{{subTopicList.name}}">{{chapterListIndex+1}}.{{lessonListIndex+1}}.{{topicListIndex+1}}.{{subTopicListIndex+1}}.&nbsp;{{subTopicList.name | limitTo:110}}<span ng-if="subTopicList.name.length>110">...</span></h6>
+                        </div>
+                        <div class="col-md-1 subTopicAction mt7" ng-if="updatePermission">
+                            <div class="col-md-1">
+                                <a href="" ng-click="updateSubTopic(subTopicList._id)">
+                                    <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit" ng-mouseover="subTopicList[subTopicListIndex]=true" ng-mouseleave="subTopicList[subTopicListIndex]=false"></i>
+                                </a>
+                            </div>
+                            <div class="col-md-1" ng-if="deletePermission">
+                                <a href="" class="linksGap">
+                                    <i data-ng-click="modalDeletePopup(subTopicList)" class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Delete" ng-mouseover="subTopicList[subTopicListIndex]=true" ng-mouseleave="subTopicList[subTopicListIndex]=false"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="w100">
+    </div>
+    <form name="materialForm" class="form-horizontal" novalidate>
+        <div data-ng-repeat = "chapter in newMaterial.chapters" data-ng-init="chapterIndex1 = $index">
+            <div class="col-md-12 row mt20">
+                <div class="form-group " ng-class="{'has-error' : submitted && materialForm.chapterName.$invalid }">
+                    <label class="pull-left indexPosition">{{chapterIndex1+1}}.</label>
+                    <div class="col-md-5">
+                        <input name="chapterName" type="text" data-ng-model="chapter.name" id="chapterName" placeholder="Chapter Name" class="form-control err-msg" required>
+                        <input name="level" type="hidden" data-ng-model="chapter.level" data-ng-value="chapter" id="level">
+                        <div ng-show="submitted && materialForm.chapterName.$invalid">
+                            <span class="err-msg red" ng-show="materialForm.chapterName.$error.required">Please enter the Chapter Name </span>
+                        </div>
+                    </div>
+                    <div class="col-md-2 materialAction">
+                        <div class="chapter-button">
+                            <a href="" ng-click="updateChapter(chapter._id)">
+                                <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit"></i>
+                            </a>
+                        </div>
+                        
+                        <div class="chapter-button">
+                            <a href="" class="linksGap" data-ng-click="removeChapter(chapter,chapterIndex1)">
+                                <i class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove Chapter"></i>
+                            </a>
+                        </div>  
+
+                        <div  class="chapter-button">
+                            <a href="" class="linksGap" data-ng-click="addLesson(chapter)">
+                                <i class="fa fa-plus tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Add Lesson"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div data-ng-repeat = "lesson in chapter.lessons" data-ng-init="lessonIndex1 = $index">
+                <div class="col-md-9 mt20 lessonHeader">
+                    <div class="form-group " ng-class="{'has-error' : submitted && materialForm.lessonName.$invalid }">
+                    <label class="pull-left indexPosition">{{chapterIndex1+1}}.{{lessonIndex1+1}}.</label>
+                        <div class="col-md-7">
+                            <input name="lessonName" type="text" data-ng-model="lesson.name" id="lessonName" placeholder="Lesson Name" class="form-control err-msg" required>
+                            <input name="level" type="hidden" data-ng-model="lesson.level" data-ng-value="chapter" id="level">
+                            <div ng-show="submitted && materialForm.lessonName.$invalid">
+                                <span class="err-msg red" ng-show="materialForm.lessonName.$error.required">Please enter the Lesson Name </span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 materialAction">
+                            <div class="chapter-button">
+                                <a href="" ng-click="updateLessonForm(lesson._id,chapter._id,$index)">
+                                    <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit"></i>
+                                </a>
+                            </div>
+                            <div class="chapter-button" data-ng-click="removeLesson(chapter,lesson,lessonIndex1)">
+                                <a href="" class="linksGap">
+                                    <i class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove Lesson"></i>
+                                </a>
+                            </div>
+                            <div  class="chapter-button">
+                                <a href="" class="linksGap" data-ng-click="addTopic(lesson)">
+                                    <i class="fa fa-plus tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Add Topic"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-ng-repeat = "topic in lesson.topics" data-ng-init="topicIndex1 = $index">
+                    <div class="col-md-8 mt20 topicHeader">
+                        <div class="form-group " ng-class="{'has-error' : submitted && materialForm.topicName.$invalid }">
+                        <label class="pull-left indexPosition">{{chapterIndex1+1}}.{{lessonIndex1+1}}.{{topicIndex1+1}}.</label>
+                            <div class="col-md-8">
+                                <input name="topicName" type="text" data-ng-model="topic.name" id="topicName" placeholder="Topic Name" class="form-control err-msg" required>
+                                <input name="level" type="hidden" data-ng-model="topic.level" data-ng-value="topic" id="level">
+                                <div ng-show="submitted && materialForm.topicName.$invalid">
+                                    <span class="err-msg red" ng-show="materialForm.topicName.$error.required">Please enter the Topic Name </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 materialAction">
+                                <div class="chapter-button">
+                                    <a href="" ng-click="updateLessonForm(lesson._id,chapter._id,$index)">
+                                        <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit"></i>
+                                    </a>
+                                </div>
+                                <div class="chapter-button">
+                                    <a href="" class="linksGap" data-ng-click="removeTopic(lesson,topic,topicIndex1)">
+                                        <i class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove Topic"></i>
+                                    </a>
+                                </div>
+                                <div class="chapter-button">
+                                    <a href="" class="linksGap">
+                                        <i data-ng-click="addSubTopic(topic)" class="fa fa-plus tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Delete"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-ng-repeat = "subTopic in topic.subTopics" data-ng-init="subTopicIndex1 = $index">
+                        <div class="col-md-9 mt20 subTopicHeader">
+                            <div class="form-group " ng-class="{'has-error' : submitted && materialForm.subTopicName.$invalid }">
+                            <label class="pull-left indexPosition">{{chapterIndex1+1}}.{{lessonIndex1+1}}.{{topicIndex1+1}}.{{subTopicIndex1+1}}.</label>
+                                <div class="col-md-7">
+                                    <input name="subTopicName" type="text" data-ng-model="subTopic.name" id="subTopicName" placeholder="Subtopic Name" class="form-control err-msg" required>
+                                    <div ng-show="submitted && materialForm.subTopicName.$invalid">
+                                        <span class="err-msg red" ng-show="materialForm.subTopicName.$error.required">Please enter the Subtopic Name </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 materialAction">
+                                    <div class="chapter-button">
+                                        <a href="" ng-click="updateLessonForm(lesson._id,chapter._id,$index)">
+                                            <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit"></i>
+                                        </a>
+                                    </div>
+                                    <div class="chapter-button">
+                                        <a href="" class="linksGap" data-ng-click="removeSubTopic(topic,subTopic,subTopicIndex1)">
+                                            <i class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove Topic"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="col-md-2 pull-left mt7">
+        <div class="btn btn-info" ng-click="addChapter()">Add Chapter</div>
+    </div>
+
+    <div class="col-md-offset-3 col-md-9 mt7" ng-if="submitButton">
+        <button mean-token="'create-submit'" type="submit"
+            ng-click="createMaterial(newMaterial,materialForm.$valid,material._id)" class="btn btn-info">Submit</button>
+        <button type="button" class="btn btn-info" ng-click="cancelMaterialView()">Cancel</button>
+    </div>
+
+    <!-- <div class="paginate usr">
+        <div data-ng-include="'system/views/paginationFilter.html'"></div>
+    </div> -->
+</section>

@@ -1,0 +1,146 @@
+<section data-ng-controller="JobsitesController"
+	data-ng-init="findOne()">
+	<div class="col-xs-12 social-group-header">
+		<h3 class="pull-left ">{{ 'job_sites.JOB_SITES' | translate }}</h3>
+	</div>
+	<div class="col-xs-10">
+		<form name="jobsitesEditForm" class="form-horizontal col-md-12"
+			data-ng-submit="update(jobsitesEditForm.$valid)" novalidate>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && jobsitesEditForm.name.$invalid }">
+				<label mean-token="'edit-name'" class="col-md-3 control-label ">{{ 'common.NAME' | translate }}</label>
+				<div class="col-md-9">
+					<input name="name" type="text" class="form-control "
+						data-ng-model="jobsite.name" id="name" placeholder="{{ 'common.NAME' | translate }}"
+						data-ng-pattern="/^([A-Za-z]\a?)+$/" required>
+					<div data-ng-show="submitted && jobsitesEditForm.name.$invalid">
+						<span class="err-msg"
+							data-ng-show="jobsitesEditForm.name.$error.required">
+							{{ 'common.error_messages.NAME' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && jobsitesEditForm.description.$invalid }">
+				<label mean-token="'edit-description'"
+					class="col-md-3 control-label ">{{ 'common.DESCRIPTION' | translate }}</label>
+				<div class="col-md-9">
+					<input name="description" type="text" class="form-control "
+						data-ng-model="jobsite.description" id="description"
+						placeholder="{{ 'common.DESCRIPTION' | translate }}" data-ng-pattern="/^([A-Za-z]\a?)+$/"
+						required>
+					<div
+						data-ng-show="submitted && jobsitesEditForm.description.$invalid">
+						<span class="err-msg"
+							data-ng-show="jobsitesEditForm.description.$error.required">
+							{{ 'common.error_messages.DESCRIPTION' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && jobsitesEditForm.domain.$invalid }">
+				<label mean-token="'edit-domain'" class="col-md-3 control-label ">{{ 'job_sites.DOMAIN' | translate }}</label>
+				<div class="col-md-9">
+					<input name="domain" type="text" class="form-control "
+						data-ng-model="jobsite.domain" id="domain" placeholder="{{ 'job_sites.DOMAIN' | translate }}"
+						data-ng-pattern="/^([A-Za-z]\a?)+$/" required>
+					<div data-ng-show="submitted && jobsitesEditForm.domain.$invalid">
+						<span class="err-msg"
+							data-ng-show="jobsitesEditForm.domain.$error.required">
+							{{ 'job_sites.error_messages.DOMAIN' | translate }} </span>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && jobsitesEditForm.urlLogin.$invalid }">
+				<label mean-token="'edit-urlLogin'" class="col-md-3 control-label ">{{ 'job_sites.URL_LOGIN' | translate }}</label>
+				<div class="col-md-9">
+					<input name="urlLogin" type="text" class="form-control "
+						data-ng-model="jobsite.urlLogin" id="urlLogin"
+						placeholder="{{ 'job_sites.URL_PLACEHOLDER' | translate }}"
+						data-ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required>
+					<div data-ng-show="submitted && jobsitesEditForm.urlLogin.$invalid">
+						<div data-ng-messages="jobsitesEditForm.urlLogin.$error"
+							data-ng-messages-include="error-messages">
+							<div data-ng-message="pattern">{{ 'job_sites.error_messages.URL_LOGIN' | translate }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && jobsitesEditForm.urlProfile.$invalid }">
+				<label mean-token="'edit-urlProfile'"
+					class="col-md-3 control-label ">{{ 'job_sites.URL_PROFILE' | translate }}</label>
+				<div class="col-md-9">
+					<input name="urlProfile" type="text" class="form-control "
+						data-ng-model="jobsite.urlProfile" id="urlProfile"
+						placeholder="{{ 'job_sites.URL_PLACEHOLDER' | translate }}"
+						data-ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required>
+					<div
+						data-ng-show="submitted && jobsitesEditForm.urlProfile.$invalid">
+						<div data-ng-messages="jobsitesEditForm.urlLogin.$error"
+							data-ng-messages-include="error-messages">
+							<div data-ng-message="pattern">{{ 'job_sites.error_messages.URL_PROFILE' | translate }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && jobsitesEditForm.urlProject.$invalid }">
+				<label mean-token="'edit-urlProject'"
+					class="col-md-3 control-label ">{{ 'job_sites.URL_PROJECT' | translate }}</label>
+				<div class="col-md-9">
+					<input name="urlProject" type="text" class="form-control "
+						data-ng-model="jobsite.urlProject" id="urlProject"
+						placeholder="{{ 'job_sites.URL_PLACEHOLDER' | translate }}"
+						data-ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required>
+					<div
+						data-ng-show="submitted && jobsitesEditForm.urlProject.$invalid">
+						<div data-ng-messages="jobsitesEditForm.urlLogin.$error"
+							data-ng-messages-include="error-messages">
+							<div data-ng-message="pattern">{{ 'job_sites.error_messages.URL_PROFILE' | translate }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && jobsitesEditForm.proposal.$invalid }">
+				<label mean-token="'edit-proposal'" class="col-md-3 control-label ">{{ 'job_sites.PROPOSAL' | translate }}</label>
+				<div class="col-md-9">
+					<input name="proposal" type="text" class="form-control "
+						data-ng-model="jobsite.proposal" id="proposal"
+						placeholder="{{ 'job_sites.PROPOSAL' | translate }}" data-ng-pattern="/^([A-Za-z]\a?)+$/"
+						required>
+					<div data-ng-show="submitted && jobsitesEditForm.proposal.$invalid">
+						<span class="err-msg"
+							data-ng-show="jobsitesEditForm.proposal.$error.required">
+							{{ 'job_sites.error_messages.PROPOSAL' | translate }} </span>
+					</div>
+
+				</div>
+			</div>
+			<div>
+				<label mean-token="'create-apiAvailable'"
+					class="col-md-3 control-label">{{ 'job_sites.API_AVAILABLE' | translate }}</label>
+				<div class="col-md-9 checkbox">
+					<input type="checkbox" data-ng-model="jobsite.apiAvailable">{{ 'job_sites.API_AVAILABLE' | translate }}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9">
+					<button mean-token="'edit-submit'" type="submit"
+						class="btn btn-info">{{ 'common.SUBMIT' | translate }}</button>
+					<button type="button" class="btn btn-info"
+						ng-click="cancelCourse()">{{ 'common.CANCEL' | translate }}</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</section>
+
+

@@ -1,0 +1,138 @@
+<section data-ng-controller="AdminCounsellingController" data-ng-init="scheduleBreadcrumb();loadBranch();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div data-ng-include="'/system/views/alert.html'"></div>
+
+	 <div class="mainwrapper">
+	 <h3>Create Counselling Schedule</h3>
+        <form name="batchForm" class="form-horizontal" novalidate>
+        <div class="col-md-12 mainwrapper row">
+			<div class="form-group">
+			<div class="col-md-4 rolesA"  ng-class="{ 'has-error' : submitted && batchForm.counsellingBranch.$invalid }">
+				<label>{{ 'course.counselling_schedule.SELECT_BRANCH' | translate }}</label>
+					<select name="counsellingBranch" ng-model="batchForm.branch" ng-options="branch._id as branch.branchName for branch in userBranch"
+ class="form-control" ng-change="loadUser(batchForm.branch);loadCourse(batchForm.branch);" required>
+							<option value="" disabled selected>Select Branch<option>
+							<option value="" disabled selected>{{ 'course.counselling_schedule.SELECT_BRANCH' | translate }}<option>
+						</select>
+					<div ng-show="submitted && batchForm.counsellingBranch.$error.required">
+						<span class="err-msg errorText red">{{ 'course.error_messages.SELECT_BRANCH' | translate }}</span>
+					</div>
+			</div>
+			<div class="col-md-4 rolesA" ng-class="{ 'has-error' : submitted && batchForm.mentor.$invalid }">
+				<label>{{ 'course.counselling_schedule.SELECT_MENTOR' | translate }}</label>
+					<select name="mentor" ng-model="batchForm.mentorAssigned" ng-options="user._id as user.name for user in branchUser" ng-click="serverError();" class="form-control" required>
+							<option value="" disabled selected>{{ 'course.counselling_schedule.SELECT_MENTOR' | translate }}<option>
+						</select>
+					<div ng-show="submitted && batchForm.mentor.$invalid">
+						<span class="err-msg errorText red">{{ 'course.error_messages.SELECT_MENTOR' | translate }}</span>
+					</div>
+					<div class="errorRed" ng-show="mentorServerError" ng-repeat="err in error.data"
+						ng-if="err.param =='mentorAssignedError'">{{err.msg}}
+					</div>
+			</div>
+			<div class="col-md-2 rolesA"  ng-class="{ 'has-error' : submitted && batchForm.counsellingCourse.$invalid }">
+				<label>{{ 'course.counselling_schedule.SELECT_COURSE' | translate }}</label>
+				<select name="counsellingCourse" ng-model="batchForm.course" ng-options="course._id as course.name for course in branchCourse" class="form-control" required>
+					<option value="" disabled selected>{{ 'course.counselling_schedule.SELECT_COURSE' | translate }}<option>
+				</select>
+				<div ng-show="submitted && batchForm.counsellingCourse.$invalid">
+					<span class="err-msg red">{{ 'course.error_messages.SELECT_COURSE' | translate }} </span>
+				</div>
+			</div>
+			<div class="col-md-2 rolesA" ng-class="{ 'has-error' : submitted && batchForm.counsellingdate.$invalid }">
+			<!-- Need, if any issue with date -->
+			<label mean-token="">{{ 'course.COUNSELLING_DATE' | translate }}</label>
+				<input name="counsellingdate" type="date" data-ng-model="batchForm.callDate" class="form-control"  ng-change='checkError(batchForm.callDate)' required>
+				<!-- <datepicker name="counsellingdate" data-ng-model="batchForm.callDate" ng-change='checkError(batchForm.callDate)' required md-placeholder="Select date"><datepicker> -->
+				<div ng-show="submitted && batchForm.counsellingdate.$invalid">
+					<span class="err-msg errorText marginleft65">
+					{{ 'course.error_messages.SELECT_DATE' | translate }}
+					</span>
+				</div>
+				<div ng-show="Lesserstartvalue">
+					<span class="err-msg errorText">	{{ 'course.error_messages.DATE_VALID' | translate }}</span>
+				</div>
+			</div>
+			</div>
+			<div class="mainwrapper row form-group">
+				<div class="col-md-2 rolesA" ng-class="{ 'has-error' : submitted && batchForm.starthr.$invalid || submitted && batchForm.startmin.$invalid }">
+				<label mean-token="'new-title'">{{ 'course.counselling_schedule.START_HOUR' | translate }}</label>
+					<select name="starthr" data-ng-model="batchForm.start_hr" ng-options="hour as hour for hour in scheduleHour" class="form-control" required>
+							<option value="" disabled selected> {{ 'course.branch.HH' | translate }}<option>
+					</select>
+					<div ng-show="submitted && batchForm.starthr.$invalid">
+						<span class="err-msg red"> {{ 'course.error_messages.START_HOUR' | translate }}</span>
+					</div>
+				</div>
+				<div class="col-md-2">
+				<label mean-token="'new-title'">{{ 'course.counselling_schedule.START_MIN' | translate }}</label>
+					<select name="startmin" data-ng-model="batchForm.start_min" ng-options="min as min for min in scheduleMin" class="form-control" required>
+						<option value="" disabled selected>{{ 'course.branch.MM' | translate }}<option>
+					</select>
+					<div ng-show="submitted && batchForm.startmin.$invalid">
+						<span class="err-msg red"> {{ 'course.error_messages.START_MIN' | translate }}</span>
+					</div>
+				</div>
+				<div class="col-md-2" ng-class="{ 'has-error' : submitted && batchForm.endhr.$invalid || submitted && batchForm.endmin.$invalid }">
+				<label mean-token="'new-title'">{{ 'course.counselling_schedule.END_HOUR' | translate }}</label>
+					<select name="endhr" data-ng-model="batchForm.end_hr" ng-options="hour as hour for hour in scheduleHour" class="form-control" required>
+							<option value="" disabled selected>{{ 'course.branch.HH' | translate }}<option>
+					</select>
+					<div ng-show="submitted && batchForm.endhr.$invalid">
+						<span class="err-msg red"> {{ 'course.error_messages.END_HOUR' | translate }}</span>
+					</div>
+				</div>
+				<div class="col-md-2">				
+				<label mean-token="'new-title'">{{ 'course.counselling_schedule.END_MIN' | translate }}</label>
+					<select name="endmin" data-ng-model="batchForm.end_min" ng-options="min as min for min in scheduleMin" class="form-control" required>
+						<option value=""  disabled selected> {{ 'course.branch.MM' | translate }}<option>
+					</select>
+					<div ng-show="submitted && batchForm.endmin.$invalid">
+						<span class="err-msg red"> {{ 'course.error_messages.END_HOUR' | translate }}</span>
+					</div>
+					<div class="marginleft10" ng-show="hourError">
+						<span class="err-msg red">{{ 'course.error_messages.END_HOUR_VALID' | translate }}</span>
+					</div>
+					<div class="marginleft10" ng-show="hourEqualError">
+						<span class="err-msg red">{{ 'course.error_messages.END_HOUR_EQUAL_VALID' | translate }}</span>
+					</div>
+				</div>
+				<div class="col-md-2" ng-class="{ 'has-error' : submitted && batchForm.scheduleinterval.$invalid }">
+				<label mean-token="'new-title'">{{ 'course.counselling_schedule.INTERVAL' | translate }}</label>
+					<select name="scheduleinterval" data-ng-model="batchForm.interval" ng-options="min as min for min in intervalArray" class="form-control" required>
+						<option value=""  disabled selected>{{ 'roles.feature.SELECT' | translate }}<option>
+					<select>
+					<div ng-show="submitted && batchForm.scheduleinterval.$error.required">
+						<span class="err-msg red"> {{ 'course.error_messages.INTERVAL' | translate }}</span>
+					</div>
+					<div class="marginleft10" ng-show="intervalError">
+						<span class="err-msg red">{{ 'course.error_messages.INTERVAL_VALID' | translate }}</span>
+					</div>
+				</div>
+				<div class="col-md-2" ng-class="{ 'has-error' : submitted && batchForm.schedulecapacity.$invalid }">
+					<label mean-token="'new-title'">{{ 'course.counselling_schedule.CAPACITY' | translate }}</label>
+					<select name="schedulecapacity" data-ng-model="batchForm.capacity" ng-options="min as min for min in intervalArray" class="form-control" required>
+						<option value="" disabled selected>{{ 'roles.feature.SELECT' | translate }}<option>
+					<select>
+					<div ng-show="submitted && batchForm.schedulecapacity.$error.required">
+						<span class="err-msg red">{{ 'course.error_messages.CAPACITY' | translate }}</span>
+					</div>
+				</div>
+			</div>
+				<div class="col-md-4 row" ng-class="{ 'has-error' : submitted && batchForm.desc.$invalid }">
+				<label>{{ 'common.DESCRIPTION' | translate }}</label>
+					<textarea required name="desc" rows="2" class="form-control" data-ng-model="batchForm.description"></textarea>
+					<div ng-show="submitted && batchForm.desc.$invalid">
+						<span class="err-msg red"> {{ 'common.error_messages.DESCRIPTION' | translate }}</span>
+					</div>
+				</div>
+			<div class="">
+				<div class="col-md-offset-5 col-md-7">
+					<button mean-token="'create-submit'"  ng-click="create(batchForm.$valid)" type="submit" class="btn btn-info">Submit</button>
+					<button type="button" class="btn btn-info" ng-click="cancelSchedule()">Cancel</button>
+				</div>
+			</div>
+		</div> <!-- End of col-xs-12 -->
+        </form>
+    </div>
+</section>

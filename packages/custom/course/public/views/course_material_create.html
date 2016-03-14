@@ -1,0 +1,211 @@
+<section data-ng-controller="ChapterController" data-ng-init="loadSkill(); summernoteOptions(); createMaterialBreadcrum(); setSkill();">
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper">
+        <div class="col-md-12">
+            <form name="materialForm" class="form-horizontal" novalidate>
+                <div class="form-group mt7" ng-class="{'has-error' : submitted && materialForm.title.$invalid}">
+                    <label class="col-md-2 mt7 row">Title</label>
+                    <div class="col-md-6">
+                        <input name="title" type="text" data-ng-model="newMaterial.title" id="title" placeholder="Title" class="form-control err-msg" required>
+                        <div ng-show="submitted && materialForm.title.$invalid">
+                            <span class="err-msg red" ng-show="materialForm.title.$error.required">Please enter the Title</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row rolesA" ng-repeat="skill in newMaterial.skills">
+                    <div class="col-md-11 row">
+                        <div class="col-md-4 row" ng-class="{'has-error' : submitted && materialForm.skill.$invalid }">
+                            <label mean-token="'create-skill'" class="col-md-3 row mt7">Skill</label>
+                            <div class="col-md-9">
+                                <select name="skill" data-ng-model="skill.skill" class="form-control" required>
+                                    <option value="" disabled selected>Please Select</option>
+                                    <option data-ng-repeat="skill in skills" value="{{skill._id}}">{{skill.name}}</option>
+                                </select>
+                                <div ng-show="submitted && skill.skill === undefined">
+                                    <span class="err-msg red" ng-show="materialForm.skill.$error.required">Please select the Skill</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 row" ng-class="{'has-error' : submitted && materialForm.pre_req.$invalid}">
+                            <label mean-token="'create-pre_req'" class="col-md-5">Pre-requisite Level</label>
+                            <div class="col-md-7">
+                                <select name="pre_req" class="form-control w100" ng-options="level.option as level.value for level in skillLevel" ng-model="skill.pre_req" required>
+                                    <option value="" disabled selected>Please Select</option>
+                                </select>
+                            </div>
+                            <div ng-show="submitted && materialForm.pre_req.$invalid">
+                                <span class="err-msg red pull-left ml15" ng-show="materialForm.pre_req.$error.required">Please select the Pre-requisite level</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4" ng-class="{'has-error' : submitted && materialForm.pre_req.$invalid }">
+                            <label mean-token="'create-target'" class="col-md-5 mt7">Target Level</label>
+                            <div class="col-md-7">
+                                <select name="target" class="form-control w100" ng-options="level.option as level.value for level in skillLevel" ng-model="skill.target" required>
+                                    <option value="" disabled selected>Please Select</option>
+                                </select>
+                            </div>
+                            <div ng-show="submitted && materialForm.target.$invalid">
+                                <span class="err-msg red pull-left ml15" ng-show="materialForm.target.$error.required">Please select the target level</span>
+                                <!-- <span class="err-msg red pull-left" ng-show="materialForm.target.$error.min">Target level must be greater than Pre-requisite level</span> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="ulPagnate">
+                            <label>&nbsp;</label>
+                            <div class="col-md-2" ng-show="$last">
+                                <button class="pull-left" type="button" ng-click="removeSkill(skill)" ng-show="$index>0">
+                                    <i class="fa edu-action fa-minus-circle"></i>
+                                </button>
+                                <button type="button" ng-click="addSkill()">
+                                    <i class="fa edu-action fa-plus-circle"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" ng-click="removeSkill(skill)" ng-hide="$last">
+                                    <i class="fa edu-action fa-minus-circle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--********************Chapter Form*******************-->
+                <div data-ng-repeat = "chapter in newMaterial.chapters" data-ng-init="chapterIndex = $index">
+                    <div class="col-md-12 row mt20">
+                        <div class="form-group " ng-class="{'has-error' : submitted && materialForm.chapterName.$invalid }">
+                            <label class="pull-left indexPosition">{{chapterIndex+1}}.</label>
+                            <div class="col-md-5">
+                                <input name="chapterName" type="text" data-ng-model="chapter.name" id="chapterName" placeholder="Chapter Name" class="form-control err-msg" required>
+                                <input name="level" type="hidden" data-ng-model="chapter.level" data-ng-value="chapter" id="level">
+                                <div ng-show="submitted && materialForm.chapterName.$invalid">
+                                    <span class="err-msg red" ng-show="materialForm.chapterName.$error.required">Please enter the Chapter Name </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 materialAction">
+                                <div class="chapter-button">
+                                    <a href="" ng-click="updateChapter(chapter._id)">
+                                        <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit"></i>
+                                    </a>
+                                </div>
+                                
+                                <div class="chapter-button">
+                                    <a href="" class="linksGap" data-ng-click="removeChapter(chapter,chapterIndex)">
+                                        <i class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove Chapter"></i>
+                                    </a>
+                                </div>  
+
+                                <div  class="chapter-button">
+                                    <a href="" class="linksGap" data-ng-click="addLesson(chapter)">
+                                        <i class="fa fa-plus tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Add Lesson"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div data-ng-repeat = "lesson in chapter.lessons" data-ng-init="lessonIndex = $index">
+                        <div class="col-md-9 mt20 lessonHeader">
+                            <div class="form-group " ng-class="{'has-error' : submitted && materialForm.lessonName.$invalid }">
+                            <label class="pull-left indexPosition">{{chapterIndex+1}}.{{lessonIndex+1}}.</label>
+                                <div class="col-md-7">
+                                    <input name="lessonName" type="text" data-ng-model="lesson.name" id="lessonName" placeholder="Lesson Name" class="form-control err-msg" required>
+                                    <input name="level" type="hidden" data-ng-model="lesson.level" data-ng-value="chapter" id="level">
+                                    <div ng-show="submitted && materialForm.lessonName.$invalid">
+                                        <span class="err-msg red" ng-show="materialForm.lessonName.$error.required">Please enter the Lesson Name </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 materialAction">
+                                    <div class="chapter-button">
+                                        <a href="" ng-click="updateLessonForm(lesson._id,chapter._id,$index)">
+                                            <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit"></i>
+                                        </a>
+                                    </div>
+                                    <div class="chapter-button" data-ng-click="removeLesson(chapter,lesson,lessonIndex)">
+                                        <a href="" class="linksGap">
+                                            <i class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove Lesson"></i>
+                                        </a>
+                                    </div>
+                                    <div  class="chapter-button">
+                                        <a href="" class="linksGap" data-ng-click="addTopic(lesson)">
+                                            <i class="fa fa-plus tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Add Topic"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div data-ng-repeat = "topic in lesson.topics" data-ng-init="topicIndex = $index">
+                            <div class="col-md-8 mt20 topicHeader">
+                                <div class="form-group " ng-class="{'has-error' : submitted && materialForm.topicName.$invalid }">
+                                <label class="pull-left indexPosition">{{chapterIndex+1}}.{{lessonIndex+1}}.{{topicIndex+1}}.</label>
+                                    <div class="col-md-8">
+                                        <input name="topicName" type="text" data-ng-model="topic.name" id="topicName" placeholder="Topic Name" class="form-control err-msg" required>
+                                        <input name="level" type="hidden" data-ng-model="topic.level" data-ng-value="topic" id="level">
+                                        <div ng-show="submitted && materialForm.topicName.$invalid">
+                                            <span class="err-msg red" ng-show="materialForm.topicName.$error.required">Please enter the Topic Name </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 materialAction">
+                                        <div class="chapter-button">
+                                            <a href="" ng-click="updateLessonForm(lesson._id,chapter._id,$index)">
+                                                <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit"></i>
+                                            </a>
+                                        </div>
+                                        <div class="chapter-button">
+                                            <a href="" class="linksGap" data-ng-click="removeTopic(lesson,topic,topicIndex)">
+                                                <i class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove Topic"></i>
+                                            </a>
+                                        </div>
+                                        <div class="chapter-button">
+                                            <a href="" class="linksGap">
+                                                <i data-ng-click="addSubTopic(topic)" class="fa fa-plus tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Delete"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div data-ng-repeat = "subTopic in topic.subTopics" data-ng-init="subTopicIndex = $index">
+                                <div class="col-md-9 mt20 subTopicHeader">
+                                    <div class="form-group " ng-class="{'has-error' : submitted && materialForm.subTopicName.$invalid }">
+                                    <label class="pull-left indexPosition">{{chapterIndex+1}}.{{lessonIndex+1}}.{{topicIndex+1}}.{{subTopicIndex+1}}.</label>
+                                        <div class="col-md-7">
+                                            <input name="subTopicName" type="text" data-ng-model="subTopic.name" id="subTopicName" placeholder="Subtopic Name" class="form-control err-msg" required>
+                                            <div ng-show="submitted && materialForm.subTopicName.$invalid">
+                                                <span class="err-msg red" ng-show="materialForm.subTopicName.$error.required">Please enter the Subtopic Name </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 materialAction">
+                                            <div class="chapter-button">
+                                                <a href="" ng-click="updateLessonForm(lesson._id,chapter._id,$index)">
+                                                    <i class="fa fa-pencil-square-o tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit"></i>
+                                                </a>
+                                            </div>
+                                            <div class="chapter-button">
+                                                <a href="" class="linksGap" data-ng-click="removeSubTopic(topic,subTopic,subTopicIndex)">
+                                                    <i class="fa fa-minus-circle tooltip-right" data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove Topic"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-2 row mt7">
+        <div class="btn btn-info" ng-click="addChapter()">Add Chapter</div>
+    </div>
+    <div class="col-md-offset-3 col-md-9">
+        <button mean-token="'create-submit'" type="submit"
+            ng-click="createMaterial(newMaterial,materialForm.$valid)" class="btn btn-info">Submit</button>
+        <button type="button" class="btn btn-info" ng-click="cancelMaterial()">Cancel</button>
+    </div>
+</section>

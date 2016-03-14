@@ -1,0 +1,28 @@
+<section data-ng-controller="AdminCourseRequestController" data-ng-init="listofStudentsonCourse(); availablecourse();">
+<div data-ng-include="'/system/views/alert.html'"></div>
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper social-group-header">
+		<h3 class="pull-left ">Student List</h3>
+	</div>
+	<table class="table table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th class="text-center">Student Name</th>
+				<th class="text-center">Course</th>
+				<th class="text-center">Branch</th>
+				<th class="text-center">Batch</th>
+			</tr>
+		</thead>
+		<tbody>
+	       <tr  data-ng-repeat= "student in collection" ng-class-odd="'odd'" ng-class-even="'even'">
+	       <td>{{student.user.name}}</td>
+	       <td>{{student.course.name}}</td>
+	       <td>{{student.branch.branchName}}</td>
+	       <td><a href="" data-ng-click="batchList(student.course, student.batch)">{{student.batch.batch_name}}</a></td>
+	       </tr>
+		</tbody>
+	</table>
+	<div ng-include="'system/views/paginationFilter.html'"></div>
+</section>
+
+

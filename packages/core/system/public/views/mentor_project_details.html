@@ -1,0 +1,63 @@
+<section data-ng-controller="HeaderController as hdrctr" data-ng-init="detailMentorProject();">
+<div ng-show="hdrctr.hdrvars.authenticated" ng-include="'/system/views/breadcrum.html'" ></div>
+	<div class="mainwrapper social-group-header">
+		<div>
+			<h3>Project Name: {{mentorproject.taskName}}</h3>
+			<!-- <div class="pull-right">
+				<a class="btn btn-info" href="/admin/site/{{site._id}}/edit">Edit</a> <a
+					href="" class="btn btn-info" ng-click="modalDeletePopup(site)">Delete</a>
+			</div> -->
+		</div>
+	</div>
+	<div class="mainwrapper">
+		<form  name="mentorshipForm" class="form-horizontal " novalidate>
+			<div class="form-group">
+				<label class="col-md-2 ">Name</label>
+				<div class="col-md-10 viewRole">{{mentorproject.taskName}}</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-2">Description</label>
+				<div class="col-md-10 viewRole">{{mentorproject.description}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2">Skills</label>
+				<div class="col-md-10 viewRole">
+					<div class="inlineskills"
+						data-ng-repeat="skill in mentorproject.skills">
+						{{skill.name.toUpperCase()}}<span ng-hide="$last">,&nbsp;</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 ">Position</label>
+				<div class="col-md-10 viewRole">{{mentorproject.position}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 ">Cost</label>
+				<div class="col-md-10 viewRole">{{mentorproject.cost}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 ">Duration</label>
+				<div class="col-md-10 viewRole">{{mentorproject.duration}}</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-md-2 ">Availability</label>
+				<div class="col-md-10 viewRole">{{mentorproject.availability}}</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 ">Type</label>
+				<div class="col-md-10 viewRole">{{mentorproject.type}}</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-10">
+
+					<button type="button" class="btn btn-info"
+						data-ng-click="hdrctr.cancelProject()">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>

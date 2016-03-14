@@ -1,0 +1,80 @@
+<section data-ng-controller="CountryController" data-ng-init="list();">
+    <div data-ng-include="'/system/views/alert.html'"></div>
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper social-group-header">
+        <h3 class="pull-left">{{ 'locations.branch.COUNTRY' | translate }}</h3>
+        <button class="btn btn-info pull-right "
+                data-ng-click="newCountry()" ng-if="writePermission">{{ 'locations.branch.CREATE_COUNTRY' | translate }}
+        </button>
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+        <tr>
+            <th class="text-center">{{ 'common.NAME' | translate }}</th>
+            <th class="text-center">{{ 'locations.country.COUNTRY_CODE' | translate }}</th>
+            <th class="text-center">{{ 'locations.country.CURRENCY' | translate }}</th>
+            <th class="text-center">{{ 'locations.country.LANGUAGE_NAME' | translate }}</th>
+            <th class="text-center">{{ 'locations.country.LANGUAGE_CODE' | translate }}</th>
+            <th class="text-center">{{ 'common.ACTIONS' | translate }}</th>
+        </tr>
+        </thead>
+        <tbody class="anchorTag">
+        <tr data-ng-repeat="country in collection" class="" ng-class-odd="'odd'" ng-class-even="'even'" data-ng-show="collection.length > 0">
+            <td data-ng-click="show(BRANCH.URL_PATH.SHOWCOUNTRY,country)">{{country.countryName}}</td>
+            <td>{{country.countryCode}}</td>
+            <td>{{country.currency}}</td>
+            <td>{{country.languageName}}</td>
+            <td>{{country.languageCode}}</td>
+
+<td width="10%" align="center">
+                    <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                        <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-arrow-circle-right">
+                            </i>
+                            <span>
+                                {{ 'common.ACTIONS' | translate }}
+                            </span>
+                        </a>
+                        <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                            <li ng-if="readPermission">
+                                <a class="menu-toggler"  data-ng-click="zoneList(BRANCH.URL_PATH.LISTZONE,country)">
+                                    <i class="fa fa-plus-square-o">
+                                    </i>
+                                    <span>
+                                      {{ 'locations.zone.ZONE' | translate }}
+                                    </span>
+                                </a>
+                            </li>
+                            <li ng-if="updatePermission">
+                                <a class="menu-toggler" ng-click='editCountry(BRANCH.URL_PATH.EDITCOUNTRY,country._id)'>
+                                    <i class="fa fa-pencil-square-o">
+                                    </i>
+                                    <span>
+                                        {{ 'common.EDITINFO' | translate }} 
+                                    </span>
+                                </a>
+                            </li>
+                            <li ng-if="deletePermission">
+                                <a class="menu-toggler" ng-click="modalDeletePopup(country)" >
+                                    <i class="fa fa-minus-square-o">
+                                    </i>
+                                    <span>
+                                       {{ 'common.DELETE' | translate }}
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+        </tr>
+        <tr data-ng-show="!collection.length> 0">
+            <td colspan="6"><h5>{{ 'locations.NO_COUNTRY' | translate }}</h5></td>
+        </tr>
+
+        </tbody>
+    </table>
+    <div data-ng-show="!collection || collection.length" class="paginate usr">
+        <div ng-include="'system/views/paginationFilter.html'"></div>
+        <br>
+    </div>
+</section>

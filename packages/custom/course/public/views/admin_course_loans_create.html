@@ -1,0 +1,85 @@
+<section data-ng-controller="CourseController">
+	<div class="col-xs-12">
+		<ol class="breadcrumb">
+			<li><i class="fa fa-home link-pointer" data-ng-click="redirectdashboard()"></i></li>
+			<li><a href="/admin/course">Courses</a></li>
+			<li><a href="/admin/course/loans">Course Loans</a></li>
+			<li>Course Loan Create</li>
+			<li></li>
+		</ol>
+	</div>
+	<div class="col-xs-12">
+		<h2>Create Loan for Course: Course #1</h2>
+		<!-- Loan Form (create) -->
+		<form name="courseLoanForm" class="form-horizontal col-md-12" data-ng-submit="create(designationForm.$valid)" novalidate>
+			<!-- Loan Description-->
+			<div class="form-group">
+				<label mean-token="'edit-desc'" class="col-md-3 control-label"> {{ 'common.DESCRIPTION' | translate }}</label>
+				<div class="col-md-9">
+					<input name="description" type="text" class="form-control" data-ng-model="loan.description" id="name" placeholder="{{ 'common.DESCRIPTION' | translate }}" required />
+				</div>
+			</div>
+
+			<!-- Loan Term-->
+			<div class="form-group">
+				<label mean-token="'edit-loan-term'" class="col-md-3 control-label">{{ 'course.loans.LOAN_TERM' | translate }}</label>
+				<div class="col-md-9">
+					<input type="number" min="0" name="term" class="form-control" data-ng-model="loan.term" id="term" placeholder="Loan Term" required />
+				</div>
+			</div>
+			
+			<!-- Loan Interest Rate-->
+			<div class="form-group">
+				<label mean-token="'edit-interest-rate'" class="col-md-3 control-label">{{ 'course.loans.LOAN_INTEREST' | translate }}</label>
+				<div class="col-md-9">
+					<input type="number" min="0" max="100" name="interest" class="form-control" data-ng-model="loan.interest" id="interest" placeholder="Interest Rate" required />
+				</div>
+			</div>
+			
+			<!-- Loan Amount-->
+			<div class="form-group">
+				<label mean-token="'edit-loan-amt'" class="col-md-3 control-label">{{ 'course.loans.LOAN_AMOUNT' | translate }}</label>
+				<div class="col-md-9">
+					<input type="number" min="0" max="300" name="amt" class="form-control" data-ng-model="loan.amt" id="amt" placeholder="Loan Amount" required />
+					<span id="loan-amt-help" class="help-block">{{ 'course.loans.MAX_LOAN_AMOUNT' | translate }}</span>
+				</div>
+			</div>
+			
+			<!-- Living Expenses-->
+			<div class="form-group">
+				<label mean-token="'edit-living-exp'" class="col-md-3 control-label">Living Expenses ($)</label>
+				<div class="col-md-9">
+					<input type="number" min="0" name="amt" class="form-control" data-ng-model="loan.livingexp" id="amt" placeholder="Living Expenses" required />
+					<span id="living-exp" class="help-block">{{ 'course.loans.ALLOW_LIVING_EXPENSES' | translate }}</span>
+				</div>
+			</div>
+			
+			<!-- Accessories Expenses-->
+			<div class="form-group">
+				<label mean-token="'edit-acc-exp'" class="col-md-3 control-label">{{ 'course.loans.ACCESSORIES_EXPENSES' | translate }}
+</label>
+				<div class="col-md-9">
+					<input type="number" min="0" name="amt" class="form-control" data-ng-model="loan.accexp" id="amt" placeholder="Accessories Expenses" required />
+					<span id="acc-exp" class="help-block">{{ 'course.loans.ALLOW_ACCESSORIES_EXPENSES' | translate }}</span>
+				</div>
+			</div>
+
+			<!-- Pre-EMI Period-->
+			<div class="form-group">
+				<label mean-token="'edit-pre-emi'" class="col-md-3 control-label">{{ 'course.loans.PRE_EMI' | translate }}</label>
+				<div class="col-md-9">
+					<input type="number" name="preemi" class="form-control" data-ng-model="loan.preemi" id="preemi" placeholder="Pre-EMI period" required />
+					<span id="pre-emi-help" class="help-block">{{ 'course.loans.PRE_EMI_PEROID' | translate }}</span>
+				</div>
+			</div>
+			
+			<!-- Form Submit -->
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-9">
+					<button mean-token="'edit-submit'" type="button" class="btn btn-info" ng-click="cancelCreateLoan()">Create Loan</button>
+					<button mean-token="'edit-cancel'" type="button" class="btn btn-info" ng-click="cancelCreateLoan()">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>

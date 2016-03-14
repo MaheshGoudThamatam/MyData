@@ -1,0 +1,14 @@
+<div data-ng-controller="userDashboardCtrl" data-ng-init="features();">
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="container-fluid">
+        <div data-ng-include="'/system/views/alert.html'"></div>
+        <div class="row">
+            <div data-ng-repeat="feature in userFeaturesList">
+                <div class="col-xs-{{feature.feature.width}} col-md-{{feature.feature.width}} col-xs-{{feature.feature.width}} col-sm-{{feature.feature.width}}"
+                     ng-if="feature.feature.isComponent == true">
+                    <ng-include src="feature.feature.url"></ng-include>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

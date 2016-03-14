@@ -1,0 +1,47 @@
+<section data-ng-controller="UserController" data-ng-init="find()">
+   <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="col-xs-12">
+        <div class="col-md-2">
+            <h3 class="pull-left">Refresh List</h3>
+        </div>
+        <div class="col-md-10">
+            <button class="btn btn-info pull-right" type="button" data-ng-click="toCreateUser()">New User</a>
+        </div>
+    </div>
+    <div class="col-md-12 usr">
+    	<div ng-include="'staticpage/views/location_filter.html'" ></div>
+    </div>
+
+    <table class="table table-bordered">
+                <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Username</th>
+                            <th>Confirmed</th>
+                            <th>Roles</th>
+                            <th>Created</th>
+                            <th>Modified</th>
+                            <th>Actions</th>
+                </tr>
+                <tr data-ng-repeat="user in users">
+                            <td>{{user.name}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.confirmed}}</td>{{user.role}}
+                            <td ><span ng-repeat = "role in user.role">{{role.name}}<span ng-hide = "$last">,&nbsp;</span></span></td>
+                            <td>{{user.created_At | date:'medium'}}</td>
+                            <td>{{user.updated_At | date:'medium'}}</td>
+                            <td>
+                                        <a href="/admin/user/{{user._id}}/view"><i class="fa fa-eye tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="View">Show</i>
+                                        </a>
+                                        <a href="/admin/user/{{user._id}}/edit"><i class="fa fa-pencil-square-o tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Edit">Edit</i></a>
+                                        <a href="#" data-ng-click="remove(user)"><i class="fa fa-minus-circle tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Delete">Remove</i></a>
+                            </td>
+                </tr>
+    </table>
+    
+    <h3 data-ng-hide="!users || users.length">
+		No Users yet. <br> Why don't you 
+			<a href="/admin/user/{{user._id}}/create">Create One</a>?
+	</h3>
+</section>

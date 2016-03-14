@@ -1,0 +1,39 @@
+<div data-ng-controller="ProjectController" data-ng-init="find()">
+<div data-ng-include="'/profile/views/profile-header.html'"></div></br>
+	<div class="row">
+		<div class="form-group">
+			<div id="exTab2" class="col-md-12">	
+				<ul class="nav nav-tabs">
+					<li>
+						<a  href="/profile/test1">About Me</a>
+					</li>
+					<li class="active">
+						<a href="/profile/test">Portfolio</a>
+					</li>
+					<li>
+						<a href="">Reviews</a>
+					</li>
+					<li>
+						<a href="">Resume</a>
+					</li>
+					<li>
+						<a href="">Badges</a>
+					</li>
+					<li>
+						<a href="">Performance</a>
+					</li>
+				</ul>
+				<div class="col-xs-12 row profile-top">
+					<div class="row">
+						<div class="col-xs-4" id="s3" data-ng-repeat="project in projects">
+							<div class="profile">
+								<p><a href="" data-ng-click="projectDetails($index,project)"><img src="http://www.whistlingconsultinggroup.com/wp-content/uploads/2013/11/1232jpg1.jpg"></a>{{selected.project.projectPicture}}</br>Name: {{selected.project.projectName}}</br>Price: {{project.price}}</br>Skills: {{project.skills}}</br>Description: {{project.description}}</br></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

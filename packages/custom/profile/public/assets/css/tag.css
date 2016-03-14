@@ -1,0 +1,86 @@
+.tags .tag-item {
+    display: inline;
+}
+
+.tag-list {
+    padding: 5px 5px 5px 5px;
+    display: inline-block;
+    margin: 0;
+}
+
+tags-input .tags .tag-item {
+    color: #fff;
+    background: #428bca;
+    border: 1px solid #357ebd;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 10px 5px 0;
+    padding: 5px 10px;
+}
+
+.tags {
+    min-height: 45px;
+    height: auto;
+}
+
+.tags > input.input, .tags > input.input:hover, .tags > input.input:focus {
+    border: 0;
+    height: 40px;
+    outline: 0;
+}
+
+.remove-button {
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    color: #fff;
+}
+
+.tag-item {
+    margin-right: 5px;
+}
+
+tags-input .autocomplete {
+    margin-top: 5px;
+    position: absolute;
+    padding: 5px 0;
+    z-index: 999;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .2);
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2)
+}
+
+tags-input .autocomplete .suggestion-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    max-height: 280px;
+    overflow-y: auto;
+    position: relative
+}
+
+tags-input .autocomplete .suggestion-item {
+    padding: 5px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #000;
+    background-color: #fff
+}
+
+tags-input .autocomplete .suggestion-item.selected, tags-input .autocomplete .suggestion-item.selected em {
+    color: #fff;
+    background-color: #0097cf
+}
+
+tags-input .autocomplete .suggestion-item em {
+    font: normal bold 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #000;
+    background-color: #fff
+}

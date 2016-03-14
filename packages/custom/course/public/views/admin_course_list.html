@@ -1,0 +1,99 @@
+<section data-ng-controller="CourseController" data-ng-init="list();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div data-ng-include="'/system/views/alert.html'"></div>
+	<div class="col-xs-12 social-group-header">
+		<h3 class="pull-left">Course</h3>
+		<button class="btn btn-info pull-right "
+			data-ng-click="newCourse()" ng-if="writePermission">Create Course</button>
+	</div>
+
+	<table class="table table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th class="text-center">Name</th>
+				<th class="text-center">Description</th>
+				<th class="text-center">Delivery Method</th>
+				<th class="text-center">Online Mentor Support</th>
+				<th class="text-center">Project Based Learning</th>
+				<th class="text-center">Counselling</th>
+				<th class="text-center">Cost Type</th>
+				<th class="text-center">Qualifications</th>
+				<th class="text-center">Start Date</th>
+				<th class="text-center">Banner</th>
+				<th class="text-center">Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="course in collection| orderBy:'createdAt':true " class="" ng-class-odd="'odd'" ng-class-even="'even'" data-ng-show="collection.length > 0">
+				<td data-ng-click="editCourse(COURSE.URL_PATH.COURSE_LIST_DETAILS,course._id)"><a href="">{{course.name}}</a></td>
+				<td>{{course.description | limitTo: 20}}...</td>
+				<td>{{course.delivery_method}}</td>
+				<td>{{course.online_mentor_support}}</td>
+				<td>{{course.project_based_learning}}</td>
+				<td>{{course.counselling}}</td>
+				<td>{{course.costType}}</td>
+				<td>{{course.qualification}}</td>
+				<td>{{course.course_startDate | date:'dd-MMM-yyyy'}}</td>
+				<td class="projectimagetd"><img src="{{course.course_picture}}" width="50%" height="112px"></td>
+				<td width="10%" align="center">
+                <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                    <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                        <i class="fa fa-arrow-circle-right"></i><span>Actions</span>
+                    </a>
+                    <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                    
+                        <li ng-if="updatePermission">
+                            <a class="menu-toggler" data-ng-click="editCourse(COURSE.URL_PATH.ADMIN_COURSE_EDIT,course._id)" >
+                                <i class="fa fa-pencil-square-o"></i>
+                                <span>Edit Course</span>
+                            </a>
+                        </li>
+                        <li ng-if="deletePermission">
+                            <a class="menu-toggler"  ng-click="modalDeletePopup(course)">
+                                <i class="fa fa-minus-circle"></i>
+                                <span>Delete Course</span>
+                            </a>
+                        </li>
+                            <li>
+                            <a class="menu-toggler" data-ng-click="batchList(COURSE.URL_PATH.ADMIN_BATCH_LIST,course)">
+                                <i class="fa fa-plus-circle"></i>
+                                <span>Batches</span>
+                            </a>
+                        </li> 
+                        <li>
+                            <a class="menu-toggler" data-ng-click="studentList(COURSE.URL_PATH.COURSE_LIST_STUDENT,course)">
+                                <i class="fa fa-users"></i>
+                                <span>Students List</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu-toggler" data-ng-click="redirectCurriculum(COURSE.URL_PATH.ADMIN_CURRICULUM_TOPICS,course)">
+                                <i class="fa fa-plus-circle"></i>
+                                <span>Create Curriculum</span>
+                            </a>
+                        </li><li>
+                            <a class="menu-toggler" data-ng-click="redirectCounsellingChecklist(COURSE.URL_PATH.COUNSELLINGCHECKLIST,course)">
+                                <i class="fa fa-file"></i>
+                                <span>Counseling Checklist</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="menu-toggler" data-ng-click="redirectCounsellingChecklist(COURSE.URL_PATH.COUNSELLINGCHECKLIST,course)">
+                                <i class="fa fa-plus-circle"></i>
+                                <span>Counselling Checklist</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+			</tr>
+			<tr data-ng-show="!collection.length> 0">
+				<td colspan="10">No Course available</td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="paginate usr">
+		<div data-ng-include="'system/views/paginationFilter.html'"></div>
+	</div>
+	<div class = "padding_courses"></div>
+</section>

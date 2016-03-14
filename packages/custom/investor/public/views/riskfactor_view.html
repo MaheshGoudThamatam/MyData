@@ -1,0 +1,66 @@
+<section data-ng-controller="RiskFactorController" data-ng-init=" findOne(); viewBreadcrumb();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper social-group-header">
+		<h3 class="pull-left ">Risk Factor</h3>
+	</div>
+	<div class="pull-right">
+		<a class="btn btn-info" href="" data-ng-if="updatePermission"
+			data-ng-click="editRiskFactor(INVESTOR.URL_PATH.RISKFACTOREDIT,riskfactor._id)">Edit</a>
+		<a href="" class="btn btn-info" data-ng-if="deletePermission"
+			data-ng-click="modalDeletePopup(riskfactor)">Delete</a>
+	</div>
+	<div class="mainwrapper">
+		<form name="RiskFactorForm" class="form-horizontal formAlign" novalidate>
+			<div class="form-group left1"
+				ng-class="{ 'has-error' : submitted && RiskFactorForm.RiskFactorName.$invalid }">
+				<label mean-token="'edit-RiskFactorName'"
+					class="col-md-2 err-msg-RiskFactorName">RiskFactor Name</label>
+				<div class="col-md-8">
+					<input name="RiskFactorName" type="text"
+						data-ng-model="riskfactor.name " id="RiskFactorName"
+						placeholder="RiskFactor Name" class="form-control  err-msg " ng-disabled = true required>
+					<div ng-show="submitted && RiskFactorForm.RiskFactorName.$invalid">
+						<span class="err-msg errorText red"
+							ng-show="RiskFactorForm.RiskFactorName.$error.required">Enter the
+							RiskFactor Name </span>
+					</div>
+				</div>
+				<div ng-show="error" class="col-md-offset-2 red col-md-8 "
+					ng-repeat="err in error.data">{{err.msg}}</div>
+			</div>
+			<div class="form-group left1"
+				ng-class="{ 'has-error' : submitted && RiskFactorForm.description.$invalid }">
+				<label mean-token="'edit-description'"
+					class="col-md-2  err-msg-description">Description</label>
+				<div class="col-md-8">
+					<textarea name="description" ng-disabled = true  data-ng-model="riskfactor.description"
+						id="description" cols="30" rows="5" placeholder="Description"
+						class="form-control err-msg " required></textarea>
+					<div ng-show="submitted && RiskFactorForm.description.$invalid">
+						<span class="err-msg errorText red"
+							ng-show="RiskFactorForm.description.$error.required">Enter the
+							Description </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+                <label mean-token="'edit-Technology'" class="col-md-2 pull-left">Technology</label>
+                <div class="col-md-6">
+                    <input name="riskfactor_technology" ng-disabled = true type="checkbox" ng-checked="riskfactor.technology"
+                    data-ng-model="riskfactor.technology" id="technology">
+                </div>
+            </div>
+			
+			<div class="form-group left1">
+				<div class="col-md-offset-2 col-md-8">
+					<button mean-token="'edit-submit'" type="button"
+						class="btn btn-info" ng-click="update(RiskFactorForm.$valid)">Submit</button>
+					<button type="button" class="btn btn-info" ng-click="cancelRiskFactor()">Cancel</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+</section>
+
+

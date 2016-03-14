@@ -1,0 +1,425 @@
+<div data-ng-controller="MentorController" data-ng-init="loadSkills()">
+<!-- <div data-ng-include="'/system/views/alert.html'"></div> -->
+	<div data-ng-if="!mentor.form_submitted" ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper" data-ng-if="mentor.form_submitted">
+		<div data-ng-include="'mentor/views/mentor_request_status.html'"></div>
+		<div data-ng-include="'mentor/views/mentor_test_list.html'"></div>
+	</div>
+	<div class="row margin-align">
+ 		<div class="mainwrapper" data-ng-show="!mentor.form_submitted">
+ 			<h3 class="pull-left">Personal Details</h3>
+ 		</div>
+		<form name="mentorDetailForm" class="form-horizontal formCountry" data-ng-show="!mentor.form_submitted" novalidate>
+ 		<div class="col-xs-12 mainwrapper">
+			<div class="form-group">
+				<label mean-token="" class="col-md-2 pull-left">{{ 'profile.edit_profile.FIRSTNAME' | translate }}</label>
+				<div class="col-md-4" ng-class="{ 'has-error' : submitted && mentorDetailForm.firstName.$invalid }">
+					<input ng-pattern="/[a-zA-Z]+/g" name="firstName" type="text" class="form-control name-reg" data-ng-model="mentor.firstName" id="firstName" placeholder="{{ 'profile.edit_profile.FIRSTNAME' | translate }}" required>
+					<div ng-show="submitted && mentorDetailForm.firstName.$invalid">
+						<span class="err-msg red"> {{ 'profile.edit_profile.error_messages.FIRSTNAME' | translate }} </span>
+					</div>
+				</div>
+				<label mean-token="" class="col-md-2 pull-left">{{ 'profile.edit_profile.LASTNAME' | translate }}</label>
+				<div class="col-md-4" ng-class="{ 'has-error' : submitted && mentorDetailForm.lastName.$invalid }">
+					<input ng-pattern="/[a-zA-Z]+/g" name="lastName" type="text" class="form-control name-reg" data-ng-model="mentor.lastName" id="lastName" placeholder="{{ 'profile.edit_profile.LASTNAME' | translate }}" required>
+						<div class="errorRed" ng-repeat="err in error.data" ng-if="">{{err.msg}}</div>
+					<div ng-show="submitted && mentorDetailForm.lastName.$invalid">
+						<span class="err-msg red">{{ 'profile.edit_profile.error_messages.LASTNAME' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="" class="col-md-2">{{ 'mentor.GENDER' | translate }}</label>
+				<div class="col-md-4">
+					<label class="radio-inline">
+						<input type="radio" data-ng-model="mentor.gender" name="genderMale" value="male" ng-checked="mentor.gender !== 'female'">{{ 'mentor.MALE' | translate }}
+					</label>
+					<label class="radio-inline">
+						<input type="radio" data-ng-model="mentor.gender" name="genderFemale" value="female">{{ 'mentor.FEMALE' | translate }}
+					</label>
+				</div>
+				<label mean-token="" class="col-md-2 pull-left">{{ 'mentor.DATE_OF_BIRTH' | translate }}</label>
+				<div class="col-md-4" ng-class="{ 'has-error' : submitted && mentorDetailForm.dob.$invalid }">
+					<input name="dob" type="date" data-ng-model="mentor.dob" id="dob" class="form-control" required format-date>
+					<div class="errorRed" ng-repeat="err in error.data" ng-if="">{{err.msg}}</div>
+					<div ng-show="submitted && mentorDetailForm.dob.$invalid">
+						<span class="err-msg red">{{ 'mentor.error_messages.DATE_OF_BIRTH' | translate }}</span>
+					</div> 
+				</div>	
+			</div>
+			<div class="form-group">
+				<label mean-token="" class="col-md-2">{{ 'profile.edit_profile.EMAIL' | translate }}</label>
+				<div class="col-md-4">
+					<input ng-pattern=" /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/" name="emailid" type="text" data-ng-model="mentor.email" id="emailid" placeholder="{{ 'profile.edit_profile.EMAIL' | translate }}" class="form-control" disabled>
+					<div ng-show="submitted && mentorDetailForm.emailid.$invalid">
+						<span class="err-msg red"> {{ 'profile.edit_profile.error_messages.EMAIL' | translate }} </span>
+					</div>
+					<div  ng-show="submitted && mentorDetailForm.emailid.$error.pattern">
+						<span class="err-msg red">{{ 'mentor.error_messages.VALID_EMAIL' | translate }} </span>
+					</div>	
+				</div>
+				<label mean-token="" class="col-md-2 pull-left">{{ 'mentor.PHONENUMBER' | translate }}</label>
+				<div class="col-md-2" ng-class="{ 'has-error' : submitted && mentorDetailForm.phonePrefix.$invalid }">
+					<input name="phonePrefix" id="phonePrefix" type="text" ng-pattern="/[0-9]/" class="form-control" data-ng-model="mentor.phonePre" placeholder="{{ 'locations.branch.PRE' | translate }}" required maxlength="4">
+					<div ng-show="submitted && mentorDetailForm.phonePrefix.$invalid">
+						<span class="err-msg red"> {{ 'mentor.error_messages.PRE' | translate }} </span>
+					</div>
+				</div>
+				<div class="col-md-2" ng-class="{ 'has-error' : submitted && mentorDetailForm.phoneNumber.$invalid }">
+					<input name="phoneNumber" id="phoneNumber" type="text" ng-pattern="/[0-9]/"  required class="form-control" data-ng-model="mentor.phoneNumber" placeholder="{{ 'mentor.error_messages.PHONENUMBER' | translate }}" maxlength="10">
+					<div ng-show="submitted && mentorDetailForm.phoneNumber.$invalid">
+						<span class="err-msg red"> {{ 'mentor.error_messages.PHONENUMBER' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="mainwrapper">
+ 				<h3 class="pull-left">{{ 'mentor.CONTACT_DETAILS' | translate }}</h3>
+ 			</div>
+ 			<div class="col-xs-12">
+				<div class="form-group">
+			<div class="row rolesA mentorBorderLine" ng-repeat="address in mentor.address">
+					<div class="col-md-4 rolesA" ng-class="{ 'has-error' : submitted && mentorDetailForm.addressType.$invalid }">
+							<label for="" mean-token="'new-title'">{{ 'mentor.ADDRESS_TYPE' | translate }}</label> 
+							<select name="addressType" class="form-control" data-ng-model="address.addressType" required>
+								<option value="" selected disabled>{{ 'mentor.PLEASE_SELECT' | translate }}</option>
+								<option value="Permanent Address">{{ 'mentor.PERMANENT' | translate }}</option>
+								<option value="Temporary Address">{{ 'mentor.TEMPORARY' | translate }}</option>
+								<option value="Office Address">{{ 'mentor.OFFICE' | translate }}</option>
+							</select>
+						<div ng-show="submitted && mentorDetailForm.addressType.$error.required">
+							<span class="err-msg red">{{ 'mentor.error_messages.ADDRESS_TYPE' | translate }}</span>
+						</div>
+					</div>
+					<div class="col-md-4 rolesA" ng-class="{ 'has-error' : submitted && mentorDetailForm.p_addressLine1.$invalid }">
+						<label mean-token="'new-title'">{{ 'mentor.ADDRESS1' | translate }}</label>
+						<input name="p_addressLine1" type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="address.addressLine1" id="p_addressLine1" placeholder="{{ 'locations.branch.LINE1' | translate }}" required="">
+						<div ng-show="submitted && mentorDetailForm.p_addressLine1.$invalid">
+							<span class="err-msg red">{{ 'mentor.error_messages.ADDRESS1' | translate }} </span>
+						</div>
+					</div>
+					<div class="col-md-4 rolesA" ng-class="{ 'has-error' : submitted && mentorDetailForm.p_addressLine2.$invalid }">
+						<label mean-token="'new-title'">{{ 'mentor.ADDRESS2' | translate }}</label>
+						<input name="p_addressLine2" type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="address.addressLine2" id="p_addressLine2" placeholder="{{ 'locations.branch.LINE2' | translate }}" required="">
+						<div ng-show="submitted && mentorDetailForm.p_addressLine2.$invalid">
+							<span class="err-msg red">{{ 'mentor.error_messages.ADDRESS2' | translate }}</span>
+						</div>
+					</div>					
+					<div class="col-md-12" ng-show="submitted && addressError && address.addressType == 'Permanent Address'">
+						<span class="err-msg red">{{ 'mentor.error_messages.PERMANENT' | translate }}<br/></span>
+					</div>
+					<div class="col-md-2 rolesA" ng-class="{ 'has-error' : submitted && mentorDetailForm.p_city.$invalid }">
+						<label mean-token="'new-title'">{{ 'locations.branch.CITY' | translate }}</label>
+						<input name="p_city" type="text" class="form-control col-md-3 ng-pristine ng-invalid ng-invalid-required ng-touched" data-ng-model="address.city" id="p_city" placeholder="{{ 'locations.branch.CITY' | translate }}" required="">
+						<div ng-show="submitted && mentorDetailForm.p_city.$invalid">
+							<span class="err-msg red"> {{ 'locations.error_messages.CITY' | translate }} </span>
+						</div>
+					</div>
+					<div class="col-md-2 rolesA" ng-class="{ 'has-error' : submitted && mentorDetailForm.p_state.$invalid }">
+						<label mean-token="'new-title'">{{ 'locations.branch.STATE' | translate }}</label>
+						<input name="p_state" type="text" class="form-control col-md-3 ng-pristine ng-touched ng-invalid ng-invalid-required" data-ng-model="address.state" id="p_state" placeholder="{{ 'locations.branch.STATE' | translate }}" required="">
+						<div ng-show="submitted && mentorDetailForm.p_state.$invalid">
+							<span class="err-msg red"> {{ 'locations.error_messages.STATE' | translate }}</span>
+						</div>
+					</div>
+					<div class="col-md-2" ng-class="{ 'has-error' : submitted && mentorDetailForm.p_country.$invalid }">
+						<label mean-token="'new-title'">{{ 'locations.branch.COUNTRY' | translate }}</label>
+						<input name="p_country" type="text" class="form-control col-md-3 ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="address.country" id="p_country" placeholder="{{ 'locations.branch.COUNTRY' | translate }}" required="">
+						<div ng-show="submitted && mentorDetailForm.p_country.$invalid">
+							<span class="err-msg red"> {{ 'locations.error_messages.COUNTRY' | translate }} </span>
+						</div>
+					</div>
+					<div class="col-md-2"  ng-class="{ 'has-error' : submitted && mentorDetailForm.p_pincode.$invalid }">
+						<label mean-token="'new-title'">{{ 'locations.branch.PINCODE' | translate }}</label>
+						<input name="p_pincode" type="text" ng-pattern="/[0-9]/" maxlength="6" class="form-control col-md-3 ng-pristine ng-	untouched ng-invalid ng-invalid-required" data-ng-model="address.pincode" id="p_pincode" placeholder="{{ 'locations.branch.PINCODE' | translate }}" required="">
+						<div ng-show="submitted && mentorDetailForm.p_pincode.$invalid">
+							<span class="err-msg red"> {{ 'locations.error_messages.PINCODE' | translate }} </span>
+						</div>
+					</div>
+			
+			<div class="ulPagnate">
+			<label>&nbsp;</label>
+					<div class="col-md-offset-2 col-md-2" ng-show="$last">
+						<button class="pull-left" type="button" ng-click="removeAddress(address)" ng-show="$index>0">
+						<i class="fa edu-action fa-minus-circle"></i>
+						</button>
+						<button type="button" ng-click="addAddress(); addressChange(address.addressType);">
+							<i class="fa edu-action fa-plus-circle"></i>
+						</button>
+					</div>
+					<label>&nbsp;</label>
+					<div class="col-md-offset-2 col-md-2">
+						<button type="button" ng-click="removeAddress(address)" ng-hide="$last">
+							<i class="fa edu-action fa-minus-circle"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+			</div></div>
+			<div class="mainwrapper">
+				<h3 class="pull-left">{{ 'mentor.QUALIFICATION' | translate }}</h3>
+			</div>
+			<div class="col-xs-12">
+				<div class="form-group">
+					<div class="row rolesA mentorBorderLine" ng-repeat="qualification in mentor.qualification_details">
+						<div class="col-md-2 rolesA" ng-class="{ 'has-error' : submitted && mentorDetailForm.examName.$invalid }">
+							<label for="examName" mean-token="'new-title'">{{ 'mentor.EXAMINATION' | translate }}</label>
+							<input name="examName" type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="qualification.examination" id="examName" placeholder="{{ 'mentor.EXAM_APPEARED' | translate }}" required="">
+							<div ng-show="submitted && mentorDetailForm.examName.$invalid">
+								<span class="err-msg red"> {{ 'mentor.error_messages.EXAMINATION' | translate }} </span>
+							</div>
+						</div>
+						<div class="col-md-2 rolesA" ng-class="{ 'has-error' : submitted && mentorDetailForm.institutionName.$invalid }">
+							<label for="institutionName" mean-token="'new-title'">{{ 'mentor.INSTITUTION' | translate }}</label>
+							<input name="institutionName" type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="qualification.institution" id="institutionName" placeholder="{{ 'mentor.INSTITUTION' | translate }}" required="">
+							<div ng-show="submitted && mentorDetailForm.institutionName.$invalid">
+								<span class="err-msg red"> {{ 'mentor.error_messages.INSTITUTION' | translate }} </span>
+							</div>
+						</div>
+						<div class="col-md-2 rolesA" ng-class="{ 'has-error' : submitted && mentorDetailForm.universityName.$invalid }">
+							<label for="universityName" mean-token="'new-title'">{{ 'profile.educational_details.UNVERSITY' | translate }}</label>
+							<input name="universityName" type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="qualification.university" id="universityName" placeholder="{{ 'profile.educational_details.UNVERSITY' | translate }}" required="">
+							<div ng-show="submitted && mentorDetailForm.universityName.$invalid">
+								<span class="err-msg red"> {{ 'profile.educational_details.error_messages.UNVERSITY' | translate }} </span>
+							</div>
+						</div>
+					<div class="col-md-2 rolesA" ng-class="{ 'has-error' : submitted && mentorDetailForm.year_of_passing.$invalid }">
+							<label for="yop" mean-token="'new-title'">{{ 'profile.educational_details.YEAROFPASSING' | translate }}</label>
+							<select name="year_of_passing" class="form-control" data-ng-model="qualification.year_of_passing" required>
+								<option value="" selected disabled>{{ 'common.PLEASE_SELECT' | translate }}</option>
+								<option ng-repeat="date in dates">{{date}}</option>
+								<option ng-if="qualification.year_of_passing" selected>{{qualification.year_of_passing}}</option>
+							</select>
+							<div ng-show="submitted && mentorDetailForm.year_of_passing.$error.required">
+								<span class="err-msg red">{{ 'profile.educational_details.error_messages.YEAROFPASSING' | translate }}</span>
+							</div>
+						</div>
+						<div class="col-md-1 rolesA" ng-class="{ 'has-error' : submitted && mentorDetailForm.grade_obtained.$invalid }">
+							<label for="grade" mean-token="'new-title'">{{ 'mentor.GRADE' | translate }}</label>
+							<select name="grade_obtained" class="form-control" data-ng-model="qualification.grade_obtained" required>
+								<option value="" selected disabled>{{ 'common.PLEASE_SELECT' | translate }}</option>
+								<option value="Percentage">{{ 'profile.educational_details.PERCENTAGE' | translate }}</option>
+								<option value="CGPA">{{ 'mentor.CGPA' | translate }}</option>
+								<option value="SGPA">{{ 'mentor.SGPA' | translate }}</option>
+							</select>
+							<div ng-show="submitted && mentorDetailForm.grade_obtained.$error.required">
+								<span class="err-msg red">{{ 'mentor.error_messages.GRADE' | translate }}</span>
+							</div>
+						</div>
+						<div class="col-md-1 rolesA" ng-class="{ 'has-error' : submitted && mentorDetailForm.marks.$invalid }">
+							<label for="marks" mean-token="'new-title'">{{ 'mentor.MARKS' | translate }}</label>
+							<input name="marks" type="text" ng-pattern="/[0-9]/" maxlength="6" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="qualification.percentage_of_marks" id="marks" placeholder="{{ 'mentor.CGPA' | translate }} / {{ 'mentor.MARKS' | translate }}" required="">
+							<div ng-show="submitted && mentorDetailForm.marks.$invalid">
+								<span class="err-msg red"> {{ 'mentor.error_messages.MARKS' | translate }}</span>
+							</div>
+						</div>
+						<div class="col-md-2 rolesA">
+							<label for="specialisation" mean-token="'new-title'">{{ 'mentor.SPECIALIZATION' | translate }}</label>
+							<input name="specialisation" type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="qualification.specialisation" id="specialisation" placeholder="{{ 'common.OPTIONAL' | translate }}">
+						</div>
+						<div class="ulPagnate">
+						<label>&nbsp;</label>
+							<div class="col-md-2 pull-right margintop10" ng-show="$last">
+								<button class="pull-right" type="button" ng-click="addQualification()">
+									<i class="fa edu-action fa-plus-circle"></i>
+								</button>
+								<button class="pull-right" type="button" ng-click="removeQualification(qualification)"
+									ng-show="$index>0">
+								<i class="fa edu-action fa-minus-circle"></i>
+								</button>
+							</div>
+							<label>&nbsp;</label>
+							<div class="col-md-2 pull-right margintop10">
+								<button class="pull-right" type="button" ng-click="removeQualification(qualification)" ng-hide="$last">
+									<i class="fa edu-action fa-minus-circle"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> <!-- End of col-xs-12 for Qualification detail -->
+			<div class="mainwrapper">
+				<h3 class="pull-left">{{ 'mentor.EXPERIANCE' | translate }}</h3>
+			</div>
+			<div class="col-xs-12">
+				<div class="form-group">
+					<div class="row rolesA mentorBorderLine" ng-repeat="experience in mentor.experience_details">
+						<div class="col-md-3" ng-class="{ 'has-error' : submitted && mentorDetailForm.empName.$invalid }">
+							<label for="empName" mean-token="'new-title'">{{ 'mentor.EMPLOYER' | translate }}</label>
+							<input name="empName" type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="experience.employer" id="empName" placeholder="{{ 'mentor.EMPLOYER_NAME' | translate }}" required="">
+							<div ng-show="submitted && mentorDetailForm.empName.$invalid">
+								<span class="err-msg red"> {{ 'mentor.error_messages.EMPLOYER' | translate }} </span>
+							</div>
+						</div>
+						<div class="col-md-3" ng-class="{ 'has-error' : submitted && mentorDetailForm.designation.$invalid }">
+							<label mean-token="'new-title'">{{ 'mentor.DESIGNATION' | translate }}</label>
+							<input name="designation" type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="experience.designation" id="designation" placeholder="{{ 'mentor.DESIGNATION' | translate }}" required="">
+							<div ng-show="submitted && mentorDetailForm.designation.$invalid">
+								<span class="err-msg red">{{ 'mentor.error_messages.DESIGNATION' | translate }}</span>
+							</div>
+
+						</div>
+						<div class="col-md-2" ng-class="{ 'has-error' : submitted && mentorDetailForm.start_date.$invalid }">
+							<label mean-token="'new-title'">{{ 'mentor.START_DATE' | translate }}</label>
+							<input name="start_date" type="date" data-ng-model="experience.start_date" id="start_date" class="form-control" required format-date>
+							<div ng-show="submitted && mentorDetailForm.start_date.$invalid">
+								<span class="err-msg red">{{ 'mentor.error_messages.START_DATE' | translate }}</span>
+							</div> 
+						</div>
+						<div class="col-md-2" ng-class="{ 'has-error' : submitted && mentorDetailForm.end_date.$invalid }">
+							<label mean-token="'new-title'">{{ 'mentor.END_DATE' | translate }}</label>
+							<input name="end_date" type="date" data-ng-model="experience.end_date" id="end_date" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" required format-date>
+							<div ng-show="submitted && mentorDetailForm.end_date.$invalid">
+								<span class="err-msg red">{{ 'mentor.error_messages.END_DATE' | translate }}</span>
+							</div> 
+						</div>
+						<div class="ulPagnate">
+						<label>&nbsp;</label>
+						<div class="col-md-2" ng-show="$last">
+								<button class="pull-left" type="button" ng-click="removeExperience(experience)"
+									ng-show="$index>0">
+
+								<i class="fa edu-action fa-minus-circle"></i>
+								</button>
+								<button type="button" ng-click="addExperience()">
+									<i class="fa edu-action fa-plus-circle"></i>
+								</button>
+						</div>
+							<div class="col-md-1">
+							<button class="martop25" type="button" ng-click="removeExperience(experience)" ng-hide="$last">
+								<i class="fa edu-action fa-minus-circle"></i>
+							</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> <!-- End of col-xs-12 for Experience detail -->
+			<div class="mainwrapper">
+				<h3 class="pull-left">{{ 'mentor.REFERENCE' | translate }}</h3>
+			</div>
+			<div class="col-xs-12">
+				<div class="form-group">
+					<div class="row rolesA mentorBorderLine" ng-repeat="reference in mentor.references">
+						<div class="col-md-3" ng-class="{ 'has-error' : submitted && mentorDetailForm.refName.$invalid }">
+							<label for="refName" mean-token="'new-title'">{{ 'mentor.REFERENCE_NAME' | translate }}</label>
+							<input name="refName" type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="reference.ref_name" id="ref_name" placeholder="{{ 'mentor.REFERENCE_NAME' | translate }}" required="">
+							<div ng-show="submitted && mentorDetailForm.refName.$invalid">
+								<span class="err-msg red"> {{ 'mentor.error_messages.REFERENCE_NAME' | translate }} </span>
+							</div>
+						</div>
+						<div class="col-md-3" ng-class="{ 'has-error' : submitted && mentorDetailForm.refPhone.$invalid }">
+							<label for="refPhone" mean-token="'new-title'">{{ 'mentor.REFERENCE_NUMBER' | translate }}</label>
+							<input name="refPhone" type="text" ng-pattern="/[0-9]/" maxlength="10" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="reference.ref_phno" id="ref_phno" placeholder="{{ 'mentor.REFERENCE_NUMBER' | translate }}" required="">
+							<div ng-show="submitted && mentorDetailForm.refPhone.$invalid">
+								<span class="err-msg red"> {{ 'mentor.error_messages.REFERENCE_NUMBER' | translate }}  </span>
+							</div>
+						</div>	
+						<div class="col-md-4">
+							<label for="refComment" mean-token="'new-title'">{{ 'mentor.COMMENTS' | translate }}</label>
+							<textarea name="refComment" type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="reference.comments" id="refPhone" placeholder="{{ 'mentor.COMMENTS' | translate }}"></textarea>
+						</div>
+						<div class="ulPagnate">
+						<label>&nbsp;</label>
+							<div class="col-md-2" ng-show="$last">
+								<button class="pull-left" type="button" ng-click="removeReference(reference)"
+									ng-show="$index>0">
+
+								<i class="fa edu-action fa-minus-circle"></i>
+								</button>
+								<button type="button" ng-click="addReference()">
+									<i class="fa edu-action fa-plus-circle"></i>
+								</button>
+							</div>
+							<div class="col-md-1">
+							<button class="martop25" type="button" ng-click="removeReference(reference)" ng-hide="$last">
+								<i class="fa edu-action fa-minus-circle"></i>
+							</button>
+							</div>
+						</div>				
+					</div>
+				</div>
+			</div>
+			<div class="mainwrapper">
+				<h3 class="pull-left">{{ 'mentor.SKILLS' | translate }}</h3>
+			</div>
+			<div class="col-md-12 marleft30">
+				<tags-input class="col-xs-12" data-ng-model="mentor.skills" id="skills" name="skills" class="form-control err-msg" replace-spaces-with-dashes="false" display-property="name" placeholder="{{ 'skills.KEYWORDS' | translate }}">
+       				<auto-complete source="loadTags($query)" min-length="1" load-on-focus="true" required></auto-complete>
+      			</tags-input>
+			</div> <!-- End of col-xs-12 for Skill detail -->
+			<div class="mainwrapper">
+				<h3 class="pull-left">{{ 'mentor.DOCUMENTS' | translate }}</h3>
+			</div>
+			<div class="col-xs-12">
+							<div class="col-md-12">
+								<div data-ng-include="'/system/views/alert.html'"></div>
+							</div>
+				<div class="form-group">
+					<div class="row rolesA mentorBorderLine" ng-repeat="document in mentor.additional_documents">
+						<div class="col-md-3" ng-class="{ 'has-error' : submitted && mentorDetailForm.doc_name.$invalid }">
+							<label for="docName" mean-token="'new-title'">{{ 'mentor.DOCUMENT' | translate }}</label>
+							<select name="doc_name" data-ng-model="document.doc_name" id="other" class="form-control" ng-change="selectPredefineDocument($index,document.doc_name)">
+								<option value="" selected disabled>{{ 'common.PLEASE_SELECT' | translate }}</option>
+								<option value="Resume">{{ 'mentor.RESUME' | translate }}</option>
+								<option value="Reference Letter">{{ 'mentor.REFERENCE_LETTER' | translate }}</option>
+								<option value="Cover Letter">{{ 'mentor.COVER_LETTER' | translate }}</option>
+								<option value="Others">{{ 'mentor.OTHER' | translate }}</option>
+							</select>
+							<div ng-show="submitted && mentorDetailForm.doc_name.$error.required">
+								<span class="err-msg red"> {{ 'mentor.error_messages.DOCUMENT_TYPE' | translate }}</span>
+							</div>
+						</div>
+						<div class="col-md-3" ng-class="{ 'has-error' : submitted && mentorDetailForm.additionalDocumentName.$invalid }" ng-if="documentOtherSelected[$index]">
+							<label mean-token="'new-title'">{{ 'mentor.DOCUMENT_NAME' | translate }}</label>
+							<input name="additionalDocumentName" type="text" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required" data-ng-model="document.doc_nameother" id="additionalDocumentName" placeholder="{{ 'mentor.DOCUMENT_NAME' | translate }}" ng-change="selectOtherDocument($index,document.doc_nameother)">
+							<div ng-show="submitted && mentorDetailForm.additionalDocumentName.$invalid">
+								<span class="err-msg red">  {{ 'mentor.error_messages.DOCUMENT_NAME' | translate }}</span>
+							</div>
+						</div>
+						<div class="col-md-2" data-ng-if="document.doc_file">
+							<label>{{ 'mentor.PREVIEW' | translate }}</label>
+							<p><a target="_blank" class="btn btn-info" href="{{document.doc_file}}">Click here</a></p>
+						</div>
+						<div class="col-md-2" data-ng-show="document.doc_name">
+							<label>Upload</label>
+							<form name="uploadDocumentForm" class="form-horizontal col-md-12" role="form" novalidate>	
+								<div class="form-group">
+									<div class="btn btn-info" ngf-select ngf-change="onFileSelectResume($files,$index)" accept="application/pdf, application/vnd.openxmlformats-officedocument.wordprocessingml.document">Upload</div>
+									<div ng-show="submitted && !document.doc_file">
+										<span class="err-msg red"> {{ 'mentor.error_messages.UPLOAD' | translate }}</span>
+									</div>
+									<span data-ng-if="uploadInProgress">Upload progress: {{uploadProgress }}</span>
+								</div>
+							</form>
+						</div>
+						<div class="ulPagnate">
+						<label>&nbsp;</label>
+							<div class="col-md-2 martop25" ng-show="$last">
+								<button class="pull-left" type="button" ng-click="removeDocument(document)"
+									ng-show="$index>0">
+
+								<i class="fa edu-action fa-minus-circle"></i>
+								</button>
+								<button type="button" ng-click="addDocument()">
+									<i class="fa edu-action fa-plus-circle"></i>
+								</button>
+							</div>
+							<div class="col-md-1">
+								<button class="martop25" type="button" ng-click="removeDocument(document)" ng-hide="$last">
+									<i class="fa edu-action fa-minus-circle"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> <!-- End of col-xs-12 for Document -->
+		</div> <!-- End of col-xs-12 for main -->
+		</form>
+		<div class="form-group" data-ng-show="!mentor.form_submitted">
+			<div class="col-md-offset-5 col-md-7">
+				<button mean-token="'create-submit'"  ng-click="create(mentorDetailForm.$valid)" type="submit" class="btn btn-info">Submit</button>
+				<button type="button" class="btn btn-info" ng-click="cancel()">Cancel</button>
+			</div>
+		</div>
+		 <!-- End of mentorDetailForm -->
+	</div>
+</div>

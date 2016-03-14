@@ -1,0 +1,71 @@
+<section data-ng-controller="ZoneController" data-ng-init="listZone();">
+    <div data-ng-include="'/system/views/alert.html'"></div>
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper social-group-header">{{zones.country}}
+        <h3 class="pull-left">{{zones.country.name}}</h3>
+        <button class="btn btn-info pull-right " data-ng-click="newZone(BRANCH.URL_PATH.CREATEZONE,countryId)" ng-if="writePermission">{{ 'locations.zone.CREATE_ZONE' | translate }}</button>
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+        <tr>
+            <th class="text-center">{{ 'locations.zone.ZONE' | translate }}</th>
+            <th class="text-center">{{ 'locations.zone.ZONECODE' | translate }}</th>
+            <th class="text-center">{{ 'common.ACTIONS' | translate }}</th>
+        </tr>
+        </thead>
+        <tbody class="anchorTag">
+        <tr data-ng-repeat="zone in collection" class="" ng-class-odd="'odd'" ng-class-even="'even'" data-ng-show="collection.length > 0">
+            <td>{{zone.zoneName}}</td>
+            <td>{{zone.zoneCode}}</td>
+<td width="10%" align="center">
+                    <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                        <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-arrow-circle-right">
+                            </i>
+                            <span>
+                                {{ 'common.ACTIONS' | translate }}
+                            </span>
+                        </a>
+                        <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                            <li ng-if="readPermission">
+                                <a class="menu-toggler"  data-ng-click="cityList(BRANCH.URL_PATH.LISTCITY,zone)">
+                                    <i class="fa fa-plus-square-o">
+                                    </i>
+                                    <span>
+                                        {{ 'locations.branch.CITY' | translate }}
+                                    </span>
+                                </a>
+                            </li>
+                            <li ng-if="updatePermission">
+                                <a class="menu-toggler"  ng-click='editZone(BRANCH.URL_PATH.EDITZONE,zone._id)'>
+                                    <i class="fa fa-pencil-square-o">
+                                    </i>
+                                    <span>
+                                       {{ 'common.EDITINFO' | translate }} 
+                                    </span>
+                                </a>
+                            </li>
+                            <li ng-if="deletePermission">
+                                <a class="menu-toggler" ng-click="modalDeletePopup(zone)" >
+                                    <i class="fa fa-minus-square-o">
+                                    </i>
+                                    <span>
+                                         {{ 'common.DELETE' | translate }}
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+        </tr>
+        <tr data-ng-show="!collection.length> 0">
+            <td colspan="3"><h5>{{ 'locations.error_messages.NO_ZONE' | translate }}</h5></td>
+        </tr>
+        </tbody>
+    </table>
+    <div data-ng-show="!collection || collection.length" class="paginate usr">
+        <div ng-include="'system/views/paginationFilter.html'"></div>
+        <br>
+    </div>
+</section>
+

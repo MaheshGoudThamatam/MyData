@@ -1,0 +1,426 @@
+<section data-ng-controller="BatchController"
+	data-ng-init="findOne(); viewBatchBread();">
+	<div data-ng-include="'/system/views/alert.html'"></div>
+	<div data-ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="pull-right">
+		<a class="btn btn-info" href="" data-ng-if="updatePermission"
+			data-ng-click="editbatch(COURSE.URL_PATH.ADMIN_BATCH_EDIT,batch._id)">Edit</a>
+		<a href="" class="btn btn-info" data-ng-if="deletePermission"
+			data-ng-click="modalDeletePopup(batch)">Delete</a>
+	</div>
+	<div class="mainwrapper padding-align">
+		<div class="col-md-4 ">
+			<h3 class="pull-left">Batch</h3>
+		</div>
+		<div class="col-md-4">
+			<h3 class="text-center">Course: {{batch.course.name}}</h3>
+		</div>
+	</div>
+	<div class="mainwrapper padding-align">
+		<form name="viewForm" class="form-horizontal" novalidate>
+
+			<div class="col-xs-12 padding-align">
+				<label mean-token="'edit-name'" class="col-md-3 ">Name</label>
+				<div class="col-md-3">
+					<input name="batch_name" type="text" class="form-control"
+						data-ng-model="batch.batch_name" id="name" placeholder="Name"
+						required ng-disabled=true />
+				</div>
+			</div>
+			<div class="col-xs-12 padding-align"
+				ng-class="{ 'has-error' : submitted && holidayForm.start_date.$invalid }">
+				<label mean-token="'edit-start_date'" class="col-md-3 ">
+					Start_date </label>
+				<div class="col-md-3">{{batch.start_date | date : 'dd MMMM
+					yyyy'}}</div>
+			</div>
+			<div class="mainwrapper col-xs-12 padding-align">
+				<label class="col-md-3 ">Branch Name</label>
+				<div class="col-md-3">
+					<input name="branchName" type="text" class="form-control"
+						data-ng-model="batch.branch.branchName" id="name" placeholder="Name"
+						required ng-disabled=true />
+				</div>
+			</div>
+			<div class="mainwrapper">
+                <label mean-token="'create-description'" class="col-md-2 pull-left ">Mentors</label>
+                <div class="col-md-3">
+                    <div role="navigation">
+                        <ul>
+                            <div data-ng-repeat="mentor in batch.mentor" ng-disabled=true class="">
+                                    <div class="col-md-9 col-md-offset-3">
+                                        <input ng-checked = 'true' type="checkbox" name="check" ng-disabled=true value="true">
+                                        <label for="">{{mentor.name}}</label>
+                                    </div>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+			<div class="mainwrapper col-xs-12 padding-align">
+				<label class="col-md-3"> Batch Timings </label>
+				<div class="col-md-9">
+					<table class="table table-bordered">
+
+						<thead>
+							<tr>
+								<th>Mon</th>
+								<th>Tue</th>
+								<th class="col-md-2 ">Wed</th>
+								<th>Thu</th>
+								<th>Fri</th>
+								<th>Sat</th>
+								<th>Sun</th>
+							</tr>
+						</thead>
+						<tbody class="anchorTag">
+							<tr>
+								<td>
+									<div class='brdr_top'
+										ng-repeat='batchtime in batch.batchTimings.mon'>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.startHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.startMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.endHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.endMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div></div>
+									</div>
+								</td>
+								<td>
+									<div class='brdr_top'
+										ng-repeat='batchtime in batch.batchTimings.tue'>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.startHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.startMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.endHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.endMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div></div>
+								</td>
+								<td>
+									<div class='brdr_top'
+										ng-repeat='batchtime in batch.batchTimings.wed'>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.startHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.startMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.endHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.endMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</td>
+								<td>
+									<div class='brdr_top'
+										ng-repeat='batchtime in batch.batchTimings.thu'>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.startHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.startMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.endHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.endMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div></div>
+									</div>
+								</td>
+								<td>
+									<div class='brdr_top'
+										ng-repeat='batchtime in batch.batchTimings.fri'>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.startHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.startMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.endHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.endMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div></div>
+									</div>
+								</td>
+								<td>
+									<div class='brdr_top'
+										ng-repeat='batchtime in batch.batchTimings.sat'>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.startHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.startMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.endHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.endMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div></div>
+									</div>
+								</td>
+								<td>
+									<div class='brdr_top'
+										ng-repeat='batchtime in batch.batchTimings.sun'>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.startHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.startMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-4">
+												<select
+													ng-options="timeinhrs.option as timeinhrs.value for timeinhrs in timeinhrs"
+													ng-model="batchtime.endHH" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<select
+													ng-options="timeinmins.option as timeinmins.value for timeinmins in timeinmins"
+													ng-model="batchtime.endMM" ng-disabled=true>
+													<option style="display: none" value="">00</option>
+												</select>
+											</div>
+										</div>
+										<div></div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+	</div>
+
+	<div class="mainwrapper col-md-8 padding-align">
+		<label mean-token="'edit-name'" class="col-md-3 padding-align">
+			Course Details </label>
+		<div class="mainwrapper col-md-9">
+			<table class="table table-bordered padding-align">
+				<thead>
+					<tr>
+
+						<th class="text-center">Session Name</th>
+						<th class="text-center">Start Date</th>
+						<th class="text-center">End Date</th>
+						<th class="text-center">Start Time</th>
+						<th class="text-center">End Time</th>
+
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-ng-repeat="session in batch.schedule" class=""
+						ng-class-odd="'odd'" ng-class-even="'even'">
+
+						<td>
+							<div>{{getSessionType(session).TestName}}</div>
+							<div>{{getSessionType(session).ProjectName}}</div>
+							<div>{{getSessionType(session).TopicName}}</div>
+
+						</td>
+						<td>
+							<div>{{getSessionType(session).StartDate}}</div>
+
+						</td>
+						<td>
+							<div>{{getSessionType(session).EndDate}}</div>
+
+						</td>
+						<td>
+							<div>{{getSessionType(session).StartTime}}</div>
+						</td>
+						<td>
+							<div>{{getSessionType(session).EndTime}}</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div class="form-group">
+			<div class="col-md-offset-2 col-md-10 CreateBtnDiv text-center">
+				<button mean-token="'delete-submit'" type="reset"
+					class="btn btn-info"
+					data-ng-Click="cancel(COURSE.URL_PATH.ADMIN_BATCH_LIST)">Back</button>
+			</div>
+		</div>
+		</form>
+	</div>
+	<div class="col-md-4 pull-left">
+		<div style="width: 100%; height: 10px;"
+			ui-calendar="uiConfig.calendar" ng-model="eventSources"
+			calendar="calendar"></div>
+	</div>
+
+
+
+<div class="batchEvents" ng-show="showEvent">
+   <h5>Day Schedule</h5>
+   <div>Title: {{selectedEvent.title}}</div>
+         <div ng-if="selectedEvent.title == 'Test'">Name: {{selectedEvent.test.name}}</div>
+       <div ng-if="selectedEvent.title == 'Project'">Name: {{selectedEvent.project.projectName}}</div>
+       <div ng-if="selectedEvent.title == 'Topic'">Name: {{selectedEvent.topic.name}}</div> 
+       <div>Start Date: {{selectedEvent.startDate}}</div>
+       <div ng-if="selectedEventT.startTime == 'Start Time'">Start Time: {{selectedEventT.test.slots[0].slot.startTime}}</div>
+       <div ng-if="selectedEventT.startTime == 'ST'">Start Time: {{selectedEventT.project.slots[0].slot.startTime}}</div>
+        <div ng-if="selectedEventET.endTime == 'End Time'">End Time: {{selectedEventT.test.slots[0].slot.endTime}}</div>
+       <div ng-if="selectedEventET.endTime == 'ET'">End Time: {{selectedEventT.project.slots[0].slot.endTime}}</div>
+</div>
+
+
+</section>

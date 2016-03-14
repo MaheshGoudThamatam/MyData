@@ -1,0 +1,20 @@
+<section data-ng-controller="JobsController" >
+    <a href="" data-ng-click="addjobs()">{{ 'jobs.ADD_JOBS' | translate }}</a>
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="city in cities" class="" ng-class-odd="'odd'"
+                ng-class-even="'even'">
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</section>

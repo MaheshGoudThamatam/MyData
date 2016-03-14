@@ -1,0 +1,155 @@
+<section data-ng-controller="StudentCounsellingController" data-ng-init="reqStatusBreadcrumb();loadRequest();">
+    <div ng-include="'/system/views/breadcrum.html'">
+    </div>
+    <div data-ng-include="'/system/views/alert.html'">
+    </div>
+    <ul class="nav nav-tabs">
+        <li>
+            <a href="/course/courseList">
+                Available Courses
+            </a>
+        </li>
+        <li>
+            <a href="/mycourse/curriculum">
+                MyCourses
+            </a>
+        </li>
+        <li>
+            <a href="/mycourse/courseRequests">
+                MyRequests
+            </a>
+        </li>
+        <li class="active">
+            <a href="/student/counsellingStatus">
+                My Counselling Requests
+            </a>
+        </li>
+    </ul>
+    <div class="col-md-12 row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="nopadding">
+                        <span>
+                            Branch
+                        </span>
+                    </th>
+                    <th class="nopadding">
+                        <span>
+                            Course
+                        </span>
+                    </th>
+                    <!--
+                        <th class="nopadding">
+                            <span>
+                                Mentor Assigned
+                            </span>
+                        </th>
+                    -->
+                    <th class="nopadding">
+                        <span>
+                            Counselling Date
+                        </span>
+                    </th>
+                    <th class="nopadding" md-order-by="counselling.counsellingSlot">
+                        <span>
+                            Counselling Slot
+                        </span>
+                    </th>
+                    <!--
+                        <th class="nopadding">
+                            <span>
+                                Query
+                            </span>
+                        </th>
+                    -->
+                    <th class="nopadding">
+                        <span>
+                            Request Date
+                        </span>
+                    </th>
+                    <!--
+                        <th class="nopadding">
+                            <span>
+                                Remarks
+                            </span>
+                        </th>
+                    -->
+                    <th class="nopadding" md-order-by="counselling.status">
+                        <span>
+                            Status
+                        </span>
+                    </th>
+                    <th class="nopadding">
+                        <span>
+                            Action
+                        </span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody md-body>
+                <!-- <tr md-row md-auto-select="options.autoSelect" ng-repeat="counselling in requestData | filter: filter.search | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit"> -->
+                    <tr ng-repeat="counselling in requestData | filter: filter.search | orderBy: counselling.status | limitTo: query.limit : (query.page -1) * query.limit">
+                        <!-- <tr md-row ng-repeat="counselling in requestObj"> -->
+                            <td class="nopadding">
+                                {{counselling.branch.branchName}}
+                            </td>
+                            <td class="nopadding">
+                                {{counselling.course.name}}
+                            </td>
+                            <td class="nopadding">
+                                {{counselling.counsellingDate |date:'dd-MMM-yyyy'}}
+                            </td>
+                            <td class="nopadding">
+                                {{counselling.counsellingSlot}}
+                            </td>
+                            <!--
+                                <td class="nopadding">
+                                    {{counselling.counsellingQuery}}
+                                </td>
+                            -->
+                            <td class="nopadding">
+                                {{counselling.createdAt |date:'dd-MMM-yyyy'}}
+                            </td>
+                            <!--
+                                <td class="nopadding">
+                                    {{counselling.remarks}}
+                                </td>
+                            -->
+                            <td class="nopadding">
+                                {{counselling.status}}
+                            </td>
+                            <td width="10%" align="center">
+                                <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                                    <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                                        <i class="fa fa-arrow-circle-right">
+                                        </i>
+                                        <span>
+                                            Actions
+                                        </span>
+                                    </a>
+                                    <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                                        <li ng-if="updatePermission">
+                                            <a class="menu-toggler" data-ng-if="counselling.status === 'Pending'" href="" ng-click="modalDeletePopup(counselling)">
+                                                <i class="fa fa-minus-square-o">
+                                                </i>
+                                                <span>
+                                                    Delete
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-ng-hide="requestData.length >0">
+                            <td colspan="7">
+                                No Request Found...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+

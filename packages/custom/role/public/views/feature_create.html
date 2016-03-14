@@ -1,0 +1,116 @@
+<section data-ng-controller="FeatureController" data-ng-init="loadNewFeatureForm();">
+    <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper">
+        <h3 class="pull-left ">{{ 'roles.feature.FEATURE '| translate }}</h3>
+    </div>
+    <div class="mainwrapper">
+        <form name="featureForm" class="form-horizontal formAlign"
+            data-ng-submit="create(featureForm.$valid)" novalidate>
+            <div class="form-group">
+                <label mean-token="'create-feature_name'" class="col-md-2 pull-left">{{ 'roles.role.NAME' | translate }}</label>
+                <div class="col-md-6">
+                    <input name="name" type="text" class="form-control input-sm"
+                    data-ng-model="newfeature.name" id="name" placeholder="{{ 'roles.role.NAME' | translate }}"   required>
+                    <div ng-show="error" class="col-md-10" ng-repeat="err in error.data"><span class="err-msg errorText errorRed">{{err.msg}}</span></div>
+                    <div ng-show="submitted && featureForm.name.$invalid">
+                        <span class="err-msg errorText errorRed"
+                        ng-show="featureForm.name.$error.required">{{ 'roles.role.error_messages.NAME' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'create-feature_url'" class="col-md-2 pull-left">{{ 'roles.feature.URL' | translate }}</label>
+                <div class="col-md-6">
+                    <input name="feature_url" type="text" class="form-control input-sm"
+                    data-ng-model="newfeature.url" id="url" pattern="/.+"
+                    placeholder="{{ 'roles.feature.URL' | translate }}" required>
+
+                    <div ng-show="submitted && featureForm.feature_url.$invalid">
+                        <span class="err-msg errorText errorRed"
+                        ng-show="featureForm.feature_url.$error.required">{{ 'roles.feature.error_messages.URL' | translate }}</span>
+                    </div>
+                    <div ng-show="submitted && featureForm.feature_url.$invalid">
+                        <span class="err-msg errorText errorRed"
+                        ng-show="featureForm.feature_url.$error.pattern">{{ 'roles.feature.error_messages.URL_PATTERN' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'create-description'" class="col-md-2 pull-left">{{ 'roles.role.DESCRIPTION' | translate }}</label>
+                <div class="col-md-6">
+                    <textarea name="description"  class="form-control input-sm"
+                    data-ng-model="newfeature.description" id="description"
+                    placeholder="{{ 'roles.role.DESCRIPTION' | translate }}" cols="30" rows="5" required></textarea>
+
+                    <div ng-show="submitted && featureForm.description.$invalid">
+                        <span class="err-msg errorText errorRed"
+                        ng-show="featureForm.description.$error.required"> {{ 'roles.role.error_messages.DESCRIPTION' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'create-description'" class="col-md-2 pull-left">{{ 'roles.feature.ICON' | translate }}</label>
+                <div class="col-md-6">
+                    <textarea name="icon"  class="form-control input-sm"
+                    data-ng-model="newfeature.icon" id="description"
+                    placeholder="{{ 'roles.feature.ICON' | translate }}" required></textarea>
+
+                    <div ng-show="submitted && featureForm.icon.$invalid">
+                        <span class="err-msg errorText errorRed"
+                        ng-show="featureForm.icon.$error.required">{{ 'roles.feature.error_messages.ICON' | translate }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'create-description'" class="col-md-2 pull-left">{{ 'roles.feature.COLOR_CODE' | translate }}</label>
+                <div class="col-md-6">
+                    <textarea name="icon"  class="form-control input-sm"
+                    data-ng-model="newfeature.color" id="color"
+                    placeholder="{{ 'roles.feature.COLOR_CODE' | translate }}" required></textarea>
+
+                    <div ng-show="submitted && featureForm.color.$invalid">
+                        <span class="err-msg errorText errorRed"
+                        ng-show="featureForm.color.$error.required">{{ 'roles.feature.error_messages.COLOR_CODE' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label mean-token="'create-isComponent'" class="col-md-2 pull-left">{{ 'roles.feature.IS_COMPONENT' | translate }}</label>
+                <div class="col-md-6">
+                    <input name="feature_isComponent" type="checkbox" data-ng-click = "enableWidth()"class="" ng-checked="newfeature.isComponent"
+                    data-ng-model="newfeature.isComponent" id="isComponent">
+                </div>
+            </div>
+
+            <div class="form-group" ng-show = 'enablecomponent'>
+                <label mean-token="'create-width'" class="col-md-2 pull-left">{{ 'roles.feature.SELECT_WIDTH' | translate }}</label>
+                <div class="col-md-6">
+                    <select ng-options="width.option as width.value for width in componentWidth" ng-model="newfeature.width">
+					   <option style="display:none" value="">{{ 'roles.feature.WIDTH' | translate }}</option>
+					</select>
+                </div>
+            </div>
+            <div class="form-group left1"
+                 ng-class="{ 'has-error' : submitted && featureForm.featureCategory.$invalid }">
+                <label for="" mean-token="'create-featureCategory'"
+                       class="col-md-2 err-msg-qualifySkills">{{ 'roles.feature.FEATURE_CATEGORY' | translate }}</label>
+                <div class="col-md-6">
+                    <select name="featureCategory" data-ng-model="newfeature.featureCategory" class="form-control" >
+                        <option value="" >{{ 'roles.feature.SELECT' | translate }}</option>
+                        <option data-ng-repeat="category in categories" value="{{category._id}}" >{{category.name}}</option>
+                    </select>
+                </div>
+            </div>
+            
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button mean-token="'create-submit'" type="submit"
+                    class="btn btn-info">{{ 'common.SUBMIT' | translate }}</button>
+                    <button type="button" class="btn btn-info" ng-click="cancel()">{{ 'common.CANCEL' | translate }}</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</section>

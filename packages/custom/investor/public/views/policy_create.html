@@ -1,0 +1,556 @@
+<section data-ng-controller="PolicyController" data-ng-init=" createPolicy(); ">
+    <div ng-include="'/system/views/breadcrum.html'">
+    </div>
+    <div class="mainwrapper social-group-header">
+        <h3 class="pull-left ">
+            POLICY
+        </h3>
+    </div>
+    <div class="mainwrapper">
+        <form name="PolicyForm" class="form-horizontal formAlign" novalidate>
+            <div class="form-group left1"
+                ng-class="{ 'has-error' : submitted && PolicyForm.PolicyName.$invalid }">
+                <label mean-token="'create-PolicyName'"
+                    class="col-md-2 err-msg-PolicyName">
+                    Policy Name
+                </label>
+                <div class="col-md-8">
+                    <input name="PolicyName" type="text"
+                        data-ng-model="policy.name " id="PolicyName"
+                        placeholder="Policy Name" class="form-control  err-msg " required/>
+                        <div ng-show="submitted && PolicyForm.PolicyName.$invalid">
+                            <span class="err-msg errorText red"
+                                ng-show="PolicyForm.PolicyName.$error.required">
+                                Enter the Policy Name
+                            </span>
+                        </div>
+                    </div>
+                    <div ng-repeat="error in error.data">
+                        <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='name'">
+                            {{error.msg}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group left1"
+                    ng-class="{ 'has-error' : submitted && PolicyForm.policytype.$invalid }">
+                    <label mean-token="'create-policytype'" class="col-md-2 pull-left">
+                        Policy Type
+                    </label>
+                    <div class="col-md-6">
+                        <select name = "policytype" ng-options="policytype.option as policytype.value for policytype in policyTypes" ng-model="policy.policytype" required>
+                            <option style="display:none" value="">
+                                {{policytype.option}}
+                            </option>
+                        </select>
+                    </div>
+                    <div ng-show="submitted && PolicyForm.policytype.$invalid">
+                        <span class="err-msg errorText red" ng-show="PolicyForm.policytype.$error.required">
+                            Please enter policy type
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group left1"
+                    ng-class="{ 'has-error' : submitted && PolicyForm.description.$invalid }">
+                    <label mean-token="'create-description'"
+                        class="col-md-2  err-msg-description">
+                        Description
+                    </label>
+                    <div class="col-md-8">
+                        <textarea name="description" data-ng-model="policy.description"
+                            id="description" cols="30" rows="5" placeholder="Description"
+                            class="form-control err-msg " required>
+                        </textarea>
+                        <div ng-show="submitted && PolicyForm.description.$invalid">
+                            <span class="err-msg errorText red"
+                                ng-show="PolicyForm.description.$error.required">
+                                Enter the
+                                Description
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group left1"
+                    ng-class="{ 'has-error' : submitted && PolicyForm.Policymininvestment.$invalid }">
+                    <label mean-token="'create-mininvestment'"
+                        class="col-md-2 err-msg-PolicyName">
+                        Minimum Investment
+                    </label>
+                    <div class="col-md-8">
+                        <input name="Policymininvestment" type="number" min = "0"
+                            data-ng-model="policy.mininvestment " id="mininvestment"
+                            placeholder="Policy Minimum Investment" class="form-control  err-msg " required/>
+                            <div ng-show="submitted && PolicyForm.Policymininvestment.$invalid">
+                                <span class="err-msg errorText red"
+                                    ng-show="PolicyForm.Policymininvestment.$error.required">
+                                    Enter the
+                                    Policy Minimum Investment
+                                </span>
+                            </div>
+                        </div>
+                        <div ng-repeat="error in error.data">
+                            <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='minInvestment'">
+                                {{error.msg}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group left1" ng-if = "policy.policytype == 'Fixed'"
+                        ng-class="{ 'has-error' : submitted && PolicyForm.fixedrateofinterest.$invalid }">
+                        <label mean-token="'create-fixedrateofinterest'"
+                            class="col-md-2 err-msg-fixedrateofinterest">
+                            Fixed Rate of Interest%
+                        </label>
+                        <div class="col-md-8">
+                            <input name="fixedrateofinterest" type="number" min = "0"
+                                data-ng-model="policy.fixedrateofinterest " id="fixedrateofinterest"
+                                placeholder="Policy fixed rate of interest%" class="form-control  err-msg " required/>
+                                <div ng-show="submitted && PolicyForm.fixedrateofinterest.$invalid">
+                                    <span class="err-msg errorText red"
+                                        ng-show="PolicyForm.fixedrateofinterest.$error.required">
+                                        Enter the Fixed rate of interest
+                                    </span>
+                                </div>
+                            </div>
+                            <div ng-repeat="error in error.data">
+                                <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='fixedrateofinterest'">
+                                    {{error.msg}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group left1"
+                            ng-class="{ 'has-error' : submitted && PolicyForm.Policymaxinvestment.$invalid }">
+                            <label mean-token="'create-maxinvestment'"
+                                class="col-md-2 err-msg-Policymaxinvestment">
+                                Maximum Investment
+                            </label>
+                            <div class="col-md-8">
+                                <input name="Policymaxinvestment" type="number" min = "0"
+                                    data-ng-model="policy.maxinvestment " id="maxinvestment"
+                                    placeholder="Policy Maximum Investment" class="form-control  err-msg " required/>
+                                    <div ng-show="submitted && PolicyForm.Policymaxinvestment.$invalid">
+                                        <span class="err-msg errorText red"
+                                            ng-show="PolicyForm.Policymaxinvestment.$error.required">
+                                            Enter the
+                                            Policy Maximum Investment
+                                        </span>
+                                    </div>
+                                </div>
+                                <div ng-repeat="error in error.data">
+                                    <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='maxInvestment'">
+                                        {{error.msg}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label mean-token="'create-autorenewal'" class="col-md-2 pull-left">
+                                    Auto Renewal
+                                </label>
+                                <div class="col-md-6">
+                                    <input name="Policy_technology" type="checkbox" ng-checked="policy.autorenewal"
+                                        data-ng-model="policy.autorenewal" id="autorenewal"/>
+                                    </div>
+                                </div>
+                                <div class="form-group left1"
+                                    ng-class="{ 'has-error' : submitted && PolicyForm.PolicyRenewaldueperiod.$invalid }">
+                                    <label mean-token="'create-PolicyRenewaldueperiod'"
+                                        class="col-md-2 err-msg-PolicyRenewaldueperiod">
+                                        Renewal Due Period
+                                    </label>
+                                    <div class="col-md-8">
+                                        <input name="PolicyRenewaldueperiod" type="number" min = "0"
+                                            data-ng-model="policy.renewalperiod" id="PolicyRenewaldueperiod"
+                                            placeholder="Policy Policy Renewal due period" class="form-control  err-msg " required/>
+                                            <div ng-show="submitted && PolicyForm.PolicyRenewaldueperiod.$invalid">
+                                                <span class="err-msg errorText red"
+                                                    ng-show="PolicyForm.PolicyRenewaldueperiod.$error.required">
+                                                    Enter the Policy Renewal due period
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div ng-repeat="error in error.data">
+                                            <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='Duration'">
+                                                {{error.msg}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group left1"
+                                        ng-class="{ 'has-error' : submitted && PolicyForm.Policyduration.$invalid }">
+                                        <label mean-token="'create-policyduration'"
+                                            class="col-md-2 err-msg-Policyduration">
+                                            Policy Duration
+                                        </label>
+                                        <div class="col-md-8">
+                                            <input name="Policyduration" type="number" min = "0"
+                                                data-ng-model="policy.policyduration " id="Policyduration"
+                                                placeholder="Policy Duration" class="form-control  err-msg " required/>
+                                                <div ng-show="submitted && PolicyForm.Policyduration.$invalid">
+                                                    <span class="err-msg errorText red"
+                                                        ng-show="PolicyForm.Policyduration.$error.required">
+                                                        Enter the Policy Duration
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div ng-repeat="error in error.data">
+                                                <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='policyDuration'">
+                                                    {{error.msg}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group left1"
+                                            ng-class="{ 'has-error' : submitted && PolicyForm.Policynoticeperiod.$invalid }">
+                                            <label mean-token="'create-Policynoticeperiod'"
+                                                class="col-md-2 err-msg-Policynoticeperiod">
+                                                Policy Notice Period
+                                            </label>
+                                            <div class="col-md-8">
+                                                <input name="Policynoticeperiod" type="number" min = "0"
+                                                    data-ng-model="policy.policynoticeperiod " id="Policynoticeperiod"
+                                                    placeholder="Policy Notice Period" class="form-control  err-msg " required/>
+                                                    <div ng-show="submitted && PolicyForm.Policynoticeperiod.$invalid">
+                                                        <span class="err-msg errorText red"
+                                                            ng-show="PolicyForm.Policynoticeperiod.$error.required">
+                                                            Enter the
+                                                            Policy Notice Period
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div ng-repeat="error in error.data">
+                                                    <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='Duration'">
+                                                        {{error.msg}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mainwrapper social-group-header">
+                                                <h3 class="pull-left ">
+                                                    Policy Pre Closure Conditions
+                                                </h3>
+                                            </div>
+                                            <div class="form-group left1" ng-repeat = "preclosurecoditions in policy.preclosureconditions" >
+                                                <div ng-class="{ 'has-error' : submitted && PolicyForm.preclosureconditions.months.$invalid }">
+                                                    <div class="col-md-2 col-md-offset-2">
+                                                        <input name="preclosurecoditions.start_month" type="number" min = "0"
+                                                            data-ng-model="preclosurecoditions.start_month" id="preclosureconditionsstart_month{{$index}}"
+                                                            placeholder="Policy Pre Closure Start Months" class="form-control  err-msg " required/>
+                                                            <div ng-show="submitted && PolicyForm.preclosureconditions.start_month.$invalid">
+                                                                <span class="err-msg errorText red"
+                                                                    ng-show="PolicyForm.preclosureconditions.start_month.$error.required">
+                                                                    Enter the
+                                                                    Policy Pre-closure Conditions Start Months
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                <div class="col-md-2">
+                                                        <input name="preclosurecoditions.end_month" type="number" min = "0"
+                                                            data-ng-model="preclosurecoditions.end_month" id="preclosureconditionsend_month{{$index}}"
+                                                            placeholder="Policy Pre Closure End Months" class="form-control  err-msg " required/>
+                                                            <div ng-show="submitted && PolicyForm.preclosureconditions.end_month.$invalid">
+                                                                <span class="err-msg errorText red"
+                                                                    ng-show="PolicyForm.preclosureconditions.end_month.$error.required">
+                                                                    Enter the
+                                                                    Policy Pre-closure Conditions End Months
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input name="preclosurecoditions.rateofinterest" type="number" min = "0" max= "100"
+                                                                data-ng-model="preclosurecoditions.rateofinterest" id="preclosureconditionsmonths{{$index}}"
+                                                                placeholder="Policy Pre Closure rateofinterest%" class="form-control  err-msg " required/>
+                                                                <div ng-show="submitted && PolicyForm.preclosureconditions.rateofinterest.$invalid">
+                                                                    <span class="err-msg errorText red"
+                                                                        ng-show="PolicyForm.preclosureconditions.rateofinterest.$error.required">%
+                                                                        Enter the
+                                                                        Policy Pre-closure Conditions Rate of Interest
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div ng-repeat="error in error.data">
+                                                                <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='Duration'">
+                                                                    {{error.msg}}
+                                                                </div>
+                                                            </div>
+                                                            <div class = "col-md-2"ng-show="$last">
+                                                                <a data-ng-click="removerow($index,policy.preclosureconditions)" ng-show="$index>0" >
+                                                                    <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                                    </i>
+                                                                </a>
+                                                                <a data-ng-click="addrow(policy.preclosureconditions)" >
+                                                                    <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                                                    </i>
+                                                                </a>
+                                                            </div>
+                                                            <div class = "col-md-2">
+                                                                <a data-ng-click="removerow($index,policy.preclosureconditions)" ng-hide="$last" class="linksGap ">
+                                                                    <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                                    </i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mainwrapper social-group-header">
+                                                        <h3 class="pull-left" ng-if = "policy.policytype == 'Risk'">
+                                                            Risk Factor Section
+                                                        </h3>
+                                                    </div>
+                                                    <div class="form-group left1 col-md-12" ng-if = "policy.policytype == 'Risk'"
+                                                        ng-class="{ 'has-error' : submitted && PolicyForm.riskthresholdvalue.$invalid }">
+                                                        <label mean-token="'create-riskthresholdvalue'"
+                                                            class="col-md-2  err-msg-riskthresholdvalue">
+                                                            Risk Threshold Value %
+                                                        </label>
+                                                        <div class="col-md-8" >
+                                                            <input name="description" min = "0" max = "100" data-ng-model="policy.riskthresholdvalue"
+                                                                id="riskthresholdvalue"  placeholder="Risk Threshold Value%"
+                                                                class="form-control err-msg " required/>
+                                                                <div ng-show="submitted && PolicyForm.riskthresholdvalue.$invalid">
+                                                                    <span class="err-msg errorText red"
+                                                                        ng-show="PolicyForm.riskthresholdvalue.$error.required">
+                                                                        Enter the Riskthresholdvalue %
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group left1 col-md-12" ng-if = "policy.policytype == 'Risk'"
+                                                            ng-class="{ 'has-error' : submitted && PolicyForm.Policyminrateofinterest.$invalid }">
+                                                            <label mean-token="'create-maxinvestment'"
+                                                                class="col-md-2 err-msg-Policyminrateofinterest">
+                                                                Risk Min Rate of Interest %
+                                                            </label>
+                                                            <div class="col-md-8">
+                                                                <input name="Policyminrateofinterest" type="number" min = "0"
+                                                                    data-ng-model="policy.riskmininterest " id="riskmininterest"
+                                                                    placeholder=" Min Rate of Interest% " class="form-control  err-msg " required/>
+                                                                    <div ng-show="submitted && PolicyForm.Policyminrateofinterest.$invalid">
+                                                                        <span class="err-msg errorText red"
+                                                                            ng-show="PolicyForm.Policyminrateofinterest.$error.required">
+                                                                            Enter the
+                                                                            Policy Min Rate of Interest
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div ng-repeat="error in error.data">
+                                                                    <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='Min Rate of Interest'">
+                                                                        {{error.msg}}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group left1 col-md-12" ng-if = "policy.policytype == 'Risk'"
+                                                                ng-class="{ 'has-error' : submitted && PolicyForm.Policymaxrateofinterest.$invalid }">
+                                                                <label mean-token="'create-riskmaxninterest'"
+                                                                    class="col-md-2 err-msg-Policymaxrateofinterest">
+                                                                    Risk Max Rate of Interest %
+                                                                </label>
+                                                                <div class="col-md-8">
+                                                                    <input name="Policymaxrateofinterest" type="number" min = "0"
+                                                                        data-ng-model="policy.riskmaxninterest " id="riskmaxninterest"
+                                                                        placeholder=" Min Rate of Interest% " class="form-control  err-msg " required/>
+                                                                        <div ng-show="submitted && PolicyForm.Policymaxrateofinterest.$invalid">
+                                                                            <span class="err-msg errorText red"
+                                                                                ng-show="PolicyForm.Policymaxrateofinterest.$error.required">
+                                                                                Enter the
+                                                                                Policy Max Rate of Interest
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div ng-repeat="error in error.data">
+                                                                        <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='Min Rate of Interest'">
+                                                                            {{error.msg}}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mainwrapper social-group-header">
+                                                                    <h3 class="pull-left " ng-if = "policy.policytype == 'Risk'">
+                                                                        Pre Defined Risk Factors
+                                                                    </h3>
+                                                                </div>
+                                                                <div class="form-group left1" ng-repeat = "riskfactor in policy.riskfactors"   ng-if = "policy.policytype == 'Risk'">
+                                                                    <div ng-class="{ 'has-error' : submitted && PolicyForm.riskfactors.$invalid }">
+                                                                        <div class="form-group left1"
+                                                                            ng-class="{ 'has-error' : submitted && PolicyForm.riskfactorname.$invalid }">
+                                                                            <div class="col-md-offset-2 col-md-4">
+                                                                                <div>
+                                                                                    <select
+                                                                                        ng-options="riskfactorlist._id as riskfactorlist.name for riskfactorlist in riskfactorslist"
+                                                                                        name = "riskfactorname{{$index}}" ng-model="riskfactor.name" id = "riskfactorname{{$index}}" required>
+                                                                                        <option style="display: none" value="">
+                                                                                            Risk Factor
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div ng-show="submitted && PolicyForm.riskfactors.riskfactorname.$invalid">
+                                                                                    <span class="err-msg errorText red"
+                                                                                        ng-show="PolicyForm.riskfactors.riskfactorname.$error.required">
+                                                                                        Enter the Policy RiskFactor name
+                                                                                    </span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <input name="riskfactors.rateofinterest" type="number" min = "0" max= "100"
+                                                                                    data-ng-model="riskfactor.rateofinterest" id="riskfactors{{$index}}"
+                                                                                    placeholder="Policy Riskfactor rateofinterest%" class="form-control  err-msg " required/>
+                                                                                    <div ng-show="submitted && PolicyForm.policy.riskfactors.rateofinterest.$invalid">
+                                                                                        <span class="err-msg errorText red"
+                                                                                            ng-show="PolicyForm.riskfactors.policy.rateofinterest.$error.required">
+                                                                                            Enter the
+                                                                                            Policy Risk Factor Rate of Interest
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div ng-repeat="error in error.data">
+                                                                                    <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='Duration'">
+                                                                                        {{error.msg}}
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class = "col-md-2"ng-show="$last">
+                                                                                    <a data-ng-click="removerow($index,policy.riskfactors)" ng-show="$index>0" >
+                                                                                        <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                                                        </i>
+                                                                                    </a>
+                                                                                    <a data-ng-click="addrow(policy.riskfactors)" >
+                                                                                        <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                                                                        </i>
+                                                                                    </a>
+                                                                                </div>
+                                                                                <div class = "col-md-2">
+                                                                                    <a data-ng-click="removerow($index,policy.riskfactors)" ng-hide="$last" class="linksGap ">
+                                                                                        <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                                                        </i>
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mainwrapper social-group-header" ng-if = "policy.policytype == 'Risk'">
+                                                                        <h3 class="pull-left ">
+                                                                            Technology Risk Factors
+                                                                        </h3>
+                                                                    </div>
+                                                                    <div class="form-group left1" ng-repeat = "technologyriskfactor in policy.technologyriskfactors"   ng-if = "policy.policytype == 'Risk'">
+                                                                        <div ng-class="{ 'has-error' : submitted && PolicyForm.riskfactors.$invalid }">
+                                                                            <div class="form-group left1"
+                                                                                ng-class="{ 'has-error' : submitted && PolicyForm.riskfactorname.$invalid }">
+                                                                                <div class="col-md-offset-2 col-md-4">
+                                                                                    <div>
+                                                                                        <select
+                                                                                            ng-options="technologyriskfactorlist._id as technologyriskfactorlist.name for technologyriskfactorlist in technologyriskfactorslist"
+                                                                                            name = "technologyriskfactor{{$index}}" ng-model="technologyriskfactor.name" id = "technologyriskfactor{{$index}}" required>
+                                                                                            <option style="display: none" value="">
+                                                                                                Risk Factor
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div ng-show="submitted && PolicyForm.technologyriskfactor.technologyriskfactorname.$invalid">
+                                                                                        <span class="err-msg errorText red"
+                                                                                            ng-show="PolicyForm.technologyriskfactor.technologyriskfactorname.$error.required">
+                                                                                            Enter the Policy Tech RiskFactor name
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-3">
+                                                                                    <input name="technologyriskfactor.rateofinterest" type="number" min = "0" max= "100"
+                                                                                        data-ng-model="technologyriskfactor.rateofinterest" id="technologyriskfactor{{$index}}"
+                                                                                        placeholder="Policy Riskfactor rateofinterest%" class="form-control  err-msg " required/>
+                                                                                        <div ng-show="submitted && PolicyForm.policy.technologyriskfactor.rateofinterest.$invalid">
+                                                                                            <span class="err-msg errorText red"
+                                                                                                ng-show="PolicyForm.technologyriskfactor.policy.rateofinterest.$error.required">
+                                                                                                Enter the
+                                                                                                Policy Risk Factor Rate of Interest
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div ng-repeat="error in error.data">
+                                                                                        <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='Duration'">
+                                                                                            {{error.msg}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class = "col-md-2"ng-show="$last">
+                                                                                        <a data-ng-click="removerow($index,policy.technologyriskfactors)" ng-show="$index>0" >
+                                                                                            <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                                                            </i>
+                                                                                        </a>
+                                                                                        <a data-ng-click="addrow(policy.technologyriskfactors)" >
+                                                                                            <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                                                                            </i>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <div class = "col-md-2">
+                                                                                        <a data-ng-click="removerow($index,policy.technologyriskfactors)" ng-hide="$last" class="linksGap ">
+                                                                                            <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                                                            </i>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="mainwrapper social-group-header">
+                                                                            <h3 class="pull-left ">
+                                                                                Coustom Defined Risks
+                                                                            </h3>
+                                                                        </div>
+                                                                        <div class="form-group left1" ng-repeat = "coustomdefinedrisk in policy.coustomdefinedrisks" >
+                                                                            <div ng-class="{ 'has-error' : submitted && PolicyForm.preclosureconditions.months.$invalid }">
+                                                                                <div class="col-md-3 col-md-offset-2">
+                                                                                    <input name="coustomdefinedrisk.name" type="text"
+                                                                                        data-ng-model="coustomdefinedrisk.name" id="coustomdefinedriskname{{$index}}"
+                                                                                        placeholder="Policy coustom defined risk" class="form-control  err-msg " required/>
+                                                                                        <div ng-show="submitted && PolicyForm.coustomdefinedrisk.name.$invalid">
+                                                                                            <span class="err-msg errorText red"
+                                                                                                ng-show="PolicyForm.coustomdefinedrisk.name.$error.required">
+                                                                                                Enter the
+                                                                                                Policy coustom defined risk
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div ng-repeat="error in error.data">
+                                                                                        <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='Duration'">
+                                                                                            {{error.msg}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <input name="coustomdefinedrisk.rateofinterest" type="number" min = "0" max= "100"
+                                                                                            data-ng-model="coustomdefinedrisk.rateofinterest" id="coustomdefinedrisk{{$index}}"
+                                                                                            placeholder="Policy coustom defined risk%" class="form-control  err-msg " required/>
+                                                                                            <div ng-show="submitted && PolicyForm.coustomdefinedrisk.rateofinterest.$invalid">
+                                                                                                <span class="err-msg errorText red"
+                                                                                                    ng-show="PolicyForm.coustomdefinedrisk.rateofinterest.$error.required">
+                                                                                                    Enter the
+                                                                                                    Policy coustom defined risk Rate of Interest
+                                                                                                </span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div ng-repeat="error in error.data">
+                                                                                            <div class="errorRed col-md-offset-2 red col-md-8" ng-if="error.param=='Duration'">
+                                                                                                {{error.msg}}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class = "col-md-2"ng-show="$last">
+                                                                                            <a data-ng-click="removerow($index,policy.coustomdefinedrisks)" ng-show="$index>0" >
+                                                                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                                                                </i>
+                                                                                            </a>
+                                                                                            <a data-ng-click="addrow(policy.coustomdefinedrisks)" >
+                                                                                                <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                                                                                </i>
+                                                                                            </a>
+                                                                                        </div>
+                                                                                        <div class = "col-md-2">
+                                                                                            <a data-ng-click="removerow($index,policy.coustomdefinedrisks)" ng-hide="$last" class="linksGap ">
+                                                                                                <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                                                                                </i>
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="form-group left1 ">
+                                                                                    <div class="col-md-offset-2 col-md-8 marg-top10">
+                                                                                        <button mean-token="'create-submit'" type="button"
+                                                                                            class="btn btn-info" ng-click="create(PolicyForm.$valid)">
+                                                                                            Submit
+                                                                                        </button>
+                                                                                        <button type="button" class="btn btn-info" ng-click="cancelPolicy()">
+                                                                                            Cancel
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </section>

@@ -1,0 +1,70 @@
+<section  data-ng-controller = 'AdminCounsellingController' data-ng-init="editRequestBreadcrumb();scheduleeditdetail();getMentorDetails();">
+<div data-ng-include="'/system/views/alert.html'"></div>
+<div ng-include="'/system/views/breadcrum.html'"></div>
+<div class="mainwrapper">
+    <h3>Update Counselling Request</h3><br/>
+  <form name="" class="form-horizontal">
+   <div class="form-group">
+    <label class="col-md-2 ">Student Name</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingrequest.studentName.name}}
+    </div>
+   </div>
+   <div class="form-group">
+    <label class="col-md-2 ">Branch</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingrequest.branch.branchName}}
+    </div>
+   </div>
+   <div class="form-group">
+    <label class="col-md-2 ">Course</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingrequest.course.name}}
+     </div>  
+   </div>
+   <div class="form-group countryAlign">
+    <label class="col-md-2">Counselling Date</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingrequest.counsellingDate | date:'dd-MMM-yyyy'}}
+    </div>
+   </div>
+   <div class="form-group countryAlign">
+    <label class="col-md-2">Counselling Slot</label>
+             <div class="col-md-10 viewRole">
+                 {{counsellingrequest.counsellingSlot}}
+             </div>        
+      </div>
+      <div class="form-group countryAlign">
+    <label class="col-md-2">Student Query</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingrequest.counsellingQuery}}
+    </div>
+   </div>
+  <div class="form-group countryAlign">
+    <label class="col-md-2">Request Date</label>
+    <div class="col-md-10 viewRole">
+     {{counsellingrequest.createdAt | date:'dd-MMM-yyyy'}}
+    </div>
+   </div>
+
+  <div class="form-group countryAlign">
+      <label mean-token="" class="col-md-2 pull-left">{{ 'course.MENTOR' | translate }}</label>
+        <div class="col-md-2" ng-class="{ 'has-error' : submitted && counsellingrequest.mentor.$invalid }">
+         <!-- <select name="mentor" ng-model="counsellingrequest.mentorAssigned" class="form-control" required>
+           <option value="" disabled>Please Select</option>
+           <option value="{{mentor.mentorAssigned._id}}" ng-repeat="mentor in branchUser">{{mentor.name}}</option>
+          </select> -->
+          <select name="mentor" ng-model="counsellingrequest.mentorAssigned" class="form-control" ng-options="mentor._id as mentor.name for mentor in branchUser" ng-change="checkMentorAssigned(counsellingrequest.mentorAssigned);"></select>
+         <div ng-show="submitted && counsellingrequest.mentor.$error.required || mentorError">
+          <span class="err-msg red"> {{ 'course.error_messages.MENTOR' | translate }}</span>
+         </div>
+        </div><br>
+    </div>
+  </div>
+    <div class="form-group">
+    <div class="col-md-offset-5 col-md-7">
+    <button class="btn btn-info" data-ng-click="changeCounsellingStatus('Approved',counsellingrequest._id,counsellingrequest)">Approve</button>
+    <button class="btn btn-info" data-ng-click="cancelscheduleRequest();">Cancel</button>
+    </div>
+    </div>    
+</section>

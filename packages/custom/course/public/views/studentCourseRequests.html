@@ -1,0 +1,61 @@
+<section data-ng-controller="CourseRequestController" data-ng-init="courseRequestsBasedonUsers(0)">
+    <div ng-if = "USER" ng-include="'/system/views/breadcrum.html'">
+    </div>
+    <div data-ng-include="'/system/views/alert.html'">
+    </div>
+    <div class="col-sm-12 row">
+        <ul class="nav nav-tabs">
+            <li>
+                <a href="/admin/course">
+                    Available Courses
+                </a>
+            </li>
+            <li>
+                <a href="/mycourse/curriculum" ng-if = "USER">
+                    MyCourses
+                </a>
+            </li>
+            <li  class="active">
+                <a href="/mycourse/courseRequests" ng-if = "USER">
+                    MyRequests
+                </a>
+            </li>
+            <li><a href="/student/counsellingStatus" ng-if = "USER">My Counselling Requests</a></li>
+        </ul>
+    </div>
+    <div class="col-xs-12 row social-group-header">
+        <h3 class="pull-left ">
+            My Requests
+        </h3>
+    </div>
+    <div class="col-sm-8 row">
+        <table class="table table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th  class = "text-center">
+                        Course
+                    </th>
+                    <th  class = "text-center">
+                        Branch
+                    </th>
+                    <th  class = "text-center">
+                        Status
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="courseRequest in courseRequests" class="" >
+                    <td>
+                        <a href = ''  ng-click='showCourseRequestDetails(COURSE.URL_PATH.STUDENT_COURSE_REQUEST_VIEW,courseRequest._id)'>{{courseRequest.course.name}}</a>
+                    </td>
+                    <td>
+                        {{courseRequest.branch.branchName}}
+                    </td>
+                    <td>
+                        {{courseRequest.user_status}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

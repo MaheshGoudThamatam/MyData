@@ -1,0 +1,44 @@
+.meanUser-example h1 {
+    background-color: purple
+}
+
+.filterAlign{
+	margin-left:-28px !important;	
+}
+
+.marginTop{
+	    margin-top: 30px;
+}
+.errorRed{
+
+	color:red;
+}
+
+.userAlign{
+
+	margin-left:15px;
+
+}
+
+.userList{
+	margin-left:15px;
+}
+.countryAlign{
+    margin-left: -15px;
+}
+.showUser{
+	margin-top: 105px;
+}
+.rolesA{
+	margin-bottom:5px;
+}
+.paginate{
+	margin-left:-11px;
+}
+.ulPagnate{
+	    margin-top: 4px;
+}
+
+.linksGap{
+	padding:5px;
+}

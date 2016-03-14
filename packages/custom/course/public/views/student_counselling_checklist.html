@@ -1,0 +1,86 @@
+<section data-ng-controller='MentorCounsellingController'
+	data-ng-init="loadmentorschedule();listCounsellingChecklistBreadcrumb();">
+	<div data-ng-include="'/system/views/alert.html'"></div>
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper">
+		<h3 class="pull-left">Counselling Checklist</h3>
+	</div>
+
+	<div data-ng-repeat="counsellingreq in collection">
+		<div class=" row col-md-12">
+			<label class="col-md-2"><b>Student Name</b></label>
+			<div class=" row col-md-6">{{counsellingreq.studentName.name}}
+			</div>
+		</div>
+		<div class=" row col-md-12">
+			<label class="col-md-2"><b>Course Name</b></label>
+			<div class=" row col-md-6">{{counsellingreq.course.name}}</div>
+		</div>
+		<div class=" row col-md-12">
+			<label class="col-md-2"><b>Branch Name</b></label>
+			<div class=" row col-md-6">
+				{{counsellingreq.branch.branchName}}</div>
+		</div>
+	</div>
+	<div class="margnleft">
+		<form name="checklistForm" class="form-horizontal formAlign"
+			data-ng-submit="create(checklistForm.$valid)" novalidate>
+			<div data-ng-repeat="question in counsellingchecklistQuestions.questions">
+				<h2 ng-if="$index < 1">{{counsellingchecklist.course.name}}</h2>
+				<label><b>Question:&nbsp;{{$index+1}}</b></label>
+				<div class=" row col-md-12">
+					<label class="col-md-2">Title</label>
+					<div class="col-md-6">{{question.title}}
+					</div>
+				</div>
+				<div class="row col-md-12">
+					<label class="col-md-2">Description</label>
+					<div class="col-md-6">{{question.description}}
+				</div>
+				</div>
+				<div class="form-group"
+					ng-class="{ 'has-error' : submitted && checklistForm.name.$invalid }">
+					<label mean-token="'create-name'" class="col-md-2 err-msg-name">Remarks</label>
+					<div class="col-md-6">
+						<textarea name="remarks" class="form-control err-msg " cols="30"
+							rows="3" data-ng-model="question.remarks" id="remarks"
+							placeholder="remarks" required>
+						</textarea>
+						<div class="errorRed" ng-repeat="err in error.data"
+							ng-if="err.param =='remarks'">{{err.msg}}</div>
+						<div ng-show="submitted && checklistForm.remarks.$invalid">
+							<span class="err-msg errorText"
+								ng-show="checklistForm.remarks.$error.required"> Please
+								enter the remarks </span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+					ng-class="{ 'has-error' : submitted && checklistForm.name.$invalid }">
+					<label mean-token="'create-name'" class="col-md-2 err-msg-name">Notes</label>
+					<div class="col-md-6">
+						<textarea name="notes" class="form-control err-msg " cols="30"
+							rows="3" data-ng-model="counsellingchecklistQuestions.notes" id="notes"
+							placeholder="notes" required>
+						</textarea>
+						<div class="errorRed" ng-repeat="err in error.data"
+							ng-if="err.param =='notes'">{{err.msg}}</div>
+						<div ng-show="submitted && checklistForm.notes.$invalid">
+							<span class="err-msg errorText"
+								ng-show="checklistForm.notes.$error.required"> Please
+								enter the notes </span>
+						</div>
+					</div>
+				</div>
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9 ">
+					<button mean-token="'create-submit'" type="submit"
+						class="btn btn-info">Submit</button>
+					<button type="button" class="btn btn-info"
+						ng-click="cancelChecklist()">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>

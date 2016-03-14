@@ -1,0 +1,25 @@
+<section data-ng-controller="ProfileController" data-ng-init="uploadResumeBreadcrumb();">
+<div ng-include="'/system/views/breadcrum.html'"></div>
+<div class="row">
+	<ul class="nav nav-tabs tabalign">
+		<li><a href="" data-ng-click="redirectEdit()">Profile</a></li>
+		<li  class="active"><a href="#" data-ng-click="redirectResume()">CV / Resume</a></li>
+		<li><a href="#" data-ng-click="portfolioEdit()">Portfolio</a></li>
+	</ul>
+	<div class="col-sm-4 top-ma">
+		<div class="col-sm-12">
+			<img src="{{user.Resume}}" data-ng-if="user.Resume">
+		</div>
+		<div>
+			<form name="uploadResumeForm" class="form-horizontal col-md-12" role="form" novalidate>
+				<div class="form-group">
+					<div class="col-md-12">
+						<div class="btn btn-info" ngf-select ngf-change="onFileSelectResume($files)" accept="file/pdf, file/docx">Upload Resume</div>
+						<span data-ng-if="uploadInProgress">Upload progress: {{uploadProgress }}</span>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</section>

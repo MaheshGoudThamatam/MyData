@@ -1,0 +1,26 @@
+<div class="col-xs-12">
+         <ol class="breadcrumb">
+            <li><i class="fa fa-home link-pointer" data-ng-click="redirectdashboard()"></i></li>
+        </ol>
+ </div>
+
+<div class="col-sm-12">
+	<ul class="nav nav-tabs">
+		<li class="active"><a  href="#1" data-toggle="tab">Investors</a></li>
+		<li><a href="#2" data-toggle="tab">Investment Policy</a></li>
+		<li><a href="#3" data-toggle="tab">Investment</a></li>
+	</ul>
+	<div class="tab-content ">
+		<div class="col-md-12 tab-pane active" id="1"></br>
+			<div data-ng-include="'/investor/views/investorlist.html'"></div>
+		</div>
+		<div class="col-md-12 tab-pane" id="2"></br>
+			<div data-ng-include="'/investor/views/investor_policyview1.html'"></div>
+		</div>
+		<div class="col-md-12 tab-pane" id="3"></br>
+			<div data-ng-include="'/investor/views/investmentList.html'"></div>
+		</div>
+	</div>
+</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

@@ -1,0 +1,53 @@
+angular.module('mean.mentor').constant('MENTOR', {
+ 	URL_PATH:{
+ 		 PROFILELIST:'/project/list',
+ 		 MENTOR_REQUEST_LIST:'/admin/mentor/request-list',
+ 		 MENTOR_DETAIL_PAGE:'/mentor/detail',
+ 		 CREATEPROJECT:'/admin/mentorproject/create',
+ 		 UPDATEPROJECT:'/admin/mentorproject/:mentorprojectId/edit',
+ 		 PROJECTLIST:'/admin/mentorproject',
+ 		 MENTOR_LIST:'/admin/mentor/list',
+ 		 MENTOR_FEEDBACK:'/admin/mentor/feedback',
+ 		 MENTOR_ASSOCIATED_OBJECT:'/admin/associated',
+ 		 PROJECTDETAIL:'/admin/mentorproject/:mentorprojectId/detail',
+ 		 ADMIN_MENTOR_ONLINETEST:'/admin/test/assignment/:mentorRequestId',
+         MENTOR_PROJECTLIST:'/admin/mentorproject/:mentorprojectId/details',
+         MENTOR_INFO:'/admin/mentor/:mentorRequestId/info',
+         FULL_CALENDAR:'/admin/full-calendar',
+         MENTOR_REQUEST_STATUS: '/mentor/requestStatus'
+ 	},
+ 	FILE_PATH:{
+ 		PROFILELIST:'profile/views/project_list.html',
+ 		MENTOR_REQUEST_LIST:'mentor/views/mentor_request_list.html',
+ 		MENTOR_DETAIL_PAGE:'mentor/views/mentor_detail.html',
+ 		CREATEPROJECT:'mentor/views/project-create.html',
+ 		UPDATEPROJECT:'mentor/views/project-edit.html',
+ 		PROJECTLIST:'mentor/views/project-list.html',
+ 		MENTOR_LIST:'mentor/views/mentor_list.html',
+ 		MENTOR_FEEDBACK:'mentor/views/mentor_feedback.html',
+ 		MENTOR_ASSOCIATED_OBJECT:'mentor/views/mentor_associated_object.html',
+ 		PROJECTDETAIL:'mentor/views/project_detail.html',
+        ADMIN_MENTOR_ONLINETEST:'mentor/views/admin_mentor_test_assigment.html',
+        MENTOR_PROJECTLIST:'mentor/views/mentor_projectlist.html',
+        MENTOR_INFO:'mentor/views/mentor_info.html',
+        FULL_CALENDAR:'mentor/views/full_calendar.html',
+        MENTOR_REQUEST_STATUS: 'mentor/views/mentor_request_status.html'        
+ 	},
+ 	STATE:{
+ 		PROFILELIST:'project list',
+ 		MENTOR_REQUEST_LIST:'mentor request list',
+ 		MENTOR_DETAIL_PAGE:'mentor detail page',
+ 		CREATEPROJECT:'admin project create',
+ 		UPDATEPROJECT:'admin project update',
+ 		PROJECTLIST:'project list mentor',
+ 		MENTOR_LIST:'mentor list',
+ 		MENTOR_FEEDBACK:'mentor feedback',
+ 		MENTOR_ASSOCIATED_OBJECT:'mentor associated object',
+ 		PROJECTDETAIL:'project detail',
+        ADMIN_MENTOR_ONLINETEST:'admin test assigment',
+        MENTOR_PROJECTLIST:'project lists',
+        MENTOR_INFO:'mentor information',
+        FULL_CALENDAR:'full calendar',
+        MENTOR_REQUEST_STATUS: 'mentor request status'
+ 	}
+});

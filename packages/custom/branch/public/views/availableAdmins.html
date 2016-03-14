@@ -1,0 +1,19 @@
+<div class="form-group">
+    <label mean-token="'create-description'" class="col-md-2 pull-left ">{{ 'locations.country.ADMINS' | translate }}</label>
+
+    <div class="col-md-10">
+        <div id="sidebar" role="navigation">
+            <div class="">
+                <div data-ng-repeat="admin in adminList " class="">
+                    <div class="checkbox">
+                        <div class="col-md-6">
+                            <input data-ng-click="addAdmin(admin,mainObject)" id="check1{{admin._id}}" type="checkbox"
+                                   name="check" ng-checked="checkAdmin(admin,mainObject)">
+                            <label for="check1{{admin._id}}">{{admin.name}} ({{admin.username}})</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<section data-ng-controller="ZoneController" data-ng-init="findOne();">
+<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper">
+		<h3 class="pull-left ">{{ 'locations.zone.ZONE' | translate }}</h3>
+	</div>
+	
+	<div class="mainwrapper">
+		<form name="zoneForm" class="form-horizontal formAlign"
+			data-ng-submit="update(BRANCH.URL_PATH.LISTZONE,zoneForm.$valid)" novalidate>
+			<div class="form-group">
+				<label mean-token="'edit-zone_name'" class="col-md-2 pull-left">{{ 'locations.zone.ZONE_NAME' | translate }}</label>
+				<div class="col-md-6">
+					<input name="name" type="text" class="form-control"
+						data-ng-model="zone.zoneName" id="name" placeholder="{{ 'locations.zone.ZONE_NAME' | translate }}" required>
+						 <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='zoneName'">{{err.msg}}</div>
+						<div ng-show="submitted && zoneForm.name.$invalid">
+						<span class="err-msg errorText red"
+							ng-show="zoneForm.name.$error.required">{{ 'locations.error_messages.ZONE_NAME' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label mean-token="'edit-zone_code'" class="col-md-2 pull-left">{{ 'locations.zone.ZONE_CODE' | translate }}</label>
+				<div class="col-md-6">
+					<input name="zone_code" type="text" class="form-control"
+						data-ng-model="zone.zoneCode" id=zone_code
+						" placeholder="{{ 'locations.zone.ZONE_CODE' | translate }}" required>
+						 <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='zoneCode'">{{err.msg}}</div>
+						<div ng-show="submitted && zoneForm.zone_code.$invalid">
+						<span class="err-msg errorText red"
+							ng-show="zoneForm.zone_code.$error.required"> {{ 'locations.error_messages.ZONE_CODE' | translate }} </span>
+					</div>
+				</div>
+			</div>
+
+            <div ng-include="'/branch/views/availableAdmins.html'"></div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-9">
+					<button mean-token="'edit-submit'" type="submit"
+						class="btn btn-info">{{ 'common.SUBMIT' | translate }}</button>
+					<button type="button" class="btn btn-info" ng-click="cancelEdit(BRANCH.URL_PATH.LISTZONE,countryId)">{{ 'common.CANCEL' | translate }}</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+</section>
+
+

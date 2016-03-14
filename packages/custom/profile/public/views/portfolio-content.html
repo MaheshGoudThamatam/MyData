@@ -1,0 +1,34 @@
+<div data-ng-controller="ProjectController" data-ng-init="find()">
+	<div data-ng-include="'/profile/views/profile-header.html'"></div>
+	<div class=" mainwrapper pro-top">
+		<ul class="nav nav-tabs">
+			<li><a href="" data-ng-click="aboutme()">About Me</a></li>
+			<li class="active"><a href="" data-ng-click="Portfolio()">Portfolio</a></li>
+			<li><a href="" data-ng-click="review()">Reviews</a></li>
+			<li><a href="" data-ng-click="resume()">Resume</a></li>
+			<li class=""><a href="" data-ng-click="badge()">Badges</a></li>
+			<li><a href="" data-ng-click="performance()">Performance</a></li>
+		</ul>
+	</div>
+	<div class="mainwrapper pro-top san">
+		<div class="row">
+			<div class="col-md-12">
+				<button mean-token="'create-project'" type="button"
+					class="btn btn-info pull-right" data-ng-click="addProject()">Add
+					Project</button>
+			</div>
+			<div class="col-xs-4" data-ng-repeat="project in projects">
+				<div class="profile">
+						<a href="" data-ng-click="projectDetails($index,project)"> <img
+							src="{{project.projectPicture}}" class="img-responsive"></a>
+						<p class="bord"><b>Name:{{project.projectName}}</b></p>
+						<p class="bord">Skill:<span data-ng-repeat="skill in project.skills">
+				           {{skill.name}}<span ng-hide = "$last">,&nbsp;</span></span></p>
+						<p class="bord">Price:{{project.price}}</p>
+						<p class="bord">Description:{{project.description}}</p>
+						<!-- <p class="bord">Completed Date:15 October 2015</p> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

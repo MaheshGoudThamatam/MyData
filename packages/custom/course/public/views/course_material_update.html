@@ -1,0 +1,123 @@
+<section data-ng-controller="ChapterController" data-ng-init = "findOne(); summernoteOptions(); editMaterial(); setSkill(); loadSkill();">
+    <div class="mainwrapper social-group-header">
+        <h3 class="pull-left ">{{material.title}}</h3>
+    </div>
+    <div class="col-md-12 row">
+        <form name="materialForm" class="form-horizontal" novalidate>
+            <div class="form-group " ng-class="{'has-error' : submitted && materialForm.name.$invalid }" ng-if="!materialOne.title">
+                <label mean-token="'edit-name'" class="col-md-2 ">Name</label>
+                <div class="col-md-8">
+                    <input name="name" type="text" data-ng-model="materialOne.name" id="name" placeholder="Name" class="form-control err-msg" required>
+                    <div ng-show="submitted && materialForm.name.$invalid">
+                        <span class="err-msg red" ng-show="materialForm.name.$error.required">Please enter the Name </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group " ng-class="{'has-error' : submitted && materialForm.title.$invalid }" ng-if = "materialOne.title">
+                <label mean-token="'edit-title'" class="col-md-2 ">Title</label>
+                <div class="col-md-8">
+                    <input name="title" type="text" data-ng-model="materialOne.title" id="title" placeholder="Name" class="form-control err-msg" required>
+                    <div ng-show="submitted && materialForm.title.$invalid">
+                        <span class="err-msg red" ng-show="materialForm.title.$error.required">Please enter the Title </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group " ng-class="{'has-error' : submitted && materialForm.description.$invalid }" ng-if = "materialOne.level || materialOne.title">
+                <label mean-token="'edit-description'" class="col-md-2 ">Description</label>
+                <div class="col-md-8">
+                    <summernote name="description" config="options" ng-model="materialOne.description" required></summernote>
+                    <div ng-show="submitted && materialForm.description.$invalid">
+                        <span class="err-msg red" ng-show="materialForm.description.$error.required">Please enter the Description</span>
+                    </div>
+                </div>
+            </div>
+            <div ng-if = "materialOne.level == undefined && materialOne.title == undefined">
+                <div class="form-group " ng-class="{'has-error' : submitted && materialForm.content.$invalid }">
+                    <label mean-token="'edit-content'" class="col-md-2 ">Content</label>
+                    <div class="col-md-8">
+                        <summernote name="content" config="options" ng-model="materialOne.content" required></summernote>
+                        <div ng-show="submitted && materialForm.content.$invalid">
+                            <span class="err-msg red" ng-show="materialForm.content.$error.required">Please enter the Contents</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group " ng-class="{'has-error' : submitted && materialForm.notes.$invalid }">
+                    <label mean-token="'edit-notes'" class="col-md-2 ">Note</label>
+                    <div class="col-md-10">
+                        <textarea name="notes" type="text" data-ng-model="materialOne.notes" id="notes" cols="30" rows="3" placeholder="Note" class="form-control" ng-required="true"></textarea>
+                        <div ng-show="submitted && materialForm.notes.$invalid">
+                            <span class="err-msg red" ng-show="materialForm.notes.$error.required">Please enter the Note</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row rolesA" ng-repeat="skill in materialOne.skills" ng-if = "materialOne.title">
+                <div class="col-md-11">
+                    <div class="col-md-4 row" ng-class="{'has-error' : submitted && materialForm.skill.$invalid }">
+                        <label mean-token="'create-skill'" class="col-md-3 row mt7">Skill</label>
+                        <div class="col-md-9">
+                            <select name="skill" data-ng-model="skill.skill" class="form-control" required>
+                                <option value="" disabled selected>Please Select</option>
+                                <option data-ng-repeat="skill in skills" value="{{skill._id}}">{{skill.name}}</option>
+                            </select>
+                            <div ng-show="submitted && skill.skill === undefined">
+                                <span class="err-msg red" ng-show="materialForm.skill.$error.required">Please select the Skill</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 row" ng-class="{'has-error' : submitted && materialForm.pre_req.$invalid}">
+                        <label mean-token="'create-pre_req'" class="col-md-5">Pre-requisite Level</label>
+                        <div class="col-md-7">
+                            <select name="pre_req" class="form-control w100" ng-options="level.option as level.value for level in skillLevel" ng-model="skill.pre_req" required>
+                                <option value="" disabled selected>Please Select</option>
+                            </select>
+                        </div>
+                        <div ng-show="submitted && materialForm.pre_req.$invalid">
+                            <span class="err-msg red pull-left ml15" ng-show="materialForm.pre_req.$error.required">Please select the Pre-requisite level</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4" ng-class="{'has-error' : submitted && materialForm.pre_req.$invalid }">
+                        <label mean-token="'create-target'" class="col-md-5 mt7">Target Level</label>
+                        <div class="col-md-7">
+                            <select name="target" class="form-control w100" ng-options="level.option as level.value for level in skillLevel" ng-model="skill.target" required>
+                                <option value="" disabled selected>Please Select</option>
+                            </select>
+                        </div>
+                        <div ng-show="submitted && materialForm.target.$invalid">
+                            <span class="err-msg red pull-left ml15" ng-show="materialForm.target.$error.required">Please select the target level</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="ulPagnate">
+                        <label>&nbsp;</label>
+                        <div class="col-md-2" ng-show="$last">
+                            <button class="pull-left" type="button" ng-click="removeSkill(skill)" ng-show="$index>0">
+                                <i class="fa edu-action fa-minus-circle"></i>
+                            </button>
+                            <button type="button" ng-click="addSkills()">
+                                <i class="fa edu-action fa-plus-circle"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" ng-click="removeSkill(skill)" ng-hide="$last">
+                                <i class="fa edu-action fa-minus-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group left1">
+                <div class="col-md-offset-4 mt7 col-md-4">
+                    <button mean-token="'edit-submit'" type="button" class="btn btn-info" ng-click="updateCourseMaterial(materialForm.$valid)">Submit</button>
+                    <button type="button" class="btn btn-info" ng-click="cancelTitle(materialOne._id)">Cancel</button>
+                    <!-- <button type="button" class="btn btn-info" ng-click="cancelMaterial()" ng-if = "materialOne.title">Cancel</button> -->
+                </div>
+            </div>
+
+        </form>
+    </div>
+</section>

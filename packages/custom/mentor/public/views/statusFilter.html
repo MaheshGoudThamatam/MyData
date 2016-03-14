@@ -1,0 +1,9 @@
+<section data-ng-init="">
+
+	<select ng-model="statusFilterValue" class="col-md-10 fullwidth"
+		ng-change="statusFilter(status)">
+		<option value="">Status-All</option>
+		<option ng-repeat="status in statusArray" value="{{status}}">{{status}}</option>
+	</select>
+
+</section>

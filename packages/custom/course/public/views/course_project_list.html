@@ -1,0 +1,95 @@
+<section data-ng-controller="CourseprojectController"
+    data-ng-init="list(); loadNewCourseprojectForm(); ">
+    <div data-ng-include="'/system/views/alert.html'">
+    </div>
+    <div ng-include="'/system/views/breadcrum.html'">
+    </div>
+    <div class="mainwrapper social-group-header">
+        <h3 class="pull-left ">
+            Course Project
+        </h3>
+        <button class="btn btn-info pull-right"
+            ng-if="writePermission" data-ng-click="newCourseproject()">
+            Create
+        </button>
+    </div>
+    <table class="table table-bordered table-condensed">
+        <thead>
+            <tr>
+                <th class="text-center">
+                    Project Name
+                </th>
+                <th class="text-center">
+                    Total Marks
+                </th>
+                <th class="text-center">
+                    Minimum Marks
+                </th>
+                <th class="text-center">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="courseproject in collection" class=""
+                ng-class-odd="'odd'" ng-class-even="'even'">
+                <td>
+                    <a href=""
+                        data-ng-click="courseprojectDetails(courseproject)">
+                        {{courseproject.projectName}}
+                    </a>
+                </td>
+                <td class="text-right">
+                    {{courseproject.totalMarks}}
+                </td>
+                <td class="text-right">
+                    {{courseproject.minimumMarks}}
+                </td>
+                <td>
+                    <a href="" class="linksGap" ng-if="updatePermission"
+                        <td width="10%" align="center">
+                            <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                                <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                                    <i class="fa fa-arrow-circle-right">
+                                    </i>
+                                    <span>
+                                        Actions
+                                    </span>
+                                </a>
+                                <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                                    <li ng-if="updatePermission">
+                                        <a class="menu-toggler" data-ng-click="editCourseproject(COURSE.URL_PATH.COURSEPROJECTEDIT,courseproject._id)">
+                                            <i class="fa fa-pencil-square-o">
+                                            </i>
+                                            <span>
+                                                Edit Info
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li ng-if="updatePermission">
+                                        <a class="menu-toggler" ng-click="modalDeletePopup(courseproject)">
+                                            <i class="fa fa-minus-square-o">
+                                            </i>
+                                            <span>
+                                                Delete
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr data-ng-hide="!collection || collection.length">
+                        <td colspan="8">
+                            No Course Project found
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div data-ng-show=" !collection || collection.length"
+                class="paginate usr">
+                <div ng-include="'system/views/paginationFilter.html'">
+                </div>
+                <br/>
+            </div>
+        </section>

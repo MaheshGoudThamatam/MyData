@@ -1,0 +1,72 @@
+<section data-ng-controller="CourseCounsellingChecklistController"
+	data-ng-init="findOne();EditCounsellingChecklist();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper social-group-header">
+		<h3 class="pull-left">Checklist</h3>
+	</div>
+	<div class="mainwrapper">
+		<form name="checklistForm" class="form-horizontal formAlign"
+			data-ng-submit="update(checklistForm.$valid,course._id)" novalidate>
+			<div data-ng-repeat="question in counsellingchecklist.questions">
+				<h2 ng-if="$index < 1">{{counsellingchecklist.course.name}}</h2>
+				<label><b>Question:&nbsp;{{$index+1}}</b></label>
+				<div class="form-group"
+					ng-class="{ 'has-error' : submitted && checklistForm.name.$invalid }">
+					<label mean-token="'create-name'" class="col-md-2 err-msg-name">Title</label>
+					<div class="col-md-6">
+						<input name="title" type="text" class="form-control err-msg"
+							data-ng-model="question.title" id="title" placeholder="title"
+							required>
+						<div class="errorRed" ng-repeat="err in error.data"
+							ng-if="err.param =='name'">{{err.msg}}</div>
+						<div ng-show="submitted && checklistForm.title.$invalid">
+							<span class="err-msg errorText"
+								ng-show="checklistForm.title.$error.required"> Please
+								enter the title </span>
+						</div>
+
+					</div>
+					<div class="col-md-1" ng-show="$last">
+						<button type="button" ng-click="addChecklist()">
+							<i class="fa edu-action fa-plus-circle"></i>
+						</button>
+					</div>
+					<div class="col-md-1">
+						<button type="button"
+							ng-click="removeChecklist(counsellingchecklist,$index)"
+							ng-hide="$last">
+							<i class="fa edu-action fa-minus-circle"></i>
+						</button>
+					</div>
+				</div>
+				<div class="form-group"
+					ng-class="{ 'has-error' : submitted && checklistForm.name.$invalid }">
+					<label mean-token="'create-name'" class="col-md-2 err-msg-name">Description</label>
+					<div class="col-md-6">
+						<textarea name="description" class="form-control err-msg "
+							cols="30" rows="3" data-ng-model="question.description"
+							id="description" placeholder="description" required>
+						</textarea>
+						<div class="errorRed" ng-repeat="err in error.data"
+							ng-if="err.param =='description'">{{err.msg}}</div>
+						<div ng-show="submitted && checklistForm.description.$invalid">
+							<span class="err-msg errorText"
+								ng-show="checklistForm.description.$error.required">
+								Please enter the description </span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9 ">
+					<button mean-token="'create-submit'" type="submit"
+						class="btn btn-info">Update Checklist</button>
+					<button type="button" class="btn btn-info"
+						ng-click="cancelChecklist()">Cancel</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+

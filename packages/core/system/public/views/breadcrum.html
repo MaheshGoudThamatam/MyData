@@ -1,0 +1,15 @@
+<!-- start: BREADCRUMB -->
+<div class="breadcrumb-wrapper">
+    <h4 class="mainTitle no-margin">{{breadcrumbTitle}}</h4>
+    <span class="mainDescription">{{breadcrumbDesc}}</span>
+    <div class="pull-right">
+        <ol class="breadcrumb">
+            <li><a href="{{MESSAGES.DASHBOARD_URL}}"><i class="fa fa-home link-pointer"></i>Home</a></li>
+            <li data-ng-repeat="breadcrumLink in breadcrumLinks">
+                <a ng-if="breadcrumLink.isLink" href="{{breadcrumLink.url}}" >{{breadcrumLink.name}}</a>
+                <span ng-if="!breadcrumLink.isLink">{{breadcrumLink.name}}</span>
+            </li>
+        </ol>
+    </div>
+</div>
+<!-- end: BREADCRUMB -->

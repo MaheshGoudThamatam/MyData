@@ -1,0 +1,9 @@
+<section data-ng-init="periodFilter()">
+
+	<select ng-model="periodFilterValue" class="col-md-10 fullwidth"
+		ng-change="periodFilter(period)">
+		<option value="">Period-All</option>
+		<option ng-repeat="period in periodArray" value="{{period}}">{{period}}</option>
+	</select>
+
+</section>

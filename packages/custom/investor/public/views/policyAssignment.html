@@ -1,0 +1,171 @@
+<section data-ng-controller="InvestorPolicyAssignmentController" data-ng-init="findPolicies();findInvestor()">
+    <div ng-include="'/system/views/breadcrum.html'">
+    </div>
+    <div class="row col-sm-8 col-md-offset-2">
+        <div class="col-sm-4 social-group-header">
+            <h3 class="pull-left ">
+                Assign Policy
+            </h3>
+        </div>
+        <form name="InvestorPolicyFORM" class="form-horizontal formAlign" novalidate>
+            <div ng-repeat = "assignedpolicy in investorpolicy.assignedPolicies"
+                <div class="row col-sm-8">
+                    <div class="col-sm-6 marg-btm5">
+                        <h4 class="pull-left ">
+                            {{$index+1}}.   Investor
+                        </h4>
+                        <div class="col-sm-4">
+                            {{investorSelected.name}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 marg-btm5">
+                        <div>
+                            <select
+                                ng-options="policy as policy.name for policy in policies  track by policy._id"
+                                name = "policy{{$index}}" data-ng-change = "policyDetail(assignedpolicy.policy)" ng-model = "assignedpolicy.policy" id = "policy{{$index}}" required>
+                                <option style="display: none" value="">
+                                    Select Policy
+                                </option>
+                            </select>
+                        </div>
+                        <div ng-show="submitted && InvestorPolicyFORM.assignedpolicy.policy{{$index}}.$invalid">
+                            <span class="err-msg errorText red"
+                                ng-show="InvestorPolicyFORM.assignedpolicy.policy{{$index}}.$error.required">
+                                Select the Policy from list
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-sm-12 marg-btm5" ng-if = "assignedpolicy.policy">
+                            <label mean-token="'create-PolicyName'"
+                                class="col-md-4 err-msg-PolicyName">
+                                Policy Min Investment
+                            </label>
+                            <div class="col-md-2">
+                                {{assignedpolicy.policy.mininvestment}}
+                            </div>
+                            <label mean-token="'create-PolicyName'"
+                                class="col-md-4 err-msg-PolicyName">
+                                Policy Max Investment
+                            </label>
+                            <div class="col-md-2">
+                                {{assignedpolicy.policy.maxinvestment}}
+                            </div>
+                        </div>
+                        <div class= "col-md-12 marg-btm5" ng-if = "assignedpolicy.policy">
+                            <label mean-token="'create-PolicyName'"
+                                class="col-md-4 err-msg-PolicyName">
+                                Fund Control%
+                            </label>
+                            <input class = "col-md-8" name="fundcontrol{{$index}}" type="number" min = "0" max = "100"
+                                data-ng-model="assignedpolicy.fund_control " id="fundcontrol{{$index}}"
+                                placeholder="Fund Control" class="form-control  err-msg" required/>
+                                <span class="col-md-offset-4 err-msg errorText">
+                                    (Please enter value between 0-100)
+                                </span>
+                                <div>
+                                    <span class="col-md-offset-4  err-msg errorText red"
+                                        ng-show="submitted && InvestorPolicyFORM.fundcontrol{{$index}}.$error.required">
+                                        Enter the Fund Control
+                                    </span>
+                                    <span class="col-md-offset-4  err-msg errorText red"
+                                        ng-show="submitted && InvestorPolicyFORM.fundcontrol{{$index}}.$error.min">
+                                        Value should be greater than 0
+                                    </span>
+                                    <span class="col-md-offset-4  err-msg errorText red"
+                                        ng-show="submitted && InvestorPolicyFORM.fundcontrol{{$index}}.$error.max">
+                                        Value should be lesser than 100
+                                    </span>
+                                </div>
+                                <div ng-repeat="error in error.data">
+                                    <div class="errorRed col-md-offset-4 red col-md-8" ng-if="error.param=='name'">
+                                        {{error.msg}}
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="class-md-12"  ng-if = "assignedpolicy.policy">
+                                <label mean-token="'create-PolicyName'"
+                                    class="col-md-4 paddinglft4 err-msg-PolicyName">
+                                    Payment Status
+                                </label>
+                                <div class= "col-md-8">
+                                    <input name="paymentstatus{{$index}}" type="checkbox" class="" ng-checked="paymentstatus{{$index}}"
+                                        data-ng-model="assignedpolicy.paymentstatus" id="paymentstatus{{$index}}"/>
+                                 </div>
+                            </div>
+                           
+
+                                <div class= "col-md-12 marg-btm5" ng-if = "assignedpolicy.policy">
+                                    <label mean-token="'create-PolicyName'"
+                                        class="col-md-4 err-msg-PolicyName">
+                                        Policy Amount
+                                    </label>
+                                    <input class = "col-md-8" name="policyamount{{$index}}" type="number" min = "{{assignedpolicy.policy.mininvestment}}" max = "{{assignedpolicy.policy.maxinvestment}}"
+                                        data-ng-model="assignedpolicy.policyamount " id="policyamount{{$index}}"
+                                        placeholder="Policy Amount" class="form-control  err-msg" required/>
+                                        <span class="col-md-offset-4  err-msg errorText">
+                                            (Please enter value between Min Investment and Max Investment)
+                                        </span>
+                                        <div>
+                                            <span class="col-md-offset-4  err-msg errorText red"
+                                                ng-show="submitted && InvestorPolicyFORM.policyamount{{$index}}.$error.required">
+                                                Enter the Policy Amount
+                                            </span>
+                                            <span class="col-md-offset-4  err-msg errorText red"
+                                                ng-show="submitted && InvestorPolicyFORM.policyamount{{$index}}.$error.min">
+                                                Policy Amount should be greater than min amount
+                                            </span>
+                                            <span class="col-md-offset-4  err-msg errorText red"
+                                                ng-show="submitted && InvestorPolicyFORM.policyamount{{$index}}.$error.max">
+                                                Policy Amount should be lesser than max amount
+                                            </span>
+                                        </div>
+                                        <div ng-repeat="error in error.data">
+                                            <div class="errorRed col-md-offset-4 red col-md-8" ng-if="error.param=='name'">
+                                                {{error.msg}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="class-md-12"  ng-if = "assignedpolicy.policy">
+                                <label mean-token="'create-PolicyName'"
+                                    class="col-md-4 paddinglft4 err-msg-PolicyName">
+                                    Auto Renewal
+                                </label>
+                                <div class= "col-md-8">
+                                    <input name="autorenewal{{$index}}" type="checkbox" class="" ng-checked="autorenewal{{$index}}"
+                                        data-ng-model="assignedpolicy.autorenewal" id="autorenewal{{$index}}"/>
+                                </div>
+                            </div>
+                                </div>
+                                <div ng-show="$last">
+                                    <a data-ng-click="removerow($index,investorpolicy.assignedPolicies)" ng-show="$index>0" class="linksGap addtime_leftmrg">
+                                        <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                        </i>
+                                    </a>
+                                    <a data-ng-click="addrow(investorpolicy.assignedPolicies)" class="linksGap addtime_leftmrg">
+                                        <i class="fa fa-plus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Add">
+                                        </i>
+                                    </a>
+                                </div>
+                                <div >
+                                    <a data-ng-click="removerow($index,investorpolicy.assignedPolicies)" ng-hide="$last" class="linksGap addtime_leftmrg">
+                                        <i class="fa fa-minus-circle link-pointer tooltip-right"  data-toggle="tooltip" data-placement="bottom" data-tooltip="Remove">
+                                        </i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button mean-token="'create-submit'" type="button" ng-click = "assignInvestorpolicy(InvestorPolicyFORM.$valid)"
+                                    class="btn btn-info">
+                                    Submit
+                                </button>
+                                <button type="button" class="btn btn-info"
+                                    ng-click="cancelassignPolicy()">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </section>

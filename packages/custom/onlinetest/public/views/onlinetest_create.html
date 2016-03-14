@@ -1,0 +1,187 @@
+<section data-ng-controller="OnlinetestController" data-ng-init="createOnlinetest();loadSkillList();">
+<div ng-include="'/system/views/breadcrum.html'"></div>
+		<div>
+			<h1 class="pull-left">{{ 'onlinetest.ONLINE_TEST' | translate }}</h1>
+		</div>
+	<div class="col-xs-12">
+		<form name="onlinetestForm" class="form-horizontal col-md-12 "
+			data-ng-submit="create(onlinetestForm.$valid)" novalidate>
+
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && onlinetestForm.name.$invalid }">
+				<label mean-token="'edit-name'" class="col-md-2 control-label">{{ 'common.NAME' | translate }}</label>
+				<div class="col-md-6">
+					<input name="name" type="text" class="form-control"
+						data-ng-model="onlinetest.name" id="name" placeholder="{{ 'common.NAME' | translate }}"
+						required>
+					<div ng-show="submitted && onlinetestForm.name.$invalid">
+						<span class="err-msg errorText"
+							ng-show="onlinetestForm.name.$error.required"> {{ 'common.error_messages.NAME' | translate }}</span>
+					</div>
+					<div ng-show="err.param === 'name'" class="col-md-8 row red" ng-repeat="err in error.data">{{err.msg}}</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && onlinetestForm.description.$invalid }">
+				<label mean-token="'edit-description'"
+					class="col-md-2 control-label">{{ 'common.DESCRIPTION' | translate }}</label>
+				<div class="col-md-6">
+					<textarea name="description" data-ng-model="onlinetest.description"
+						id="description" cols="30" rows="5" placeholder="{{ 'common.DESCRIPTION' | translate }}"
+						class="form-control" required></textarea>
+					<div ng-show="submitted && onlinetestForm.description.$invalid">
+						<span class="err-msg errorText"
+							ng-show="onlinetestForm.description.$error.required">
+							{{ 'common.error_messages.DESCRIPTION' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && onlinetestForm.instructions.$invalid }">
+				<label mean-token="'edit-instructions'"
+					class="col-md-2 control-label">{{ 'onlinetest.INSTRUCTION' | translate }}</label>
+				<div class="col-md-6">
+					<textarea name="instructions" data-ng-model="onlinetest.instructions"
+						id="instructions" cols="30" rows="5" placeholder="{{ 'onlinetest.INSTRUCTION' | translate }}"
+						class="form-control" required></textarea>
+					<div ng-show="submitted && onlinetestForm.instructions.$invalid">
+						<span class="err-msg errorText"
+							ng-show="onlinetestForm.instructions.$error.required">
+							{{ 'onlinetest.error_messages.INSTRUCTION' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && onlinetestForm.duration.$invalid }">
+				<label mean-token="'edit-duration'" class="col-md-2 control-label">{{ 'onlinetest.DURATION' | translate }}</label>
+				<div class="col-md-6">
+					<input name="duration" type="number" min="0" class="form-control"
+						data-ng-model="onlinetest.duration" id="duration"
+						placeholder="{{ 'onlinetest.DURATION' | translate }}" required>
+					<div ng-show="submitted && onlinetestForm.duration.$invalid">
+						<span class="err-msg errorText"
+							ng-show="onlinetestForm.duration.$error.required">{{ 'onlinetest.error_messages.DURATION' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && onlinetestForm.duration.$invalid }">
+				<label mean-token="'edit-numberOfQuestions'"
+					class="col-md-2 control-label">{{ 'onlinetest.NUMBER_OF_QUESTIONS' | translate }}</label>
+				<div class="col-md-6">
+					<input name="numberOfQuestions" type="number" min="0"
+						class="form-control" data-ng-model="onlinetest.numberOfQuestions"
+						id="name" placeholder="{{ 'onlinetest.NUMBER_OF_QUESTIONS' | translate }}" required>
+					<div ng-show="submitted && onlinetestForm.duration.$invalid">
+						<span class="err-msg errorText"
+							ng-show="onlinetestForm.duration.$error.required">{{ 'onlinetest.error_messages.NUMBER_OF_QUESTIONS' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && onlinetestForm.passmark.$invalid }">
+				<label mean-token="'edit-passmark'" class="col-md-2 control-label">{{ 'onlinetest.PASS_MARK' | translate }}
+					</label>
+				<div class="col-md-6">
+					<input name="passmark" type="number" min="0" class="form-control"
+						data-ng-model="onlinetest.passMark" id="counselling"
+						placeholder="{{ 'onlinetest.PASS_MARK' | translate }}" required>
+					<div ng-show="submitted && onlinetestForm.passmark.$invalid">
+						<span class="err-msg errorText"
+							ng-show="onlinetestForm.passmark.$error.required">
+							{{ 'onlinetest.error_messages.PASS_MARK' | translate }} </span>
+					</div>
+				</div>
+			</div>
+			<span ng-init="testSkillIndex=$index"></span>
+			<div class="col-md-12">
+			<div class="form-group">
+				<div class="col-md-12 row martop15" ng-repeat="testSkill in onlinetest.testSkills track by $index">
+						<div class="col-md-2 control-label">
+							<label mean-token="'new-title'">{{ 'onlinetest.TEST_SKILLS' | translate }} {{$index+1 }}</label>
+						</div>
+						<div class="col-md-4 rolesA" ng-class="{ 'has-error' : submitted && onlinetestForm.skill.$invalid }">
+							<label for="yop" mean-token="'new-title'">{{ 'onlinetest.SKILL_NAME' | translate }}</label>
+							<select name="skill" class="form-control" data-ng-model="testSkill.skill" ng-options="skillArray.name for skillArray in skillList" required>
+							<option value="" selected disabled>{{ 'common.PLEASE_SELECT' | translate }}</option>
+							</select>
+							<div ng-show="submitted && (testSkill.skill === undefined)">
+								<span class="err-msg red"> {{ 'common.PLEASE_SELECT' | translate }}</span>
+							</div>
+						</div>
+						<div class="col-md-4 rolesA" ng-class="{ 'has-error' : submitted && onlinetestForm.subSkillName.$invalid }">
+							<label for="yop" mean-token="'new-title'">{{ 'onlinetest.SUB_SKILL' | translate }}</label>
+							<select name="subSkillName" class="form-control" data-ng-model="testSkill.subSkillName" ng-change="errorChc();" required>
+								<option value="" selected disabled>{{ 'common.PLEASE_SELECT' | translate }}</option>
+								<option ng-repeat="sSkill in testSkill.skill.subSkills track by $index">{{sSkill.skillName}}</option>
+							</select>
+							<div class="errorRed pull-left" ng-repeat="err in error.data track by $index" ng-show="err.param =='subSkillError' && !uniqueChc">{{err.msg}}</div>
+							<div ng-show="submitted && testSkill.subSkillName === undefined">
+								<span class="err-msg red"> {{ 'common.PLEASE_SELECT' | translate }}</span>
+							</div>
+						</div>
+						<div class="col-md-2" ng-class="{ 'has-error' : submitted && onlinetestForm.noOfQuestion.$invalid }">
+						<label for="yop" mean-token="'new-title'">{{ 'onlinetest.NO_OF_QUS' | translate }}</label>
+							<input name="noOfQuestion" type="number" min="0"
+								class="form-control col-md-3"
+								data-ng-model="testSkill.noOfQuestion" id="noOfQuestion"
+								placeholder="{{ 'onlinetest.NO_OF_QUS' | translate }}" required>
+							<div ng-show="submitted && (testSkill.noOfQuestion === undefined)">
+								<span class="err-msg red"> {{ 'common.PLEASE_SELECT' | translate }}</span>
+							</div>
+						</div>
+						<div class="col-md-offset-2 col-md-2" ng-class="{ 'has-error' : submitted && onlinetestForm.complexitystart.$invalid }">
+						<label for="yop" mean-token="'new-title'">{{ 'onlinetest.COMPLEXITY_START' | translate }}</label>
+							<input name="complexitystart" type="number" min="0" max = "6"
+								class="form-control col-md-3"
+								data-ng-model="testSkill.complexitystart" id="complexitystart"
+								placeholder="{{ 'onlinetest.COMPLEXITY_START' | translate }}" required>
+							<div ng-show="submitted && (testSkill.complexitystart === undefined)">
+								<span class="err-msg red">{{ 'common.PLEASE_SELECT' | translate }}</span>
+							</div>
+						</div>
+						<div class="col-md-2" ng-class="{ 'has-error' : submitted && onlinetestForm.complexityend.$invalid }">
+						<label for="yop" mean-token="'new-title'">{{ 'onlinetest.COMPLEXITY_END' | translate }}</label>
+							<input name="complexityend" type="number" max = "6"
+								class="form-control col-md-3"
+								data-ng-model="testSkill.complexityend" id="complexityend" min="{{complexitystart + 1}}"
+								placeholder="{{ 'onlinetest.COMPLEXITY_END' | translate }}">
+							<div class="errorRed pull-left" ng-repeat="err in error.data track by $index" ng-if="err.param =='complexityend'  && (testSkill.complexityend <= testSkill.complexitystart)">{{err.msg}}</div>
+							<div ng-show="submitted && (testSkill.complexityend === undefined)">
+								<span class="err-msg red" ng-show="testSkill.complexityend.$error.required"> {{ 'common.PLEASE_SELECT' | translate }}</span>
+							</div>
+						</div>
+						<div class="ulPagnate">
+						<label>&nbsp;</label>
+							<div class="col-md-5 martop25" ng-show="$last">
+								<button class="pull-left marright15" type="button" ng-click="removeTestskill(testSkill)"
+									ng-show="$index>0">
+
+								<i class="fa edu-action fa-minus-circle"></i>
+								</button>
+								<button type="button" ng-click="addTestskill($index)">
+									<i class="fa edu-action fa-plus-circle"></i>
+								</button>
+							</div>
+							<div class="col-md-1">
+							<button class="martop25" type="button" ng-click="removeTestskill(testSkill)" ng-hide="$last">
+								<i class="fa edu-action fa-minus-circle"></i>
+							</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-3 col-md-9">
+					<button mean-token="'edit-submit'" type="submit"
+						class="btn btn-info">{{ 'common.SUBMIT' | translate }}</button>
+					<button type="button" class="btn btn-info"
+						ng-click="cancelOnlinetest()">{{ 'common.CANCEL' | translate }}</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+

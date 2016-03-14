@@ -1,0 +1,130 @@
+<div data-ng-controller="ProfileController" data-ng-init= "success()">
+
+<div data-ng-include="'/profile/views/profile-header.html'"></div>
+
+
+<div class=" mainwrapper pro-top">
+
+<script>
+var today = new Date();
+ document.getElementById('date').innerHTML = today
+ </script>
+
+    <ul class="nav nav-tabs">
+    <li class="active"><a href="" data-ng-click="aboutme()">About Me</a></li>
+    <li ><a href="" data-ng-click="Portfolio()">Portfolio</a></li>
+    <li ><a href="" data-ng-click="review()">Reviews</a></li>
+    <li><a href="" data-ng-click="resume()">Resume</a></li>
+    <li ><a href="" data-ng-click="badge()">Badges</a></li>
+    <li><a href="" data-ng-click="performance()">Performance</a></li>
+   </ul>
+   </div>   
+
+<div class="mainwrapper pro-top san">
+    <div class="col-lg-4">
+        <button href="#" class="btn btn-default"><i class="fa fa-users"></i>&nbsp;&nbsp;200
+        </button>
+        <a href="#" class="btn btn-default pull-right">
+            <i class="fa fa-thumbs-o-up">&nbsp;&nbsp;200</i>
+        </a>
+        <hr>
+        <h3><p align="center"><i class="fa fa-flag">&nbsp;{{profileuser.country_user}}</i></p></h3>
+        <hr>
+        <h5><p align="center">It's Currently<span id="date"></span></p></h5>
+        <hr><p></p>
+        <p align="center">
+        <i class="fa fa-usd inactive">&nbsp;</i>
+        <i class="fa fa-envelope-o circle inactive">&nbsp;</i>
+        <i class="fa fa-user circle inactive">&nbsp;</i>
+        <i class="fa fa-phone circle inactive">&nbsp;</i>
+        <i class="fa fa-credit-card circle inactive">&nbsp;</i>
+        </p>
+        <hr>
+        <h5><p align="center"><i class="fa fa-user">&nbsp;</i>Member Since </i>
+        <strong>{{profileuser.confirmedAt|date:'dd-MMM-yyyy'}}</strong></p></h5>
+        <hr><p></p>
+    </div>
+
+    <div class="col-lg-4 profile-detail">
+        <h5><b>Education</b></h5><h5><div ng-repeat = 'education in profileuser.qualification_details|limitTo:1'>{{education.examination}}</br>{{education.institution}}</div></h5>
+        <hr class="horline">
+        <h5><b>Hobbies</b></h5>Cricket and Hockey
+        <hr class="horline">
+        <h5 ng-repeat="address in profileuser.address"><b>Lives in</b></br>{{address.city}},&nbsp;{{address.state}}</h5>
+        <hr class="horline">
+        <h5><b>Skills</b></br><li class="mentorskill" ng-repeat="skill in profileuser.skills">{{skill.name}}</li></h5>
+        <hr class="horline">
+        <h5><b>Contact Number</b></br>{{profileuser.phonePre}}-{{profileuser.phoneNumber}}</h5>
+    </div>
+
+    <div class="col-lg-4">
+        <a href="#" class="btn btn-default btn-default disabled"><span class="review">5.0 </span>/ 5</a>
+        <a href="#" class="btn btn-default btn-default pull-right disabled"><span class="rating">5.0 </span> / 5</a>
+        <p></p>
+        <div class="progress pull-right" style="width:100px;height:25px;">
+        <div class="progress-bar progress-bar-default progress-bar-striped active" role="progressbar" aria-valuenow="$" aria-valuemin="0" aria-valuemax="100" style="width:50px">
+        <span class="review">$</span>
+        </div>
+        </div>
+
+        <div class="rating-select">
+            <div class="btn btn-default btn-xs">
+            <i class="fa fa-star-o fa-2x"></i>
+            <i class="fa fa-star-o fa-2x"></i>
+            <i class="fa fa-star-o fa-2x"></i>
+            <i class="fa fa-star-o fa-2x"></i>
+            <i class="fa fa-star-o fa-2x"></i>
+            </div>
+        </div>
+        <div class="col-sm-12 rating-review">
+                <span> # Review </span> <span class="pull-right">Earnings</span>
+        </div>
+        <script>
+            $(function(){
+            $('.rating-select .btn').on('mouseover', function(){
+            $(this).removeClass('btn-default').addClass('btn-default');
+            $(this).prevAll().removeClass('btn-default').addClass('btn-default');
+            $(this).nextAll().removeClass('btn-default').addClass('btn-default');
+            });
+
+            $('.rating-select').on('mouseleave', function(){
+            active = $(this).parent().find('.selected');
+            if(active.length) {
+            active.removeClass('btn-default').addClass('btn-default');
+            active.prevAll().removeClass('btn-default').addClass('btn-default');
+            active.nextAll().removeClass('btn-default').addClass('btn-default');
+            } else {
+    
+                $(this).find('.btn').removeClass('btn-default').addClass('btn-default');
+            }
+            });
+
+            $('.rating-select .btn').click(function(){
+            if($(this).hasClass('selected')) {
+            $('.rating-select .selected').removeClass('selected');
+            } else {
+            $('.rating-select .selected').removeClass('selected');
+            $(this).addClass('selected');
+            }
+            });
+            });
+        </script>
+        <br/>
+        <hr>
+        <h4 align="center">{{profileuser.firstName}}&nbsp;{{profileuser.lastName}}<br/>{{profileuser.email}}</h4>
+        <hr>
+        <div class="col-xs-6 profile-job-detail"><span class="score-detail">Jobs Completed</span></div>
+        <span class="pull-right">100%</span>
+        <br/><br/>
+        <div class="col-xs-6 profile-job-detail"><span class="score-detail">On Budget</span></div>
+        <span class="pull-right">100%</span>
+        <br/><br/>
+        <div class="col-xs-6 profile-job-detail"><span class="score-detail">On Time</span></div>
+        <span class="pull-right">100%</span>
+        <br/><br/>
+        <div class="col-xs-6 profile-job-detail"><span class="score-detail">Repeat Hire Rate</span></div>
+        <span class="pull-right">N/A</span>
+        <br/><br/>
+    </div>
+</div>
+</div>

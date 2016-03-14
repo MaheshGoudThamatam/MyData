@@ -1,0 +1,39 @@
+<section class="">
+   <div class="" data-ng-controller="JobsController" data-ng-init="listjobs();loadfilterSkills();">
+      <div class="form-group">
+            <div class="mainwrapper anchorTag">
+                     <tags-input data-ng-model="jobsfilter" name="keywords" display-property="name"
+                   replace-spaces-with-dashes="false" on-tag-added="filterinputadded()" on-tag-removed="filterinputremoved()" placeholder="{{ 'jobs.SKILLS_FILTER' | translate }}" min-length="1" add-from-autocomplete-only="true">
+                   <auto-complete source="loadInput($query)" min-length="1" load-on-focus="true" > </auto-complete>
+                  </tags-input>
+            </div>
+      </div>
+       <div ng-if="collection.length == 0" class="jobs-not-found">
+          <h3>{{ 'jobs.NO_JOBS' | translate }}</h3>
+      </div>
+      <div ng-if="collection.length > 0">
+          <h3 class="">{{ 'jobs.JOBS_LIST' | translate }}</h3>
+      </div> 
+      <div class="" data-ng-repeat="jobs in collection">  
+            <div class="col-md-12 jobs-bord job-blog1">
+               <h3><a href="/job/{{jobs._id}}/details">{{jobs.title}}</a></h3>
+               <p>{{jobs.description | limitTo: 160}}...</p>
+               <div class="col-md-12 price">
+                  <h3 class="pull-left"><b>{{jobs.cost}}&nbsp;{{jobs.costCurrency}}</b></h3>
+                  <h5 class="pull-right"><li class="skills" ng-repeat="skill in jobs.skills">{{skill.toUpperCase()}}</li></h5>
+               </div>
+               <div class="col-md-12 provider">
+                  <h4 class="pull-left postdate black">{{ 'jobs.JOBS_POST' | translate }} {{jobs.postedDate}}</h4>
+                  <h4 class="pull-right provider-name black">{{jobs.jobUrl.split(".")[1]}}</h4>
+               </div>
+            </div> 
+      </div>
+    <div ng-if="collection.length > 0">   
+         <div class="paginate usr">
+            <div ng-include="'system/views/paginationFilter.html'"></div>
+            <br>
+         </div>
+   </div>
+
+   </div>
+</section>

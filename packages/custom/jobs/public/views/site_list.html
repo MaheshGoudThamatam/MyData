@@ -1,0 +1,69 @@
+<section data-ng-controller="SiteController" data-ng-init="find(); loadNewSiteForm();">
+<div data-ng-include="'/system/views/alert.html'"></div>
+ <div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper social-group-header">
+	<h3 class="pull-left ">{{ 'jobs.SITE' | translate }}</h3>
+	<button class="btn btn-info pull-right" ng-if="writePermission" data-ng-click="newSite()">{{ 'common.CREATE' | translate }} {{ 'jobs.SITE' | translate }}</button>
+		</div>
+	<table class="table table-bordered table-condensed">
+		<thead>
+			<tr>
+				<th class="text-center">{{ 'jobs.SITE_NAME' | translate }}</th>
+				<th class="text-center">{{ 'jobs.SITE_URL' | translate }}</th>
+				<th class="text-center">{{ 'jobs.API_URL' | translate }}</th>
+				<th class="text-center">{{ 'jobs.SITE_ID' | translate }}</th>
+				<th class="text-center">{{ 'jobs.SITE' | translate }} {{ 'jobs.ENABLE' | translate }} ?</th>
+				<th class="text-center">{{ 'common.ACTIONS' | translate }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="site in collection" class="" ng-class-odd="'odd'"
+				ng-class-even="'even'">
+				<td ><a href="" data-ng-click="siteDetails(site)">{{site.websiteName}}</a></td>
+				<td>{{site.websiteUrl}}</td>
+				<td>{{site.apiUrl}}</td>
+				<td>{{site.apiSiteId}}</td>
+				<td ng-if="site.enabled" class="text-center"><i class="fa fa-check"></i></td>
+				<td ng-if="!site.enabled" class="text-center"><i class="fa fa-times"></i></td>
+	<td width="10%" align="center">
+                    <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+                        <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+                            <i class="fa fa-arrow-circle-right">
+                            </i>
+                            <span>
+                                {{ 'common.ACTIONS' | translate }}
+                            </span>
+                        </a>
+                        <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+                            <li ng-if="updatePermission">
+                                <a class="menu-toggler" data-ng-click="editSite(JOBS.URL_PATH.SITEEDIT,site._id)">
+                                    <i class="fa fa-pencil-square-o">
+                                    </i>
+                                    <span>
+                                        {{ 'common.EDITINFO' | translate }}
+                                    </span>
+                                </a>
+                            </li>
+                            <li ng-if="deletePermission">
+                                <a class="menu-toggler" ng-click ="modalDeletePopup(site)">
+                                    <i class="fa fa-minus-square-o">
+                                    </i>
+                                    <span>
+                                        {{ 'common.DELETE' | translate }}
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+			</tr>
+			<tr data-ng-hide="!collection || collection.length">
+                <td colspan="8">{{ 'jobs.NO_SITES' | translate }}</td>
+            </tr> 
+		</tbody>
+	</table>
+	<div data-ng-show=" !collection || collection.length" class="paginate usr">
+		<div ng-include="'system/views/paginationFilter.html'"></div>
+		<br>
+	</div>
+</section>

@@ -1,0 +1,57 @@
+<section data-ng-controller="JobsitesController" data-ng-init="find()">
+ <div class="col-xs-12 social-group-header">
+  <h3 class="pull-left ">{{ 'job_sites.JOB_SITES' | translate }}</h3>
+  <button class="btn btn-info pull-right "
+   data-ng-click="newJobSites()" ng-if="writePermission">{{ 'job_sites.CREATE_JOB' | translate }}</button>
+ </div>
+
+ <table class="table table-bordered table-condensed">
+  <thead>
+   <tr>
+    <th>{{ 'common.NAME' | translate }}</th>
+    <th>{{ 'common.DESCRIPTION' | translate }}</th>
+    <th>{{ 'job_sites.DOMAIN' | translate }}  </th>
+    <th>{{ 'job_sites.URL_LOGIN' | translate }}</th>
+    <th>{{ 'job_sites.URL_PROFILE' | translate }}</th>
+    <th>{{ 'job_sites.URL_PROJECT' | translate }}</th>
+    <th>{{ 'job_sites.PROPOSAL' | translate }}</th>
+    <th>{{ 'common.ACTIONS' | translate }}</th>
+   </tr>
+  </thead>
+  <tbody>
+   <tr data-ng-repeat="jobsite in jobsites">
+    <td>{{jobsite.name}}</td>
+    <td>{{jobsite.description}}</td>
+    <td>{{jobsite.domain}}</td>
+    <td>{{jobsite.urlLogin}}</td>
+    <td>{{jobsite.urlProfile}}</td>
+    <td>{{jobsite.urlProject}}</td>
+    <td>{{jobsite.proposal}}</td>
+    <td width="10%" align="center">
+      <div class="dropdown" uib-dropdown on-toggle="toggled(open)">
+        <a href class="dropdown-toggle btn btn-wide btn-default" uib-dropdown-toggle>
+          <i class="fa fa-arrow-circle-right"></i><span>{{ 'common.ACTIONS' | translate }}</span>
+        </a>
+        <ul role="menu" class="dropdown-menu dropdown-light animated fadeInUpShort ">
+          <li ng-if="updatePermission">
+            <a class="menu-toggler" href="/admin/jobsites/{{jobsite._id}}/jobsite_edit">
+              <i class="fa fa-pencil-square-o"></i>
+              <span>{{ 'common.EDITINFO' | translate }}</span>
+            </a>
+          </li>
+          <li ng-if="deletePermission">
+              <a class="menu-toggler" ng-click="modalDeletePopup(jobsite)">
+                  <i class="fa fa-minus-circle"></i>
+                  <span>{{ 'common.DELETE' | translate }}</span>
+              </a>
+          </li>
+        </ul>
+      </div>      
+    </td>
+   </tr>
+   <tr data-ng-show="jobsites.length <= 0">
+                <td colspan="12"><h5>{{ 'jobsite.NO_JOBSITES' | translate }}</h5></td>
+            </tr>
+  </tbody>
+ </table>
+</section>

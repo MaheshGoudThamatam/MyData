@@ -1,0 +1,50 @@
+<section data-ng-controller="MentorProjectController" data-ng-init="findOne(); loadMentorsBasedOnMentorStatus('All');">
+    <div data-ng-include="'/system/views/alert.html'"></div>
+ <div ng-include="'/system/views/breadcrum.html'"></div>
+    <div class="mainwrapper">
+        <h3>Project Detail</h3>
+        <div class="col-md-9 row">
+        	<h5><b>Title: </b>{{mentorproject.taskName}}</h5>
+        	<p class="text-justify"><b>Description: </b></br> {{mentorproject.description}}</p>
+        </div>
+        <div class="col-md-3 taskImage">
+        	<img src = {{mentorproject.taskImage}} width="120%" height="20%" />
+        </div></br>
+    	<div class="col-md-12 job-blog1 margnbottom">
+			<div class="col-md-9 row">
+	        	<h5 class="col-md-11 pull-left"><b>Skills: </b>
+	        		<div class="inlineskills" data-ng-repeat="skill in mentorproject.skills">{{skill.name.toUpperCase()}}<span ng-hide = "$last">,&nbsp;</span></div>
+	        	</h5>
+                <h5 class="col-md-11 pull-left"><b>Cost: </b>{{mentorproject.cost}}</h5>
+                <h5 class="col-md-11 pull-left"><b>Availability </b>{{mentorproject.availability}}</h5>
+	        </div>
+	        <div class="col-md-3 row">
+	        	<h5 class="col-md-11 pull-left"><b>Position: </b>{{mentorproject.position}}</h5>
+				<h5 class="col-md-11 pull-left"><b>Duration: </b>{{mentorproject.duration}} {{mentorproject.durationType}}</h5>
+                <h5 class="col-md-11 pull-left"><b>Type </b>{{mentorproject.type}}</h5>
+			</div>
+		</div>
+    </div><br>
+    <div class="col-md-12 row">
+        <ul class="nav nav-tabs navtabswidth">
+            <li class="active"><a href="#1" data-toggle="tab"  data-ng-click="loadMentorsBasedOnMentorStatus('All')">All</a></li>
+            <li ><a href="#2" data-toggle="tab"  data-ng-click="loadMentorsBasedOnMentorStatus('Accepted')">Accepted</a></li>
+            <li ><a href="#3" data-toggle="tab" data-ng-click="loadMentorsBasedOnMentorStatus('Pending')">Waiting</a></li>
+            <li ><a href="#4" data-toggle="tab" data-ng-click="loadMentorsBasedOnMentorStatus('Declined')">Rejected</a></li>
+       </ul>
+       <div class="tab-content projecttab">
+            <div class="col-md-12 tab-pane active row" id="1">
+                <div data-ng-include="'/mentor/views/project_mentor_list.html'"></div>
+            </div>
+            <div class="col-md-12 tab-pane row" id="2">
+                <div data-ng-include="'/mentor/views/project_mentor_list.html'"></div>
+            </div>
+            <div class="col-md-12 tab-pane row" id="3">
+                <div data-ng-include="'/mentor/views/project_mentor_list.html'"></div>
+            </div>
+            <div class="col-md-12 tab-pane row" id="4">
+                <div data-ng-include="'/mentor/views/project_mentor_list.html'"></div>
+            </div>
+        </div>
+    </div>
+</section>

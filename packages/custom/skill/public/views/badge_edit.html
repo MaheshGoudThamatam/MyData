@@ -1,0 +1,82 @@
+
+<section data-ng-controller="BadgeController" data-ng-init="findSkill(); findOne();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper">
+		<form name="badgeForm" class="form-horizontal" novalidate>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && badgeForm.badgeName.$invalid }">
+				<label mean-token="'edit-badgeName'"
+					class="col-md-2 err-msg-badgeName ">{{ 'skills.badge.BADGE_NAME' | translate }}</label>
+				<div class="col-md-8">
+					<input name="badgeName" type="text"
+						data-ng-model="badge.badgeName " placeholder="{{ 'skills.badge.BADGE_NAME' | translate }}"
+						class="form-control err-msg " required>
+					<div ng-show="submitted && badgeForm.badgeName.$invalid">
+						<span class="err-msg"
+							ng-show="badgeForm.badgeName.$error.required">{{ 'skills.error_messages.BADGE_NAME' | translate }} </span>
+					</div>
+				</div>
+				<div ng-show="error" class="col-md-offset-2 red col-md-8 "
+					ng-repeat="err in error.data">{{err.msg}}</div>
+			</div>
+			<div class="form-group"
+				ng-class="{ 'has-error' : submitted && badgeForm.description.$invalid }">
+				<label mean-token="'edit-description'"
+					class="col-md-2 err-msg-description">{{ 'common.DESCRIPTION' | translate }}</label>
+				<div class="col-md-8">
+					<textarea name="description" data-ng-model="badge.description"
+						cols="30" rows="5" placeholder="{{ 'skills.DESCRIPTION' | translate }}"
+						class="form-control err-msg " required></textarea>
+					<div ng-show="submitted && badgeForm.description.$invalid">
+						<span class="err-msg"
+							ng-show="badgeForm.description.$error.required">{{ 'common.error_messages.DESCRIPTION' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group left1"
+				ng-class="{ 'has-error' : submitted && badgeForm.qualifySkills.$invalid }">
+				<label for="" mean-token="'create-qualifySkills'"
+					class="col-md-2 err-msg-qualifySkills">{{ 'skills.QUALIFIED_SKILLS' | translate }}</label>
+				<div class="col-md-8">
+					<select name="qualifySkills" data-ng-model="badge.qualifySkills"
+						class="form-control" required>
+						<option value="" disabled selected>{{ 'common.PLEASE_SELECT' | translate }}</option>
+						<option name="qualifySkills" id="qualifySkills"
+							data-ng-repeat="skill in skills" value="{{skill.name}}">{{skill.name}}</option>
+					</select>
+					<div ng-show="submitted && badgeForm.qualifySkills.$error.required">
+						<span class="err-msg errorText red">{{ 'skills.error_messages.KEYWORDS' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group left1"
+				ng-class="{ 'has-error' : submitted && badgeForm.qualifyPoints.$invalid }">
+				<label for="" mean-token="'create-qualifyPoints'"
+					class="col-md-2 err-msg-qualifyPoints">{{ 'skills.QUALIFIED_POINS' | translate }}</label>
+				<div class="col-md-8">
+					<select name="qualifyPoints" data-ng-model="badge.qualifyPoints"
+						class="form-control " required>
+						<option value="" disabled selected>{{ 'common.PLEASE_SELECT' | translate }}</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+					</select>
+					<div ng-show="submitted && badgeForm.qualifyPoints.$error.required">
+						<span class="err-msg errorText red"> {{ 'skills.error_messages.QUALIFIED_POINS' | translate }}</span>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-8">
+					<button mean-token="'create-submit'" type="button"
+						class="btn btn-info" ng-click="update(badgeForm.$valid)">{{ 'common.SUBMIT' | translate }}</button>
+					<button type="button" class="btn btn-info" ng-click="cancelBadge()">{{ 'common.CANCEL' | translate }}</button>
+				</div>
+			</div>
+		</form>
+	</div>
+</section>
+
+

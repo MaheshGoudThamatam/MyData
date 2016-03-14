@@ -1,0 +1,159 @@
+.cover-image {
+    background-image: url("https://placeholdit.imgix.net/~text?txtsize=75&txt=Cover Image&w=1200&h=300");
+    height: 300px;
+    z-index: 1;
+    margin-top: -2%;
+}
+
+#s3 img {
+	padding-top: 2px;
+	width: 100%;
+	height: 200px;
+}
+
+.profile {
+    border: 1px solid #828587;
+    margin-top: 7px;
+}
+
+.profile1 {
+    border: 1px solid black;
+
+}
+
+#s2 img {
+    margin-top: 12px;
+    width: 100%;
+    height: 205px;
+    margin-left: -20px;
+}
+
+.profile-image {
+    border: 2px solid white;
+    box-shadow: 2px 2px 2px 0 #696169;
+    width: 150px;
+    height: 150px;
+    margin-left: 75px;
+    margin-top: 75px;
+}
+
+.profile-name {
+    margin-top: 100px;
+}
+
+.connection-top{
+    margin-left: 92px;
+    margin-top: 6px;
+
+}
+.top-ma{
+	margin-top:15px;
+
+}
+
+.pro-top{
+	margin-top:10px;
+	
+}
+.pro-top1{
+	margin-top:10px;
+	margin-right:10px;
+}
+.pro{
+	left:98px;
+	top:25px;
+}
+.imagesize{
+	width:295px;
+	height:150px;
+	padding: 0;
+}
+.imagesize1{
+	border: 1px solid black;
+	margin-top:10px;
+	margin-bottom: 30px;
+}
+.size{
+	font-size:24px !important;
+}
+.tabalign{
+	margin-left:15px;
+}
+.has-error .form-control .error-border{
+	border-color:red !important;
+}
+.error-label{
+	color:black !important;
+}
+.boer{
+	border:1px solid black;
+}
+.score{
+    margin-left: 210px
+}
+
+.san{
+    margin-top: 20px;
+}
+
+.socialconnection i {
+    font-size: 30px !important;
+}
+
+.conf{
+    text-align: center;
+}
+
+.img{
+	width:20%;
+	height:20%;
+	margin-bottom:2px;
+}
+.img1{
+	margin-top:5px;
+	margin-left:100px;
+}
+.pro-top2{
+	margin-top:10px;
+	margin-right:10px;
+}
+.modal-margntop{
+    margin-top: 50%;
+}
+.img2{
+	width:100%;
+	height:100%;
+}
+.font{
+	font-size:14px;
+	margin-bottom:0 !important;
+}
+.font1{
+	font-size:12px;
+}
+.no-padding{
+	padding :0 !important;
+
+}
+ .bord1{
+	font-size:14px;
+	margin-top:2px;
+} 
+.bord
+{
+	margin-left:2px;
+}
+
+.edu-action{
+	font-size: 21px;
+	margin-top: 2px;
+}
+
+.rating-review{
+	margin-top: -15px;
+}
+
+.profile a img{
+    width: 100%;
+    height: 205px;
+}

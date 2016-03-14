@@ -1,0 +1,37 @@
+<div class='pull-right'>
+    <ul class="info-menu right-links list-inline list-unstyled">
+        <li class="profile_theme">
+            <a href="#" data-toggle="dropdown" class="toggle">
+                <img src="/system/assets/img/user_avatar.png" alt="user-image"
+                     class="img-circle img-inline">
+                <span>{{loginUser}} <i class="fa fa-angle-down"></i></span>
+            </a>
+            <ul class="dropdown-menu profile_theme animated fadeIn">
+                <li>
+                    <a href="#" ng-click="hdrctr.changePassword()">
+                        <i class="fa fa-wrench"></i>
+                        Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="" data-ng-click="hdrctr.redirectProfile()">
+                        <i class="fa fa-user"></i>
+                        Profile
+                    </a>
+                </li>
+                <li class="common-pointer">
+                    <a ng-click="hdrctr.logout()">
+                        <i class="fa fa-lock"></i>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="chat-toggle-wrapper">
+            <a href="#" data-toggle="chatbar" class="toggle_chat">
+                <i class="fa fa-comments"></i>
+                <span class="badge badge-warning">9</span>
+            </a>
+        </li>
+    </ul>
+</div>

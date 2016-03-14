@@ -1,0 +1,36 @@
+<section data-ng-controller="StudentCounsellingController" data-ng-init="reqBreadcrumb();loadCourseBranch();loadCalendar();loadRequest();">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div data-ng-include="'/system/views/alert.html'"></div>
+    <!-- <div>
+		<h4 class="pull-left">Branch : </h4><h4 class="pull-left">Course :</h4>
+    </div> -->
+	<br/>
+		<div class="mainwrapper">
+			<div class="col-md-6 vline">
+				<div id="calendar"></div>
+			</div>
+			<form name="counsellingRequest">
+			<div class="col-md-6">
+				<div ng-repeat="slots in schedule">
+					<div class="col-md-12 row">
+						<h4>Time Slot : {{slots.start_hr}}:{{slots.start_min}} to {{slots.end_hr}}:{{slots.end_min}}</h4>
+						<h6>Available Slots</h6>
+						<div ng-repeat="slot in slots.slots">
+							 <button type="button" class="btn btn-primary avail-btn" value="{{slot.slotTime}}" ng-click="modalQuery(slot.slotTime, slots);" ng-disabled="slot.userTaken">{{slot.slotTime}}</button>
+					    </div>
+				    </div>
+				</div>
+				<div ng-if="noSchedule">
+					<h4>No Slots Available</h4>
+				</div>
+				<div ng-if="selecDate">
+					<h4>Select Date</h4>
+				</div>
+				<div class="errorRed" ng-show="dateServerError" ng-repeat="err in error.data"
+					ng-if="err.param =='dateError'">{{err.msg}}
+				</div>
+			</div>
+		</div>
+	</form>
+	</div>
+</section>

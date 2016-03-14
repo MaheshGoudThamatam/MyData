@@ -1,0 +1,53 @@
+<!-- start: MAIN NAVIGATION MENU -->
+<nav ng-controller="userDashboardCtrl" data-ng-init="features();">
+    <div class="navbar-title">
+        <span translate="sidebar.heading.NAVIGATION">Main Navigation</span>
+    </div>
+    <ul class="main-navigation-menu">
+        <li ui-sref-active="active" data-ng-class="activateLeftBar(MESSAGES.DASHBOARD_URL)">
+            <a href="{{MESSAGES.DASHBOARD_URL}}">
+                <div class="item-content">
+                    <div class="item-media">
+                        <letter-icon data="{{ 'sidebar.nav.dashboard.MAIN' | translate }}" char-count="2"
+                                     size="sm"></letter-icon>
+                    </div>
+                    <div class="item-inner">
+                        <span class="title" translate="sidebar.nav.dashboard.MAIN"> Dashboard </span>
+                    </div>
+                </div>
+            </a>
+        </li>
+        <li data-ng-repeat="category in categoryList | orderBy: 'category.name'">
+            <a href="javascript:void(0)">
+                <div class="item-content">
+                    <div class="item-media">
+                        <letter-icon data="{{ category.name }}" char-count="2" size="sm"></letter-icon>
+                    </div>
+                    <div class="item-inner">
+                        <span class="title"> {{category.name}} </span><i class="icon-arrow"></i>
+                    </div>
+                </div>
+            </a>
+            <ul class="sub-menu">
+                <li data-ng-class="activateLeftBar(feature.url)" data-ng-repeat="feature in category.features ">
+                    <a href="{{feature.url}}"> <span class="title" > {{feature.name}} </span> </a>
+                </li>
+            </ul>
+        </li>
+        <!--<li ui-sref-active="active" data-ng-repeat="features in userFeaturesList | orderBy: 'feature.name'"
+            data-ng-class="activateLeftBar(features.feature.url)">
+            <a href="{{features.feature.url}}">
+                <div class="item-content">
+                    <div class="item-media">
+                        <letter-icon data="{{ features.feature.name }}" char-count="2" size="sm"></letter-icon>
+                    </div>
+                    <div class="item-inner">
+                        <span class="title"> {{features.feature.name}} </span>
+                    </div>
+                </div>
+            </a>
+        </li>-->
+
+    </ul>
+    <!-- end: MAIN NAVIGATION MENU -->
+</nav>

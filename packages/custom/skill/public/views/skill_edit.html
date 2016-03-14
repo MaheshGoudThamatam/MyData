@@ -1,0 +1,88 @@
+<section data-ng-controller="SkillController" data-ng-init="findOne()">
+	<div ng-include="'/system/views/breadcrum.html'"></div>
+	<div class="mainwrapper">
+	<h3 class="pull-left ">{{ 'course.courses.SKILL' | translate }}</h3></div>
+	<div class="mainwrapper">
+		<form name="skillForm" class="form-horizontal formAlign"
+			data-ng-submit="update(skillForm.$valid)" novalidate>
+				<div class="form-group"
+					ng-class="{ 'has-error' : submitted && skillForm.name.$invalid }">
+					<label mean-token="'create-name'"
+						class="col-md-2 pull-left err-msg-name"> {{ 'skills.SKILL_NAME' | translate }}</label>
+					<div class="col-md-9">
+						<input name="name" type="text" data-ng-model="skill.name "
+							id="name" placeholder="{{ 'skills.SKILL_NAME' | translate }}" class="form-control err-msg "
+							required>
+							<div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='name' || err.param == 'normalizedName'">{{err.msg}}</div> 
+						<div ng-show="submitted && skillForm.name.$invalid">
+							<span class="err-msg" ng-show="skillForm.name.$error.required">
+							 {{ 'skills.error_messages.SKILL_NAME' | translate }} </span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group"
+					ng-class="{ 'has-error' : submitted && skillForm.description.$invalid }">
+					<label mean-token="'create-description'"
+						class="col-md-2 pull-left err-msg-description">{{ 'skills.DESCRIPTION' | translate }}</label>
+					<div class="col-md-9">
+						<textarea name="description" data-ng-model="skill.description"
+							id="description" cols="30" rows="5" placeholder="{{ 'skills.DESCRIPTION' | translate }}"
+							class="form-control err-msg " required></textarea>
+							<div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='description'">{{err.msg}}</div>
+						<div ng-show="submitted && skillForm.description.$invalid">
+							<span class="err-msg"
+								ng-show="skillForm.description.$error.required">  {{ 'skills.error_messages.DESCRIPTION' | translate }}</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label mean-token="'create-keywords'"
+						class="col-md-2 pull-left err-msg-keywords">{{ 'skills.KEYWORDS' | translate }}</label>
+					<div class="col-md-9">
+                          <tags-input data-ng-model="skill.keywords" name="keywords" 
+					       replace-spaces-with-dashes="false" placeholder="Add a Skill" > 
+					      </tags-input>
+					      <div class="errorRed" ng-repeat="err in error.data" ng-if="err.param =='keywords'">{{err.msg}}</div>
+					</div>
+				</div>
+				<div class="col-xs-12">
+				<div class="form-group">
+				<div class="row rolesA martop15" data-ng-repeat="subSkill in skill.subSkills track by $index">
+					<label mean-token="'create-skillName'" class="col-md-2 pull-left err-msg-name"> {{ 'skills.SUB_SKILL' | translate }}</label>	
+					<div class="col-md-5">
+						<input name="skillName" type="text" data-ng-model="subSkill.skillName" id="skillName" placeholder="{{ 'skills.SUB_SKILL' | translate }}" class="form-control err-msg ">
+					</div>
+					<div class="ulPagnate">
+						<label>&nbsp;</label>
+							<div class="col-md-5 martop-25" ng-show="$last">
+								<button class="pull-left marright15" type="button" ng-click="removeSubskill(subSkill)"
+									ng-show="$index>0">
+
+								<i class="fa edu-action fa-minus-circle"></i>
+								</button>
+								<button type="button" ng-click="addSubskill()">
+									<i class="fa edu-action fa-plus-circle"></i>
+								</button>
+							</div>
+							<div class="col-md-4">
+							<button class="" type="button" ng-click="removeSubskill(subSkill)" ng-hide="$last">
+								<i class="fa edu-action fa-minus-circle"></i>
+							</button>
+							</div>
+					</div>
+				</div>
+				</div>
+			</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-9">
+						<button mean-token="'create-submit'" type="submit"
+							class="btn btn-info">{{ 'common.SUBMIT' | translate }}</button>
+						<button type="button" class="btn btn-info"
+							ng-click="cancelSkill()">{{ 'common.CANCEL' | translate }}</button>
+					</div>
+				</div>
+		</form>
+	</div>
+</section>
+
+
