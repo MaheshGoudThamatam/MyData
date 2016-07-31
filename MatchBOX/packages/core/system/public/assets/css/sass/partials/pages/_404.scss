@@ -1,0 +1,50 @@
+.page-not-found {
+  padding-top: 50px;
+  padding-bottom: 90px;
+}
+.page-comingsoon .page-body .item-content h4,
+.page-comingsoon .page-body .item-content p,
+.page-not-found .page-body .item-content * {
+  color: #fff;
+}
+.page-comingsoon .page-body .item-content .image-wrap,
+.page-not-found .page-body .item-content .image-wrap {
+  margin-top: 8%;
+}
+.page-comingsoon .page-body .item-content h4,
+.page-not-found .page-body .item-content h4 {
+  font-family: 'Lato', Arial, Verdana;
+  font-size: 50px;
+  font-weight: 300;
+  margin-top: 15px;
+  margin-bottom: 0;
+}
+.page-comingsoon .page-body .item-content p,
+.page-not-found .page-body .item-content p {
+  font-family: 'Lato', Arial, Verdana;
+  font-size: 26px;
+  font-weight: 300;
+}
+.page-not-found .page-body .item-footer {
+  margin-top: 15px;
+  margin-left: -5px;
+  margin-right: -5px;
+  font-size: 0;
+}
+.page-not-found .page-body .item-footer a {
+  margin: 5px;
+}
+.page-slide .owl-pagination .owl-page {
+  display: inline-block;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.page-slide .owl-pagination .owl-page span {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.page-slide .owl-pagination .owl-page.active span {
+  background-color: #59c35c;
+}

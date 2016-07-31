@@ -1,0 +1,61 @@
+.banner {
+  padding-top: 50px;
+  padding-bottom: 120px;
+  position: relative;
+} 
+.banner .banner-slide {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+}
+.banner-slide .owl-item {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+.banner .banner-video {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+}
+.banner-video-control {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  z-index: 1;
+  color: #59c45a;
+}
+.banner-video-control span {
+  cursor: pointer;
+  font-size: 10px;
+}
+.banner.margin {
+  margin-top: 84px;
+  padding-top: 0;
+  padding-bottom: 120px;
+}
+.banner-cn {
+  position: relative;
+  z-index: 1;
+}
+
+.banner-cn h1 {
+  margin: 5% 0;
+  color:#fff;
+}
+.banner.margin .tabs-cat {
+  margin-top: 200px;
+}
+.banner .logo-banner {
+  position: relative;
+  z-index: 1;
+}
+.banner .logo-banner img {
+  max-width: 100%;
+}
+.banner .category-singer,
+.banner .tabs-cat {
+  margin-top: 160px;
+}
+
+.banner .tabs-cat {
+  margin-top: 0px;
+}

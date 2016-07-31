@@ -1,0 +1,76 @@
+<section class="partnerinfo mydetails"
+	data-ng-controller="BookingController" data-ng-init="loadUserBooking()">
+<div class="container-fluid">
+	<div class="main-cn element-page bg-white clearfix">
+		<section class="user-login-page">
+			<div class="row">
+					<div class="col-md-3">
+					  <div class="user-profile__header">
+                                    <h4>{{logUser.first_name}}</h4>
+                                    <p>
+                                        <!-- <img class="img-responsive" src="{{userDetailObj.avatar}}" alt="Profile Photo"> -->
+                                        <img ng-if = "logUser.avatar" class="nopad-bordr img-circle img-thumbnail img-responsive" src="{{thumbimg}}" alt = "">
+                                        <img ng-if = "!logUser.avatar" class="nopad-bordr img-circle img-thumbnail img-responsive" src="/system/assets/img/custom/avatars/avatar4.png" alt = "">
+                                    </p>
+                                    
+                                </div>
+                              <ul class="user-profile__navigation">
+                                    <li><span align="center"> <button class="btn btn-default" ngf-select="onFileSelect($files)"
+        									accept="image/png, image/jpeg">upload Image</button></span></li>
+                                    <li><a data-ng-click="userBookings()"><i class="fa fa-shopping-cart" aria-hidden="true"></i> My Bookings</a></li>
+                                    <li class="current"><a><i class="fa fa-user" aria-hidden="true"></i> My profile</a></li>
+                                    <li><a href="" data-ng-click="changePassword()"><i class="fa fa-cog" aria-hidden="true"></i> Change Password</a></li>
+                                   <!--  <li><a href="" data-ng-click="hdrctr.logout()"><img src="images/icon/icon-back.png" alt="">Sign out</a></li> -->
+
+                                </ul>
+					</div>
+				<div class="col-md-9">
+					<div class="my-profile">
+                         <div class="row">
+					      <div class="panel" style="padding: 15px;">
+										<div class="panel-content pagination2">
+											<table datatable="ng"  class="table table-bordered row-border hover booking-table" dt-options="dtOptions" dt-column-defs="dtColumnDefs" id="userBookingTable">
+												<thead>
+													<tr>
+													    <th>ID</th>
+														<th>Booked Date</th>
+														<th>Room Name</th>
+														<th>Address</th>
+														<th>Booking Date</th>
+														<th>Timings</th>
+														<th>Cost</th>
+														<th>Status</th>
+														<th>View Booking</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="userBooking in userBookings">
+														<td>{{userBooking._id}}</td>
+														<td>{{userBooking.createdAt|date:'shortDate'}}</td>
+														<td>{{userBooking.room.name}}</td>
+														<td>{{userBooking.space.address1}} {{userBooking.space.address2}} {{userBooking.space.city}}</td>
+                                                         <td>{{userBooking.bookingDate|date:'shortDate'}}</td>
+                                                         <td>{{userBooking.bookingStartTime|date:'ha'}} - {{userBooking.bookingEndTime|date:'ha'}}</td>
+                                                         <td>Rs.{{userBooking.price}}</td>
+                                                         <td>Rs.{{userBooking.status}}</td>
+                                                          <td class="text-center"><a class="menu-toggler editIcon" ng-click="redirectAttendee(userBooking._id,BOOKING.URL_PATH.VIEWATTENDEES)" title="View " ><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+													</tr>
+													<tr data-ng-hide="!book.userBookings || book.userBookings.length">
+													<td>No Bookings available.........</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+</section>

@@ -1,0 +1,205 @@
+.tabs-head {
+  list-style: none;
+  padding: 0;
+  font-size: 0;
+  margin: 0;
+  border-bottom: 1px dotted #999999;
+}
+.tabs-head li {
+  display: inline-block;
+  font-size: 14px;
+}
+.tabs-head li a {
+  display: block;
+  line-height: 70px;
+  color: #000000;
+  font-size: 18px;
+  text-decoration: none;
+  margin: 0;
+}
+.tabs-head.nav-tabs-one {
+  background-color: #f6f6f6;
+}
+.tabs-head.nav-tabs-one li {
+  margin-bottom: -1px;
+  border-right: 1px dotted #999;
+}
+.tabs-head.nav-tabs-one li:last-child {
+  border-right-color: transparent;
+}
+.tabs-head.nav-tabs-one li:last-child.active {
+  border-right-color: #999;
+}
+.tabs-head.nav-tabs-one li:first-child {
+  border-left: 1px dotted transparent;
+}
+.tabs-head.nav-tabs-one li:first-child.active {
+  border-left-color: #999;
+}
+.tabs-head.nav-tabs-one li.active {
+  background-color: #fff;
+  border-top: 1px dotted #999;
+}
+.tabs-head.nav-tabs-one li a {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.tabs-head.nav-tabs-two li {
+  margin-bottom: -1px;
+  margin-left: 60px;
+}
+.tabs-head.nav-tabs-two li:first-child {
+  margin-left: 0;
+}
+.tabs-head.nav-tabs-two li.active {
+  border-bottom: 3px solid #000;
+}
+
+.tabs-cat {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 0;
+}
+.tabs-cat .cate-item {
+  position: relative;
+  padding-bottom: 10px;
+  height: 135px;
+  padding-top:20px;
+  overflow: hidden;
+}
+
+.tabs-cat .cate-item.active, .tabs-cat .cate-item:hover {
+  background:rgba(0,0,0,0.4);
+}
+.tabs-cat .cate-item:last-child:after {
+  display: none;
+}
+.tabs-cat .cate-item.active:before,
+.tabs-cat .cate-item:hover:before {
+  bottom: 0;
+}
+.tabs-cat .cate-item:before {
+  position: absolute;
+  bottom: -17px;
+  left: 50%;
+  content: '';
+  border: 17px solid transparent;
+  /*border-bottom-color: rgba(0,0,0,0.4);*/
+  -webkit-transform: translate(-50%, 0);
+  -moz-transform: translate(-50%, 0);
+  -ms-transform: translate(-50%, 0);
+  -o-transform: translate(-50%, 0);
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  -ms-transition: all 0.2s linear;
+  -o-transition: all 0.2s linear;
+}
+.tabs-cat .cate-item:after {
+  width: 0;
+  top: 0;
+  bottom: 20px;
+  border-left: 1px solid rgba(0,0,0,0.4);
+  right: 0;
+  position: absolute;
+  content: '';
+  display: block;
+}
+.tabs-cat .cate-item a {
+  text-decoration: none;
+  display: block;
+  text-align:center;
+}
+
+.tabs-cat .cate-item a p {
+  text-align:center;
+}
+.tabs-cat .cate-item span {
+  color: #fff;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  font-size:18px;
+}
+
+.tabs-cat .cate-item .imgrole {
+  width: 35px;
+  height: 50px;
+  margin: 0 auto;
+}
+
+.tabs-cat .cate-item img {
+  margin-top: 0px;
+  max-width:100%;
+  width:85%;
+}
+
+/*.tabs-cat .cate-item img:hover {
+    margin-top: 0px;
+    background: #f37124;
+    border-radius: 50%;
+    padding: 10px;
+    width: 50px;
+    height: 55px;
+}*/
+
+/*.tabs-cat .cate-item:hover, 
+.tabs-cat .cate-item span:hover {
+  color: #f37124;
+}*/
+.category-singer {
+  border-bottom: 5px solid #59c45a;
+  padding-bottom: 40px;
+  position: relative;
+}
+.category-singer:before {
+  position: absolute;
+  bottom: 0;
+  left: 80px;
+  content: '';
+  border: 17px solid transparent;
+  border-bottom-color: #59c45a;
+}
+.category-singer .cate-singer-icon {
+  text-align: center;
+  width: 200px;
+  padding-top: 5px;
+}
+.category-singer .cate-singer-icon h2 {
+  margin: 0;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+.category-singer .cate-singer-icon img {
+  margin-top: 20px;
+}
+.category-singer p {
+  padding: 0 0 0 30px;
+  margin: 0;
+  height: 90px;
+  border-left: 1px solid #ffffff;
+  display: table-cell;
+  vertical-align: middle;
+  color: #ededed;
+  font-size: 24px;
+  font-family: Georgia;
+  font-style: italic;
+}
+.category-singer p span {
+  font-size: 55px;
+  color: #fff;
+  line-height: 25px;
+}
+/*Tabs Cat Form*/
+/* End Banner */
+.sub-banner {
+  padding-top: 60px;
+  padding-bottom: 185px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.sub-banner .logo-banner img {
+  max-width: 100%;
+}

@@ -1,0 +1,314 @@
+<section class="partnerinfo mydetails" data-ng-controller="AdminRoomsController" ng-init="viewRoomDetail();">
+    <div class="container-fluid">
+        <!-- Banner Content -->
+        <div class="banner-cn">
+
+            <!-- Tabs Content -->
+            <div class="tab-content" style="background: transparent;">
+                <div class="row">
+                    <div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+                    <div class="col-sm-9 col-lg-10 mydetailsnav">
+                        <div class="page-content page-thin dashboard-content col-sm-12 col-lg-12">
+                            <div class="row">
+                                <style type="text/css">
+    footer {
+        position: fixed;
+        width: 67%;
+        left: 33%;
+        padding: 5px 0;
+        height: auto;
+        background: rgba(0,0,0,0.5);
+        box-shadow: none;
+    }
+
+    footer .copyright {
+        line-height: 30px;
+    }
+
+    #header.header {
+        background-color: #fff !important;
+        
+    box-shadow: 0px -12px 17px 7px rgba(0,0,0,0.9);
+    }
+
+    .bg-1, .bg-3 {
+        background: transparent;
+    }
+</style>
+        <div class="main main-dt">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="space-detail-media col-xs-12 main-cn bg-white clearfix" style="margin-top: 12.5%;">
+                        <section class="head-detail">
+                        <div class="row">
+                        <div class="col-xs-12">
+                            </div>
+                        </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h2 style="font-size:30px;">Space: {{room.spaceId.name}}</h2>
+                                            <div class="start-address">
+                                                <div>
+                                                    <h3>{{room.spaceId.address1}},{{room.spaceId.address2}}</h3></br>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <h2 style="font-size:30px;">Room: </h2><span style="font-size:20px;">{{room.name}}</span>
+                                            <div class="start-address">
+                                                <div>
+                                                    <h2 style="font-size:30px;">Room Type:</h2><span style="font-size:20px;">{{room.roomtype.name}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     </div> 
+                                     <div class="row">
+                                    <div class="col-sm-4 price-media">
+                                        <p class="price-book">
+                                            <span ng-if="timeType == 1"> &#8377;{{room.pricePerhour}}<small>/hour</small></span>
+                                                   <span ng-if="timeType == 2">&#8377;{{room.pricePerhalfday}}<small>/halfday</small></span>
+                                                    <span ng-if="timeType == 3" >&#8377;{{room.pricePerfullday}}<small>/fullday</small></span>
+                                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">Modify Booking</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                               <div class="form-search clearfix">
+                                                                <div class="form-field field-select">
+                                                                    <div class="select">
+                                                                        <span>Select locality</span>
+                                                                        <select>
+                                                                            <option>Select locality</option>
+                                                                            <option>Bannerghatta Road</option>
+                                                                            <option>Chandapura - Anekal Main Road</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-field field-date">
+                                                                    <input type="text" class="field-input calendar-input" placeholder="Select Date">
+                                                                </div>
+                                                                  <div class="form-field field-select">
+                                                                    <div class="select">
+                                                                        <span>Start Time</span>
+                                                                        <select>
+                                                                            <option>5PM</option>
+                                                                            <option>6PM</option>
+                                                                            <option>7pm</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                  <div class="form-field field-select">
+                                                                    <div class="select">
+                                                                        <span>End Time</span>
+                                                                        <select>
+                                                                            <option>8PM</option>
+                                                                            <option>9PM</option>
+                                                                            <option>10PM</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="awe-btn awe-btn1" data-dismiss="modal">Close</button>
+                                                                <button type="button" class="awe-btn awe-btn1">Save changes</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                             
+                                        </p>
+                                    </div>
+                                </div>
+                           
+                        </section>
+                        <!-- End Header Detail -->
+ 
+                        <!-- Detail Slide -->
+                        <section class="slideshow-margin" ng-if = "photos.length>0">
+                            <div>
+                                <div class="row">
+                                        <div class="gal-slider">
+                                            <!-- enumerate all photos -->
+                                            <img ng-repeat="photo in photos" class="gal-slide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ng-show="isActive($index)" ng-src="{{generateTempUrl1(photo.src)}}" />
+                                            <!-- prev / next controls -->
+                                            <a class="gal-arrow gal-prev" href="#" ng-click="showPrev()"></a>
+                                            <a class="gal-arrow gal-next" href="#" ng-click="showNext()"></a>
+                                            <!-- extra navigation controls -->
+                                            <ul class="gal-nav">
+                                                <li ng-repeat="photo in photos" ng-class="{'gal-active':isActive($index)}">
+                                                    <img src="{{generateTempUrl(photo.src)}}" ng-click="showPhoto($index);" />
+                                                </li>
+                                            </ul>
+                                        </div>
+                                       
+                                </div>
+                            </div>
+                            <!-- End Thumnail Image -->
+                        </section>
+                        <!-- End Detail Slide -->
+                        <div ng-if = "!photos.length">
+                            <h2>No images has been uploaded.</h2>
+                        </div>
+                        <!-- Hotel Content One -->
+                        <section class="hotel-content detail-cn" id="hotel-content">
+                            <div class="row">
+
+                                <!-- Description -->
+                                <div class="col-md-offset-3 col-md-9 hl-customer-like">
+
+                                    <h2>Price Details </h2>
+
+                                    <!-- Custom link field -->
+                                    <div class="customer-like">
+                                        <span class="cs-like-label">
+                                            Price per hour
+                                        </span>
+                                        <ul>
+                                            <li>&#8377; {{room.pricePerhour}}</li>
+                                        </ul>
+                                    </div>
+                                    <!-- End Custom link field -->
+
+                                    <!-- Custom link field -->
+                                    <div class="customer-like">
+                                        <span class="cs-like-label">
+                                            Price for half day
+                                        </span>
+                                        <ul>
+                                            <li>&#8377; {{room.pricePerhalfday}}</li>
+                                        </ul>
+                                    </div>
+                                    <!-- End Custom link field -->
+
+                                    <!-- Custom link field -->
+                                    <div class="customer-like">
+                                        <span class="cs-like-label">
+                                            Price for full day
+                                        </span>
+                                        <ul>
+                                            <li>&#8377; {{room.pricePerfullday}}</li>
+                                        </ul>
+                                    </div>
+                                    <!-- End Custom link field -->
+
+
+                                </div>
+                                <!-- End Description -->
+                            </div>
+
+                        </section>
+                        <!-- End Hotel Content One -->
+
+                        <!-- Hotel Features -->
+                        <section class="hl-features detail-cn" id="hl-features">
+                            <div class="row">
+                                <div class="col-md-3 detail-sidebar">
+                                    <div class="scroll-heading">
+                                        <h2>Features</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 hl-features-cn">
+                                    <div class="featured-service">
+                                        <h3 class="mgTop">Facilities</h3>
+                                        <ul class="service-list">
+                                            <li class="unselected" data-ng-repeat="amenity in room.amenities">
+                                                <figure data-ng-if="amenity.facilityavailable">
+                                                    <div class="icon-service">
+                                                        <img src="{{amenity.icon}}"  alt="" style="height: 25px; width: 25px;">
+                                                    </div>
+                                                    <h4>{{amenity.name}}<span ng-hide = '$last'>,</span></h4>
+                                                </figure>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="featured-service">
+                                        <h3>Centre Timings</h3>
+                                        <table class="service-spoken">
+                                                  <tr data-ng-repeat="timing in room.spaceId.officeHours">
+                                                   <td ng-show="!timing.isClosed && !timing.isAllday">{{timing.day|limitTo:3}}</td>
+                                                   <td ng-show="!timing.isClosed && !timing.isAllday">&emsp;:&emsp;{{timing.startTime|date:'ha'}}&emsp;-&emsp;</td>
+                                                   <td ng-show="!timing.isClosed && !timing.isAllday">{{timing.endTime|date:'ha'}}</td>
+                                                   <td ng-show="timing.isClosed">{{timing.day|limitTo:3}}</td>
+                                                   <td ng-show="timing.isClosed">&emsp;:&emsp;Closed</td>
+                                                   <td ng-show="timing.isAllday">{{timing.day|limitTo:3}}</td>
+                                                   <td ng-show="timing.isAllday">&emsp;:&emsp;24 hours</td>
+                                                  </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- End Hotel Features -->
+                                                <!-- Details-Policies -->
+                        <section class="about-area detail-cn" id="about-area">
+                            <div class="row">
+                                <div class="col-md-3 detail-sidebar ">
+                                    <div class="scroll-heading">
+                                        <h2>Description &amp; Details</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+
+                                    <!-- Details Policies Item -->
+                                    <div class="about-area-text">
+                                        <h2 class="mgTop">{{room.roomtype.name}}</h2>
+                                        <p>
+                                            {{room.description|limitTo:140}}
+                                        </p>
+                                    </div>
+                                    <!-- End Details Policies Item -->
+
+                                </div>
+                            </div>
+                        </section>
+                        <section class="detail-footer detail-cn">
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-9 detail-footer-cn">
+                                    <!-- Show More Book -->
+                                        <div class="row">
+                                        <div class="col-xs-7 text-right">
+                                            <p class="price-book">
+                                                <span ng-if="timeType == 1"> &#8377;{{room.pricePerhour}}<small>/hour</small></span>
+                                                   <span ng-if="timeType == 2">&#8377;{{room.pricePerhalfday}}<small>/halfday</small></span>
+                                                    <span ng-if="timeType == 3" >&#8377;{{room.pricePerfullday}}<small>/fullday</small></span>
+                                                    <a  title="" class="reject-btn awe-btn" ng-show =  "room.status == 'pending'" data-ng-click="rejectRoom(room,'pending');">Reject</a>
+                                                     <a  title="" class="awe-btn arrow-right" ng-show =  "room.status == 'pending' || isApproved" data-ng-click="approveRoom(room,'approved');">Approve</a>
+                                                    <a  title="" class="awe-btn arrow-right" ng-show =  "room.status == 'approved'" data-ng-click = "backtoList();">Back</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- End Show More Book -->
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </section>
+                                </div>
+                            </div>                     
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Tabs Content -->
+
+        </div>
+        <!-- End Banner Content -->
+
+    </div>
+
+</section>

@@ -1,0 +1,95 @@
+.top-list-car {
+  line-height: 40px;
+  padding: 15px 30px;
+  font-family: 'Open sans';
+}
+.top-list-car span {
+  color: #333333;
+}
+.top-list-car .navigation-car p {
+  color: #111111;
+  display: inline-block;
+  margin: 0;
+}
+.top-list-car .navigation-car .awe-btn {
+  letter-spacing: 0;
+  margin-left: 5px;
+}
+.car-list-cn {
+  padding: 0px 30px;
+}
+.car-list-cn .car-list-table {
+  background: url('../images/bg-border-v.png') repeat-x bottom left;
+  margin: 0px 0 0 0;
+}
+.car-list-cn .car-list-table th {
+  padding: 25px 5px;
+  border-bottom: 0;
+  text-align: center;
+  position: relative;
+  background: url('../images/bg-border-v.png') repeat-x top left;
+}
+.car-list-cn .car-list-table th:after {
+  display: block;
+  top: 0;
+  bottom: 0;
+  content: '';
+  background: url('../images/bg-border-h.png') repeat-y top left;
+  width: 1px;
+  position: absolute;
+  right: 0;
+}
+.car-list-cn .car-list-table th img {
+  max-width: 100%;
+}
+.car-list-cn .car-list-table td {
+  vertical-align: middle;
+  padding: 20px 5px;
+  border-top: 0;
+  position: relative;
+  background: url('../images/bg-border-v.png') repeat-x top left;
+}
+.car-list-cn .car-list-table td:after {
+  display: block;
+  top: 0;
+  bottom: 0;
+  content: '';
+  background: url('../images/bg-border-h.png') repeat-y top left;
+  width: 1px;
+  position: absolute;
+  right: 0;
+}
+.car-list-cn .car-list-table td.td-car figure img {
+  max-width: 100%;
+}
+.car-list-cn .car-list-table td.td-car figure figcaption {
+  margin-top: 2px;
+  color: #333333;
+  font-family: 'Open sans';
+  line-height: 25px;
+}
+.car-list-cn .car-list-table td.td-price {
+  width: 16.5432%;
+}
+.car-list-cn .car-list-table td.td-price .price-box {
+  display: inline-block;
+}
+.car-list-cn .car-list-table td.td-price .price-box .price {
+  color: #333333;
+  font-family: 'Open sans';
+  display: block;
+  line-height: 30px;
+}
+.car-list-cn .car-list-table td.td-price .price-box .price ins {
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #25ab4b;
+}
+.car-list-cn .car-list-table td.td-price .price-box .price small {
+  color: #999999;
+  font-size: 14px;
+}
+.car-list-cn .car-list-table td.td-price .price-box .price.night {
+  border-top: 1px solid #dedede;
+}

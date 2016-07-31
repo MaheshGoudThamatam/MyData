@@ -1,0 +1,82 @@
+<div ng-hide="state.name =='user confirmation'" class="container-fluid col-sm-12  {{(state.name == 'home' || state.name == 'auth-login' || state.name == 'auth-register' || state.name == 'reset-password' || state.name == 'forgot-password') ? 'headerShadow' : 'whitebg'}}">
+
+<div ng-if="!(state.name == 'home' || state.name == 'auth-login' || state.name == 'auth-register' || state.name == 'reset-password' || state.name == 'forgot-password')">
+    <div class="logo pull-left">
+        <a href="index.html" title=""><img src="system/assets/img/logo/logo.png" alt="" style="width:150px; height:60px;"></a>
+    </div>
+</div>
+
+    <nav class="navigation nav-c pull-right nav-desktop" id="navigation" data-menu-type="1200" ng-show="!hdrctr.hdrvars.authenticated">
+        <div class="nav-inner">
+            <div class="tb">
+                <div class="tb-cell">
+                    <ul class="menu-list text-uppercase">
+                        <!-- <li ng-show="!hdrctr.hdrvars.authenticated">
+                            <a href="/register" class="awe-btn arrow-right text-uppercase pull-right getin">JOIN</a>
+                        </li> -->
+                        <li ng-show="!hdrctr.hdrvars.authenticated">
+                            <a href="/login" class="awe-btn arrow-right text-uppercase pull-right  
+                            {{(state.name != 'home' && state.name != 'auth-login' && state.name != 'auth-register' && state.name != 'reset-password' && state.name != 'forgot-password') && (!hdrctr.hdrvars.authenticated) ? 'getinLogin' : 'getin'}}
+                            
+                            {{(state.name != 'search list') && (!hdrctr.hdrvars.authenticated) ? '' : 'getinRedLow'}}}}
+
+                            ">GET IN</a>
+                        </li>
+                         <li ng-show="hdrctr.hdrvars.authenticated">
+                         	<a class="awe-btn arrow-right text-uppercase pull-right getin" ng-click="hdrctr.logout()">Log Out</a>
+                         </li>
+                       
+                
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="navigation nav-c pull-right nav-desktop" id="navigation" data-menu-type="1200" ng-show="hdrctr.hdrvars.authenticated">
+        <div class="nav-inner">
+
+            <div class="tb">
+                <div class="tb-cell">
+                    <ul class="menu-list text-uppercase">
+                        <li>
+                            <button type="button" class="btn btn-default dropdown-toggle {{(state.name == 'home' || state.name == 'auth-login' || state.name == 'auth-register' || state.name == 'reset-password' || state.name == 'forgot-password') ? 'bgcolor-bellhome' : 'bgcolor-bell'}}" data-toggle="dropdown">
+                                <i class="fa fa-bell-o {{(state.name == 'home' || state.name == 'auth-login' || state.name == 'auth-register' || state.name == 'reset-password' || state.name == 'forgot-password') ? 'bell-homecolor' : 'bell-size20'}}"></i>
+                                <span class="badge position-bell">{{alerts.length}}</span>
+                            </button>
+                            <div class="dropdown-menu pull-right">
+                                <h5  style="cursor: pointer;">Notification</h5>
+                                <ul class="media-list dropdown-list">
+                                    <li data-ng-repeat="alert in alerts" data-ng-click="readNotification(alert);">
+
+                                        <h2> {{alert.description}}</h2>
+                                        <h2>{{alert.createdAt|date:'medium'}}</h2>
+                                    </li>
+                                </ul>
+                                <div class="dropdown-footer text-center">
+                                    <a  style="cursor: pointer;" class="link" data-ng-click="allNotification();">See All Notifications</a>
+                                </div>
+                            </div><!-- dropdown-menu -->
+                        </li>
+                        <li>
+                            <a class="{{(state.name == 'home' || state.name == 'auth-login' || state.name == 'auth-register' || state.name == 'reset-password' || state.name == 'forgot-password') ? 'headerTextualBg' : ''}}
+
+                            {{(state.name != 'home' || state.name != 'auth-login' || state.name != 'auth-register' || state.name != 'reset-password' || state.name != 'forgot-password') ? 'titleBg' : ''}}" title="" style="line-height: 65px;">Hello, {{user.first_name}}
+                             <img ng-init = "imageFunc(user.avatar)" ng-if = "user.avatar" ng-src="{{thumbimg}}" class=" pad0 marginleft15 img-circle img-thumbnail img-responsive" alt = "">
+                                        <img ng-if = "!user.avatar" class="marginleft15 img-circle img-thumbnail img-responsive" src="/system/assets/img/custom/avatars/avatar4.png" alt = ""></a>
+                            <ul class="sub-menu right">
+                            	<li ng-hide = "isUser"><a href="{{dashboardUrl}}" title=""><i class="fa fa-sliders rightmar15" aria-hidden="true"></i>Dashboard</a></li>
+                                <li><a href="/user-profile" title=""><i class="fa fa-user rightmar15"></i> Profile</a></li>
+                                <li><a href="/change-password" title=""><i class="fa fa-unlock rightmar15"></i>Change password</a></li>
+                                <li><a href="javascript:void(0)" ng-click="hdrctr.logout()" title=""><i class="fa fa-power-off rightmar15"></i>Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div></div>
+</div>
+
+

@@ -1,0 +1,94 @@
+  <!DOCTYPE html>
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="fragment" content="!">
+
+  <title>{{appName}} - {{title}}</title>
+  <link id="favicon" rel="shortcut icon" type="image/png" href=""/>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+  <meta name="keywords" content="node.js, express, mongoose, mongodb, angularjs, swig">
+  <meta name="description" content="MEAN - A Modern Stack: MongoDB, ExpressJS, AngularJS, NodeJS. (BONUS: Passport User Support).">
+
+  <meta property="fb:app_id" content="APP_ID">
+  <meta property="og:title" content="{{appName}} - {{title}}">
+  <meta property="og:description" content="MEAN - A Modern Stack: MongoDB, ExpressJS, AngularJS, NodeJS. (BONUS: Passport User Support).">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="APP_URL">
+  <meta property="og:image" content="APP_LOGO">
+  <meta property="og:site_name" content="MEAN - A Modern Stack">
+  <meta property="fb:admins" content="APP_ADMIN">
+
+  <link rel="manifest" href="/system/assets/static/manifest.json">
+  
+  <!-- {{locals.config.cssFramework}} -->
+  <!-- <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+   -->
+
+  {% for file in aggregatedassets.header.css %}
+    <link rel="stylesheet" href="{{file}}">
+  {% endfor %}
+
+  {% for file in aggregatedassets.footer.css %}
+    <link rel="stylesheet" href="{{file}}">
+  {% endfor %}
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700%7COpen+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="system/assets/css/sass/main.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/library/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/library/jquery-ui.min.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/library/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/library/jquery.mb.YTPlayer.min.css">  
+  <link rel="stylesheet" type="text/css" href="system/assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/theme.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/ui.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/layout.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/library/dataTables.min.css">
+  <link rel="stylesheet" href="/bower_components/angular-google-places-autocomplete/src/autocomplete.css">
+
+
+<script type="text/javascript" src="system/assets/js/library/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+<script type="text/javascript" src="system/assets/js/library/jquery-ui.min.js"></script>
+<script type="text/javascript" src="system/assets/js/library/bootstrap.min.js"></script>
+  
+<script type="text/javascript" src="system/assets/js/library/parallax.min.js"></script>
+<script type="text/javascript" src="system/assets/js/library/jquery.nicescroll.js"></script>
+<script type="text/javascript" src="system/assets/js/library/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="system/assets/js/library/jquery.mb.YTPlayer.min.js"></script>
+<script type="text/javascript" src="system/assets/js/library/SmoothScroll.js"></script>
+<script type="text/javascript" src="system/assets/js/library/owl.carousel.min.js"></script>
+<script type="text/javascript" src="system/assets/js/script.js"></script>
+  {% for file in aggregatedassets.header.js %}
+    <script type="text/javascript" src="{{file}}"></script>
+  {% endfor %}
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    // var favicon = ['1.png','2.png','3.png','4.png','5.png','6.png','7.png','8.png','9.png','10.png','11.png','12.png','13.png','14.png'];  
+        var dataArray=new Array();
+        dataArray[0]="system/assets/img/loaders/7.png";
+        dataArray[1]="system/assets/img/loaders/9.png";
+        dataArray[2]="system/assets/img/loaders/10.png";
+        dataArray[3]="system/assets/img/loaders/11.png";
+        dataArray[4]="system/assets/img/loaders/12.png";
+        dataArray[5]="system/assets/img/loaders/13.png";
+        dataArray[6]="system/assets/img/loaders/14.png";
+        //start with id=0 after 5 seconds
+        var thisId=0;
+
+        window.setInterval(function(){
+            $('#favicon').attr('href',dataArray[thisId]);
+            thisId++; //increment data array id
+            if (thisId>=6) thisId=0; //repeat from start
+        },2000);        
+    });
+</script>
+</head>
+

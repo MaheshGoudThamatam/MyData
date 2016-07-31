@@ -1,0 +1,20 @@
+.amenity-example h1 {
+  background-color: purple
+}
+.margin-left{
+	margin-left:11%;
+	margin-top:1%;
+	width:20%;
+	height:20%;
+	
+}
+.clred, a.clred:hover, a.clred:focus{
+	color: #ff0000;
+	
+}
+
+.clred,.editIcon{
+	cursor: pointer;
+	font-size: 20px;
+	margin: 0 5px 0 0;
+}

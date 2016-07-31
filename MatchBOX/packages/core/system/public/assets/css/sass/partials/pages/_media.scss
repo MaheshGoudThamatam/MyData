@@ -1,0 +1,136 @@
+@media (max-width: 1199px) {
+  .awe-btn.awe-btn-lager {
+    font-size: 17px;
+    padding-left: 20px;
+    padding-right: 20px;
+    line-height: 45px;
+  }
+  .awe-btn.awe-btn-medium {
+    font-size: 16px;
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 35px;
+  }
+  .awe-btn.awe-btn-small {
+    font-size: 15px;
+  }
+  .awe-btn.arrow-right {
+    padding-left: 15px;
+    padding-right: 45px;
+    background-position: right 15px center;
+  }
+  .awe-btn.arrow-left {
+    padding-right: 15px;
+    padding-left: 45px;
+    background-position: left 15px center;
+  }
+  .awe-btn.awe-search {
+    padding-right: 45px;
+    background-position: right 10px center;
+  }
+  .awe-btn.awe-btn-5 {
+    font-size: 13px;
+  }
+  .tabs-head.nav-tabs-two li {
+    margin-left: 40px;
+  }
+  .tabs-head.nav-tabs-two li a {
+    font-size: 17px;
+    line-height: 60px;
+  }
+  .tabs-head.nav-tabs-one li a {
+    font-size: 16px;
+    line-height: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+@media (max-width: 991px) {
+  .awe-btn.awe-btn-lager {
+    line-height: 40px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 15px;
+  }
+  .awe-btn.awe-btn-medium {
+    font-size: 15px;
+  }
+  .awe-btn.awe-btn-small {
+    font-size: 14px;
+  }
+  .awe-btn.arrow-right {
+    padding-left: 10px;
+    padding-right: 40px;
+    background-position: right 10px center;
+  }
+  .awe-btn.arrow-left {
+    padding-right: 10px;
+    padding-left: 40px;
+    background-position: left 10px center;
+  }
+  .awe-btn.awe-search {
+    padding-left: 10px;
+    padding-right: 40px;
+  }
+  .tabs-head.nav-tabs-two li {
+    margin-left: 30px;
+  }
+  .tabs-head.nav-tabs-two li a {
+    font-size: 16px;
+    line-height: 50px;
+  }
+  .tabs-head.nav-tabs-one li a {
+    font-size: 16px;
+    line-height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .ui-datepicker {
+    width: 300px;
+  }
+  .ui-datepicker .ui-datepicker-header .ui-datepicker-title {
+    font-size: 14px;
+    line-height: 40px;
+  }
+  .ui-datepicker .ui-datepicker-calendar th {
+    font-size: 13px;
+    padding: 15px 3px 10px 3px;
+  }
+  .ui-datepicker .ui-datepicker-calendar td a {
+    font-size: 13px;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    margin: 3px 0;
+  }
+}
+@media (max-width: 767px) {
+  .tabs-head.nav-tabs-two li {
+    margin-left: 20px;
+  }
+  .tabs-head.nav-tabs-two li a {
+    font-size: 15px;
+    line-height: 40px;
+  }
+  .tabs-head.nav-tabs-one li a {
+    font-size: 15px;
+    line-height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+@media (max-width: 480px) {
+  .tabs-head.nav-tabs-two li {
+    margin-left: 10px;
+  }
+  .tabs-head.nav-tabs-two li a {
+    font-size: 14px;
+    line-height: 30px;
+  }
+  .tabs-head.nav-tabs-one li a {
+    font-size: 15px;
+    line-height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

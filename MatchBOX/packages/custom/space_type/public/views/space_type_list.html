@@ -1,0 +1,84 @@
+<section class="partnerinfo mydetails" data-ng-controller="SpaceTypeController" data-ng-init="find()">
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+
+			<!-- Tabs Content -->
+			<div class="tab-content" style="background: transparent;">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div class="page-content page-thin dashboard-content col-sm-12 col-lg-12 no-left-pad">
+							<div class="row">
+								<div class="col-sm-12 col-lg-12 no-padding">
+									<div class="col-sm-12 panel-header pull-left panel-controls">
+										<!-- <section class="breakcrumb-sc pull-left">
+											<ul class="breadcrumb arrow">
+												<li><a href="admin-dashboard.html"><i
+														class="fa fa-home"></i></a></li>
+												<li>Space Type</li>
+											</ul>
+										</section> -->
+										<section class="pull-left">
+										 
+										</section>
+										<section class="pull-right">
+											<a href="/admin/space-type/create"
+												class="awe-btn arrow-right">Add
+												Partner Type
+											</a>
+										</section>
+										<div class="row">
+                                             <div class="col-sm-12 col-lg-12">
+											     <div data-ng-include="'/system/views/alert.html'"></div>
+											</div>
+									     </div>
+										</div>
+										
+									</div>
+								</div>
+								<div class="col-sm-12 col-lg-12 portlets no-padding">
+									<div class="panel" style="padding: 15px;">
+										<div class="panel-content pagination2">
+											<table datatable="ng"  class="table table-bordered row-border hover booking-table" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+												<thead>
+												  
+													<tr>
+													    <th class="text-center">ID</th>
+														<th class="text-center">Name</th>
+														<th class="text-center">Description</th>
+														<th class="text-center">Status</th>
+														<th class="text-center">Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="spaceType in spaceTypes"s>
+													    <td class="text-center">{{spaceType._id}}</td>
+														<td class="text-center">{{spaceType.name}}</td>
+														<td class="text-center">{{spaceType.description}}</td>
+														<td  class="text-center" ng-if="spaceType.status"><i class="fa fa-check"></i></td>
+														<td  class="text-center" ng-if="!spaceType.status"><i class="fa fa-close"></i></td>
+														<td  class="text-center">
+															<a ng-click="edit(spaceType)" title="Edit this space type" class="editIcon"><i class="fa fa-pencil-square-o"></i></span>
+                                							<a ng-click="delete(spaceType)" title="Delete this space type" class="clred"><i class="fa fa-trash-o"></i></span>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Tabs Content -->
+
+		</div>
+		<!-- End Banner Content -->
+
+	</div>
+
+</section>

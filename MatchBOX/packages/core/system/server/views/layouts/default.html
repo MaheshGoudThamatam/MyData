@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:fb="https://www.facebook.com/2008/fbml" itemscope="itemscope"
+	itemtype="http://schema.org/Product">
+{% include '../includes/head.html' %}
+
+
+	<body data-ng-controller="HeaderController as hdrctr" ng-cloak class="ng-cloak" ng-class="state">    
+	    <!-- class="navbar navbar-inverse navbar-fixed-top"  data-role="navigation"-->
+        <div id="preloader">
+	        <div class="tb-cell">
+	            <div id="page-loading">
+	                <div></div>
+	                <p>Loading</p>
+	            </div>
+	        </div>
+	    </div>
+	    <div id="wrap"> 
+	    	<!-- <div data-ng-include="{{bgImage}}"></div> -->
+	    	<div class="bg-parallax bg-1" data-ng-show="state.name == 'home' || state.name == 'auth-login' || state.name == 'auth-register' || state.name == 'reset-password' || state.name == 'forgot-password'"><div class="overlay"></div></div>
+	    	<!-- <header id="header" class="header"  data-ng-include="{{headerTemp}}"></header> -->
+	    	<header id="header" data-ng-class="(state.name == 'home' || state.name == 'auth-login' || state.name == 'auth-register' || state.name == 'reset-password' || state.name == 'forgot-password') ? 'bgNone' : 'header'" data-ng-include="'/system/views/header.html'"></header>
+	    	<!-- <div data-ng-include="'/admin/views/index.html'"></div> -->
+	            {% block content %}{% endblock %}
+	    </div>
+    	<footer data-ng-include="'/system/views/footer.html'" ng-if="(state.name == 'home' || state.name == 'auth-login' || state.name == 'auth-register' || state.name == 'reset-password' || state.name == 'forgot-password')"></footer>
+	    {% include '../includes/foot.html' %}
+	</body>
+
+</html>

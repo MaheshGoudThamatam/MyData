@@ -1,0 +1,368 @@
+<!-- <div class="modal-header">
+	<h3>
+		<b class="table-capitalize">Complete Your Reservation</b>
+	</h3>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-sm-12">
+			<form name="bookingForm">
+				<div class="booking-tabs">
+					<div>
+						<label>You are booking:</label>{{booking}}
+					</div>
+					<div>
+						<label>Conference Room "back office" </label>{{backOfficeBooking}} {{requiredRoomResource}}
+					</div>
+					<div class="row form-group">
+						<div class="col-sm-3" data-ng-if="!isTrainingRoomList">
+							<input type="text" name="current_date" class="form-control" 
+								value="{{selectedDate}}" placeholder="Current date" required >
+						</div>
+						<div class="col-sm-3" data-ng-if="isTrainingRoomList">
+							<input type="text" name="current_date" class="form-control" 
+								value="{{selectedFromDate}}" placeholder="From date" required >
+						</div>
+						<div class="col-sm-3" data-ng-if="isTrainingRoomList">
+							<input type="text" name="current_date" class="form-control" 
+								value="{{selectedEndDate}}" placeholder="To date" required >
+						</div>
+						<div class="col-sm-3">
+							<input type="text" name="start_time" class="form-control"
+								value="{{start}}" placeholder="Start time" required>
+						</div>
+						<div class="col-sm-3">
+							<input type="text" name="end_time" class="form-control"
+								value="{{end}}" placeholder="End Time" required>
+						</div>
+					</div>
+				</div>
+
+				<div class="booking-tabs">
+                           {{finalRoomsResult}}
+					<div>
+						<label>Reservation Details</label>
+                               
+					</div>
+					<div class="form-group">
+						<div class="append-icon">
+							<input type="text" name="name" class="form-control" minlength="4"
+								ng-model="backOfficeBooking.name" placeholder="Title" required> <i
+								class="icon-user"></i>
+							<div ng-show="submitted && bookingForm.name.$invalid">
+								<span class="err-msg errorText"
+									ng-show="bookingForm.name.$error.required">Please enter
+									the name </span>
+							</div>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<div class="append-icon">
+							<input type="text" name="name" class="form-control" minlength="4"
+								ng-model="backOfficeBooking.email"
+								placeholder="xyz@email.com (optional)" required> <i
+								class="icon-user"></i>
+							<div ng-show="submitted && bookingForm.name.$invalid">
+								<span class="err-msg errorText"
+									ng-show="bookingForm.name.$error.required">Please enter
+									the name </span>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<div class="booking-tabs">
+					<div>
+						<label>Amenities Request</label>
+					</div>
+					<div class="form-group">
+						<div class="append-icon">
+							<div class="col-sm-3" ng-repeat="amenity in booking.amenities">
+								<label>{{amenity.name}}</label><br> <input
+									name='amenity{{$index}}' id='amenity{{$index}}' type="checkbox"
+									class="not-show wdth-meetngdtls"
+									ng-model="amenity.isApplicable" />Is Applicable
+							</div>
+							<div class="col-sm-3" ng-show="booking.amenities.length === 0">
+								No Amenities available for the Space type</div>
+						</div>
+
+					</div>
+					<div>
+						<label>Included</label>
+					</div>
+					<div class="form-group">
+						<div class="append-icon">
+							<div class="col-sm-3" ng-repeat="amenity in booking.amenities">
+								<div ng-show="amenity.isApplicable">
+									<label>{{amenity.name}}</label>
+								</div>
+								<div class="col-sm-3" ng-show="booking.amenities.length === 0">
+									No Amenities available for the Space type</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+{{error}}
+</div>
+<div class="modal-footer">
+{{requiredRoomId}}
+	<button class="awe-btn awe-default" data-ng-click="cancel()">Cancel</button>
+	<button class="awe-btn arrow-right" data-ng-click="submit(requiredRoomId,bookingForm,schedule,backOfficeBooking)">Submit</button>
+</div> -->
+
+ <section id="backOfficeBookingForm">
+ <div class="modal-header">
+	<h3>
+		<b class="table-capitalize">Complete Your Reservation</b>
+	</h3>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-sm-12">
+			<form name="bookingForm" id="backOfficeBookingForm">
+				<div class="booking-tabs">
+					<div>
+						<label>You are booking:</label>
+					</div>
+					<div>
+						<label>{{requiredRoomResource.roomType}}</label><!-- {{backOfficeBooking}} {{requiredRoomResource}} -->
+					</div>
+					<div class="row form-group">
+						<div class="col-sm-3">
+						
+							<input type="text" name="current_date" class="form-control" 
+								 placeholder="Current date" value="{{selectedDate}}" required data-ng-disabled="true">
+						</div>
+						<div class="col-sm-3">
+							<!-- <select id="select-search-hide" class="select-ui"
+									data-placeholder="Choose One" name="timeType"
+									ng-model="meetingRoom.timeType"
+									ng-change="hideEndTime(meetingRoom)"
+									ng-options="timeType.data as timeType.data for timeType in timeTypes"
+									ng-selected="{{timeType.data == meetingRoom.timeType}}">
+									<option value="">Time Type</option>
+								</select> -->
+								 <select ng-model = "timeTypeRequired" data-ng-change ="changeTimeType(timeTypeRequired)" >
+                            <option ng-repeat="timeType in timeTypes" ng-selected="{{timeType.data==timeTypeRequired}}" 
+                              value="{{timeType.data}}">{{timeType.data}}</option>
+                             </select>
+						</div>
+						<div class="col-sm-3">
+							<input type="text" name="start_time" class="form-control"
+								data-ng-model="start" value="{{start}}" placeholder="Start time" required>
+						</div>
+						<div class="col-sm-3" data-ng-show="endTime">
+							<input type="text" name="end_time" class="form-control"
+								value="{{end}}" placeholder="End Time" required>
+						</div>
+						<div class="col-sm-3" data-ng-show="endTimeHalfDay">
+							<input type="text" name="end_time" class="form-control"
+								value="{{timeHalfDay}}" placeholder="End Time" required>
+						</div>
+					</div>
+				</div>
+
+		<!-- 		<div class="booking-tabs">
+					<div>
+						<label>Reservation Details</label>
+                               
+					</div>
+					<div class="form-group">
+						<div class="append-icon">
+							<input type="text" name="name" class="form-control" minlength="4"
+								ng-model="backOfficeBooking.name" placeholder="Title" required> <i
+								class="icon-user"></i>
+							<div ng-show="submitted && bookingForm.name.$invalid">
+								<span class="err-msg errorText"
+									ng-show="bookingForm.name.$error.required">Please enter
+									the name </span>
+							</div>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<div class="append-icon">
+							<input type="text" name="name" class="form-control" minlength="4"
+								ng-model="backOfficeBooking.email"
+								placeholder="xyz@email.com (optional)" required> <i
+								class="icon-user"></i>
+							<div ng-show="submitted && bookingForm.name.$invalid">
+								<span class="err-msg errorText"
+									ng-show="bookingForm.name.$error.required">Please enter
+									the name </span>
+							</div>
+						</div>
+
+					</div>
+				</div> -->
+				<div class="booking-tabs">
+				<div>
+				    <label>Reservation Details</label>
+				</div>
+				<div>
+				                     <div>
+                              <div class="col-md-12 booking-tabs">
+                              <div class="col-md-6">
+                              <div>Selected Room</div>
+                              <div>
+                             <span class="time-weght"> {{requiredRoomResource.title}}</span><br>
+                              <span class="time-weght">{{requiredRoomResource.space.name}}</span><br>
+                               <span class="time-weght">{{requiredRoomResource.space.address1}} {{requiredRoomResource.space.address2}} {{requiredRoomResource.space.city}}</span><br>
+                              </div>
+                              </div>
+                              <div class="col-md-6">
+                             <div>
+                            <div>
+                                <div ng-if="timeTypeRequired == 'Hourly'" data-ng-init="calculateServiceTax(timeTypeRequired,requiredRoomResource.priceperHour)">
+                                                 <div class="col-md-6">
+                                                 <span>Price</span>
+                                                 </div>
+                                                 <div class="col-md-6">
+                                                 <span class="time-weght"> Rs.{{requiredRoomResource.priceperHour}}<small>/hour</small></span>
+                                                 </div><br>
+                                                  <div>
+                                                    <div class="col-md-6">
+                                                    <span>Total Hours</span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                     <span class="time-weght">{{totalHoursBooked}}</span>
+                                                    </div>
+                                                  </div><br>
+                                                   <div>
+                                                    <div class="col-md-6 ">
+                                                      <span>Total Price</span>
+                                                        </div>
+                                                   <div class="col-md-6">
+                                                   <span class="time-weght">Rs.{{totalPricePerHour}}</span>
+                                                         </div>
+                                                       </div><br>
+                                                            <div>
+                                                        <div class="col-md-6">
+                                                             <span>Service Tax</span>
+                                                                    </div>
+                                                        <div class="col-md-6">
+                                                          <span class="time-weght">14.5%</span>
+                                                        </div>
+                                                        </div><br>
+                                                           <div>
+                                                       <div class="col-md-6">
+                                                            <span>Total Price<span class="lessFont">(Including tax)</span></span>
+                                                               </div>
+                                                        <div class="col-md-6">
+                                                                <span class="time-weght">Rs.{{totalPrice | number:2}}</span>
+                                                         </div>
+                                                      </div><br>
+                                             </div>
+                                               <div ng-if="timeTypeRequired == 'Half Day'" data-ng-init="calculateServiceTax(timeTypeRequired,requiredRoomResource.priceperHalfday)">
+                                                   <div class="col-md-6">
+                                                   <span>Price</span>
+                                                   </div>
+                                                   <div class="col-md-6">
+                                                   <span class="time-weght">Rs.{{requiredRoomResource.priceperHalfday}}<small>/halfday</small></span>
+                                                   </div><br>
+                                                   <div>
+                                                    <div class="col-md-6">
+                                                    <span>Total Hours</span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                     <span class="time-weght">4</span>
+                                                    </div>
+                                                  </div><br>
+                                                            <div>
+                                                        <div class="col-md-6">
+                                                             <span>Service Tax</span>
+                                                                    </div>
+                                                        <div class="col-md-6">
+                                                          <span class="time-weght">14.5%</span>
+                                                        </div>
+                                                        </div><br>
+                                                           <div>
+                                                       <div class="col-md-6">
+                                                            <span>Total Price<span class="lessFont">(Including tax)</span></span>
+                                                               </div>
+                                                        <div class="col-md-6">
+                                                                <span class="time-weght">Rs.{{totalPrice | number:2}}</span>
+                                                         </div>
+                                                      </div><br>
+                                               </div>
+                                               <div ng-if="timeTypeRequired == 'Full Day'" data-ng-init="calculateServiceTax(timeTypeRequired,requiredRoomResource.priceperfullday)">
+                                                   <div class="col-md-6">
+                                                   <span>Price</span>
+                                                   </div>
+                                                   <div class="col-md-6">
+                                                   <span class="time-weght">Rs.{{requiredRoomResource.priceperfullday}}<small>/fullday</small></span>
+                                                   </div><br>
+                                                            <div>
+                                                        <div class="col-md-6">
+                                                             <span>Service Tax</span>
+                                                                    </div>
+                                                        <div class="col-md-6">
+                                                          <span class="time-weght">14.5%</span>
+                                                        </div>
+                                                        </div><br>
+                                                           <div>
+                                                       <div class="col-md-6">
+                                                            <span>Total Price<span class="lessFont">(Including tax)</span></span>
+                                                               </div>
+                                                        <div class="col-md-6">
+                                                                <span class="time-weght">Rs.{{totalPrice | number:2}}</span>
+                                                         </div>
+                                                      </div><br>
+                                               </div>
+                                               
+                              </div>
+                              </div>
+                              </div>
+                              </div>
+                     </div>
+				</div>
+				</div>
+					<div class="booking-tabs">
+					<div>
+						<label>Reservation User Details</label>
+                               
+					</div>
+					<div class="form-group">
+						<div class="append-icon">
+							<input type="text" name="name" class="form-control" minlength="4"
+								ng-model="backOfficeBooking.name" placeholder="Title" required> <i
+								class="icon-user"></i>
+							<div ng-show="submitted && bookingForm.name.$invalid">
+								<span class="err-msg errorText"
+									ng-show="bookingForm.name.$error.required">Please enter
+									the name </span>
+							</div>
+						</div>
+
+					</div>
+					<div class="form-group">
+						<div class="append-icon">
+							<input type="text" name="name" class="form-control" minlength="4"
+								ng-model="backOfficeBooking.email"
+								placeholder="xyz@email.com (optional)" required> <i
+								class="icon-user"></i>
+							<div ng-show="submitted && bookingForm.name.$invalid">
+								<span class="err-msg errorText"
+									ng-show="bookingForm.name.$error.required">Please enter
+									the name </span>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="awe-btn awe-default" data-ng-click="cancel()">Cancel</button>
+	<button class="awe-btn arrow-right" data-ng-click="submit(requiredRoomResource,bookingForm,schedule,backOfficeBooking)">Submit</button>
+</div>
+ </section>

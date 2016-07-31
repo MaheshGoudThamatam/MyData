@@ -1,0 +1,89 @@
+<!-- <section class="partnerinfo mydetails" ng-controller="adminPartnerCtrl">
+	<div class="container-fluid">
+		Banner Content
+		<div class="banner-cn">
+			Tabs Content
+			<div class="tab-content" style="background: transparent;">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+					End Tabs Cat
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div class="page-content page-thin dashboard-content col-sm-12 col-md-12 no-left-pad">
+							<section class="breakcrumb-sc">
+								<ul class="breadcrumb arrow">
+									<li><a href="home.html"><i class="fa fa-home"></i></a></li>
+									<li>Edit Partner</li>
+								</ul>
+							</section>
+							<div class="row">
+								<div class="col-lg-8 portlets">
+									<div class="panel panel-default no-bd">
+										<div class="panel-body bg-white">
+											<div class="row">
+												<div class="col-md-12 col-sm-12 col-xs-12">
+													<form role="form" class="form-validation"
+														name="partnerEditForm" id="partnerEditForm">
+														<div class="row">
+															<div class="col-sm-6 col-sm-offset-3">
+																<div class="form-group" ng-class="{ 'has-error' : submitted && partnerEditForm.first_name.$invalid }">
+																	<label class="control-label">First Name</label>
+																	<div class="append-icon">
+																		<input type="text" name="first_name"
+																			class="form-control" minlength="4"
+																			ng-model="partnerObj.first_name"
+																			placeholder="Minimum 4 characters..." required>
+																		<i class="icon-user"></i>
+																	</div>
+																</div>
+																<div ng-repeat="err in error.data">
+										                             <div class="errRed" ng-if="err.param=='first_name'">{{err.msg}}</div>
+									                             </div>
+									                             <div ng-show="submitted && partnerEditForm.first_name.$invalid">
+										                              <span class="err-msg errorText" ng-show="partnerEditForm.first_name.$error.required">Please enter the name </span>
+								                                  </div>
+															</div>
+														</div>
+														
+														<div class="row">
+															<div class="col-sm-6 col-sm-offset-3">
+																<div class="form-group">
+																	<label class="control-label">Email Address</label>
+																	<div class="append-icon">
+																		<input type="email" name="email"
+																			class="form-control"
+																			data-ng-model="partnerObj.email"
+																			placeholder="Enter your email..." required disabled="true">
+																		<i class="icon-envelope"></i>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="text-center  m-t-20">
+															<a id="next1" href=""
+																class="awe-btn awe-default"
+																ng-click="cancel()"> Cancel</a>
+															<a id="next1"
+																class="awe-btn arrow-right" href="" 
+																ng-click="update(partnerObj, partnerEditForm.$valid)">Submit</a>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		End Tabs Content
+	</div>
+	End Banner Content
+</section>
+End Banner -->

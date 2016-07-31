@@ -1,0 +1,120 @@
+<section class="partnerinfo mydetails"
+	data-ng-controller="BookingController" data-ng-init="loadBookingBasedOnUser()">
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+			<!-- Tabs Content -->
+			<div class="tab-content">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div class="page-content page-thin dashboard-content col-sm-12 col-md-12 no-left-pad">
+							<div class="row" data-ng-hide="bookingTable">
+								<div class="col-sm-12 col-lg-12">
+									<div class="col-sm-12 panel-header pull-left panel-controls no-padding">
+									</div>
+								</div>
+								<div class="col-sm-12 portlets">
+									<div class="panel" style="padding: 15px;">
+										<div class="panel-content pagination2">
+											<table datatable="ng"  class="table table-bordered row-border hover booking-table" dt-options="dtOptions1" dt-column-defs="dtColumnDefs1">
+												<thead>
+													<tr>
+													   <th class="text-center">ID</th>
+														<th class="text-center">Space Name</th>
+														<th class="text-center">Room</th>
+														<th class="text-center">Partner</th>
+														<th class="text-center">Booked By</th>
+														<th class="text-center">Booking Date</th>
+														<th class="text-center">Status</th>
+														<th class="text-center">Booking Price</th>
+														<th class="text-center">Commission</th>
+														<th class="text-center">Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="booking in bookings" data-ng-init="calculatePriceAfterCommission(booking.room.roomtype,booking.partner,booking.price)">
+														<td class="text-center">{{booking._id}}</td>
+														<td class="text-center">{{booking.space.name}}</td>
+														<td class="text-center">{{booking.room.name}}</td>
+														<td class="text-center">{{booking.partner.first_name}}</td>
+                                                         <td class="text-center">{{booking.user.first_name}}</td>
+                                                         <td class="text-center">{{booking.bookingDate|date:'shortDate'}}</td>
+                                                         <td class="text-center">{{booking.status}}</td>
+                                                         <td class="text-center">Rs.{{booking.price}}</td>
+                                                         <td class="text-center">Rs.{{finalCommissionValue | number:2}}</td>
+                                                         <td class="text-center"><a class="editIcon" ng-click="redirectAttendee(booking._id,BOOKING.URL_PATH.VIEWATTENDEES)" title="View " ><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+													</tr>
+													<tr data-ng-hide="!bookings || bookings.length">
+													<td>No Bookings available.........</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>	
+							</div>
+							<div data-ng-show="bookingTable">
+							<div class="row" >
+								<div class="col-sm-12 col-lg-12">
+									<div class="col-sm-12 panel-header pull-left panel-controls no-padding">
+									</div>
+								</div>
+								<div class="col-sm-12 portlets">
+									<div class="panel" style="padding: 15px;">
+										<div class="panel-content pagination2">
+											<table datatable="ng"  class="table table-bordered row-border hover booking-table" dt-options="dtOptions2" dt-column-defs="dtColumnDefs2">
+													<thead>
+													<tr>
+													    <th class="text-center">ID</th>
+														<th class="text-center">Space Name</th>
+														<th class="text-center">Room</th>
+														<th class="text-center">Booked By</th>
+														<th class="text-center">Booking Date</th>
+														<th class="text-center">Status</th>
+														<th class="text-center">Booking Amount</th>
+														<th class="text-center">Partner Amount</th>
+													    <th class="text-center">Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="partnerBooking in partnerBookings" data-ng-init="calculatePriceAfterCommission(partnerBooking.room.roomtype,partnerBooking.partner,partnerBooking.price)">
+														<td class="text-center">{{partnerBooking._id}}</td>
+														<td class="text-center">{{partnerBooking.space.name}}</td>
+														<td class="text-center">{{partnerBooking.room.name}}</td>
+                                                         <td class="text-center">{{partnerBooking.user.first_name}}</td>
+                                                         <td class="text-center">{{partnerBooking.bookingDate|date:'shortDate'}}</td>
+                                                         <td class="text-center">{{partnerBooking.status}}</td>
+                                                         <td class="text-center">Rs.{{partnerBooking.price}}</td>
+                                                         <td class="text-center">Rs.{{PartnerFinalPrice | number:2}}</td>
+                                                         <td class="text-center"><a class="editIcon" ng-click="redirectAttendee(partnerBooking._id,BOOKING.URL_PATH.VIEWATTENDEES)" title="View Attendees" ><i class="fa fa-eye"></i></a></td>
+													</tr>
+													<tr data-ng-hide="!partnerBookings || partnerBookings.length">
+													<td>No Bookings available.........</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>	
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Tabs Content -->
+
+		</div>
+		<!-- End Banner Content -->
+
+	</div>
+
+</section>
+
+<!--End Banner-->
+
+<!-- 		</div>
+		</div>
+	</div>
+</section> -->

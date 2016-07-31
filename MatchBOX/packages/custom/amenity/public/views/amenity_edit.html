@@ -1,0 +1,156 @@
+<section class="partnerinfo mydetails"
+	data-ng-controller="AmenityController"
+	data-ng-init="findOne();listSpaceType();listPartOf();">
+	<div ng-if="loaderEnabled">
+		<div id="preloaderImage">
+			<div class="tb-cell">
+				<div id="page-loadingImage">
+					<div></div>
+					<p><h4 class="h-image-caption">Uploading....</h4></p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+			<!-- Tabs Content -->
+			<div class="tab-content">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+
+						<div
+							class="page-content page-thin dashboard-content col-sm-12 col-lg-12 no-left-pad">
+
+							<div class="row">
+								<div class="col-sm-12 col-lg-12">
+									<!-- <section class="breakcrumb-sc pull-left">
+										<ul class="breadcrumb arrow">
+											<li><a href="admin-dashboard.html"><i
+													class="fa fa-home"></i></a></li>
+											<li>Add Amemity</li>
+										</ul>
+									</section> -->
+								</div>
+								<div class="col-xs-12 portlets">
+									<div class="panel" style="padding: 15px;">
+										<div class="panel-body bg-white">
+										<div class="row col-xs-3  panel-heade text-left" style="padding: 15px;">
+											</div>
+											<form role="form" class="form-validation" name="amenityForm">
+												<div class="row">
+												<h3>Edit Amenity</h3>
+													<div class="col-xs-6">
+														<div class="form-group"
+															ng-class="{ 'has-error' : submitted && amenityForm.name.$invalid }">
+															<label class="control-label">Amenity Name</label>
+															<div class="append-icon">
+																<input type="text" name="name" class="form-control"
+																	minlength="4" placeholder="name"
+																	data-ng-model="amenity.name" required> <i
+																	class="icon-user"></i>
+																<div ng-show="submitted && amenityForm.name.$invalid">
+																	<span class="err-msg errorText"
+																		ng-show="amenityForm.name.$error.required">Please
+																		enter the name </span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+												</div>
+												<div class="row">
+													<div class="col-xs-6">
+														<div class="form-group"
+															ng-class="{ 'has-error' : submitted && amenityForm.description.$invalid }">
+															<label class="control-label">Description</label>
+															<div class="append-icon">
+																<textarea name="description" class="form-control"
+																	data-ng-model="amenity.description" rows="3"
+																	placeholder="description.." required></textarea>
+																<div
+																	ng-show="submitted && amenityForm.description.$invalid">
+																	<span class="err-msg errorText"
+																		ng-show="amenityForm.description.$error.required">Please
+																		enter the description </span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-xs-6">
+														<div class="form-group">
+															<label class="control-label">Part Of</label>
+															<div class="append-icon">
+																<select id="select-search-hide" class="form-control custom_dropdown"
+																	data-placeholder="Choose One" name="partOf"
+																	ng-model="amenity.partOf" ng-change="{{spaceType._id}}"
+																	ng-options="partof._id as partof.name for partof in partofs"
+																	ng-selected="{{partof._id == amenity.partOf}}">
+
+																</select>
+															</div>
+														</div>
+
+													</div>
+													<div class="col-xs-4" ng-hide="!amenity.partOf">
+														<div class="form-group">
+															<label class="control-label">Applies To</label>
+															<div class="append-icon">
+																<select ng-model="amenity.appliesTo"
+																	class="form-control branchwidth col-sm-12">
+																	<option value="">Select</option>
+																	<option ng-repeat="spaceType in spaceTypes"
+																		value="{{spaceType._id}}">{{spaceType.name}}</option>
+																</select>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-xs-3">
+														<div class="form-group">
+															<label class="control-label">Icon</label>
+															<div class="append-icon">
+																<button class="btn btn-default"
+																	ngf-select="onFileSelect($files)"
+																	accept="image/png, image/jpeg">Upload</button>
+																	<div class="form-group">
+															<img ng-if="amenity.icon" class="img-responsive image-border"
+																src="{{amenity.icon}}" alt="uploaded image">
+														</div>
+															</div>
+															<!-- <div class="col-sm-offset-3 col-sm-2">
+																<img ng-if="amenity.icon" class="img-responsive img150"
+																	src="{{amenity.icon}}" alt="uploaded image">
+
+															</div> -->
+														</div>
+													</div>
+													
+
+												</div>
+												<div class="row col-xs-12">
+													<div class="text-center  m-t-20">
+														<a href="" class="awe-btn awe-default"
+															data-ng-click="cancel()">Cancel </a> 
+														<a href=""
+															id="next1" data-toggle="tab" class="awe-btn arrow-right"
+															data-ng-click="update(amenityForm.$valid)">Submit</a>
+													</div>
+												</div>
+											</form>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

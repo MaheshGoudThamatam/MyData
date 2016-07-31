@@ -1,0 +1,126 @@
+<section class="partnerinfo mydetails"
+	data-ng-controller="ProfileController">
+	<div ng-if="loaderEnabled">
+		<div id="preloaderImage">
+			<div class="tb-cell">
+				<div id="page-loadingImage">
+					<div></div>
+					<p><h4 class="h-image-caption">Uploading....</h4></p>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="container-fluid">
+	<div class="main-cn element-page bg-white clearfix">
+		<!--Breakcrumb-->
+		<!-- <section class="breakcrumb-sc">
+			<ul class="breadcrumb arrow">
+				<li><a href="index.html"><i class="fa fa-home"></i></a></li>
+				<li>My Profile</li>
+			</ul>
+		</section> -->
+		<!--End Breakcrumb-->
+		<section class="user-login-page" ng-init = "loadUser()">
+
+			<div class="row">
+
+				<div class="col-md-3">
+					  <div class="user-profile__header">
+                                    <h4>{{userDetail.first_name}}</h4>
+                                    <p>
+                                        <!-- <img class="img-responsive" src="{{userDetailObj.avatar}}" alt="Profile Photo"> -->
+                                        <img ng-if = "userDetail.avatar" src="{{thumbimg}}" alt = "">
+                                        <img ng-if = "!userDetail.avatar" src="/system/assets/img/custom/avatars/avatar4.png" alt = "">
+                                    </p>
+                                    
+                                </div>
+                              <ul class="user-profile__navigation">
+                                    <li><span align="center"> <button class="btn btn-default" ngf-select="onFileSelect($files)"
+        									accept="image/png, image/jpeg">upload Image</button></span></li>
+                                    <li><a data-ng-click="userBookings()"><i class="fa fa-shopping-cart" aria-hidden="true"></i> My Bookings</a></li>
+                                    <li class="current"><a><i class="fa fa-user" aria-hidden="true"></i> My profile</a></li>
+                                    <li><a href="" data-ng-click="changePassword()"><i class="fa fa-cog" aria-hidden="true"></i> Change Password</a></li>
+                                   <!--  <li><a href="" data-ng-click="hdrctr.logout()"><img src="images/icon/icon-back.png" alt="">Sign out</a></li> -->
+
+                                </ul>
+				</div>
+				<div class="col-md-9">
+					<div class="my-profile">
+							<div class="col-md-6 user-form userform">
+										<div class="row text-edit">
+                                             <div class="col-sm-12 col-lg-12">
+											     <div data-ng-include="'/system/views/alert.html'"></div>
+											</div>
+									     </div>
+								<h3>Personal Information</h3>
+
+								<div class="field-input">
+									<input type="text" name="firstName" class="input-text"
+										minlength="4" data-ng-model="userDetail.first_name"
+										placeholder="Enter your first name..." required>
+								</div>
+								<div class="field-input">
+									<input type="text" name="lastName" class="input-text"
+										minlength="4" data-ng-model="userDetail.last_name"
+										placeholder="Enter your last name" required>
+								</div>
+								<div class="field-input">
+									<input type="email" name="email" class="input-text"
+										data-ng-model="userDetail.email"
+										placeholder="Enter your email..." required>
+								</div>
+								<div class="field-input">
+									<input type="text" name="address1" class="input-text"
+										data-ng-model="userDetail.address1"
+										placeholder="Enter address line 1" required>
+								</div>
+								<div class="field-input">
+									<input type="text" name="address2" class="input-text"
+										data-ng-model="userDetail.address2"
+										placeholder="Enter address line 2">
+								</div>
+								<div class="field-input">
+									<input type="text" name="state" class="input-text"
+										data-ng-model="userDetail.city" placeholder="Enter your city" required>
+								</div>
+								<div class="field-input">
+									<input type="text" name="state" class="input-text"
+										data-ng-model="userDetail.state"
+										placeholder="Enter your state" required>
+								</div>
+								<div class="field-input">
+									<input type="text" name="pinCode" class="input-text"
+										data-ng-model="userDetail.pinCode"
+										placeholder="Enter your pin code" >
+								</div>
+								<div class="field-input">
+									<input type="text" name="country" class="input-text"
+										data-ng-model="userDetail.country"
+										placeholder="Enter your country" required>
+								</div>
+								<div class="field-input">
+									<input type="text" name="mobile" class="input-text"
+										data-ng-model="userDetail.phone"
+										placeholder="Mobile Number..." minlength="3" required>
+								</div>
+								<div class="field-input">
+									<!-- <input type="reset"
+										class="awe-btn awe-default text-uppercase"
+										value="Cancel" />  -->
+									<a
+										class="awe-btn arrow-right" href=""
+										id="next1" data-ng-click="update(userDetail)">Save</a>
+								</div>
+							</div>
+
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+</section>

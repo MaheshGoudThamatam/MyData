@@ -1,0 +1,51 @@
+@import "../../mixins/backgrounds";
+@import "../../mixins/transitions";
+@import "../../mixins/buttons";
+@import "../../mixins/margin-padding";
+
+footer {
+  	@include bgndcolor(rgba(0,0,0,0.2));
+  	@include paddings(10px, 0, 10px, 0);
+  	font-family: $font-stack;
+  	position:absolute;
+  	bottom:0;
+  	width:100%;
+  	z-index:1111;
+  	height:50px;
+
+  	.copyright {
+	  	color: #fff;
+	  	clear: both;
+	  	@include topBottomMargin(0, 0);
+	  	line-height:30px;
+	  	padding:0;
+	  	font-weight: 800;
+	}
+
+	.ul-ft {
+  		@include topMargin(0px);
+
+	 	ul {
+	  		list-style: none;
+	  		@include generalMargin(0);
+	  		@include generalPadding(0);
+			
+			li {
+				display: inline-block;
+	            @include margins(0, 10px, 0, 10px);
+
+				a {
+		  			color: #fff;
+		  			text-decoration: none;
+		  			line-height: 30px;
+		            @include transition(all 0.2s linear);
+		            font-weight: 800;
+				}
+				a:hover {
+		  			color: #f37124;
+		  			@include leftPadding(0px);
+				}
+			}
+		}
+	}
+}
