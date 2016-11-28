@@ -1,0 +1,111 @@
+	<section class="partnerinfo mydetails" ng-controller="SpaceTypeController" data-ng-init="findSpaceType()">
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+			<!-- Tabs Content -->
+			<div class="tab-content" style="background: transparent;">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+					<!-- End Tabs Cat -->
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div class="page-content page-thin dashboard-content col-sm-12 col-lg-12 no-left-pad">
+							<!-- <section class="breakcrumb-sc">
+								<ul class="breadcrumb arrow">
+									<li><a href="home.html"><i class="fa fa-home"></i></a></li>
+									<li>Add Space type</li>
+								</ul>
+							</section> -->
+							<div class="row">
+								<div class="col-xs-12 portlets">
+									<div class="panel" style="padding: 15px;">
+										<div class="panel-body bg-white">
+										<div class="row col-sm-3  panel-heade text-left" style="padding: 15px;">
+												<h3>SpaceType Details</h3>
+											</div>
+											<div class="row">
+												<div class="col-md-12 col-sm-12 col-xs-12">
+													<form role="spaceTypeForm" class="form-validation"
+														name="partnerDetailForm" id="partnerDetailForm" novalidate>
+														<div class="row">
+															<div class="col-xs-6">
+																<div class="form-group" ng-class="{ 'has-error' : submitted && partnerDetailForm.name.$invalid }">
+																	<label class="control-label">Type Name</label>
+																	<div class="append-icon">
+																		<input type="text" name="name"
+																			class="form-control"
+																			ng-model="type.name"
+																			placeholder="Minimum 4 characters..." required>
+																		<i class="icon-user"></i>
+																		<div
+																			ng-show="submitted && partnerDetailForm.name.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.name.$error.required">Please
+																				enter the name </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-6">
+																<div class="form-group" ng-class="{ 'has-error' : submitted && partnerDetailForm.name.$invalid }">
+																	<label class="control-label">Description</label>
+																	<div class="append-icon">
+																		<input type="text" name="description"
+																			class="form-control" ng-model="type.description"
+																			placeholder="Enter your description..." required>
+																			<div
+																			ng-show="submitted && partnerDetailForm.description.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.description.$error.required">Please
+																				enter the description </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														
+														<div class="row">
+															<div class="col-xs-6">
+																<div class="form-group">
+																	<label class="control-label">Status</label>
+																	<div class="append-icon">
+																		<input type="checkbox" name="status"
+																			ng-model="type.status"
+																			placeholder="Enter your status...">
+																	</div>
+																</div>
+															</div>
+														</div>
+														
+														<div class="row col-xs-12">
+															<div class="text-center  m-t-20">
+																<a href="" id="next1" data-toggle="tab"
+																	class="awe-btn awe-default"
+																	data-ng-click="cancel()">Cancel</a>
+																<a id="next1" data-toggle="tab"
+																	class="awe-btn arrow-right"
+																	data-ng-click="update(partnerDetailForm.$valid)">Submit</a>
+															</div>
+														</div>
+
+													</form>
+												</div>
+											</div>
+											<!-- Add Room -->
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<!-- End Tabs Content -->
+					</div>
+					<!-- End Banner Content -->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!--End Banner-->

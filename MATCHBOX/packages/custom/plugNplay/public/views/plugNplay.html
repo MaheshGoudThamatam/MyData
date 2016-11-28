@@ -1,0 +1,54 @@
+<section class="partnerinfo mydetails"
+	data-ng-controller="PlugNplayController" data-ng-init="listPlugNplay();">
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+			<!-- Tabs Content -->
+			<div class="tab-content">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div class="page-content page-thin dashboard-content col-sm-12 col-md-12 no-left-pad">
+							<div class="row">
+								<div class="col-sm-12 col-lg-12">
+									<div class="col-sm-12 panel-header pull-left panel-controls">
+										<div class="row">
+                                             <div class="col-sm-12 col-lg-12">
+											     <div data-ng-include="'/system/views/alert.html'"></div>
+											</div>
+									     </div>
+									</div>
+								</div>
+								<div class="col-sm-12 portlets">
+									<div class="panel" style="padding: 15px;">
+										<div class="panel-content pagination2">
+											<table datatable="ng"  class="table table-bordered row-border hover booking-table" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+												<thead>
+													<tr>
+													    <th class="text-center">ID</th>
+														<th class="text-center">City</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="plugNplay in plugNplays" >
+														<td  class="text-center">{{plugNplay._id}}</td>
+														<td class="text-center"><a class="iconCursor" data-ng-click="redirectToDetails(PLUGNPLAY.URL_PATH.PLUGANDPLAYDETAILS,plugNplay._id)">{{plugNplay.city}}</a></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</section>
+
+

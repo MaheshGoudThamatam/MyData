@@ -1,0 +1,137 @@
+<section class="sub-banner reviewSectionLow" id="resetPassword"	style="padding: 12% 15px;"	data-ng-controller="BookingController" data-ng-init="getBookingDetail();">
+<style type="text/css">
+	.bgcolor-bell {
+		background-color: transparent !important;
+	}
+	.bgcolor-bell i {
+		color: white !important;
+	}
+	.titleBg {
+	    color: #ffffff !important;
+	}
+	.panelBg li a {
+		color: black;
+	}
+	section#resetPassword {
+		height: 100vh;
+	}
+	.table>tbody>tr>td {
+		border-top: none;
+		padding: 2px;
+	}
+	.tdWid28 {
+		width: 28%;
+	}
+	/*.logo-banner.text-center {
+    	margin-top: -5%;
+	}*/
+
+</style>
+	<div class="logo-banner text-center">
+		<a href="/" title="">
+			<img src="/system/assets/img/logo/logo.png" alt="">
+		</a>
+	</div>
+	<div class="main">
+		<div class="container bookingPageReview">
+			<div class="main-cn element-page bg-white clearfix reviewPageLow">
+				<div class="user-profile user-login-page" id="signin">
+						<!-- <div ng-if="reviewedTrue" style="margin-bottom: 10%;text-align: -moz-center;text-align: -webkit-center;">
+							<h2 class="col-xs-12 user-profile__title text-center">Review already submitted</h2>
+							<a style="margin-right: 1em;margin-top: 10%;margin-bottom: -3%;" class="awe-btn awe-default" ng-click="redirectMyBooking();" href="">Back</a>
+						</div> -->
+						<!-- <div ng-if="reviewedDone" style="margin-bottom: 10%;text-align: -moz-center;text-align: -webkit-center;">
+							<h2 class="col-xs-12 user-profile__title text-center">Review submitted successfully</h2>
+							<a style="margin-right: 1em;margin-top: 10%;margin-bottom: -3%;" class="awe-btn awe-default" ng-click="redirectMyBooking();" href="">Back</a>
+						</div> -->
+					<div class="user-form" ng-hide="reviewedTrue || reviewedDone">
+						<div>
+							<h2 class="col-xs-12 user-profile__title text-center">Submit Review</h2>
+						</div>
+						<div style="padding-top: 10%;"><br/>
+
+
+						<table class="table">
+							<tbody>
+								<tr>
+									<td class="tdWid28">Space</td>
+									<td>{{spaceName}}</td>
+								</tr>
+								<tr>
+									<td  class="tdWid28">Room</td>
+									<td>{{roomName}}</td>
+								</tr>
+								<tr data-ng-if="bookingDetailObj.room.roomtype.name == 'Meeting Room' || bookingDetailObj.room.roomtype.name == 'Board Room'">
+									<td  class="tdWid28">Booking Date</td>
+									<td>{{bookingDate | date:'dd-MM-yyyy'}}</td>
+								</tr>
+								<tr data-ng-if="bookingDetailObj.room.roomtype.name == 'Meeting Room' || bookingDetailObj.room.roomtype.name == 'Board Room'">
+									<td  class="tdWid28">Booking Time</td>
+									<td>{{bookingDetailObjStartTime | date:'ha'}} - {{bookingDetailObjEndTime | date:'ha'}}</td>
+								</tr>
+								
+								<tr data-ng-if="bookingDetailObj.room.roomtype.name == 'Hot Desk' || bookingDetailObj.room.roomtype.name == 'Training Room'">
+									<td  class="tdWid28">Booking Date</td>
+									<td>{{bookingDetailObjStartTime  | date:'dd-MM-yyyy'}} - {{bookingDetailObjEndTime  | date:'dd-MM-yyyy'}}</td>
+								</tr>
+								<tr data-ng-if="bookingDetailObj.room.roomtype.name == 'Hot Desk' || bookingDetailObj.room.roomtype.name == 'Training Room'">
+									<td  class="tdWid28">Booking Time</td>
+									<td>{{bookingDetailObjStartTime | date:'ha'}} - {{bookingDetailObjEndTime | date:'ha'}}</td>
+								</tr>
+
+
+
+
+							</tbody>
+						</table>
+						</div>
+						<form ng-submit="submitReview()" class="reset form-horizontal">
+							<div class="row">
+								<div class="userProfile forgotPwdMedia">
+									<div class="field-input" style="display: inline-block; width: 100%;margin-left: 15%;">
+									
+										<div style="float: left;margin-right: 10%;">
+										<legend style="padding: 0;margin-left: -25%;">Poor</legend>
+											<input type="radio" id="star5" name="rating" ng-model="review.rating" value="1" />
+												<label for="star5">1</label>
+										</div>
+										<div style="float: left;margin-right: 10%;">
+										<legend style="padding: 0;">&nbsp;</legend>
+										<input type="radio" id="star4" name="rating" ng-model="review.rating" value="2" />
+											<label for="star4">2</label>
+										</div>
+										<div style="float: left;margin-right: 10%;">
+										<legend style="padding: 0;">&nbsp;</legend>
+										<input type="radio" id="star3" name="rating" ng-model="review.rating" value="3" />
+											<label for="star3" >3</label>
+										</div>
+										<div style="float: left;margin-right: 10%;">
+										<legend style="padding: 0;">&nbsp;</legend>
+										<input type="radio" id="star2" name="rating" ng-model="review.rating" value="4" />
+											<label for="star2">4</label>
+										</div>
+										<div style="float: left;margin-right: 10%;">
+										<legend style="padding: 0;">Excellent</legend>
+										<input type="radio" id="star1" name="rating" ng-model="review.rating" value="5" />
+  											<label for="star1">5</label>
+  										</div>
+									</div>
+									<div class="field-input">
+										<input required class="input-text" type="text" name="text" placeholder="Title" ng-model="review.title">
+									</div>
+									<div class="field-input">
+										<textarea required class="input-text reviewComment" type="text" name="text" placeholder="Comments" ng-model="review.text"></textarea>
+									</div>
+									<div class="field-input" align="center" style="text-align: -webkit-center;text-align: -moz-center;">
+										<a style="margin-right: 1em;" class="awe-btn awe-default" ng-click="redirectMyBooking();" href="">Cancel</a>
+										<button type="submit" class="awe-btn arrow-right forgotPwdButton">Submit</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

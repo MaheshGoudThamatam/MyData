@@ -1,0 +1,371 @@
+<style type="text/css">
+footer {
+	position: fixed;
+	width: 67%;
+	left: 33%;
+	padding: 5px 0;
+	height: auto;
+	background: rgba(0, 0, 0, 0.5);
+	box-shadow: none;
+}
+
+footer .copyright {
+	line-height: 30px;
+}
+
+#header.header {
+	background-color: #fff !important;
+	box-shadow: 0px -12px 17px 7px rgba(0, 0, 0, 0.9);
+}
+
+.bg-1, .bg-3 {
+	background: transparent;
+}
+</style>
+<section data-ng-controller="VirtualOfficeResultController"	data-ng-init="findSearchRoomsList();intializeCounter();cssFunction();" class="listFullPage" style="margin-top: 10%;">
+	<div class="col-xs-12" style="overflow: hidden;">
+		<h6><b>Room Type</b> : {{searchObj.roomType}} </h6>
+	</div>
+	<div class="col-xs-12" style="height: 5.7vh;overflow: hidden;">
+		<h6><b>Place</b> : {{searchObj.place}} </h6>
+	</div>
+	<div class="col-xs-12 singleListCol" ng-repeat="room in rooms" style="padding-top: 2%;">
+  			<div style="margin-left: -5%;">
+				<div class="col-xs-4">
+					<figure class="" ng-show="room.image">
+						<a href="" title="">
+							<img src="{{room.image}}" alt="" style="height: 75px;width: 75px;">
+						</a>
+					</figure>
+					<figure class="" ng-show="!room.image">
+						<a href="" title="">
+							<img src="http://res.cloudinary.com/tarento/image/upload/v1460693602/570e8f207c9c6c001e1460d9.png" alt="" style="height: 75px;width: 75px;">
+						</a>
+					</figure>
+				</div>
+				<div class="col-xs-8" style="width: 70%; margin-left: -4%;">
+					<div class="" style="min-height: 15px;max-height: 30px;line-height: 14px;">
+						<a href="" style="font-size: 14px;" data-ng-click="detail(SEARCH.URL_PATH.SEARCH_DETAILS,room._id)">{{room.spaceId.name}}</a>
+					</div>
+					<div class="">
+						<div style="font-size: 12px;">{{room.name}}</div>
+					</div>
+					<div class="hotel-places">
+						<div style="font-size: 12px;">{{room.spaceId.locality}}</div>
+					</div>
+					<div class="hotel-places searchHotelPlaceLow scrollbarContent" id="scrollbarContent" style="color: black;" ng-scrollbars>
+						<div class="hotel-places" ng-repeat="package in room.packages">
+						<span class="" style="font-size:14px;">{{package.packageName}}</span> 
+						<span class="" style="font-size:14px;"><i class="fa fa-info-circle mouse-pointer" ng-click="modal(package)" aria-hidden="true"></i> </span>
+						<div ng-repeat="payment in package.paymentPlan" ng-show="$first">
+							<span style="font-size: 12px;color: #4c4c4c;">Rs. {{payment.amount}} onwards</span>
+						</div>
+					</div>
+					</div>
+
+				</div>
+			</div>
+
+
+    </div>
+<div data-ng-include="'/search/views/virtualOfficePackage.html'"></div>
+</section>
+<section data-ng-controller="VirtualOfficeResultController"
+	data-ng-init="findSearchRoomsList();intializeCounter();cssFunction();" class="listPage-d320">
+	<div class="main">
+		<div class="">
+			<div class="main-cn hotel-page ">
+				<div class="row">
+					<div class="col-xs-4">
+						<div class="hl-maps-cn absoluteOne">
+							<div class="col-sm-9 col-lg-10 mydetailsnav">
+								<div
+									class="page-content page-thin dashboard-content col-sm-12 col-lg-12">
+									<div class="row">
+
+										<div class="col-md-5 portlets">
+											<div class="panel-content pagination2 table-responsive">
+
+												<ng-map id="myMatchBoxMap" scale-control="true"
+													style="display: grid !important; height: 100vh !important; padding-top: 11%;">
+												</ng-map>
+
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-8 bg-white shadowBox">
+
+
+						<section class="hotel-list">
+
+
+
+
+							<div class="hotel-grid-cn clearfix tab-section"
+								style="margin-top: 7%;">
+								<div class="col-xs-4 searchRoomType">
+									<div class="input-group location">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-map-marker fa-2x"></i>
+										</div>
+										<input type="text" class="form-control" id="location"
+											value={{searchObj.roomType}} ng-disabled="true"
+											style="text-transform: uppercase; font-size: 15px !important; padding: 11px !important;">
+									</div>
+								</div>
+								<div class="col-xs-4 searchRoomType">
+									<div class="input-group location">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-map-marker fa-2x"></i>
+										</div>
+										<input type="text" class="form-control" id="location"
+											value={{searchObj.place}} ng-disabled="true"
+											style="text-transform: uppercase; font-size: 15px !important; padding: 11px !important;">
+									</div>
+								</div>
+
+
+								<div class="col-xs-12" style="width: 100% !important">
+									<!-- <div
+										class="form-group row full-width main-filter searchFilter10"
+										style="margin-left: -7%;">
+										<div class="col-lg-4 col-md-8 col-sm-8 col-xs-12 searchPlace">
+											<div class="input-group location">
+												<div class="input-group-addon searchbord">
+													<i class="fa fa-map-marker fa-2x"></i>
+												</div>
+												<input type="text" class="form-control" id="location"
+													value={{searchObj.place}} ng-disabled="true"
+													style="text-transform: uppercase; font-size: 15px !important; padding: 11px !important;">
+											</div>
+										</div>
+										<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"
+											style="width: 12% !important">
+											<div class="input-group peoples">
+												<div class="input-group-addon searchbord">
+													<i class="fa fa-users fa-2x"></i>
+												</div>
+												<input type="number" class="form-control"
+													value={{searchObj.capacity.min}} ng-disabled="true"
+													style="font-size: 15px !important; padding: 11px !important;">
+											</div>
+										</div>
+										<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12 mrleft3">
+											<div class="input-group peoples">
+												<div class="input-group-addon searchbord">
+													<i class="fa fa-clock-o fa-2x" data-toggle="popover"
+														title="Find special offers for your meeting"></i>
+												</div>
+												<input type="text" class="form-control searchTime"
+													value={{bookingStartTime}} ng-disabled="true"
+													style="font-size: 15px !important; padding: 11px !important;">
+
+											</div>
+										</div>
+
+										<div class="col-lg-1 col-md-1 col-sm-1 searchLine"
+											style="width: 1vw; margin-left: -14px; margin-top: 10px;">
+											<i class="fa fa-minus" aria-hidden="true"></i>
+										</div>
+
+										<div
+											class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchTime1366">
+											<div class="input-group peoples">
+												<div class="input-group-addon searchbord">
+													<i class="fa fa-clock-o fa-2x" data-toggle="popover"
+														title="Find special offers for your meeting"></i>
+												</div>
+												<input type="text" class="form-control searchTime"
+													value={{bookingEndTime}} ng-disabled="true"
+													style="font-size: 15px !important; padding: 11px !important;">
+											</div>
+										</div>
+
+										<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchDate"
+											style="width: 20% !important"
+											data-ng-hide="isTrainingOrHotDesk">
+
+											<div class="input-group start-date">
+												<div class="input-group-addon searchbord">
+													<i class="fa fa-calendar fa-2x" data-toggle="popover"
+														title="Find special offers for your meeting"></i>
+												</div>
+												<input type="text" class="form-control searchStartDateInput"
+													id="start-date" value={{bookingDate}} ng-disabled="true"
+													style="font-size: 15px !important; padding: 11px !important;">
+											</div>
+										</div>
+										<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchDate"
+											style="width: 20% !important"
+											data-ng-show="isTrainingOrHotDesk">
+											<div class="input-group start-date">
+												<div class="input-group-addon searchbord">
+													<i class="fa fa-calendar fa-2x" data-toggle="popover"
+														title="Find special offers for your meeting"></i>
+												</div>
+												<input type="text" class="form-control searchStartDateInput"
+													id="start-date" value={{bookingFromDate}}
+													ng-disabled="true"
+													style="font-size: 15px !important; padding: 11px !important;">
+											</div>
+										</div>
+										<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchToDate"
+											style="width: 20% !important"
+											data-ng-show="isTrainingOrHotDesk">
+											<div class="input-group end-date">
+												<div class="input-group-addon searchbord">
+													<i class="fa fa-calendar fa-2x" data-toggle="popover"
+														title="Find special offers for your meeting"></i>
+												</div>
+												<input type="text"
+													class="form-control searchStartDateToInput" id="end-date"
+													value={{bookingToDate}} ng-disabled="true"
+													style="font-size: 15px !important; padding: 11px !important;">
+											</div>
+										</div>
+										 <div class="col-lg-2 col-md-4 col-sm-4 col-xs-12">
+						        <div class="input-group end-date">
+						            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+						            <input type="text" class="form-control popup-toggle" id="end-date" value={{searchObj.etime|date:ha}}>
+						        </div>
+						    </div>
+									</div> -->
+
+
+
+									<div
+										class="col-xs-6 col-sm-4 col-md-6 col-lg-4 searchListSingleCol"
+										ng-repeat="room in rooms">
+										<div class="hotel-item">
+											<figure class="hotel-img" ng-show="room.image">
+												<a href="" title=""> <img src="{{room.image}}" alt="">
+												</a>
+
+											</figure>
+											<figure class="hotel-img" ng-show="!room.image">
+												<a href="" title=""> <img
+													src="http://res.cloudinary.com/tarento/image/upload/v1460693602/570e8f207c9c6c001e1460d9.png"
+													alt="">
+												</a>
+											</figure>
+											<div class="hotel-text descHeight searchHotel">
+												<div class="searchHotelInner">
+													<div class="hotel-name">
+														<a href=""
+															data-ng-click="detail(SEARCH.URL_PATH.SEARCH_DETAILS,room._id)">{{room.spaceId.name}}</a>
+													</div>
+													<div class="hotel-places"
+														style="font-size: 20px !important">
+														<div>{{room.name}}</div>
+													</div>
+													<div class="hotel-places">
+														<div>{{room.spaceId.locality}}</div>
+													</div>
+													<!-- 	<perfect-scrollbar class="scroller mt20"
+														wheel-propagation="true" wheel-speed="10"
+														min-scrollbar-length="20"
+														style="height: 162px; overflow-y: hidden;"> -->
+
+													<div class="mt20 scrollbarContent" id="scrollbarContent"
+														ng-scrollbars>
+														<div class="hotel-places mt10"
+															ng-repeat="package in room.packages">
+															<span class="packageName">{{package.packageName}}
+															</span> <span class="packageName"><i
+																class="fa fa-info-circle mouse-pointer"
+																ng-click="modal(package)" aria-hidden="true"></i> </span>
+															<div ng-repeat="payment in package.paymentPlan"
+																ng-show="$first">
+																<span class="paymentPaln">Rs. {{payment.amount}}
+																	onwards</span>
+															</div>
+														</div>
+
+														<!-- 	<div class="hotel-places mt10"
+															ng-repeat="package in room.packages">
+															<span>{{package.packageName}} </span> <span><i
+																class="fa fa-info-circle mouse-pointer"
+																ng-click="modal(package)" aria-hidden="true"></i> </span>
+															<div ng-repeat="payment in package.paymentPlan"
+																ng-show="$first">
+																<span class="paymentPaln">Rs. {{payment.amount}}
+																	onwards</span>
+															</div>
+														</div>
+													
+														<div class="hotel-places mt10"
+															ng-repeat="package in room.packages">
+															<span>{{package.packageName}} </span> <span><i
+																class="fa fa-info-circle mouse-pointer"
+																ng-click="modal(package)" aria-hidden="true"></i> </span>
+															<div ng-repeat="payment in package.paymentPlan"
+																ng-show="$first">
+																<span class="paymentPaln">Rs. {{payment.amount}}
+																	onwards</span>
+															</div>
+														</div> -->
+
+													</div>
+
+													<!-- </perfect-scrollbar> -->
+
+
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<!-- End Hotel Grid Content-->
+							<!-- Page Navigation -->
+							<div class="row col-xs-12 page-navigation-cn">
+								<div class="col-xs-6" ng-hide="pageNo == 0">
+
+									<a href="" title="" class="awe-btn arrow-right"
+										data-ng-click="prev()"> Previous</a>
+								</div>
+								<div class="col-xs-6" ng-hide="rooms.length < 6">
+									<a href="" title="" class="awe-btn arrow-right pull-right"
+										data-ng-click="next()"> Next</a>
+								</div>
+							</div>
+
+							<!-- Page Navigation -->
+						</section>
+						<!-- End Hotel List -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div data-ng-include="'/search/views/virtualOfficePackage.html'"></div>
+
+</section>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#tabs a').bind('click', function(e) {
+			console.log('i m here');
+			$('#tabs a.current').removeClass('current');
+			$('.tab-section:visible').fadeOut(1000);
+			$(this.hash).fadeIn(1000);
+			$(this).addClass('current');
+			e.preventDefault();
+		}).filter(':first').click();
+
+		$('.filterSection').hide();
+		$('#filterMe').on('click', function() {
+			$('.filterSection').slideToggle('medium');
+		});
+		$('#cancelBtn , #applyBtn').on('click', function() {
+			$('.filterSection').slideUp('medium');
+		});
+	});
+</script>

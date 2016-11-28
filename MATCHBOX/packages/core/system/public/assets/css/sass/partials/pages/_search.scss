@@ -1,0 +1,236 @@
+@import "../../mixins/backgrounds";
+@import "../../mixins/transitions";
+@import "../../mixins/buttons";
+@import "../../mixins/margin-padding";
+@import "../../mixins/loaders";
+@import "../../mixins/borders";
+
+$font-stack: 'Open Sans';
+
+.form-radio {
+  @include generalMargin(0);
+  @include generalPadding(0);
+  list-style: none;
+  overflow: hidden;
+  @include bgndcolor(#fff);
+  
+  li {
+    float: left;
+    @include paddings(15px, 20px, 15px, 20px);
+    
+    .radio:checked ~ label {
+      color: #25ab4b;
+    }
+    label {
+      font-weight: 600;
+    }
+    label:after {
+      @include bgndcolor(#25ab4b);
+    }
+  }
+}
+
+.form-cn {
+  @include bgndcolor(rgba(0,0,0,0.4));
+  @include paddings(15px, 15px, 15px, 15px);
+  /*border-top: 5px solid rgba(0,0,0,0.6);*/
+  /*box-shadow: 0px 3px 6px 0 #F37124;*/
+  
+  h2 {
+    @include generalMargin(0);
+    color: #FFF;
+    font-size: 32px;
+  }
+  .form-search {
+    @include bgndcolor(#fff);
+    @include topMargin(0px);
+
+    .form-field {
+      float: left;
+      @include paddings(0px, 15px, 0px, 15px);
+      border-right: 1px solid #e6e6e6;
+      font-size: 18px;
+      position: relative;
+      font-family: $font-stack;
+      color: #25ab4b;
+      line-height: 30px;
+      font-weight:600;
+      
+      label {
+        font-size: 14px;
+        @include rightPadding(30px);
+        position: absolute;
+        display: block;
+        z-index: 0;
+        font-weight: 600;
+        @include generalMargin(0);
+        overflow: hidden;
+        font-size: 14px;
+        height: 29px;
+        color: #999999;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        top: 50%;
+        @include transformation(translate(0, -50%));
+        
+        span {
+          font-size: 18px;
+          color: rgba(0,0,0,0.9);
+        }
+      }
+
+      label.focus {
+        display: none;
+      }
+      .field-input {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        border: 0;
+        outline: none;
+        color: rgba(0,0,0,0.9);
+        @include bgndcolor(transparent);
+        font-weight: 600;
+        border-bottom: none;
+        line-height: 38px; 
+        padding-bottom: 4px; 
+      }
+      .field-input:after {
+        content: '';
+        display: block;
+        margin: auto;
+        height: 3px;
+        width: 0px;
+        background: transparent;
+        transition: width .5s ease, background-color .5s ease;
+      }
+      .field-input:hover:after {
+        width: 100%;
+        background: #F37124;
+      }
+      .field-input:focus {
+        border-bottom:1px solid #F37124;
+      }
+      .field-input:-moz-placeholder {
+        color: #999999;
+      }
+      .field-input:-ms-input-placeholder {
+        color: #999999;
+      }
+      .field-input::-webkit-input-placeholder {
+        color: #999999;
+      }
+    }
+    .form-field.field-date{ 
+      line-height: 45px;
+      .field-input {
+        background: url('../../../../../system/assets/img/custom/icon-calendar.png') no-repeat right center;
+        @include rightPadding(20px);
+      }
+    }
+    .form-field.field-date:after {
+      right: 20px;
+    }
+
+    .form-field.field-select {
+
+      .select { 
+        
+        select {
+          font-weight: 600;
+          color: rgba(0,0,0,0.9);
+        }
+
+        span {
+          font-weight: 600;
+          border-bottom: none;
+          line-height: 45px;
+        }
+        span.desk{
+          color: #999999;
+        }
+        span.option{
+          color: rgba(0,0,0,0.9);
+        }
+
+        select:focus, span:focus {
+          border-bottom: 1px solid #F37124;
+        }
+        span:after {
+          font-size: 24px;
+          color: #b9b9b9;
+          font-weight: normal;
+        }
+      }
+    }
+    
+    .form-submit {
+      float: left;
+      @include paddings(0px, 0px, 0px, 0px);
+      
+      .awe-btn {
+        line-height: 42px;
+        width: 100%;
+        background-position: right 10px center;
+      }
+    }
+  }
+}
+
+.form-hotdesk {
+  .field-destination {
+    
+  }
+  .field-date, .field-select, .form-submit {
+    
+  }
+}
+
+.form-meetingroom {
+  .field-destination {
+    width: 25%;
+  }
+  .field-date, .field-select {
+    width: 14%;
+  }
+
+  .form-submit {
+    width: 9%;
+  }
+}
+
+.form-boardroom {
+  .field-destination {
+    width: 30%;
+  }
+  .field-date, .field-select, .form-submit {
+    width: 14%;
+  }
+}
+
+.form-trainingroom {
+  .field-destination {
+    width: 30%;
+  }
+  .field-date, .field-select, .form-submit {
+    width: 14%;
+  }
+}
+
+.form-virtualoffice {
+  .field-destination {
+    
+  }
+  .field-date, .field-select, .form-submit {
+    width: 14%;
+  }
+}
+
+.form-plugnplay {
+  .field-destination {
+    
+  }
+  .field-date, .field-select, .form-submit {
+    width: 14%;
+  }
+}

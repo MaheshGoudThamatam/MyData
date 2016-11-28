@@ -1,0 +1,64 @@
+<style type="text/css">
+</style>
+<div class="form-cn form-boardroom tab-pane" id="">
+	<h5 class="search-caption">Board Room (&gt; 8 Attendees)</h5>
+	<div class="form-search clearfix" id="datepairMeetingroom">
+		
+		<div class="form-field form-custom-low mar-1">
+			<select id="select-search-hide" class="select-ui" data-placeholder="City" ng-model="boardRoom.city" ng-change="selectLocationObj(boardRoom.city)"
+				ng-options="location.seqNo as location.city for location in locations">
+				<option value="">City</option>
+			</select>
+		</div>
+		
+		<div class="form-field form-custom-low mar-1" style="margin-left: 2%;">
+			
+			<angucomplete-alt id="meetingRoomDestination" name="meetingRoomDestination" class="autoCompleteField"
+				placeholder="Locality"
+				pause="100" selected-object="locality"
+				local-data="localityAreas" search-fields="value" disable-input="disableInput"
+				title-field="value" minlength="1" focus-in="onFocus(boardRoom)"
+				input-class="form-control form-control-small" required />
+				
+			</div>
+			<div class="form-field form-custom-low mar-1">
+				
+				<select id="select-search-hide" class="select-ui" data-placeholder="Capacity" ng-model="boardRoom.capacity"
+					ng-options="capacity.data as capacity.data for capacity in boardRoomCapacity">
+					<option value="">Capacity</option>
+				</select>
+			</div>
+			<div class="form-field form-custom-low mar-1">
+				<input readonly="true" type="text" name="daterangeBoardRoom" id="boardRoomDate" class="field-input" style="font-size: 12px;border: none;color: #8f97a0;margin-left: 1%;" ng-click="loadBoardRoomCalendar();onDateChangeTime('boardRoom');" placeholder="Date" />
+			</div>
+			
+			<div class="form-custom-low mar-1 form-field" style="width: 50%;">
+				<div class='input-group date'>
+					<!-- <input type='time' id='boardroomcheckin' placeholder="Check In"
+					class="" style="font-size: 11px;color: #a2a2b9;border: none;" /> -->
+					<input data-ng-click="blurTimeDropdown();" type="text" id='boardroomcheckin' ng-model="meetingRoom.startTime" style="font-size: 11px;color: #a2a2b9;border: none;" class="field-input start startTimeMeetinRoom"  placeholder="Start Time" />
+					<span class="input-group-addon icon-timepicker" id="boardCheckInIcon" style="padding-right: 4px;"> <span
+					class="glyphicon glyphicon-time"></span>
+				</span>
+			</div>
+		</div>
+		<div class="form-custom-low mar-1 form-field" style="width: 50%;">
+			<div class='input-group date'>
+				<!-- <input type='time' id='boardroomcheckout' placeholder="Check Out"
+				class="" style="font-size: 11px;color: #a2a2b9;border: none;" /> -->
+				<input data-ng-click="blurTimeDropdown();" type="text" id='boardroomcheckout' style="font-size: 11px;color: #a2a2b9;border: none;" class="field-input end endTimeMeetinRoom" placeholder="End Time" />
+				<span class="input-group-addon icon-timepicker" id="boardCheckOutIcon" style="padding-right: 4px;"> <span
+				class="glyphicon glyphicon-time"></span>
+			</span>
+		</div>
+	</div>
+	<div class="form-submit" style="margin-left: 35%;width: 30% !important;margin-top: 5%;zoom: 75%;">
+		<a type="submit"
+			class="awe-btn awe-btn-lager awe-search aweSearchBtn search-button-align"
+			data-ng-click="searchMeetingRoom(boardRoom, 'Board Room')">
+			<i class="fa fa-search search-icon" aria-hidden="true"></i><span
+			class="search-search-button-media">Search</span>
+		</a>
+	</div>
+</div>
+</div>

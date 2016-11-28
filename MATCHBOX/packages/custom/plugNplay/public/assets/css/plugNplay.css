@@ -1,0 +1,14 @@
+.plugNplay-example h1 {
+  background-color: purple
+}
+
+.savebutton{
+	margin-top:-10px;
+}
+
+.selectInput{
+	line-height:30px !important;
+}
+.checkarea{
+	margin-right:8px !important;
+}

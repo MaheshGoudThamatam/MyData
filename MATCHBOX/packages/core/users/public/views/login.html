@@ -1,0 +1,107 @@
+<section class="sub-banner" id="loginPage" style="padding: 0% 15px 0 15px;" data-ng-controller="LoginCtrl as login">
+            <!-- <div class="bg-parallax"></div> -->
+            <!-- End Background
+            Logo -->
+            <div class="logo-banner text-center">
+                <a href="/" title="">
+                    <img src="/system/assets/img/logo/logo.png" alt="">
+                </a>
+            </div>
+            <div class="main">
+            <div class="container">
+                <div class="loginLowMarg2 main-cn element-page bg-white clearfix iPageLow">
+                    <!-- Breakcrumb -->
+                    <!-- <section class="breakcrumb-sc" style="padding:15px 30px;">
+                        <ul class="breadcrumb arrow">
+                            <li><a href="index.html"><i class="fa fa-home"></i></a></li>
+                            <li>GET IN</li>
+                        </ul>
+                        <div class="support pull-right">
+                            <small>Got a question?</small> +91 1231 231 234
+                        </div>
+                    </section> -->
+                    <!-- End Breakcrumb -->
+                    
+                    <div class="user-profile user-login-page" id="signin">
+                        <div class="user-form user-signup">
+                        <!-- <div ng-repeat="error in loginError" class="registerErrorMedia">
+                            <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
+                        </div> -->
+                            <form>
+                                <div class="row">
+                                  <div class="col-sm-12 col-lg-12">
+                                                 <div data-ng-include="'/system/views/alert.html'"></div>
+                                            </div>
+                                    <h2 class="col-xs-12 user-profile__title text-center">Sign in</h2>
+                                    <div class="col-md-5">
+                                        <p class="dNoneLow">Access your account information and manage your bookings.</p>
+                                         <div class="field-input">
+                                            <input type="email" class="input-text" placeholder="Email ID" ng-model="login.user.email" required>
+                                        </div>
+                                        <div class="field-input">
+                                            <input type="password" class="input-text" placeholder="Password" ng-model="login.user.password" required>
+                                        </div>
+                                        <div class="field-input">
+                                            Forgot your password?
+                                            <a href="/forgot-password" id="forgotPswd"> Reset it</a>
+                                        </div>
+                                        <div class="field-input btnCenterLow">
+                                            <a style="margin-right: 1em;" class="awe-btn awe-default" href="/">Cancel</a>
+                                            <a  class="awe-btn arrow-right signInBtn" ng-click="login.login()">Sign in</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 col-md-offset-2 btnCenterLow"  ng-controller="AuthCtrl">
+                                    <!-- <p>Sign in with your social login credentials </p> -->
+
+									<a href="" class="field-input blockDisplay facbook-loginmtop" target="_self" ng-href="/api/auth/facebook">
+                                        <img src="/system/assets/img/custom/custom/icons/f.png" alt="facebook login" >
+                                    </a>
+                                    <a ng-hide = true href="" class="field-input blockDisplay" target="_self" ng-href="/api/auth/google">
+                                        <img src="/system/assets/img/custom/custom/icons/g.png" alt="facebook login">
+                                    </a>
+                                    <a ng-hide = true ng-href="/api/auth/linkedin" class="field-input blockDisplay" target="_self" ng-href="/api/auth/linkedin">
+                                        <img src="/system/assets/img/custom/custom/icons/l.png" alt="linkedin login">
+                                    </a>
+                                </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-5 margin3015">
+                                        Are you a new user? <a href="/register" id="newUser" class="">Sign Up</a> for a free account
+                                    </div>
+                                   <h4 class="promocodeBg" id="promocodeBg" ng-click="promoCodeRedirect();" ng-if="(!hdrctr.hdrvars.authenticated)" style="text-transform: capitalize;clear: both;margin-left: 0.7em;cursor:pointer;float: left;line-height: 0.1em;transition: all 200ms ease-in;">Create an account and get Rs.200 OFF on your 1<sup style="font-size: 11px;">st</sup> booking</h4>
+                                    
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!-- Logo -->
+            <script type="text/javascript">
+                $(document).keypress(function(e)
+                {
+                if (e.which == 13) {
+                    console.log("in fn");
+                    $('.signInBtn').click();
+                }
+                });
+                /* Animation for PROMO CODE in landing page. */
+                // $(document).ready(function () {
+                //     setTimeout(function(){
+                //         $("#promocodeBg").removeClass("promoCodeColor");
+                //             setTimeout(function() {
+                //                 $("#promocodeBg").addClass("promoCodeColor");
+                //             }, 1);
+                //             function fadeBgToggle($obj) {
+                //                 $obj.fadeToggle(400, function () {
+                //                 fadeBgToggle($obj)
+                //             });
+                //         }
+                //     fadeBgToggle($("#promocodeBg"));
+                //     }, 1000);
+                // });
+            </script>
+        </section>
+        
+        

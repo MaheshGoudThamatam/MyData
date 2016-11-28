@@ -1,0 +1,4 @@
+<ng-map  id="spaceMap" scale-control="true" center="{{address}}" zoom="{{zoomLevel}}">
+	<marker ng-if="address" position="{{address}}" title="{{address.title}}" on-dragend="dragFn();" draggable="{{dragMarker}}"></marker>
+</ng-map>
+<div class="text-danger" ng-if="mapError">Please enter address to see location in map.</div>

@@ -1,0 +1,36 @@
+<section class="partnerinfo mydetails" data-ng-controller="NotificationController" data-ng-init="loadAlert()">
+    <div class="container-fluid">
+        <!-- Banner Content -->
+        <div class="banner-cn">
+
+            <!-- Tabs Content -->
+            <div class="tab-content" style="background: transparent;">
+                <div class="row">
+                    <div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+                    <div class="col-sm-9 col-lg-10 mydetailsnav">
+                        <div class="page-content page-thin dashboard-content col-sm-12 col-lg-12 no-left-pad">
+                            <div class="row">
+                                <div class="col-sm-12 col-lg-12 portlets">
+                                    <div class="panel" style="padding: 15px; cursor:pointer;" data-ng-repeat="alert in alerts" data-ng-click="readNotification(alert)">
+                                        <div class="panel-heading"><h2>{{alert.title}}</h2></div>
+                                        <div class="panel-content">
+                                            <h3>{{alert.description}}</h3>
+                                        </div>
+                                    </div>
+                                    <div ng-if= "alerts.length == 0" class="panel" style="padding: 15px; cursor:pointer;">
+                                        <div class="panel-heading"><h2>Oops!</h2></div>
+                                        <div class="panel-content">
+                                            <h3>You don't have any notifications.</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Tabs Content -->
+        </div>
+        <!-- End Banner Content -->
+    </div>
+</section>

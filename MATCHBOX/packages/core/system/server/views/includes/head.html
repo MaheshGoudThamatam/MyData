@@ -1,0 +1,122 @@
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="fragment" content="!">
+
+  <title>MYMATCHBOX: Real Time Bookings for Office Spaces</title>
+  <link id="favicon" rel="shortcut icon" type="image/png" href=""/>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+  <meta name="keywords" content="office spaces, meeting room, hot desk, training room, plug-n-play, booking">
+  <meta name="description" content="100% Verified Listings of Meeting Rooms, Hot Desks, Board Rooms, Training Rooms, and more in Bangalore, Mumbai, Pune and other major cities in India.">
+
+  <meta property="fb:app_id" content="APP_ID">
+  <meta property="og:title" content="MYMATCHBOX: Real Time Bookings for Office Spaces">
+  <meta property="og:description" content="100% Verified Listings of Meeting Rooms, Hot Desks, Board Rooms, Training Rooms, and more in Bangalore, Mumbai, Pune and other major cities in India.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="APP_URL">
+  <meta property="og:image" content="APP_LOGO">
+  <meta property="og:site_name" content="MYMATCHBOX: Real Time Bookings for Office Spaces">
+  <meta property="fb:admins" content="APP_ADMIN">
+  
+  <meta name="google-site-verification" content="PMZLxDP59f_kp64yxgO4OLw0-1SHwZbqYehSTiV3QtY" />
+  
+  <link rel="manifest" href="/system/assets/static/manifest.json">
+  
+  <!-- {{locals.config.cssFramework}} -->
+  <!-- <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css">
+   -->
+
+  {% for file in aggregatedassets.header.css %}
+    <link rel="stylesheet" href="{{file}}">
+  {% endfor %}
+
+  {% for file in aggregatedassets.footer.css %}
+    <link rel="stylesheet" href="{{file}}">
+  {% endfor %}
+  <link href='https://fonts.googleapis.com/css?family=Lato:300,400,700%7COpen+Sans:300,400,600,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="system/assets/css/sass/main.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/library/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/library/jquery-ui.min.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/library/owl.carousel.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/library/jquery.mb.YTPlayer.min.css">  
+  <link rel="stylesheet" type="text/css" href="system/assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/theme.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/ui.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/layout.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/library/dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="system/assets/css/ieC.css">
+
+
+<script type="text/javascript" src="system/assets/js/library/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&sensor=false"></script>
+<script type="text/javascript" src="system/assets/js/library/jquery-ui.min.js"></script>
+<script type="text/javascript" src="system/assets/js/library/bootstrap.min.js"></script>
+  
+<script type="text/javascript" src="system/assets/js/library/parallax.min.js"></script>
+<script type="text/javascript" src="system/assets/js/library/jquery.nicescroll.js"></script>
+<script type="text/javascript" src="system/assets/js/library/jquery.ui.touch-punch.min.js"></script>
+<script type="text/javascript" src="system/assets/js/library/jquery.mb.YTPlayer.min.js"></script>
+<script type="text/javascript" src="system/assets/js/library/SmoothScroll.js"></script>
+<script type="text/javascript" src="system/assets/js/library/owl.carousel.min.js"></script>
+<script type="text/javascript" src="system/assets/js/script.js"></script>
+  {% for file in aggregatedassets.header.js %}
+    <script type="text/javascript" src="{{file}}"></script>
+  {% endfor %}
+
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    // var favicon = ['1.png','2.png','3.png','4.png','5.png','6.png','7.png','8.png','9.png','10.png','11.png','12.png','13.png','14.png'];  
+        var dataArray=new Array();
+        dataArray[0]="system/assets/img/loaders/7.png";
+        dataArray[1]="system/assets/img/loaders/9.png";
+        dataArray[2]="system/assets/img/loaders/10.png";
+        dataArray[3]="system/assets/img/loaders/11.png";
+        dataArray[4]="system/assets/img/loaders/12.png";
+        dataArray[5]="system/assets/img/loaders/13.png";
+        dataArray[6]="system/assets/img/loaders/14.png";
+        //start with id=0 after 5 seconds
+        var thisId=0;
+
+        window.setInterval(function(){
+            $('#favicon').attr('href',dataArray[thisId]);
+            thisId++; //increment data array id
+            if (thisId>=6) thisId=0; //repeat from start
+        },2000);
+      if ($.browser.msie) {
+        $("html").addClass("ieC");
+      }
+      // else{
+      //   $("html").addClass("noIEC");
+      // }
+      if(navigator.userAgent.match(/Trident\/7\./)) {
+        $("html").addClass("ieC");
+      }
+      if (/Edge/.test(navigator.userAgent)) {
+        $("html").addClass("ieC");
+      }
+      
+      if (navigator.userAgent.indexOf('Safari') != -1 && (navigator.userAgent.indexOf('Chrome') == -1)) {
+        $("html").addClass("sfC");
+      }
+
+    });
+</script>
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyD3BP6yv2gutqVSlkkoIq-Yhtgv86Ecc5g"></script>
+</head>
+<style type="text/css">
+  .toast.toast-warning {
+    width: 100% !important;
+    opacity: 1 !important;
+  }
+  div#toast-container {
+    z-index: 999999999;
+  }
+</style>
+

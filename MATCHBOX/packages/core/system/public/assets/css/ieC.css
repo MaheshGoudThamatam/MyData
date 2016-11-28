@@ -1,0 +1,268 @@
+ /* For IE 10 and above */
+
+
+
+.ieC .captionPage {
+    text-align: center;
+}
+
+.ieC .startTimeMeetinRoom, .ieC .endTimeMeetinRoom {
+	height: 2em;
+	margin-top: 0.1em;
+}
+
+.ieC .searchpageLow  {
+	margin-top: 10vh;
+}
+.ieC .searchMessageIndexPg, .ieC .virtualOfficeMsg {
+	text-align: center;
+}
+.ieC .searchFilter10 {
+	padding-top: 5%
+}
+.ieC #start-date {
+	width: 75% !important;
+}
+.ieC #myMatchBoxMap {
+	margin-top: 11%;
+	width: 100vw;
+}
+.ieC .listpageFilterList {
+	padding-left: 0% !important;
+}
+.ieC .searchDetailDate {
+	width: 50% !important;
+}
+.ieC .searchBookingMap #myMatchBoxMap {
+	margin-top: 1% !important;
+}
+
+.ieC .promoCodeHover:hover {
+    transform: scale(1.1);
+    transition: all 200ms ease-in;
+    font-weight: bolder;
+    padding-right: 1.5em;
+}
+
+/* End - IE 10 CSS */
+/* Index page bottom white issue */
+.ieC #wrap section.banner {
+    padding: 0 !important;
+    margin-top: 0 !important;
+}
+.ieC #wrap {
+    overflow: visible !important;
+}
+/* End of issue */
+
+/* Media query for IE */
+
+
+	/* Device upto 1280px width resolution */
+
+		@media (min-width: 1025px) and (max-width: 1281px) {
+			.ieC .searchToDateLowGridQ #start-date {
+				width: 75% !important;
+			}
+			.ieC #start-date {
+				width: 230% !important;
+			}
+			.ieC .searchFilter10 {
+				padding-top: 0%;
+			}
+			.ieC .searchFilter10 {
+				margin-top: 1% !important;
+			}
+			.ieC #myMatchBoxMap {
+				margin-top: 15%;
+				width: 110%;
+			}
+			.ieC .searchListViewResult {
+				margin-top: 3% !important;
+			}
+			.ieC .searchModifyListBtn {
+				width: 25% !important;
+				float: right;
+			}
+			.ieC .detailFilterPageWidLow {
+				margin-top: 5% !important;
+			}
+			.ieC .searchDetailDate {
+				width: 5% !important;
+			}
+			.ieC .slideshow-margin .gal-slider {
+				margin-top: 7% !important;
+			}
+			.ieC .searchDetailBookNow {
+				float: right;
+				width: auto;
+				margin-bottom: 10%;
+			}
+			.ieC .searchDetailMap {
+				margin-top: 2% !important;
+			}
+			.ieC .searchDetailMap #myMatchBoxMap {
+				height: 100vh !important;
+			}
+
+			/* Daterangepicker Hotdesk */
+			.ieC .daterangepicker.ltr {
+				zoom: 80% !important;
+				margin-top: 4% !important;
+				margin-right: 1.5% !important;
+			}
+			.ieC .daterangepicker.dropdown-menu{
+				top: 135px !important;
+			}
+			.ieC button.applyBtn {
+				width: 10.5vw;
+				height: 2.4vw;
+				position: absolute;
+				margin-top: 25%;
+			}
+			.ieC  button.cancelBtn {
+				width: 10.5vw;
+				height: 2.4vw;
+				position: absolute;
+				margin-top: 33%;    
+				margin-left: 0%;
+			}
+			.ieC .weekendBtn  {
+				margin-top: 25%;
+			}
+			.ieC .daterangepicker.dropdown-menu {
+				width: 55vw;
+			}
+			/* End - Daterangepicker */
+
+			.ieC .ieFontSize20 {
+				font-size: 20px;
+			}
+			.ieC .ieFontSize17 {
+				font-size: 17px;
+			}
+			.ieC .daterangepicker.dropdown-menu.single{
+				left: 630px !important;
+				top: 135px !important;
+				width: 21vw;
+			}
+			.ieC .searchDetailTimeEnd {
+				margin-top: 1%;
+			}
+			
+
+		}
+
+	/* End - 1280px resolution */
+
+	/* Device upto 1280px width resolution */
+
+		@media (min-width: 1281px) and (max-width: 1367px) {
+			.ieC .searchDate {
+				width: 75% !important;
+			}
+			.ieC .searchToDateLowGridQ #start-date, .ieC .searchDate #start-date {
+				width: 230% !important;
+			}
+			.ieC .detailFilterPageWidLow {
+				margin-top: 5% !important;
+			}
+			.ieC .slideshow-margin .gal-slider {
+				margin-top: 7% !important;
+			}
+			.ieC .searchDetailBookNow {
+				float: right;
+				width: auto;
+				margin-bottom: 10%;
+			}
+			.ieC .ieFontSize20 {
+				font-size: 20px;
+			}
+			.ieC .ieFontSize17 {
+				font-size: 17px;
+			}
+			.ieC .detailPagePriceSpan {
+				float: right;
+				font-size: 21px;
+			}
+			.ieC .searchDetailTimeEnd {
+				margin-top: 1%;
+			}
+			.ieC .searchDetailDate.searchDetailDate {
+				width: 35% !important;
+			}
+			.ieC .searchDetailDate.searchDetailDate #start-date {
+				width: 230% !important;
+			}
+			.ieC .searchDetailDateQLow #start-date {
+				width: 230% !important;				
+			}
+		}
+
+	/* End - 1280px resolution */
+
+	/* Device upto 1280px width resolution */
+
+		@media (max-width: 1440px) {
+			.ieC .searchDate #start-date {
+				width: 230% !important;
+			}
+			.ieC .searchToDateLowGridQ #start-date {
+				width: 230% !important;
+			}
+			.ieC .detailFilterPageWidLow {
+				margin-top: 5% !important;
+			}
+			.ieC .slideshow-margin .gal-slider {
+				margin-top: 7% !important;
+			}
+			.ieC .searchDetailBookNow {
+				float: right;
+				width: auto;
+				margin-bottom: 10%;
+			}
+			.ieC .ieFontSize20 {
+				font-size: 20px;
+			}
+			.ieC .ieFontSize17 {
+				font-size: 17px;
+			}
+			.ieC .detailPagePriceSpan {
+				float: right;
+				font-size: 21px;
+			}
+			.ieC .searchDetailTimeEnd {
+				margin-top: 0%;
+			}
+			.ieC .searchDetailOne .searchDetailTimeEnd {
+				margin-top: 1%;
+			}
+			.ieC .searchDetailDate.searchDetailDateSpan, .ieC .searchDetailDate.searchDetailDateQLow {
+				width: 35% !important;
+			}
+			.ieC .searchDetailDate.searchDetailDateQLow {
+				margin-left: -10%;
+			}
+			.ieC .searchDetailDate.searchDetailDateSpan #start-date, .ieC .searchDetailDate.searchDetailDateQLow #start-date {
+				width: 230% !important;
+			}
+			.ieC .cancellationPTag {
+				width: 99%;
+			}
+			.ieC .searchDetailTimeEnd {
+				margin-top: 0% !important;
+			}
+
+		}
+
+	/* End - 1280px resolution */
+	@media (min-width: 1300px) and (max-width: 1367px) {
+			
+			.ieC .searchDetailBookNow {
+				float: right;
+				width: auto;
+				margin-bottom: 10%;
+			}
+	}
+
+/* End - media query */

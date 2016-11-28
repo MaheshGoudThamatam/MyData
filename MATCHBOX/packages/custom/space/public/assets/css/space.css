@@ -1,0 +1,167 @@
+.space-example h1 {
+  background-color: purple
+}
+.team-form{
+	display: inline-block;	
+}
+.btnWidth{
+	width: 100%;
+}
+.errRed{
+	color: #ff0000;
+}
+.selectRole
+{
+    height: 34px;
+ }
+.removeTeam
+{
+    margin-top: 28px;
+    margin-left: -50px;
+ } 
+.image-text-delete{
+	margin-top: 25px;
+}
+.image-text-delete a, .image-text-delete a:hover, .image-text-delete a:focus{	
+	color: #ff0000;
+	font-size: 22px;
+	cursor: pointer;
+}
+
+	#preloaderImage {
+		position: fixed;
+		display: table;
+		text-align: center;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background-color: rgba(255,255,255,0.4);
+		z-index: 999999999; 
+	}
+	#preloaderImage #page-loadingImage div {
+		width: 40px;
+		height: 40px;
+		border-right: 3px solid;
+		border-bottom: 3px solid transparent;
+		-webkit-border-radius: 100%;
+		-moz-border-radius: 100%;
+		-ms-border-radius: 100%;
+		-o-border-radius: 100%;
+		border-radius: 100%;
+		-webkit-animation: spin 0.9s linear infinite;
+		-moz-animation: spin 0.9s linear infinite;
+		-o-animation: spin 0.9s linear infinite;
+		-ms-animation: spin 0.9s linear infinite;
+		animation: spin 0.9s linear infinite;
+		margin: auto; 
+	}
+	#preloaderImage #page-loadingImage p h4 {
+		text-align: center;
+		text-transform: uppercase;
+		z-index: 99;
+		color: black;
+		font-size: 12px;
+		overflow: hidden;
+		margin-top: 5px;
+		padding-top: 10px;
+		padding-right: 0;
+		padding-bottom: 10px;
+		padding-left: 0;
+		left: 50vw !important;
+	}
+	.h-image-caption {
+		margin-left: 48% !important;
+		margin-top: 4vh !important;
+	}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+    border-color: #fcb918; }
+  50% {
+    transform: rotate(180deg);
+    border-color: #F37124; }
+  75% {
+    transform: rotate(270deg);
+    border-color: #E22428; }
+  100% {
+    transform: rotate(359deg);
+    border-color: #fcb918; } }
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    border-color: #fcb918; }
+  50% {
+    -webkit-transform: rotate(180deg);
+    border-color: #F37124; }
+  75% {
+    -webkit-transform: rotate(270deg);
+    border-color: #E22428; }
+  100% {
+    -webkit-transform: rotate(359deg);
+    border-color: #fcb918; } }
+
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+    border-color: #fcb918; }
+  50% {
+    -moz-transform: rotate(180deg);
+    border-color: #F37124; }
+  75% {
+    -moz-transform: rotate(270deg);
+    border-color: #E22428; }
+  100% {
+    -moz-transform: rotate(359deg);
+    border-color: #fcb918; } }
+
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+    border-color: #fcb918; }
+  50% {
+    -o-transform: rotate(180deg);
+    border-color: #F37124; }
+  75% {
+    -o-transform: rotate(270deg);
+    border-color: #E22428; }
+  100% {
+    -o-transform: rotate(359deg);
+    border-color: #fcb918; } }
+
+    .weekly-timing {
+		text-align: center;
+		font-weight: bold;
+		text-transform: uppercase;
+    }
+   .mapCreate ng-map {
+    height:67vh !important;
+    }
+    
+.marginLeft-Initial {
+	margin-left: initial !important;
+}
+
+.global-loader {
+    padding-left: 50%;
+    padding-top: 25%;
+    display: block;
+}
+
+/*
+	To avoid placeholder to capatalize
+*/
+::-webkit-input-placeholder { /* WebKit browsers */
+    text-transform: none;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    text-transform: none;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    text-transform: none;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    text-transform: none;
+}

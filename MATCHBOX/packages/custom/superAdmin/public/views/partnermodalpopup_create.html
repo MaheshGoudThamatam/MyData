@@ -1,0 +1,195 @@
+<section>
+<div id="partnerModal" class="modal fade text-align" role="dialog">
+<div class="modal-dialog">
+<!-- Modal content-->
+<div class="modal-content">
+<div class="modal-header">
+<div>
+<button type="button" class="close" data-dismiss="modal">&times;</button>
+<h2 align="center">Add Partner</h2>
+</div>
+</div>
+<div class="modal-body">
+<section class=" mydetails" data-ng-init="loadRoomTypeCommission();initPhone();">
+<div class="container-fluid">
+<!-- Banner Content -->
+<!-- <h4 class="modal-title">Add Partner</h4> -->
+<div class="banner-cn">
+<!-- Tabs Content -->
+<div class="tab-content">
+<div class="row">
+<!-- <div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div> -->
+<!-- End Tabs Cat -->
+<div class="col-xs-offset-1 col-sm-9 col-lg-10 mydetailsnav">
+<div
+	class="page-content page-thin dashboard-content col-sm-12 col-md-12 no-left-pad">
+	<!-- <section class="breakcrumb-sc">
+		<ul class="breadcrumb arrow">
+			<li><a href="home.html"><i class="fa fa-home"></i></a></li>
+			<li>Add Partner</li>
+		</ul>
+	</section> -->
+	<div class="row">
+		<div class="col-xs-12 portlets">
+			<div class="panel panel-default no-bd">
+				<div class="panel-body bg-white">
+					<div class="row">
+						<div class="col-md-12 col-sm-12 col-xs-12">
+							<form role="form" class="form-validation"
+								name="partnerDetailForm" id="partnerDetailForm">
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="form-group"
+											ng-class="{ 'has-error' : submitted && partnerDetailForm.first_name.$invalid }">
+											<label class="control-label">Name</label>
+											<div class="append-icon">
+												<input type="text" name="first_name"
+												class="form-control" minlength="4"
+												ng-model="partnerObj.first_name"
+												placeholder="Minimum 4 characters" required>
+												<i class="icon-user"></i>
+											</div>
+										</div>
+										<div ng-repeat="err in error.data">
+											<div class="errRed"
+											ng-if="err.param=='first_name'">{{err.msg}}</div>
+										</div>
+										<div ng-show="submitted && partnerDetailForm.first_name.$invalid">
+											<span class="err-msg errorText validaion-color" ng-show="partnerDetailForm.first_name.$error.required">Please enter the name </span>
+											<span class="err-msg errorText validaion-color" ng-show="partnerDetailForm.first_name.$viewValue.length < 4">Minimum 4 characters required</span>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="form-group"
+											ng-class="{ 'has-error' : submitted && partnerDetailForm.email.$invalid }">
+											<label class="control-label">Email Address</label>
+											<div class="append-icon">
+												<input type="email" name="email" data-ng-pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/" class="form-control" data-ng-model="partnerObj.email" placeholder="Enter your email" required>
+												<i class="icon-envelope"></i>
+											</div>
+										</div>
+										<div ng-repeat="err in error.data">
+											<div class="errRed" ng-if="err.param=='email'">{{err.msg}}</div>
+										</div>
+										<div ng-show="submitted && partnerDetailForm.email.$invalid">
+											<!-- <span class="err-msg errorText validaion-color" ng-show="partnerDetailForm.email.$error.required">Please enter the email </span> -->
+											<span class="err-msg errorText validaion-color" ng-show="partnerDetailForm.email.$error.required">Please enter the email</span>
+											<span class="err-msg errorText validaion-color" data-ng-show="partnerDetailForm.email.$error.pattern">Please enter valid email</span>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="form-group"
+											ng-class="{ 'has-error' : submitted && partnerDetailForm.contactName.$invalid }">
+											<label class="control-label">Contact Name</label>
+											<div class="append-icon">
+												<input type="text" name="contactName"
+												class="form-control"
+												data-ng-model="partnerObj.contactName"
+												placeholder="Enter your contact name" required>
+											</div>
+										</div>
+										<div ng-repeat="err in error.data">
+											<div class="errRed"
+											ng-if="err.param=='contactName'">{{err.msg}}</div>
+										</div>
+										<div
+											ng-show="submitted && partnerDetailForm.contactName.$invalid">
+											<span class="err-msg errorText validaion-color"
+												ng-show="partnerDetailForm.contactName.$error.required">Please
+											enter the contact name </span>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="form-group">
+											<label class="control-label">Contact Phone Number</label>
+											<div class="append-icon">
+												<!-- <input ng-minlength="10" ng-maxlength="10" onkeypress="return isNumber(event)" type="number" name="contactPhoneNo" class="form-control" data-ng-model="partnerObj.contactPhoneNo" placeholder="Enter your phone number" required> -->
+												<input onkeypress="return isNumber(event)" class="form-control" id="contactPhoneNo" ng-click="flagTrue()" ng-model="partnerObj.contactPhoneNo" name="contactPhoneNo" type="tel" style="padding-left: 4em !important;" data-ng-disabled="contactDetail">
+											</div>
+											<div ng-repeat="err in error.data">
+												<div class="errRed" ng-if="err.param=='contactPhoneNo'">{{err.msg}}</div>
+											</div>
+											<div ng-show="isPhNoInvalid">
+												<span class="err-msg errorText validaion-color" ng-show="isPhNoInvalid">Please enter the phone number</span>
+												<span style="display: block;" class="err-msg errorText validaion-color" ng-show="isPhNoInvalid">Phone number should be 10 digits</span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xs-12">
+										<table class="table table-hover table-dynamic">
+											<thead>
+												<tr>
+													<th style="text-transform: none;">Room Type</th>
+													<th style="text-transform: none;">Commission Percentage</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr data-ng-repeat="roomType in roomTypes">
+													<td>{{roomType.name}}</td>
+													<td><input name="commission" type="number"
+														data-ng-model="roomType.commission"
+													value="{{roomType.commission}}" required /></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="text-center  m-t-20 addPartnerLow">
+									<a id="next1" class="awe-btn awe-default"
+									data-ng-click="cancel()" href="">Cancel</a> <a
+									id="next1" class="awe-btn arrow-right" href=""
+									style="margin-left: 4px"
+								data-ng-click="savePartner(partnerObj,partnerDetailForm.$valid)">Submit</a>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- End Tabs Content -->
+</div>
+<!-- End Banner Content -->
+</section>
+<!--End Banner-->
+</div>
+<!--   <div class="modal-footer">
+<a id="next1" class="awe-btn awe-default"
+					data-ng-click="cancel()" href="">Cancel</a> <a id="next1"
+					class="awe-btn arrow-right" href=""
+				data-ng-click="savePartner(partnerObj,partnerDetailForm.$valid)">Submit</a>
+</div> -->
+</div>
+</div>
+</div>
+<script type="text/javascript">
+function isNumber(evt) {
+evt = (evt) ? evt : window.event;
+var charCode = (evt.which) ? evt.which : evt.keyCode;
+if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+return false;
+}
+/*
+Uncomment to accept '+' in phone number field.
+*/
+// if (charCode == 43) {
+//     return true;
+// }
+return true;
+}
+</script>
+</section>

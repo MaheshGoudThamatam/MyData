@@ -1,0 +1,250 @@
+<section>
+	<div id="partnerModalEdit" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<div>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h2 align="center">Edit Partner</h2>
+					</div>
+				</div>
+				<div class="modal-body">
+					<section class="mydetails" data-ng-init="initPhone();">
+						<div class="container-fluid">
+							<!-- Banner Content -->
+							<div class="banner-cn">
+								<!-- Tabs Content -->
+								<div class="tab-content">
+									<div class="row">
+										<!-- <div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div> -->
+										<!-- End Tabs Cat -->
+										<div class="col-xs-offset-1 col-sm-9 col-lg-10 mydetailsnav">
+											<div
+												class="page-content page-thin dashboard-content col-sm-12 col-md-12 no-left-pad">
+												<!-- <section class="breakcrumb-sc">
+								<ul class="breadcrumb arrow">
+									<li><a href="home.html"><i class="fa fa-home"></i></a></li>
+									<li>Add Partner</li>
+								</ul>
+							</section> -->
+
+												<div class="row">
+													<div class="col-xs-12 portlets">
+
+														<div class="panel panel-default no-bd">
+
+															<div class="panel-body bg-white">
+																<div class="row">
+																	<div class="col-md-12 col-sm-12 col-xs-12">
+																		<form role="form" class="form-validation"
+																			name="partnerDetailForm" id="partnerDetailForm">
+																			<div class="row">
+																				<div class="col-xs-12">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && partnerDetailForm.first_name.$invalid }">
+																						<label class="control-label">Name</label>
+																						<div class="append-icon">
+																							<input type="text" name="first_name"
+																								class="form-control" minlength="4"
+																								ng-model="partnerObj.first_name"
+																								placeholder="Minimum 4 characters..." required>
+																							<i class="icon-user"></i>
+																						</div>
+																					</div>
+																					<div ng-repeat="err in error.data">
+																						<div class="errRed"
+																							ng-if="err.param=='first_name'">{{err.msg}}</div>
+																					</div>
+																					<div
+																						ng-show="submitted && partnerDetailForm.first_name.$invalid">
+																						<span class="err-msg errorText validaion-color"
+																							ng-show="partnerDetailForm.first_name.$error.required">Please
+																							enter the name </span>
+																					</div>
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-xs-12">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && partnerDetailForm.email.$invalid }">
+																						<label class="control-label">Email Address</label>
+																						<div class="append-icon">
+																							<input type="email" name="email"
+																								class="form-control"
+																								data-ng-model="partnerObj.email"
+																								placeholder="Enter your email..." required>
+																							<i class="icon-envelope"></i>
+																						</div>
+																					</div>
+																					<div ng-repeat="err in error.data">
+																						<div class="errRed" ng-if="err.param=='email'">{{err.msg}}</div>
+																					</div>
+																					<div
+																						ng-show="submitted && partnerDetailForm.email.$invalid">
+																						<span class="err-msg errorText validaion-color"
+																							ng-show="partnerDetailForm.email.$error.required">Please
+																							enter the email </span>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="row">
+																				<div class="col-xs-12">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && partnerDetailForm.contactName.$invalid }">
+																						<label class="control-label">Contact Name</label>
+																						<div class="append-icon">
+																							<input type="text" name="contactName"
+																								class="form-control"
+																								data-ng-model="partnerObj.contactName"
+																								placeholder="Enter your contact name" required>
+																						</div>
+																					</div>
+																					<div ng-repeat="err in error.data">
+																						<div class="errRed"
+																							ng-if="err.param=='contactName'">{{err.msg}}</div>
+																					</div>
+																					<div
+																						ng-show="submitted && partnerDetailForm.contactName.$invalid">
+																						<span class="err-msg errorText validaion-color"
+																							ng-show="partnerDetailForm.contactName.$error.required">Please
+																							enter the contact name </span>
+																					</div>
+																				</div>
+																			</div>
+																			<!-- <div class="row">
+																				<div class="col-xs-12">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && partnerDetailForm.contactPhoneNo.$invalid }">
+																						<label class="control-label">Contact
+																							PhoneNo</label>
+																						<div class="append-icon">
+																							<input type="number" name="contactPhoneNo"
+																								class="form-control"
+																								data-ng-model="partnerObj.contactPhoneNo"
+																								placeholder="Enter your contactPhoneNo" required>
+																						</div>
+																					</div>
+																					<div ng-repeat="err in error.data">
+																						<div class="errRed"
+																							ng-if="err.param=='contactPhoneNo'">{{err.msg}}</div>
+																					</div>
+																					<div
+																						ng-show="submitted && partnerDetailForm.contactPhoneNo.$invalid">
+																						<span class="err-msg errorText validaion-color"
+																							ng-show="partnerDetailForm.contactPhoneNo.$error.required">Please
+																							enter the contact phone number </span>
+																					</div>
+																				</div>
+																			</div> -->
+															<div class="row">
+																<div class="col-xs-12">
+																	<div class="form-group">
+																		<label class="control-label">Contact Phone Number</label>
+																		<div class="append-icon">
+																			<input onkeypress="return isNumber(event)" class="form-control" id="contactPhoneNoEdit" ng-click="flagTrue()" ng-model="partnerObj.contactPhoneNo" name="contactPhoneNo" type="tel" style="padding-left: 4em !important;" data-ng-disabled="contactDetail">
+																		</div>
+																		<div ng-repeat="err in error.data">
+																			<div class="errRed" ng-if="err.param=='contactPhoneNo'">{{err.msg}}</div>
+																		</div>
+																		<div ng-show="isPhNoInvalid">
+																			<span class="err-msg errorText validaion-color" ng-show="isPhNoInvalid">Please enter the phone number</span>
+																			<span style="display: block;" class="err-msg errorText validaion-color" ng-show="isPhNoInvalid">Phone number should be 10 digits</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+																			<div class="row" data-ng-show="!showCommission">
+																				<div class="col-xs-12">
+																					<table class="table table-hover table-dynamic">
+																						<thead>
+																							<tr>
+																								<th>Room Type</th>
+																								<th>Commission Percentage</th>
+																							</tr>
+																						</thead>
+																						<tbody
+																							data-ng-repeat="commissionPercent in partnerObj.commissionPercentage">
+																							<tr>
+																								<td>{{commissionPercent.name}}</td>
+																								<td>
+																									<div class="append-icon">
+																										<input type="number" name="commission"
+																											class="form-control"
+																											data-ng-model="commissionPercent.commission"
+																											required>
+																									</div>
+																								</td>
+																							</tr>
+																						</tbody>
+																					</table>
+
+																				</div>
+																			</div>
+																			<div class="row" data-ng-show="showCommission">
+																				<div class="col-xs-12">
+																					<table class="table table-hover table-dynamic">
+																						<thead>
+																							<tr>
+																								<th>Room Type</th>
+																								<th>Commission Percentage</th>
+																							</tr>
+																						</thead>
+																						<tbody>
+																							<tr data-ng-repeat="roomType in roomTypes">
+																								<td>{{roomType.name}}</td>
+																								<td><input name="commission" type="text"
+																									data-ng-model="roomType.commission"
+																									value="{{roomType.commission}}" /></td>
+
+																							</tr>
+																						</tbody>
+																					</table>
+
+																				</div>
+																			</div>
+
+																			<div class="text-center  m-t-20 addPartnerLow">
+																				<a id="next1" class="awe-btn awe-default"
+																					data-ng-click="cancelEdit()" href="">Cancel</a> <a
+																					id="next1" class="awe-btn arrow-right iconCursor"
+																					style="margin-left: 4px"
+																					data-ng-click="update(partnerObj,partnerDetailForm.$valid)">Submit</a>
+																			</div>
+																		</form>
+
+																	</div>
+																</div>
+															</div>
+														</div>
+
+													</div>
+												</div>
+
+
+
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Tabs Content -->
+						</div>
+						<!-- End Banner Content -->
+					</section>
+					<!--End Banner-->
+				</div>
+				<!--   <div class="modal-footer">
+       <a id="next1" class="awe-btn awe-default"
+																data-ng-click="cancel()" href="">Cancel</a> <a id="next1"
+																class="awe-btn arrow-right" href=""
+																data-ng-click="savePartner(partnerObj,partnerDetailForm.$valid)">Submit</a>
+      </div> -->
+			</div>
+
+		</div>
+	</div>
+</section>

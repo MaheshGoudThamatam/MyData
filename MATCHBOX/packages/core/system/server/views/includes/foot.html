@@ -1,0 +1,14 @@
+
+
+{% for file in aggregatedassets.footer.js %}
+  <script type="text/javascript" src="{{file}}"></script>
+{% endfor %}
+<script type="text/javascript" src="/system/assets/js/myMatchBox.js"></script>
+<script type="text/javascript" src="/system/assets/js/library/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/system/assets/js/library/table_dynamic.js"></script>
+{% if (process.env.NODE_ENV == 'development') %}
+  <!-- <script type="text/javascript" src="{{'//' + req.hostname + ':35729/livereload.js'}}"></script> -->
+  <script  async defer type="text/javascript" src="{{'//' + req.hostname + ':35729/livereload.js'}}"></script>
+{% endif %}
+
+<!--  -->

@@ -1,0 +1,103 @@
+<section class="partnerinfo mydetails"
+	data-ng-controller="BookingController" data-ng-init="loadUserBooking()">
+<style type="text/css">
+	@media only screen and (max-width: 450px) and (min-width: 320px) {
+		/*th.text-center.sorting {
+    		background-color: white;
+		}
+		th.text-center.sorting:before {
+    		display: none;
+		}*/
+	}
+</style>
+<!-- 	<div ng-if="loaderEnabled">
+		<div id="preloaderImage">
+			<div class="tb-cell">
+				<div id="page-loadingImage">
+					<div></div>
+					<p>
+					<h4 class="h-image-caption">Loading....</h4>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+<div class="container-fluid">
+	<div class="main-cn element-page bg-white clearfix">
+		<section class="user-login-page">
+			<div class="row">
+					<div class="col-md-3">
+					  <div class="user-profile__header">
+                                    <h4>{{logUser.first_name}}</h4>
+                                    <p>
+                                        <!-- <img class="img-responsive" src="{{userDetailObj.avatar}}" alt="Profile Photo"> -->
+                                        <img ng-if = "logUser.avatar" class="nopad-bordr img-circle img-thumbnail img-responsive" src="{{thumbimg}}" alt = "">
+                                        <img ng-if = "!logUser.avatar" class="nopad-bordr img-circle img-thumbnail img-responsive" src="/system/assets/img/custom/avatars/avatar4.png" alt = "">
+                                    </p>
+                                    
+                                </div>
+                              <ul class="user-profile__navigation">
+                                    <li style="cursor: pointer;" class="current"><a data-ng-click="userBookings()"><i class="fa fa-shopping-cart" aria-hidden="true"></i> My Bookings</a></li>
+                                    <li style="cursor: pointer;"><a data-ng-click = "userProfile()"><i class="fa fa-user" aria-hidden="true" ></i> My Profile</a></li>
+                                    <li style="cursor: pointer;"><a data-ng-click="changePassword()"><i class="fa fa-cog" aria-hidden="true"></i> Change Password</a></li>
+                                   <!--  <li><a href="" data-ng-click="hdrctr.logout()"><img src="images/icon/icon-back.png" alt="">Sign out</a></li> -->
+
+                                </ul>
+					</div>
+				<div class="col-md-9">
+					<div class="my-profile">
+                         <div class="row">
+					      <div class="panel panelBookingPage" style="padding: 15px;">
+										<div class="panel-content pagination2">
+											<table datatable="ng"  class="table table-bordered row-border hover booking-table tableBookingPage" dt-options="dtOptions" dt-column-defs="dtColumnDefs" id="userBookingTable">
+												<thead>
+													<tr>
+													    <th class="text-center">ID</th>
+														<th class="text-center">Booking ID</th>
+														<th class="text-center">Booking Date</th>
+														<th class="text-center">Room Name</th>
+														<th class="text-center tdBookingAddress">Space</th>
+														<th class="text-center tdBookingAddress">City</th>
+														<th class="text-center">Timings</th>
+														<th class="text-center tdBookingCost">Price</th>
+														<th class="text-center">Status</th>
+														<th class="text-center tdBookingBookedDate">Booked Date</th>
+														<th class="text-center">Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="userBooking in userBookings">
+														<td class="text-center">{{userBooking._id}}</td>
+														<td class="text-left">{{userBooking.bookingConfirmationId}}</td>
+                                                         <td class="text-right">{{userBooking.bookingDate|date:'dd MMM yy'}}</td>
+
+														<td class="text-left">{{userBooking.room.name}}</td>
+														<td class="text-left tdBookingAddress">{{userBooking.space.name}}</td>
+														<td class="text-left tdBookingAddress">{{userBooking.space.city}}</td>
+
+                                                         <td class="text-right">{{userBooking.bookingStartTime|date:'ha'}} - {{userBooking.bookingEndTime|date:'ha'}}</td>
+                                                         <td class="text-right tdBookingCost">&#8377;&nbsp;{{userBooking.price}}</td>
+                                                         <td class="text-left">{{userBooking.status}} </td>
+														<td class="text-right tdBookingBookedDate">{{userBooking.createdAt|date:'dd MMM yy'}}</td>
+                 <td class="text-center">
+	                 <a class="menu-toggler editIcon" ng-click="redirectAttendee(userBooking, BOOKING.URL_PATH.VIEWBOOKINGDETAILS)" title="View " ><i class="fa fa-eye" aria-hidden="true"></i></a>
+	                 <a ng-if="userBooking.reviewed" class="menu-toggler editIcon" ng-click="reviewdMessage();" title="Review "><i class="fa fa-comment-o" aria-hidden="true"></i></a>
+					<a ng-show="(!userBooking.reviewed) && (userBooking.bookingNewdate < currentDate)" style="color: red;" class="menu-toggler editIcon" ng-click="bookingreview(userBooking._id,BOOKING.URL_PATH.BOOKINGREVIEW)" title="Review "><i class="fa fa-comment-o" aria-hidden="true"></i></a>
+				</td>
+													</tr>
+												</tbody> 
+											</table>
+										</div>
+									</div>
+
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+</section>

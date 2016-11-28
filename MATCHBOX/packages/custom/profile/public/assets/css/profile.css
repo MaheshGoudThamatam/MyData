@@ -1,0 +1,12 @@
+.profile-example h1 {
+  background-color: purple
+}
+.mar-top-5p {
+	margin-top: 5%;
+}
+.p-justify {
+	text-align: justify !important;
+}
+.cursorDisabledBtn {
+	cursor: not-allowed !important;
+}

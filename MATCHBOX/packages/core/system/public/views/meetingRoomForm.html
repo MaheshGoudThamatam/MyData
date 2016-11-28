@@ -1,0 +1,71 @@
+<style type="text/css">
+.daterangepicker.dropdown-menu.single {
+    top: 20% !important;
+    /*zoom: 60% !important;*/
+    left: 10% !important;
+    width: 50% !important;
+}
+</style>
+<div class="form-cn form-meetingroom tab-pane active in">
+	<h4 class="search-caption">Meeting Room (2 to 8 Attendees)</h4>
+	<div class="form-search clearfix" id="datepairMeetingroom">
+		
+		<div class="form-field form-custom-low mar-1">
+			<select id="select-search-hide" class="select-ui" data-placeholder="City" ng-model="meetingRoom.city" ng-change="selectLocationObj(meetingRoom.city)"
+				ng-options="location.seqNo as location.city for location in locations">
+				<option value="">City</option>
+			</select>
+		</div>
+		
+		<div class="form-field form-custom-low mar-1" style="margin-left: 2%;">
+			
+			<angucomplete-alt id="meetingRoomDestination" name="meetingRoomDestination" class="autoCompleteField"
+				placeholder="Locality"
+				pause="100" selected-object="locality"
+				local-data="localityAreas" search-fields="value"
+				title-field="value" minlength="1"
+				input-class="form-control form-control-small" required />
+				
+			</div>
+			<div class="form-field form-custom-low mar-1">
+				
+				<select id="select-search-hide" class="select-ui" data-placeholder="Capacity" ng-model="meetingRoom.capacity"
+					ng-options="capacity.data as capacity.data for capacity in meetingRoomCapacity">
+					<option value="">Capacity</option>
+				</select>
+			</div>
+			
+			<div class="form-field form-custom-low mar-1">
+				<input readonly="true" type="text" name="daterangeMeetingRoom" id="meetingRoomDate" class="field-input" style="font-size: 12px;border: none;color: #8f97a0;margin-left: 1%;" ng-click="loadMeetingRoomCalendar();onDateChangeTime('meetingRoom');" placeholder="Date" />
+			</div>
+
+			<div class="form-custom-low form-field mar-1" style="width: 50%;">
+				<div class='input-group date'>
+					<!-- <input type='time' step="1800" id='meetingcheckin' placeholder="Check In" ng-model="meetingRoom.startTime"
+					class="" style="font-size: 11px;color: #a2a2b9;border: none;"/> -->
+					<input data-ng-click="blurTimeDropdown();" type="text" id='meetingcheckin' ng-model="meetingRoom.startTime" style="font-size: 11px;color: #a2a2b9;border: none;" class="field-input start startTimeMeetinRoom"  placeholder="Start Time" />
+					<span class="input-group-addon icon-timepicker" id="meetingCheckInIcon" style="padding-right: 4px;"> <span
+					class="glyphicon glyphicon-time"></span>
+				</span>
+			</div>
+		</div>
+		<div class="form-custom-low form-field mar-1" style="width: 50%;">
+			<div class='input-group date'>
+				<!-- <input type='time' step="1800" id='meetingcheckout' placeholder="Check Out"
+				class="" style="font-size: 11px;color: #a2a2b9;border: none;" /> -->
+				<input data-ng-click="blurTimeDropdown();" type="text" id='meetingcheckout' style="font-size: 11px;color: #a2a2b9;border: none;" class="field-input end endTimeMeetinRoom" placeholder="End Time" />
+				<span class="input-group-addon icon-timepicker" id="meetingCheckOutIcon" style="padding-right: 4px;" > <span
+				class="glyphicon glyphicon-time"></span>
+			</span>
+		</div>
+	</div>
+	<div class="form-submit" style="margin-left: 35%;width: 30% !important;margin-top: 5%;zoom: 75%;">
+		<a type="submit"
+			class="awe-btn awe-btn-lager awe-search aweSearchBtn search-button-align"
+			data-ng-click="searchMeetingRoom(meetingRoom, 'Meeting Room')">
+			<i class="fa fa-search search-icon" aria-hidden="true"></i><span
+			class="search-search-button-media">Search</span>
+		</a>
+	</div>
+</div>
+</div>

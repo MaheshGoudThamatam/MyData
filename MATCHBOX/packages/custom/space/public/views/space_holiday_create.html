@@ -1,0 +1,148 @@
+<section class="partnerinfo mydetails" ng-controller="SpaceHolidayController" data-ng-init="loadDateSelected();">
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+			<!-- Tabs Content -->
+			<div class="tab-content" style="background: transparent;">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+					<!-- End Tabs Cat -->
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div class="page-content page-thin dashboard-content">
+							<!-- <section class="breakcrumb-sc">
+								<ul class="breadcrumb arrow">
+									<li><a href="home.html"><i class="fa fa-home"></i></a></li>
+									<li>Add Holiday</li>
+								</ul>
+							</section> -->
+							<div class="row">
+								<div class="col-lg-12 portlets">
+									<div class="">
+
+										<div class="col-lg-12" style="padding-left: 0;">
+											<div class="tab-content">
+												<!-- Basic Info -->
+												<div class="form-hotel tab-pane active in no-padding"
+													id="basicInfo">
+													<div class="col-xs-8" style="padding-left: 0;">
+														<div class="panel panel-default no-bd">
+															<div class="panel-heade text-left" style="padding: 15px;">
+																<h3>Holiday Create</h3>
+															</div>
+															<div class="panel-body bg-white">
+																<div class="row">
+																	<div class="col-md-12 col-sm-12 col-xs-12">
+																		<form role="form" class="form-validation"
+																			name="HolidayForm" id="HolidayForm" novalidate>
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && HolidayForm.name.$invalid }">
+																						<label class="control-label">Name</label>
+																						<div class="append-icon">
+																							<input type="text" name="name"
+																								class="form-control" minlength="4"
+																								ng-model="holiday.name"
+																								placeholder="Minimum 4 characters..." required>
+																							<i class="icon-user"></i>
+																						</div>
+																					</div>
+
+																					<div
+																						ng-show="submitted && HolidayForm.name.$invalid"
+																						class="help-block">
+																						<p ng-show="HolidayForm.name.$error.required">Name
+																							is required</p>
+																					</div>
+
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && HolidayForm.description.$invalid }">
+																						<label class="control-label">Description</label>
+																						<div class="append-icon">
+																							<input type="text" name="description"
+																								class="form-control"
+																								ng-model="holiday.description"
+																								placeholder="Minimum 4 characters..." required>
+																							<i class="icon-user"></i>
+																						</div>
+																					</div>
+
+																					<div
+																						ng-show="submitted && HolidayForm.description.$invalid"
+																						class="help-block">
+																						<p
+																							ng-show="HolidayForm.description.$error.required">Description
+																							is required</p>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && HolidayForm.holiday_date.$invalid }">
+																						<label class="control-label">Holiday Date</label>
+																						<div class="append-icon">
+																							<input type="text" name="holiday_date"
+																								class="form-control" minlength="4"
+																								data-ng-model="holiday.holiday_date"
+																								placeholder="Minimum 4 characters..."
+																								ng-disabled="true" format-date /> <i
+																								class="icon-user"></i>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && HolidayForm.year.$invalid }">
+																						<label class="control-label">Holiday Year</label>
+																						<div class="append-icon">
+																							<input type="text" name="year"
+																								class="form-control" minlength="4"
+																								data-ng-model="holiday.year"
+																								placeholder="Minimum 4 characters..."
+																								ng-disabled="true" /> <i class="icon-user"></i>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																			<div class="row col-md-12">
+			<div class="text-center  m-t-20">
+		<a href="" class="awe-btn awe-default"
+               data-ng-click="cancel()">Cancel </a> <a href=""
+               id="next1" data-toggle="tab" class="awe-btn arrow-right"
+               data-ng-click="create(HolidayForm.$valid)">Submit</a>
+	</div>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+																<!-- Add Room -->
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End Tabs Content -->
+					</div>
+					</div>
+					</div>
+					</div>
+					</div>
+					
+					<!-- End Banner Content -->
+</section>
+<!--End Banner-->

@@ -1,0 +1,92 @@
+/* mixins for margins*/
+
+@mixin generalMargin($value){
+	margin: $value;
+}
+
+@mixin topMargin($value){
+	margin-top: $value;
+}
+
+@mixin rightMargin($value){
+	margin-right: $value;
+}
+
+@mixin bottomMargin($value){
+	margin-bottom: $value;
+}
+
+@mixin leftMargin($value){
+	margin-left: $value;
+}
+
+@mixin topBottomMargin($value1, $value2){
+	margin-top: $value1;
+	margin-bottom: $value2;
+}
+
+@mixin rightLeftMargin($value1, $value2){
+	margin-right: $value1;
+	margin-left: $value2;
+}
+
+@mixin marginTopEqualRLBottom($value1, $value2, $value3){
+	margin-top: $value1;
+	margin-right: $value2;
+	margin-bottom: $value3;
+	margin-left: $value2;
+} 
+
+@mixin margins($value1, $value2, $value3, $value4){
+	margin-top: $value1;
+	margin-right: $value2;
+	margin-bottom: $value3;
+	margin-left: $value4;
+}
+
+
+/* mixins for padding*/
+
+@mixin generalPadding($value){
+	padding: $value;
+}
+
+@mixin topPadding($value){
+	padding-top: $value;
+}
+
+@mixin rightPadding($value){
+	padding-right: $value;
+}
+
+@mixin bottomPadding($value){
+	padding-bottom: $value;
+}
+
+@mixin leftPadding($value){
+	padding-left: $value;
+}
+
+@mixin topBottomPadding($value1, $value2){
+	padding-top: $value1;
+	padding-bottom: $value2;
+}
+
+@mixin rightLeftPadding($value1, $value2){
+	padding-right: $value1;
+	padding-left: $value2;
+}
+
+@mixin PaddingTopEqualRLBottom($value1, $value2, $value3){
+	padding-top: $value1;
+	padding-right: $value2;
+	padding-bottom: $value3;
+	padding-left: $value2;
+} 
+
+@mixin paddings($value1, $value2, $value3, $value4){
+	padding-top: $value1;
+	padding-right: $value2;
+	padding-bottom: $value3;
+	padding-left: $value4;
+}

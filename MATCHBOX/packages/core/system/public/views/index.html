@@ -1,0 +1,756 @@
+<section class="banner" data-ng-controller="SearchController"
+	ng-init="init();meetingRoomTimeUI();hotDeskTimeUI();virtualOfficetimeUI();boardRoomTimeUI();trainingRoomTimeUI();loadHoliday();findScreenSize();">
+<!-- 	<div class="appError">
+		<div id="appRedirection">
+			<img class="" src="/system/assets/img/logo/logo.png" alt="" style="width: 50vw;margin: 25%;">
+			<h3 style="margin-top: -20%;"><a href="#">Click here to download mobile application</a></h3><div class="tb-cell"></div>
+		</div>
+	</div> -->
+	<!--Background-->
+
+	<!--End Background-->
+
+	<div class="container-fluid">
+		<div data-ng-include="'/system/views/alert.html'"></div>
+		<div class="roomTypeDropdown">
+		<div class="app-banner">
+			<!-- <h2>Download App...</h2> -->
+			<img src="http://res.cloudinary.com/tarento/image/upload/v1474635049/playstore-soon_g5hm7w.png" style="height: 10vh;width: 50vw;top: 50vh;left: 25vw;position: absolute;">
+			<!-- Enable if link to APP store is available -->
+			<div class="text-center col-xs-12" style="top: 75%;display: none;">
+				<a style="" class="awe-btn awe-default" href="/">Cancel</a>
+				<a  class="awe-btn arrow-right" style="padding-right: 10px !important;" ng-click="">Continue</a>
+			</div>
+			<!-- End -->
+			<!-- Temporary icon link display -->
+			<div class="text-center col-xs-12" style="top: 75%;">
+				<a style="" class="awe-btn awe-default" ng-click="closeAppBanner();">Close</a>
+			</div>
+			<!-- End -->
+		</div>
+			<div class="text-center" style="height: 10%;width: 50%;margin-left: 22vw;margin-top: -20%;">
+				<a href="/" title="" ng-click="redirectPage();"> <img class="img img-responsive" src="/system/assets/img/logo/logo.png" alt=""></a>
+			</div>
+			<figcaption style="color: white;letter-spacing: 0.05em;text-align: -webkit-center;text-align: -moz-center;margin-bottom: 10%;">Temporary Offices. Permanent Solutions!</figcaption>
+			<div class="row iconMenu">
+				<div class="col-xs-6 col-sm-6">
+					<a data-toggle="tab" href="" title="Hot Desk" ng-click="changeSelection('hotdesk');resetTimeField();">
+						<div class="menuRow">
+							<img class="img img-responsive searchIconHW" src="/system/assets/img/custom/searchicon/2.png" alt="">
+							<span class="spanTag" style="margin-top: 7%;">Hot Desk</span>
+							<p class="subDesc">Upto 10 Desks</p>
+						</div> 
+					</a>
+				</div>
+				<div class="col-xs-6 col-sm-6">
+					<a data-toggle="tab" href="" title="" ng-click="changeSelection('meetingroom');resetTimeField();">
+						<div class="menuRow">
+							<img class="img img-responsive searchIconHW" src="/system/assets/img/custom/searchicon/1.png" alt="Meeting Room">
+							<span class="spanTag" style="margin-top: 7%;">Meeting Room</span>
+							<p class="subDesc">2 to 8 Attendees</p>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="row iconMenu">
+				<div class="col-xs-6 col-sm-6">
+					<a data-toggle="tab" href="" title="" ng-click="changeSelection('boardroom');resetTimeField();">
+						<div class="menuRow">
+							<img class="img img-responsive searchIconHW" src="/system/assets/img/custom/searchicon/15.png" alt="Board Room">
+							<span class="spanTag" style="margin-top: 7%;">Board Room</span>
+							<p class="subDesc">&gt; 8 Attendees</p>
+						</div>
+					</a>
+				</div>
+				<div class="col-xs-6 col-sm-6">
+					<a data-toggle="tab" href="" title="" ng-click="changeSelection('trainingroom');">
+						<div class="menuRow">
+							<img class="img img-responsive searchIconHW" src="/system/assets/img/custom/searchicon/14.png" alt="Training Room">
+							<span class="spanTag" style="margin-top: 7%;">Training Room</span>
+							<p class="subDesc">Upto 50 Attendees</p>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="row iconMenu">
+				<div class="col-xs-6 col-sm-6">
+					<a title="" data-toggle="tab" href="" ng-click="changeSelection('plugandplay');">
+						<div class="menuRow">
+							<img class="img img-responsive searchIconHW" src="/system/assets/img/custom/searchicon/16.png" alt="Plug - n - Play">
+							<span class="spanTag" style="margin-top: 7%;">Plug - n - Play</span>
+							<p class="subDesc">Office Spaces &gt; 1 month</p>
+						</div>
+					</a>
+				</div>
+				<div class="col-xs-6 col-sm-6">
+					<a data-toggle="tab" href="" title="" ng-click="changeSelection('virtualoffice');">
+						<div class="menuRow">
+							<img class="img img-responsive searchIconHW" src="/system/assets/img/custom/searchicon/4.png" alt="Virtual Office">
+							<span style="margin-top: 7%;" class="spanTag">Virtual Office</span>
+							<!-- <p class="subDesc">Upto 50 Persons</p> -->
+						</div>
+					</a>
+				</div>
+			</div>
+			<div class="hideDivTag" id="hotdeskForm" data-ng-include="'/system/views/hotdeskForm.html'"></div>
+			<div class="hideDivTag" id="meetingroomForm" data-ng-include="'/system/views/meetingRoomForm.html'"></div>
+			<div class="hideDivTag" id="boardroomForm" data-ng-include="'/system/views/boardRoomForm.html'"></div>
+			<div class="hideDivTag" id="trainingroomForm" data-ng-include="'/system/views/trainingRoomForm.html'"></div>
+			<div class="hideDivTag" id="virtualofficeForm" data-ng-include="'/system/views/virtualOfficeForm.html'"></div>
+			<div class="hideDivTag" id="plugandplayForm" data-ng-include="'/system/views/plugandplayForm.html'"></div>
+		</div>
+
+		<div class="row col-sm-12 searchpageLow searchForm-d320" style="width: 80vw;margin-left: 10vw;">
+			<div class="logo-banner text-center">
+				<a href="" title=""> <img class="search-image-media"
+					src="/system/assets/img/logo/logo.png" alt="" style="width: 25%;">
+				</a>
+				<!-- <figcaption style="font-size: 1.3em;color: white;letter-spacing: 0.05em;">Temporary offices. Permanent Solutions !</figcaption> -->
+				<p class="captionPage" style="font-size: 1.5em;color: white;letter-spacing: 0.05em;text-align: -webkit-center;text-align: -moz-center;">Temporary Offices. Permanent Solutions!</p>
+			</div>
+
+			<!-- Banner Content -->
+			<div class="banner-cn search-media search-low" style="margin-top: 10%;">
+				<!-- <h1 class="text-center">TAG LINE COMES HERE...</h1> -->
+				<!-- Tabs Cat Form -->
+				<ul class="tabs-cat text-center row">
+					<li class="cate-item col-xs-2 li-media"><a data-toggle="tab" href="#hotDesk" title="Hot Desk" ng-click="resetSelectedLocation(1);resetTimeField();">	
+							<div class="imgrole">
+								<img src="/system/assets/img/custom/searchicon/2.png" alt="">
+							</div> <span class="search-span-media">Hot Desk</span>
+							<p class="subDesc">Upto 10 Desks</p>
+					</a></li>
+					<li class="cate-item active  col-xs-2 li-media"><a
+						data-toggle="tab" href="#meetingRoom" title="" ng-click="resetSelectedLocation(2);resetTimeField();">
+							<div class="imgrole">
+								<img src="/system/assets/img/custom/searchicon/1.png" alt="Meeting Room">
+							</div> <span class="search-span-media">Meeting Room</span>
+							<p class="subDesc">2 to 8 Attendees</p>
+					</a></li>
+					<li class="cate-item col-xs-2 li-media"><a data-toggle="tab"
+						href="#boardRoom" title="" ng-click="resetSelectedLocation(3);resetTimeField();">
+							<div class="imgrole">
+								<img src="/system/assets/img/custom/searchicon/15.png" alt="Board Room">
+							</div> <span class="search-span-media">Board Room</span>
+							<p class="subDesc">&gt; 8 Attendees</p>
+					</a></li>
+
+					<li class="cate-item col-xs-2"><a 
+						data-toggle="tab" href="#trainingRoom" title="" ng-click="resetSelectedLocation(4)">
+							<div class="imgrole">
+								<img src="/system/assets/img/custom/searchicon/14.png" alt="Training Room">
+							</div> <span class="search-span-media">Training Room</span>
+							<p class="subDesc">Upto 50 Attendees</p>
+					</a></li>
+					<li class="cate-item col-xs-2 li-media"><a title="" data-toggle="tab" href="#plugnplay" ng-click="resetSelectedLocation(6)">
+							<div class="imgrole">
+								<img src="/system/assets/img/custom/searchicon/16.png" alt="Plug - n - Play">
+							</div> <span class="search-span-media">Plug - n - Play</span>
+							<p class="subDesc">Office Spaces &gt; 1 month</p>
+					</a></li>
+					<li class="cate-item col-xs-2 li-media"><a data-toggle="tab" href="#virtualoffice" title="" ng-click="resetSelectedLocation(5)">
+							<div class="imgrole">
+								<img src="/system/assets/img/custom/searchicon/4.png" alt="Virtual Office">
+							</div> <span class="search-span-media">Virtual Office</span>
+					</a></li>
+				</ul>
+				<!-- End Tabs Cat -->
+
+				<!-- Tabs Content -->
+				<div class="tab-content">
+
+					<!-- Search hot desk-->
+					<div class="form-cn form-hotdesk tab-pane" id="hotDesk">
+					<h4 class="search-caption">Hot Desk (50 Persons)</h4>
+						<div class="form-search clearfix"  id="datepairMeetingroom">
+						
+						<div class="form-field field-capacity qLow wid11">
+							<select id="select-search-hide" class="select-ui cityDropdown" data-placeholder="City" ng-model="hotDesk.city" ng-change="selectLocationObj(hotDesk.city)"
+									ng-options="location.seqNo as location.city for location in locations">
+									<option value="">City</option>
+									</select>
+						</div>
+
+							<div class="form-field field-destination col-xs-2">
+
+									<!-- <input style="font-size: 15px; color: #636e7b;" type="text" type="text" ng-if="tabNo == 1"
+									id="hotDeskDestination" class="field-input"
+									placeholder="Area, Landmark"
+									ng-model="hotDesk.address" googleplace > -->
+									<angucomplete-alt id="meetingRoomDestination" name="meetingRoomDestination" class="autoCompleteField"
+										placeholder="Locality"
+										pause="100" selected-object="locality"
+										local-data="localityAreas" search-fields="value"
+										title-field="value" minlength="1" focus-in="onFocus(hotDesk)" disable-input="disableInput"
+										input-class="form-control form-control-small" match-class="highlight" required />
+									
+							</div>
+							
+							<div class="capacity-select form-field field-capacity col-xs-2 width-10 qLow">
+								<select id="select-search-hide" class="select-ui"
+									data-placeholder="Choose One" name="occupancy"
+									ng-model="hotDesk.capacity"
+									ng-options="hotDeskData.data as hotDeskData.data for hotDeskData in hotDeskCapacity"
+									ng-selected="{{hotDeskData.data == hotDesk.capacity}}">
+									<option value="">Desks</option>
+								</select>
+							</div>
+							
+							<!-- <div class="form-field field-date field-custom" ng-click="additionalParameter(hotdesk.isWeekend, hotdesk.isHoliday);">
+								<input type="text" class="field-input calendar-input" style="font-size: 15px;color: #636e7b;"
+									id="fromDate" placeholder="From Date"  readonly="true" onfocus="this.blur()" ng-model="temp" ng-change="hotdeskMinDate()" >
+							</div> -->
+							<!-- Range Calendar. -->
+
+							<!-- <input type="text" name="daterange" value="01/01/2015 - 01/31/2015" /> -->
+							<!-- <script type="text/javascript">
+							$(function() {
+							    $('input[name="daterange"]').daterangepicker();
+							});
+							</script> -->
+							
+							<div class="form-field field-date col-xs-3">
+								<input type="text" name="daterange" id="hotdeskdaterangeCal" class="field-input hotdeskDaterange dateHotdeskLow" readonly="true" style="font-size: 15px;border: none;color: #9797a2;padding-bottom: 0px;" ng-click="loadDateRange()" placeholder="Date" readonly />
+							</div>
+
+							
+							<div class="trainingroomcheckinLow trainingroomDateLow form-field">
+								<div class='input-group date' style="margin-bottom: -4%;">
+									<!-- <input type='text' id='hotdeskcheckin' placeholder="Start Time"
+										class="field-input dateHotdeskLow" style="font-size: 15px; color: #636e7b;" /> -->
+										<input type="text" id='hotdeskcheckin' ng-model="meetingRoom.startTime" style="font-size: 15px; color: #9797a2;line-height: 40px;" class="field-input start startTimeMeetinRoom" placeholder="Start Time" ng-change="hotDeskDuration(meetingRoom.startTime);" />
+
+									<span class="input-group-addon icon-timepicker" id="hotdeskCheckInIcon"> <span
+										class="glyphicon glyphicon-time"></span>
+									</span>
+								</div>
+							</div>
+							
+							<div class="trainingroomcheckinLow trainingroomDateLow form-field">
+								<select id="select-search-hide" class="select-ui"
+									data-placeholder="Time" ng-model="hotDesk.duration"
+									ng-change="setEndTimeBasedOnTimeFrameHD(hotDesk)"
+									ng-options="session.seqNo as session.duration for session in hotDeskTimeFrame">
+									<option value="">Duration</option>
+								</select>
+							</div>
+							<!-- <div class="form-field field-date field-custom">
+								<input type="text" class="hotdeskEndDate field-input calendar-input" style="font-size: 15px;color: #636e7b;"
+									id="endDate" placeholder="End Date" readonly="true" onfocus="this.blur()">
+							</div> -->
+
+							<!-- Time type removed from search page -->
+							<!-- <div class="form-field field-select col-xs-2">
+								<select id="select-search-hide" class="select-ui"
+									data-placeholder="Choose One" name="timeType"
+									ng-model="hotDesk.timeType"
+									ng-change="hideEndTime(hotDesk)"
+									ng-options="timeType.data as timeType.data for timeType in trainingTimeTypes"
+									ng-selected="{{timeType.data == hotDesk.timeType}}">
+									<option value="">Time Type</option>
+								</select>
+							</div> -->
+
+							<!-- <div class="trainingroomcheckinLow trainingroomDateLow form-field">
+								<div class='input-group date'>
+									<input type='text' id='hotdeskcheckin' placeholder="Start Time"
+										class="field-input" style="font-size: 15px; color: #636e7b;" />
+									<span class="input-group-addon icon-timepicker" id="hotdeskCheckInIcon"> <span
+										class="glyphicon glyphicon-time"></span>
+									</span>
+								</div>
+							</div> -->
+
+							<div class="form-submit col-xs-2 pull-right searchButtonLow" style="margin-bottom: -0.1%;">
+								<a type="submit"
+									class="awe-btn awe-btn-lager awe-search aweSearchBtn search-button-align"
+									data-ng-click="searchHotDesk(hotDesk, 'Hot Desk')"><i class="fa fa-search search-icon" aria-hidden="true"></i><span
+									class="search-search-button-media">Search</span></a>
+							</div>
+							<div class="col-xs-12">
+
+
+<!-- <table class="table table-hover table-dynamic" style="margin-bottom: 0%;">
+	<tbody>
+		<tr>
+			<td style="border-bottom: none;"><input data-ng-model="hotdesk.isWeekend" type="checkbox" name="check" value="true">
+				Include Weekends
+				<input style="margin-left: 10%;" data-ng-model="hotdesk.isHoliday" type="checkbox" name="check" value="true">
+				Include Holiday
+			</td>
+		</tr>
+	</tbody>
+</table> -->
+
+
+
+							</div>
+						</div>
+						<div style="width: 100%;position: absolute;background-color: rgba(0, 0, 0, 0.4);padding: 0;left: 0;text-align: -moz-center;text-align: -webkit-center;">
+							<h4 class="searchMessageIndexPg" style="font-weight: bold;color: white;line-height: 1.4em;">Real-time Bookings! Anytime, Anywhere!<br/>100% verified listings</h4>
+						</div>
+					</div>
+					<!-- End Search hot desk -->
+
+					<!-- Search Meeting room -->
+					<div class="form-cn form-meetingroom tab-pane active in" id="meetingRoom">
+						<h4 class="search-caption">Meeting Room (2 to 8 Persons)</h4>
+						<div class="form-search clearfix" id="datepairMeetingroom">
+							<div class="form-field field-select col-xs-2 qLow">
+								
+									<select id="select-search-hide" class="select-ui cityDropdown" data-placeholder="City" ng-model="meetingRoom.city" ng-change="selectLocationObj(meetingRoom.city)"
+									ng-options="location.seqNo as location.city for location in locations">
+									<option value="">City</option>
+									</select>
+
+							</div>
+						
+							<div class="form-field field-destination col-xs-2">
+									<!-- <input style="font-size: 15px; color: #636e7b;" type="text" ng-if="tabNo == 2"
+									id="meetingRoomDestination" class="field-input"
+									placeholder="Area, Landmark"
+									ng-model="meetingRoom.address" googleplace > -->
+									<angucomplete-alt id="meetingRoomDestination" name="meetingRoomDestination" class="autoCompleteField"
+										placeholder="Locality"
+										pause="100" selected-object="locality"
+										local-data="localityAreas" search-fields="value" disable-input="disableInput"
+										title-field="value" minlength="1" focus-in="onFocus(meetingRoom)"
+										input-class="form-control form-control-small" match-class="highlight" required />
+									
+							</div>
+							<div class="form-field field-capacity col-xs-2 width-10 qLow">
+								<!-- <label for="capacity"> Capacity </label> -->
+								<!-- <input type="number" style="font-size: 15px; color: #636e7b;"
+									id="capacity" ng-model="meetingRoom.capacity"
+									class="field-input" placeholder="Capacity"> -->
+									<select id="select-search-hide" class="select-ui" data-placeholder="Capacity" ng-model="meetingRoom.capacity"
+									ng-options="capacity.data as capacity.data for capacity in meetingRoomCapacity">
+									<option value="">Capacity</option>
+									</select>
+
+							</div>
+							<!-- <div class="form-field field-date field-custom dateLow">
+								<input style="font-size: 15px; color: #636e7b;" type="text"
+									class="field-input calendar-input" id="date" placeholder="Date" readonly="true" onfocus="this.blur()">
+							</div> -->
+							<div class="form-field field-date col-xs-3">
+								<input type="text" name="daterangeMeetingRoom" id="meetingRoomDate" class="field-input dateHotdeskLow lineHg meetingRoomDateHg" style="font-size: 15px;border: none;color: #9797a2;padding-bottom: 0px;" ng-click="loadMeetingRoomCalendar()" placeholder="Date" readonly />
+							</div>
+
+
+							<!-- Time type removed from search page -->
+							<!-- <div class="form-field field-select col-xs-2 qLow">
+								<select id="select-search-hide" class="select-ui"
+									data-placeholder="Choose One" name="timeType"
+									ng-model="meetingRoom.timeType"
+									ng-change="hideEndTime(meetingRoom)"
+									ng-options="timeType.data as timeType.data for timeType in timeTypes"
+									ng-selected="{{timeType.data == meetingRoom.timeType}}">
+									<option value="">Time Type</option>
+								</select>
+							</div> -->
+
+							<div class="checkinLow checkinNormal form-field" ng-click="">
+								<div class='input-group date' style="margin-bottom: -4%;">
+									<!-- <input type='text' id='meetingcheckin' placeholder="Start Time" ng-model="meetingRoom.startTime"
+										class="field-input dateHotdeskLow" style="font-size: 15px; color: #636e7b;"/> -->
+										<input type="text" id='meetingcheckin' ng-model="meetingRoom.startTime" style="font-size: 15px; color: #9797a2;line-height: 41px;" class="field-input start startTimeMeetinRoom"  placeholder="Start Time" />
+									<span class="input-group-addon icon-timepicker" id="meetingCheckInIcon"> <span
+										class="glyphicon glyphicon-time"></span>
+									</span>
+								</div>
+							</div>
+							<div class="checkoutLow checkoutNormal form-field">
+								<div class='input-group date'>
+									<!-- <input type='text' id='meetingcheckout' placeholder="End Time"
+										class="field-input dateHotdeskLow" style="font-size: 15px; color: #636e7b;" /> -->
+										<input type="text" id='meetingcheckout' style="font-size: 15px; color: #9797a2;line-height: 41px;" class="field-input end endTimeMeetinRoom" placeholder="End Time" />
+									<span class="input-group-addon icon-timepicker" id="meetingCheckOutIcon"> <span
+										class="glyphicon glyphicon-time"></span>
+									</span>
+								</div>
+							</div>
+							<div class="form-submit col-xs-2 pull-right searchButtonLow">
+								<a type="submit"
+									class="awe-btn awe-btn-lager awe-search aweSearchBtn search-button-align"
+									data-ng-click="searchMeetingRoom(meetingRoom, 'Meeting Room')">
+									<i class="fa fa-search search-icon" aria-hidden="true"></i><span
+									class="search-search-button-media">Search</span>
+								</a>
+
+							</div>
+						</div>
+						<div style="width: 100%;position: absolute;background-color: rgba(0, 0, 0, 0.4);padding: 0;left: 0;text-align: -moz-center;text-align: -webkit-center;">
+							<h4 class="searchMessageIndexPg" style="font-weight: bold;color: white;line-height: 1.4em;">Real-time Bookings! Anytime, Anywhere!<br/>100% verified listings</h4>
+						</div>
+					</div>
+					<!-- End Search Meeting room -->
+
+					<!-- Search Board room -->
+					<div class="form-cn form-boardroom tab-pane" id="boardRoom">
+						<!-- <h2>Board Room</h2> -->
+						<h4 class="search-caption">Board Room (More than 8 Persons)</h4>
+						<div class="form-search clearfix" id="datepairMeetingroom">
+						
+						<div class="form-field field-select col-xs-2 qLow">
+							<select id="select-search-hide" class="select-ui cityDropdown" data-placeholder="City" ng-model="boardRoom.city" ng-change="selectLocationObj(boardRoom.city)"
+									ng-options="location.seqNo as location.city for location in locations">
+									<option value="">City</option>
+									</select>
+						</div>
+						
+							<div class="form-field field-destination col-xs-2">
+									<!-- <input style="font-size: 15px; color: #636e7b;" type="text" type="text" ng-if="tabNo == 3"
+									id="boardRoomDestination" class="field-input"
+									placeholder="Area, Landmark"
+									ng-model="boardRoom.address" googleplace > -->
+									<angucomplete-alt id="meetingRoomDestination" name="meetingRoomDestination" class="autoCompleteField"
+										placeholder="Locality"
+										pause="100" selected-object="locality"
+										local-data="localityAreas" search-fields="value" disable-input="disableInput"
+										title-field="value" minlength="1" focus-in="onFocus(boardRoom)"
+										input-class="form-control form-control-small" required />
+									
+							</div>
+							<div class="form-field field-capacity col-xs-2 width-10 qLow">
+								<!-- <label for="capacity"> Capacity </label> -->
+								<!-- <input type="number" style="font-size: 15px; color: #636e7b;"
+									id="capacity" ng-model="boardRoom.capacity" class="field-input"
+									placeholder="Capacity"> -->
+									<select id="select-search-hide" class="select-ui" data-placeholder="Capacity" ng-model="boardRoom.capacity"
+									ng-options="capacity.data as capacity.data for capacity in boardRoomCapacity">
+									<option value="">Capacity</option>
+									</select>
+							</div>
+						<!-- 	<div class="form-field field-date field-custom">
+								<input style="font-size: 15px; color: #636e7b;" readonly="true" onfocus="this.blur()" type="text"
+									class="field-input calendar-input" id="boarddate"
+									placeholder="Date">
+							</div> -->
+								<div class="form-field field-date col-xs-3">
+								<input type="text" name="daterangeBoardRoom" id="boardRoomDate" class="field-input dateHotdeskLow" style="font-size: 15px;border: none;color: #9797a2;padding-bottom: 0px;" ng-click="loadBoardRoomCalendar()" placeholder="Date" readonly />
+							</div>
+
+
+							<!-- Time type removed from search page -->
+							<!-- <div class="form-field field-select col-xs-2 qLow">
+								<select id="select-search-hide" class="select-ui"
+									data-placeholder="Choose One" name="timeType"
+									ng-model="boardRoom.timeType"
+									ng-change="hideEndTime( boardRoom)"
+									ng-options="timeType.data as timeType.data for timeType in timeTypes"
+									ng-selected="{{timeType.data == boardRoom.timeType}}">
+									<option value="">Time Type</option>
+								</select>
+							</div> -->
+
+							<div class="checkinLow checkinNormal form-field">
+								<div class='input-group date' style="margin-bottom: -4%;">
+									<!-- <input type='text' id='boardroomcheckin' placeholder="Start Time"
+										class="field-input dateHotdeskLow" style="font-size: 15px; color: #636e7b;" /> -->
+										<input type="text" id='boardroomcheckin' ng-model="boardRoom.startTime" style="font-size: 15px; color: #9797a2;line-height: 41px;" class="field-input start boardC startTimeMeetinRoom" placeholder="Start Time" />
+									<span class="input-group-addon icon-timepicker" id="boardCheckInIcon"> <span
+										class="glyphicon glyphicon-time"></span>
+									</span>
+								</div>
+							</div>
+
+							<div class="checkoutLow checkoutNormal form-field">
+								<div class='input-group date'>
+									<!-- <input type='text' id='boardroomcheckout' placeholder="End Time"
+										class="field-input dateHotdeskLow" style="font-size: 15px; color: #636e7b;" /> -->
+										<input type="text" id='boardroomcheckout' style="font-size: 15px; color: #9797a2;line-height: 41px;" class="field-input end boardC endTimeMeetinRoom" placeholder="End Time" />
+									<span class="input-group-addon icon-timepicker" id="boardCheckOutIcon"> <span
+										class="glyphicon glyphicon-time"></span>
+									</span>
+								</div>
+							</div>
+
+
+							<div class="form-submit col-xs-2 pull-right searchButtonLowTwo">
+								<a type="submit"
+									class="awe-btn awe-btn-lager awe-search aweSearchBtn search-button-align"
+									data-ng-click="searchMeetingRoom(boardRoom, 'Board Room')">
+									<i class="fa fa-search search-icon" aria-hidden="true"></i><span
+									class="search-search-button-media">Search</span>
+								</a>
+							</div>
+						</div>
+						<div style="width: 100%;position: absolute;background-color: rgba(0, 0, 0, 0.4);padding: 0;left: 0;text-align: -moz-center;text-align: -webkit-center;">
+							<h4 class="searchMessageIndexPg" style="font-weight: bold;color: white;line-height: 1.4em;">Real-time Bookings! Anytime, Anywhere!<br/>100% verified listings</h4>
+						</div>
+
+
+
+
+
+					</div>
+					<!-- End Search Board room -->
+
+					<!-- Search Training Room-->
+					<div class="form-cn form-trainingroom tab-pane" id="trainingRoom">
+						<!-- <h2>Training Room</h2> -->
+						<h4 class="search-caption">Training Room (Upto 50 Persons)</h4>
+						<div class="form-search clearfix">
+						
+							<div class="form-field field-select col-xs-2 qLowTwo">
+
+								<select id="select-search-hide" class="select-ui cityDropdown"
+									data-placeholder="City" ng-model="trainingRoom.city"
+									ng-change="selectLocationObj(trainingRoom.city)"
+									ng-options="location.seqNo as location.city for location in locations">
+									<option value="">City</option>
+								</select>
+
+							</div>
+						
+							<div class="form-field field-destination col-xs-2">
+									<!-- <input style="font-size: 15px; color: #636e7b;" type="text" type="text" ng-if="tabNo == 4"
+									id="trainingRoomDestination" class="field-input"
+									placeholder="Area, Landmark"
+									ng-model="trainingRoom.address" googleplace > -->
+									<angucomplete-alt id="meetingRoomDestination" name="meetingRoomDestination" class="autoCompleteField"
+										placeholder="Locality"
+										pause="100" selected-object="locality"
+										local-data="localityAreas" search-fields="value" disable-input="disableInput"
+										title-field="value" minlength="1" focus-in="onFocus(trainingRoom)"
+										input-class="form-control form-control-small" required />
+										
+							</div>
+							<div class="capacity-select form-field field-select col-xs-2 qLow">
+								<select id="select-search-hide" class="select-ui"
+									data-placeholder="Choose One" name="occupancy"
+									ng-model="trainingRoom.capacity"
+									ng-options="occupancy.range as occupancy.range for occupancy in occupancyRange"
+									ng-selected="{{occupancy.range  == trainingRoom.capacity}}">
+									<option value="">Capacity</option>
+								</select>
+							</div>
+								<div class="form-field field-date col-xs-3">
+								<input type="text" name="daterange"  class="field-input trainingroomDateRange dateHotdeskLow" style="font-size: 15px;border: none;color: #9797a2;padding-bottom: 0px;" ng-click="loadDateRange();" ng-model="search.trainingRoom" ng-change="trainingRoomDuration();" placeholder="Date" readonly />
+							</div>
+						<!-- 	<div class="form-field field-date field-custom">
+								<input type="text" class="field-input calendar-input" style="font-size: 15px;color: #636e7b;"
+									id="trainingfromDate" placeholder="From Date" readonly="true" onfocus="this.blur()" ng-model="temp" ng-change="trainingMinDate();">
+							</div>
+							<div class="form-field field-date field-custom">
+								<input type="text" class="field-input calendar-input" style="font-size: 15px;color: #636e7b;"
+									id="trainingendDate" placeholder="End Date" readonly="true" onfocus="this.blur()">
+							</div> -->
+
+							<!-- Time type removed from search page -->
+							<!-- <div class="form-field field-select col-xs-2 qLowTwo">
+								<select id="select-search-hide" class="select-ui"
+									data-placeholder="Choose One" name="timeType"
+									ng-model="trainingRoom.timeType"
+									ng-change="hideEndTime(trainingRoom)"
+									ng-options="timeType.data as timeType.data for timeType in trainingTimeTypes"
+									ng-selected="{{timeType.data == trainingRoom.timeType}}">
+									<option value="">Time Type</option>
+								</select>
+							</div> -->
+
+							<!-- <div class="form-field field-select col-xs-2">
+								<select id="select-search-hide" class="select-ui"
+									data-placeholder="Choose One" name="startTime"
+									ng-model="trainingRoom.startTime"
+									ng-change="setEndTime(trainingRoom); setEndTimeList(trainingRoom)"
+									ng-options="time.data as time.data for time in timeSet"
+									ng-selected="{{time.data == trainingRoom.startTime}}">
+									<option value="">Start Time</option>
+								</select>
+							</div> -->
+
+							<div class="trainingroomcheckinLow trainingroomDateLow form-field marleft-1">
+								<select id="select-search-hide" class="select-ui trainingRoomDurationIcon"
+									data-placeholder="Time" ng-model="trainingRoom.duration"
+									ng-change="setEndTimeForHalfFullDay(trainingRoom)"
+									ng-options="session.seqNo as session.duration for session in sessions" ng-click="durationError();">
+									<option disabled="disabled" value="">Duration</option>
+									<!-- <option ng-if="durationDisabled == 'true'" value="">No slots</option>
+									<option ng-if="durationDisabled == 'false'" value="">Duration</option> -->
+								</select>
+							</div>
+
+
+							<div class="form-submit col-xs-2 pull-right searchButtonLowTwo" style="margin-bottom: -0.1%;">
+								<a type="submit"
+									class="awe-btn awe-btn-lager awe-search aweSearchBtn search-button-align"
+									data-ng-click="searchTrainingRoom(trainingRoom, 'Training Room')"><i class="fa fa-search search-icon" aria-hidden="true"></i><span
+									class="search-search-button-media">Search</span></a>
+							</div>
+						</div>
+						<div style="width: 100%;position: absolute;background-color: rgba(0, 0, 0, 0.4);padding: 0;left: 0;text-align: -moz-center;text-align: -webkit-center;">
+							<h4 class="searchMessageIndexPg" style="font-weight: bold;color: white;line-height: 1.4em;">Real-time Bookings! Anytime, Anywhere!<br/>100% verified listings</h4>
+						</div>
+					</div>
+					<!-- End Search Training Room -->
+
+					<!-- Search Tour-->
+					<div class="form-cn form-virtualoffice tab-pane" id="virtualoffice">
+						<h4 class="search-caption">Virtual Office</h4>
+						<div class="form-search clearfix">
+							<div class="col-md-12 virtualOfficeMsg" style="line-height: 3em;text-align: -webkit-center;">
+								<span style="font-size: 1.5em;font-weight: bold;"> Coming soon...</span>
+ 							</div>
+							<div style="display:none;">
+							<div class="form-field field-capacity col-xs-2 qLow">
+								<select id="select-search-hide" class="select-ui cityDropdown" data-placeholder="City" ng-model="virtualOffice.city" ng-change="selectLocationObj(virtualOffice.city)"
+									ng-options="location.seqNo as location.city for location in locations">
+									<option value="">City</option>
+									</select>
+							</div>
+
+							<div class="form-field field-destination col-xs-2">
+								<!-- <input style="font-size: 15px; color: #636e7b;" type="text" type="text" ng-if="tabNo == 5"
+									id="virtualOfficeDestination" class="field-input"
+									placeholder="Area, Landmark"
+									ng-model="virtualOffice.address" googleplace > -->
+									
+									
+									<angucomplete-alt id="virtualOfficeDestination" name="virtualOfficeDestination" class="autoCompleteField"
+										placeholder="Locality"
+										pause="100" selected-object="locality"
+										local-data="localityAreas" search-fields="value" disable-input="disableInput"
+										title-field="value" minlength="1" focus-in="onFocus(virtualOffice)"
+										input-class="form-control form-control-small" required />
+									
+							</div>
+							
+							
+							<!-- <div class="form-field field-select col-xs-2">
+                                        <div class="select">
+                                            <span>Locality</span>
+                                            <select>
+                                                <option>Koramangala</option>
+                                                <option>Bannerghatta Road</option>
+                                                <option>Marathalli</option>
+                                                <option>Sarjapur</option>
+                                            </select>
+                                        </div>
+                                    </div> field-date-->
+								<!-- <div class="form-field field-select col-xs-2">
+
+
+								<div class='input-group date'>
+									<input type='text' id='virtualofficecheckin' placeholder="Start Time" ng-model="virtualoffice.startTime"
+										class="field-input" style="font-size: 15px; color: #636e7b;" />
+									<span class="input-group-addon icon-timepicker"> <span
+										class="glyphicon glyphicon-time"></span>
+									</span>
+								</div>
+							</div> -->
+
+							<!-- <div class="form-field field-select col-xs-2">
+								<div class="select" style="font-size: 15px;color: #636e7b;">
+									<span>Tenure</span> <select class="select-ui">
+										<option>Tenure</option>
+										<option>3 Months</option>
+										<option>6 Months</option>
+										<option>9 Months</option>
+										<option>12 Months</option>
+									</select>
+								</div>
+							</div> -->
+							<!-- <div class="form-field field-select col-xs-2">
+                                        <div class="select">
+                                            <span>End Time</span>
+                                            <select>
+                                                <option>End Time</option>
+                                                <option>10 A.M</option>
+                                                <option>11 A.M</option>
+                                                <option>12 P.M</option>
+                                                <option>01 P.M</option>
+                                                <option>02 P.M</option>
+                                                <option>03 P.M</option>
+                                                <option>04 P.M</option>
+                                                <option>05 P.M</option>
+                                                <option>06 P.M</option>
+                                                <option>07 P.M</option>
+                                                <option>08 P.M</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
+							<div class="form-submit col-xs-2 searchButtonOther">
+								<a ng-click="searchVirtualOffice(virtualOffice, 'Virtual Office')"
+									class="awe-btn awe-btn-lager awe-search aweSearchBtn search-button-align"><i class="fa fa-search search-icon" aria-hidden="true"></i><span class="search-search-button-media">Search</a>
+							</div>
+							</div>
+						</div>
+						<div style="width: 100%;position: absolute;background-color: rgba(0, 0, 0, 0.4);padding: 0;left: 0;text-align: -moz-center;text-align: -webkit-center;">
+							<h4 class="searchMessageIndexPg" style="font-weight: bold;color: white;line-height: 1.4em;">Real-time Bookings! Anytime, Anywhere!<br/>100% verified listings</h4>
+						</div>
+					</div>
+					<!-- End Search Tour -->
+
+					<!-- Search Package -->
+					<div class="form-cn form-plugnplay tab-pane" id="plugnplay">
+					<h4 class="search-caption">Plug-N-Play</h4>
+						<div class="form-search clearfix">
+							
+							<div class="form-field field-select col-xs-2 qLowTwo">
+								<select id="select-search-hide" class="select-ui cityDropdown"
+									data-placeholder="City" ng-model="plugnplay.city"
+									ng-change="selectLocationObjPP(plugnplay.city)"
+									ng-options="location.seqNo as location.city for location in locations">
+									<option value="">City</option>
+								</select>
+							</div>
+							<div class="form-field field-destination col-xs-4">
+									<angucomplete-alt  id="pulgNPlayDestination" name="pulgNPlayDestination"  class="autoCompleteField"
+										placeholder="Locality"
+										pause="100" selected-object="localityPlugNPlay" 
+										local-data="localityAreasPlugNplay" search-fields="value" disable-input="disableInput"
+										title-field="value" minlength="1" focus-in="onFocus(plugnplay)"
+										input-class="form-control form-control-small" required />
+							</div>
+							
+							<!-- <div class="form-field field-select col-xs-2">
+								<div class="select" style="font-size: 15px;color: #636e7b;">
+									<span>Seats</span> <select class="select-ui">
+										<option>Seats</option>
+										<option>1 - 10</option>
+										<option>11 - 20</option>
+										<option>21 - 30</option>
+										<option>31 - 40</option>
+										<option>41 - 50</option>
+									</select>
+								</div>
+							</div> -->
+							<!-- <div class="form-field field-select col-xs-2">
+								<div class="select" style="font-size: 15px;color: #636e7b;">
+									<span>Tenure</span> <select class="select-ui">
+										<option>Tenure</option>
+										<option>3 Months</option>
+										<option>6 Months</option>
+										<option>9 Months</option>
+										<option>11 Months</option>
+									</select>
+								</div>
+							</div> -->
+							<div class="form-submit col-xs-2 searchButtonOther">
+								<a href="" data-ng-click="searchPlugNplay(plugnplay,'PlugNplay Room')" type="submit"
+									class="awe-btn awe-btn-lager awe-search aweSearchBtn search-button-align"><i class="fa fa-search search-icon" aria-hidden="true"></i><span class="search-search-button-media">Search</a>
+							</div>
+						</div>
+						<div style="width: 100%;position: absolute;background-color: rgba(0, 0, 0, 0.4);padding: 0;left: 0;text-align: -moz-center;text-align: -webkit-center;">
+							<h4 class="searchMessageIndexPg" style="font-weight: bold;color: white;line-height: 1.4em;">Real-time Bookings! Anytime, Anywhere!<br/>100% verified listings</h4>
+						</div>
+					</div>
+					<!-- End Search Package -->
+
+
+
+				</div>
+
+			</div>
+			<!-- End Banner Content -->
+		</div>
+	</div>
+
+<script type="text/javascript">
+	$(window).load(function() {
+	  $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+	});
+</script>
+</section>

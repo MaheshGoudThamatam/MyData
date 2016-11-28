@@ -1,0 +1,174 @@
+<section class="partnerinfo mydetails"
+	data-ng-controller="RoomsController"
+	ng-init="loadroomtypes();checkingLoggedinUserIsAdmin();loadvirtualOffices();">
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+
+			<!-- Tabs Content -->
+			<div class="tab-content" style="background: transparent;">
+
+				<div class="row panel">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+
+                            <div class="col-xs-3 ">
+                                <div class="form-group">
+                                    <label class="control-label" ng-if="loggedinuserisadmin">
+                                        Room Type
+                                    </label>
+                                    <div class="option-group">
+                                        <select class="type col-xs-12 form-control" ng-model="room.roomtype" ng-if="loggedinuserisadmin" ng-change="changingroomtypeRoomList(room.roomtype);" required="">
+                                            <option disabled="disabled" selected="selected" value="">
+                                                Select Room Type...
+                                            </option>
+                                            <option ng-repeat="items in roomtypeoptions" value="{{items._id}}" ng-hide="items.name == 'Plug-N-Play'">
+                                                {{items.name}}
+                                            </option>
+                                            <option  value="">
+                                                All
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div
+							class="page-content page-thin dashboard-content col-sm-12 col-lg-12">
+							<div class="row">
+								<div class="col-sm-12 col-lg-12">
+									<div
+										class="col-sm-12 panel-header pull-left panel-controls no-padding">
+										<!-- <section class="breakcrumb-sc pull-left">
+											<ul class="breadcrumb arrow">
+												<li><a href="admin-dashboard.html"><i
+														class="fa fa-home"></i></a></li>
+												<li>Space</li>
+											</ul>
+										</section> -->
+										<div class="row">
+											<div class="col-sm-12 col-lg-12">
+												<div data-ng-include="'/system/views/alert.html'"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-12 col-lg-12 portlets">
+									<div class="panel" style="padding: 15px;">
+										<div class="panel-content pagination2" ng-hide="normaloffice">
+											<table datatable="ng"
+												class="table table-bordered row-border hover booking-table"
+												dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+												<thead>
+													<tr>
+														<th>ID</th>
+														<th>Name</th>
+														<th>Type</th>
+														<th>Space</th>
+														<th>Capacity</th>
+														<th>Price Per Hour</th>
+														<th>Price Per Half Day</th>
+														<th>Price Per Day</th>
+														<th>Status</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="room in roomdetails">
+														<td>{{room._id}}</td>
+														<td>{{room.name}}</td>
+														<td>{{room.roomtype.name}}</td>
+														<td>{{room.spaceId.name}}</td>
+														<td>{{room.capacity}}</td>
+														<td>{{room.pricePerhour}}</td>
+														<td>{{room.pricePerhalfday}}</td>
+														<td>{{room.pricePerfullday}}</td>
+														<td  style="width:11%;"><p class="colorYellow" ng-if="room.sentToAdminApproval && room.status == 'Pending'">Awaiting Approval</p><p style="display: inline;" ng-hide="room.sentToAdminApproval && room.status == 'Pending'" ng-class="{colorGreenApproved : room.status == 'Approved',colorRed : room.status == 'Rejected',colorGreen : room.status == 'Published',colorBlue:room.status == 'Pending'}">{{room.status}}</p>
+														 <div class="taxTooltip help-tip help-tool-tip" style="margin-left: 0.5% !important;" ng-if="room.status == 'Rejected' && room.reasonForRejection != '' &&  !room.sentToAdminApproval">
+                                                              <p><small>{{room.reasonForRejection}}</small> </p>
+                                                         </div>
+														</td>
+
+														<td>							
+														  <a ng-click="editroom(room)" ng-if="room.status == 'Pending'  || room.isPublished || loggedinuserisadmin || room.status == 'Rejected'" title="Edit this room" class="editIcon"><i class="fa fa-pencil-square-o"></i></a>
+                                						   <a ng-if="room.isActive && room.isPublished" ng-click="deactivateRoom(room)" title="Deactivate this room" class="clred"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+                                						   <a ng-if="!room.isActive && room.isPublished" ng-click="activateRoom(room)" title=" Activate room" class="clred"><i class="fa fa-check-circle-o" aria-hidden="true"></i></a>
+                                						   <a ng-if="!room.sentToAdminApproval && room.status == 'Pending' && !loggedinuserisadmin" ng-click="sendToApproval(room);" title="Send for approval"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
+                                						   <a ng-if="!room.sentToAdminApproval && room.status == 'Rejected' && !loggedinuserisadmin" ng-click="sendToApproval(room);" title="Send for approval"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
+                                						   <a ng-if="room.sentToAdminApproval && room.status == 'Pending' && !loggedinuserisadmin" title="Sent for approval"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></a>
+                                						   <a ng-if="room.status == 'Approved' && !room.isPublished && room.isActive" ng-click="publishRoom(room);" title="Publish room"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+														</td>
+
+													</tr>
+												</tbody>
+											</table>
+										</div>
+
+
+										<div class="panel-content pagination2" ng-hide="virtualoffice">
+
+											<table
+												datatable="ng"
+												class="table table-bordered row-border hover booking-table"
+												dt-options="dtVirOffOptions" dt-column-defs="dtVirOffColumnDefs">
+												<thead>
+													<tr>
+														<th>ID</th>
+														<th>Space Name</th>
+														<th>Partner Name</th>
+														<th>Package Name</th>
+														<th>Actions</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="virOffPackage in virtualOfficePackages">
+													<td>{{virOffPackage._id}}</td>
+														<td>{{virOffPackage.spaceName}}</td>
+														<td>{{virOffPackage.partnerName}}</td>
+														<td>{{virOffPackage.pckgObj.packageName}}</td>
+														<td><a ng-click="editPackage(virOffPackage)"
+															title="Edit this room" class="editIcon"><i
+																class="fa fa-pencil-square-o"></i></a> <a
+															ng-click="deletevirtualoffice(virOffPackage)"
+															title="Delete this room" class="clred"><i
+																class="fa fa-trash-o"></i></a></td>
+
+													</tr>
+												</tbody>
+											</table>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Tabs Content -->
+
+		</div>
+		<!-- End Banner Content -->
+
+	</div>
+
+	<div id="myModalDeactivatePopup" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title"></h4>
+				</div>
+				<div class="modal-body">
+					<p>Booking already done for this room you cannot deactivate
+						this room</p>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+
+		</div>
+	</div>
+
+</section>

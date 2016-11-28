@@ -1,0 +1,165 @@
+<section class="partnerinfo mydetails"
+	data-ng-controller="PlugNplayController" data-ng-init="findOnePlugNplay();">
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+			<!-- Tabs Content -->
+			<div class="tab-content">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div class="page-content page-thin dashboard-content col-sm-12 col-md-12 no-left-pad">
+							<div class="row">
+							<div class="col-sm-12 col-lg-12">
+									<div class="col-sm-12 panel-header pull-left panel-controls">
+										<div class="row">
+                                             <div class="col-sm-12 col-lg-12">
+											     <div data-ng-include="'/system/views/alert.html'"></div>
+											</div>
+									     </div>
+									</div>
+								</div>
+								<div class="col-sm-12 portlets panel" style="margin: 1%;width: 98%;">
+									<div class="panel" style="padding: 15px;">
+										<div class="panel-content pagination2">
+											<h2>{{plugNplay.city}}</h2>
+											<div class="col-sm-5 zero-padding">
+											<h3>Areas</h3>
+										   <div>
+											<form role="form" class="form-validation" name="plagNplayAreasForm" id="plagNplayAreasForm">
+								                      <div class="row">
+								                      <div >
+													<div class="col-sm-12">
+													 <div class="append-icon">
+															 <div class="col-md-10 zero-padding">
+                                                    <!-- <div class="form-group"
+                                                        ng-class="{ 'has-error' : submitted && plagNplayAreasForm.area.$invalid }">
+                                                        <div class="append-icon">
+                                                            <input type="text" name="area"
+                                                                class="form-control selectInput" 
+                                                                ng-model="area"
+                                                                placeholder="Select Area" required>
+                                                        </div>
+                                                    </div> -->
+                                                         <angucomplete-alt  class="autoCompleteField plugandplayField"	placeholder="Area"
+									                        pause="100" selected-object="locality"
+										                      local-data="localityAreas" search-fields="value"
+										                       title-field="value" minlength="1"
+										                        input-class="form-control form-control-small" ng-model="locality" required />
+                                                    <div ng-show="submitted && plagNplayAreasForm.area.$invalid"
+                                                        class="help-block">
+                                                        <span class="err-msg errorText validaion-color" ng-show="plagNplayAreasForm.area.$error.required">area
+                                                            is required</span>
+                                                    </div>
+                                                </div>
+														</div> 
+														<!-- <div>
+														<angucomplete-alt id="meetingRoomDestination" name="meetingRoomDestination" class="autoCompleteField"
+										placeholder="Locality"
+										pause="100" selected-object="locality"
+										local-data="localityAreas" search-fields="value"
+										title-field="value" minlength="1"
+										input-class="form-control form-control-small" required />
+														</div> -->
+														<div class="col-md-2 ">
+                                                    <div class="savebutton">
+                                                            <a href=""
+                                                            id="next1" data-toggle="tab"
+                                                            class="awe-btn arrow-right"
+                                                            data-ng-click="addArea(locality)" title="Add areas" >Add</a>
+                                                         
+                                                   </div>
+                                                </div>
+													</div>
+													
+													</div>
+												</div>
+								           </form>
+											</div>
+											<table   class="table table-bordered  booking-table" >
+												<thead>
+													<tr>
+														<th class="text-center">Areas</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr   data-ng-repeat="plugNplayArea in plugNplay.areas">
+														<td><input type="checkbox" class="checkarea" ng-model="checkedArea"  data-ng-click="selectedArea($index,checkedArea)">{{plugNplayArea.title}}</td>
+													</tr>
+												</tbody>
+											</table>
+											 <div>
+											<div class="col-md-2 zero-padding">
+                                                    <div class="pull-right">
+                                                            <a href=""
+                                                            id="next1" data-toggle="tab"
+                                                            class="awe-btn arrow-right"
+                                                            data-ng-click="deleteArea()" title="Delete areas" >Delete</a>
+                                                         
+                                                   </div>
+                                                </div>
+											</div>
+											 
+											 </div>
+											<div class="col-sm-4 col-md-offset-1">
+											<h3>Images</h3>
+											<form role="form" class="form-validation" name="plagNplayForm">
+								                      <div>
+								                      <div >
+													<div class="col-sm-12">
+														<div class="append-icon">
+															<button class="btn btn-default"
+															ngf-select="onFileSelect($files)"
+															accept="image/png, image/jpeg" data-ng-disabled="plugNplay.image.length>=16">Upload Image</button>
+															<!-- <div class="form-group">
+																<img ng-if="plugNplay.image" class="image-border img-responsive"
+																src="{{plugNplay.image}}" alt="uploaded image" data-ng-show="plugNplay.image.length>=0">
+															</div> -->
+														</div>
+													</div>
+													<div>
+													<div class="col-sm-12">
+													<div>
+													<div >
+													  <div data-ng-repeat="imge in plugNplay.image"  class="col-md-3">
+													  <input type="checkbox" ng-model="checkedImage"  data-ng-click="selectedImage($index,checkedImage)">
+													  <img src="{{imge}}" class="image-border img-responsive img150">
+													  </div>
+													  
+													</div>
+													</div>
+													</div></div>
+													</div>
+													<div class="col-md-2 col-md-offset-1">
+                                                    <div class="pull-right">
+                                                            <a href=""
+                                                            id="next1" data-toggle="tab"
+                                                            class="awe-btn arrow-right"
+                                                            data-ng-click="deleteImage()" title="delete images" data-ng-disabled="imageSelectedArray.length==0">Delete</a>
+                                                         
+                                                   </div>
+                                                </div>
+												</div>
+								           </form>
+											</div> 
+											
+										</div>
+									</div>
+								</div>	
+							</div>
+						</div>
+						<div class="row col-md-12">
+													<div class="text-center  m-t-20">
+														<a href="" class="awe-btn awe-default"
+														data-ng-click="BackToPlugNPlay()">Back </a>
+													</div>
+												</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+</section>

@@ -1,0 +1,122 @@
+<section id="backOfficeBookingFormSuccess">
+ <div class="modal-header">
+	<h3>
+		<b class="table-capitalize">Booking Summary</b>
+	</h3>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-sm-12">
+		<div>
+     <div>
+                    <div class="row">
+                            <div class="submit text-center">
+                                 <p class="text-center completed-text">Your booking is confirmed and copy of your order has been mailed to your email id.</p>
+                            </div>
+                                     
+                        </div>
+                        <div data-ng-if="bookingDetail.room.roomtype.name == 'Meeting Room'||bookingDetail.room.roomtype.name == 'Board Room' ">
+                        <div class="payment-room">
+                            <div class="row"> 
+                                <div class="col-md-12">
+                                    <h2>Add Attendees</h2>
+                                    <div >
+                                        <form role="form" class="form-validation" name="AttendeeFormBackOffice" id="AttendeeFormBackOffice">
+                                        <div class="row">
+                                        <div data-ng-repeat="attendee in addAttendeeForm track by $index">
+                                                <div class="col-md-3">
+                                                    <div class="form-group"
+                                                        ng-class="{ 'has-error' : submitted && AttendeeFormBackOffice.name.$invalid }">
+                                                        <label class="control-label">Name</label>
+                                                        <div class="append-icon">
+                                                            <input type="text" name="name"
+                                                                class="form-control" minlength="4"
+                                                                ng-model="attendee.name"
+                                                                placeholder="Minimum 4 characters..." required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div
+                                                        ng-show="submitted && AttendeeFormBackOffice.name.$invalid"
+                                                        class="help-block">
+                                                        <p ng-show="AttendeeFormBackOffice.name.$error.required">Name
+                                                            is required</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group"
+                                                        ng-class="{ 'has-error' : submitted && AttendeeFormBackOffice.email.$invalid }">
+                                                        <label class="control-label">Email</label>
+                                                        <div class="append-icon">
+                                                            <input type="email" name="email"
+                                                                class="form-control" minlength="4"
+                                                                ng-model="attendee.email"
+                                                                placeholder="Minimum 4 characters..." required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div
+                                                        ng-show="submitted &&AttendeeFormBackOffice.email.$invalid"
+                                                        class="help-block">
+                                                        <p ng-show="AttendeeFormBackOffice.email.$error.required">Email
+                                                            is required</p>
+                                                            <span class="error" ng-show="AttendeeFormBackOffice.input.$error.email">
+                                                              Not valid email!</span>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group"
+                                                        ng-class="{ 'has-error' : submitted &&AttendeeFormBackOffice.phoneNumber.$invalid }">
+                                                        <label class="control-label">Phone Number</label>
+                                                        <div class="append-icon">
+                                                            <input type="number" name="phoneNumber"
+                                                                class="form-control" 
+                                                                ng-model="attendee.phoneNumber" placeholder="10 digit number"
+                                                                 required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div
+                                                        ng-show="submitted &&AttendeeFormBackOffice.phoneNumber.$invalid"
+                                                        class="help-block">
+                                                        <p ng-show="AttendeeFormBackOffice.phoneNumber.$error.required">Phone Number
+                                                            is required</p>
+                                                    </div>
+
+                                                </div>
+                                               
+                                            </div>
+                                              <div class="col-md-2">
+                                                    <div class="">
+                                                            <a href=""
+                                                            id="next1" data-toggle="tab"
+                                                            class="awe-btn arrow-right"
+                                                            data-ng-click="addAttendee(attendee,bookingSuccess._id)" title="Add Invities" ><i class="fa fa-plus"></i></a>
+                                                         
+                                                   </div>
+                                                </div>
+                                            </div>
+                                                  <div>
+                                                    <a href=""
+                                                            id="next1" data-toggle="tab"
+                                                            class="awe-btn arrow-right" 
+                                                            data-ng-click="createAttendee(AttendeeFormBackOffice.$valid,attendee,bookingSuccess._id)" title="Invite">Invite</a>
+                                                            </div>
+                                        </form>        
+                                    </div>
+                                </div >
+                            </div>
+                        </div>
+                          
+                           </div> 
+                   </div>
+
+</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="awe-btn awe-default" data-ng-click="cancelSuccess(bookingSuccess)">Back</button>
+</div>
+</section>

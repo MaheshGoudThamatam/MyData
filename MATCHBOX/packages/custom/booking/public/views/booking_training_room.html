@@ -1,0 +1,589 @@
+<section data-ng-controller="BookingTrainingController"
+	data-ng-init="findOneRoom();loadCurrentUser();loadGuest();">
+	<style type="text/css">
+		.user-signup:after {
+		    border-left: none;
+		    position: absolute;
+		    top: 100px;
+		    bottom: 0;
+		    left: 50%;
+		    content: '';
+		    -webkit-transform: translateX(-50%);
+		    -moz-transform: translateX(-50%);
+		    -ms-transform: translateX(-50%);
+		    -o-transform: translateX(-50%);
+		    transform: translateX(-50%);
+		}
+		.bookingSummaryTable tr td {
+    		padding-bottom: 0px !important;
+		}
+	</style>
+	<div class="main">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-4 detailLowMap" style="padding: 0;">
+					<div class="hotel-detail-map absoluteOne2 searchBookingMap">
+						<div data-ng-include="'/search/views/map_view_booking.html'"></div>
+					</div>
+				</div>
+				<div
+					class="col-xs-8 main-cn bg-white clearfix process-bar searchBookingSection bookingFormLow">
+					<div class="step">
+						<ul class="payment-step text-center clearfix">
+							<li class="step-select"><span>1</span>
+								<p>Choose Your Room</p></li>
+							<li class="step-part" id="step2"><span>2</span>
+								<p>Your Booking &amp; Payment Details</p></li>
+							<li id="step3"><span>3</span>
+								<p>Booking Completed!</p></li>
+						</ul>
+					</div>
+					<div class="col-md-5 payment-details" style="margin-left: 4%;">
+						<div class="col-md-12 booking-details zC76 zero-padding" style="background: #f8f8f8;">
+							<div class="ur-booking-border your-booking">
+								<i class="fa fa-shopping-cart fa-font" aria-hidden="true"></i> <span
+									class="booking-details-ur" style="margin-left: 5%;">YOUR
+									BOOKING</span>
+							</div>
+					 <div class="zqz" style="background: #ffffff;margin: 15px;">
+							<div class="time-padding">
+								<div class="col-md-6  zero-padding floatLeftLow">
+									<span class="searchBookingTitle">From</span>
+								</div>
+								<div class="col-md-6 mar-left-30">
+									<span class="searchBookingTitle">To</span>
+								</div>
+								<div class="col-md-6 zero-padding floatLeftLow">
+									<span class="time-weght">
+										{{queryParams.from_date|date:'dd-MM-yyyy'}}</span><br>
+								</div>
+								<div class="col-md-6 mar-left-30">
+									<span class="time-weght">
+										{{queryParams.end_date|date:'dd-MM-yyyy'}}</span><br>
+								</div>
+								<div class="col-md-6  zero-padding floatLeftLow">
+									<span class="searchBookingTitle">Start Time</span>
+								</div>
+								<div class="col-md-6 mar-left-30">
+									<span class="searchBookingTitle">End Time</span>
+								</div>
+								<div class="col-md-6  zero-padding floatLeftLow">
+									<span class="time-weght">{{queryParams.start_time}}</span>
+								</div>
+								<div class="col-md-6 mar-left-30">
+									<span class="time-weght">{{queryParams.end_time}}</span>
+								</div>
+							</div>
+							<div class="ur-booking-border time-padding paddingDivTagQ">
+								<div class="searchBookingTitle">Location</div>
+								<div>
+									<span class="time-weght" style="font-size: 16px;">
+										{{room.name}}</span><br> <span class="time-weght">{{room.spaceId.name}}</span><br>
+									<span>{{room.spaceId.address1}}
+										{{room.spaceId.address2}} {{room.spaceId.city}}</span><br>
+								</div>
+							</div>
+							
+
+						<!-- 	<div class="time-padding">
+								<div>
+									<div>
+										<div ng-if="timeType == 1"
+											data-ng-init="calculateServiceTax(timeType,room.pricePerhour)">
+											<div class="col-md-6  zero-padding floatLeftLow">
+												<span class="searchBookingTitle">Price</span>
+											</div>
+											<div class="col-md-6 mar-left-30">
+												<span class="time-weght"> Rs.{{room.pricePerhour}}<small>/hour</small></span>
+											</div>
+										</div>
+										<div ng-if="timeType == 2"
+											data-ng-init="calculateServiceTax(timeType,room.pricePerhalfday)">
+											<div class="col-md-6  zero-padding floatLeftLow">
+												<span class="searchBookingTitle">Price</span>
+											</div>
+											<div class="col-md-6 mar-left-30">
+												<span class="time-weght">Rs.{{room.pricePerhalfday}}<small>/half
+														day</small></span>
+											</div>
+										</div>
+										<div ng-if="timeType == 3"
+											data-ng-init="calculateServiceTax(timeType,room.pricePerfullday)">
+											<div class="col-md-6  zero-padding floatLeftLow">
+												<span class="searchBookingTitle">Price</span>
+											</div>
+											<div class="col-md-6 mar-left-30">
+												<span class="time-weght">Rs.{{room.pricePerfullday}}<small>/full
+														day</small></span>
+											</div>
+										</div>
+
+									</div>
+									<div>
+										<div class="col-md-6  zero-padding floatLeftLow">
+											<span class="searchBookingTitle">Total Hours</span>
+										</div>
+										<div class="col-md-6 mar-left-30">
+											<span class="time-weght">{{totalHours}}</span>
+										</div>
+									</div>
+									<div>
+										<div class="col-md-6  zero-padding floatLeftLow">
+											<span class="searchBookingTitle">Price Without Tax</span>
+										</div>
+										<div class="col-md-6 mar-left-30">
+											<span class="time-weght">Rs.{{totalPricePerHourAmt}}</span>
+										</div>
+									</div>
+
+                               <div data-ng-show="codeValid">
+                              <div class="col-md-6  zero-padding floatLeftLow">
+                                          <span class="searchBookingTitle">Discount</span>
+                                 </div>
+                               <div class="col-md-6 mar-left-30">
+                                     <span data-ng-show="promoCode.isPercent" class="time-weght">{{promoCodeDiscountPercentage}} %</span>
+                                     <span data-ng-show="(!promoCode.isPercent) && (promoCode.value < totalPricePerHourAmt)" class="time-weght">Rs.{{promoCodeDiscountValue}}</span>
+                                     <span data-ng-show="(codeInvalid) || (codeUsed)" class="time-weght">N/A</span>
+                                 </div>
+                              </div>
+
+                              <div data-ng-show="codeValid">
+                              <div class="col-md-6  zero-padding floatLeftLow">
+                                          <span class="searchBookingTitle">Total Price after Discount</span>
+                                 </div>
+                               <div class="col-md-6 mar-left-30">
+                                     <span class="time-weght">Rs.{{totalPricePerHour}}</span>
+                                 </div>
+                              </div>
+									<div>
+										<div class="col-md-6  zero-padding floatLeftLow">
+										 <div class="taxTooltip help-tip  help-tool-tip">
+                                                  <p><small>Service Tax @ 14%</small> <br/><small> Swachh Bharat Cess @ 0.5%</small> <br/><small> Krishi Kalyan @ 0.5%</small></p>
+                                       </div>
+											<span class="searchBookingTitle">Service Tax</span>
+										</div>
+										<div class="col-md-6 mar-left-30">
+											<span class="time-weght">15%</span>
+										</div>
+									</div>
+									<div>
+										<div class="col-md-6  zero-padding totalPriceMargin floatLeftLow">
+											<span class="searchBookingTitle">Total Price<span
+												style="display: block;" class="lessFont">(Including
+													tax)</span></span>
+										</div>
+										<div class="col-md-6 mar-left-30">
+											<span class="time-weght">Rs.{{totalPrice | number:2}}</span>
+										</div>
+									</div>
+
+
+								</div>
+							</div> -->
+							 <table class="table bookingSummaryTable" style="margin-left: 12px;">
+                                    <tbody>
+                                        <tr data-ng-init="calculateServiceTax(timeType,room.pricePerhour)" ng-if="timeType == 1">
+                                            <td>Rate<span>/hr</span></td>
+                                            <td class="bookingPagePriceTable">&#8377;&nbsp;{{room.pricePerhour | number:2}}</td>
+                                        </tr>
+                                        <tr data-ng-init="calculateServiceTax(timeType,room.pricePerhalfday)" ng-if="timeType == 2">
+                                            <td>Half day Rate (4 hrs)</td>
+                                            <td class="bookingPagePriceTable">&#8377;&nbsp;{{room.pricePerhalfday | number:2}}</td>
+                                        </tr>
+                                        <tr data-ng-init="calculateServiceTax(timeType,room.pricePerfullday)" ng-if="timeType == 3">
+                                            <td>Full day Rate (8 hrs)</td>
+                                            <td class="bookingPagePriceTable">&#8377;&nbsp;{{room.pricePerfullday | number:2}}</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <td>Number of Hours/day</td>
+                                            <td class="bookingPagePriceTable">{{totalHours / totalDays}}</td>
+                                        </tr>
+                                        <tr>
+                                        	<td>Number of Days</td>
+                                        	<td class="bookingPagePriceTable">{{totalDays}}
+                                        </tr>
+                                        <tr>
+                                            <td>Late Hour Charges
+                                                <div class="lateHrCharge" style="display: none;">
+                                                    <p>N/A</p>
+                                                </div>
+                                            </td>
+                                            <td class="bookingPagePriceTable">N/A</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Base Price</td>
+                                            <td class="bookingPagePriceTable">&#8377;&nbsp;{{totalPricePerHourAmt | number:2}}</td>
+                                        </tr>
+                                        <tr data-ng-show="codeValid">
+                                            <td>Discount</td>
+                                            <td class="bookingPagePriceTable" data-ng-show="promoCode.isPercent" class="time-weght">{{promoCodeDiscountPercentage}}%</td> 
+                                            <td class="bookingPagePriceTable" data-ng-show="(!promoCode.isPercent) && (promoCode.value < totalPricePerHourAmt)" class="time-weght">&#8377;&nbsp;{{promoCodeDiscountValue | number:2}}</td>
+                                            <td class="bookingPagePriceTable" data-ng-show="(codeInvalid) || (codeUsed)" class="time-weght">N/A</td>
+                                        </tr>
+                                        <tr data-ng-show="codeValid">
+                                            <td>Price after discount</td>
+                                            <td class="bookingPagePriceTable">&#8377;&nbsp;{{totalPricePerHour | number:2}}</td>
+                                        </tr>
+                                         <tr>
+                                            <td>Taxes
+                                                <div class="taxCharge" ng-if="serviceTax_applicable">
+                                                <p>
+                                                    <small>Service Tax @ 14%</small> <br />
+                                                    <small> Swachh Bharat Cess @ 0.5%</small> <br />
+                                                    <small> Krishi Kalyan @ 0.5%</small>
+                                                </p>
+                                            </div>
+                                            </td>
+                                            <td class="bookingPagePriceTable" ng-if="serviceTax_applicable">15%</td>
+                                            <td class="bookingPagePriceTable" ng-if="!serviceTax_applicable">N/A</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding-bottom: 5% !important;">Total Price<span class="lessFont">&nbsp;(Including tax)</span></td>
+                                            <td class="bookingPagePriceTable" style="font-weight: bolder;padding-bottom: 5% !important;">&#8377;&nbsp;{{totalPrice | number:2}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+					</div>
+
+
+
+
+						</div>
+					</div>
+					<div class="zC76 mozScale" data-ng-if="authenticated">
+						
+						<div class="col-md-4 bookingLeftBoxYI">
+							<div class="bookingLoginDivTag">
+								<div>
+									<div id="login-form">
+										<input type="radio" checked id="login" name="switch"
+											class="hide">
+										<div class="ur-booking-border your-booking">
+											<i class="fa fa-user" aria-hidden="true"></i> <span
+											class="booking-details-ur" style="margin-left: 5%;">YOUR INFORMATION</span>
+										</div>
+										<div class="section-out">
+											 <section class="login-section">
+                                                       <div class="login">
+                                                            <div class="main">
+                                                                 <div class="">
+                                                                      <div class="main-cn element-page bg-white clearfix">
+                                                                           <div class="user-profile user-login-page" id="signin">
+                                                                                <div class="user-form user-signup">
+                                                                                     <form>
+                                                                                         <div class="row">
+                                                                                              <div class="">
+                                                                                                     <div class="time-padding">
+                                                                                                               <div>
+                                                                                                                <span class="searchBookingTitle">Username :</span><br>
+                                                                                                                <span class="time-weght">{{user.first_name}}</span><br>
+                                                                                                                <span class="searchBookingTitle">Email :</span><br>
+                                                                                                                <span class="time-weght">{{user.email}}</span><br>
+                                                                                                                <span ng-show="user.address1" class="searchBookingTitle">Address :<br></span>
+										<span class="user-form field-input">
+											<input style="padding: 2px;" type="text" class="input-text" placeholder="Address Line 1" ng-model="loggeduser.address1" required>
+										</span><br>
+
+										<span class="user-form field-input">
+											<input style="padding: 2px;" type="text" class="input-text" placeholder="Address Line 2" ng-model="loggeduser.address2" required>
+										</span><br>
+										<span class="user-form field-input">
+											<input style="padding: 2px;" type="text" class="input-text" placeholder="City" ng-model="loggeduser.city" required>
+										</span><br>
+										<span class="user-form field-input">
+											<input style="padding: 2px;" type="text" class="input-text" placeholder="State" ng-model="loggeduser.state" required>
+										</span><br>
+										<span class="user-form field-input">
+											<input style="padding: 2px;" type="text" class="input-text" placeholder="Postal Code" ng-model="loggeduser.pinCode" required>
+										</span><br>
+										<span class="user-form field-input">
+											<input style="padding: 2px;" type="text" class="input-text" placeholder="Country" ng-model="loggeduser.country" required>
+										</span><br>
+										<span ng-show="!loggeduser.address1 || !loggeduser.city || !loggeduser.state || !loggeduser.pinCode || !loggeduser.country" class="err-msgclr">
+										*All fields are required<br/></span>
+                                                                                                                <span class="searchBookingTitle">Phone :</span><br>
+                                                                                                                <span ng-show = "user.phone" class="time-weght">{{user.phone}}</span><br>
+                                                                                                                <span ng-show = "!user.phone" class="time-weght">
+                                                                                                                  <input type="text" class="input-text" placeholder="Phone number" ng-model="loggeduser.phone" required>
+                                                                                                                </span><br>
+                                                                                                                <span ng-show = "!user.phone" class = "err-msgclr">*Phone number required to proceed</span>
+                                                                                                               </div>
+                                                                                                     </div>
+                                                                                               </div> 
+                                                                                           </div>
+                                                                                      </form>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>                                       
+                                                             </div>
+                                                       </section>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-5 zC76 bookingLeftBox" data-ng-if="!authenticated" style="margin-left: 12%;">
+						<div class="row" data-ng-if="!authenticated">
+							<div class="col-md-12" style="text-align: -webkit-center;text-align: -moz-center;text-align: center;">
+								<h4 style="color: red;">* Sign in to enter promo code.</h4>
+							</div>
+						</div>
+						<div class="bookingLoginDivTag">
+							<div>
+								<div id="login-form">
+									<input type="radio" checked id="login" name="switch"
+										class="hide"> <input type="radio" id="signup"
+										name="switch" class="hide">
+									<div>
+										<ul class="form-header">
+											<li><label for="login"><i class="fa fa-lock"
+													style="margin-right: 10%; margin-left: -10%;"></i>SIGN IN<label
+													for="login"></li>
+											<li><label for="signup"><i
+													class="fa fa-credit-card"
+													style="margin-right: 10%; margin-left: -10%;"></i>GUEST</label></li>
+										</ul>
+									</div>
+									<div class="section-out">
+										<section class="login-section">
+											<div class="login">
+												<div class="main">
+													<div class="">
+														<div class="main-cn element-page bg-white clearfix">
+															<div class="user-profile user-login-page" id="signin">
+																<div class="user-form user-signup">
+																	<form>
+																		<div class="row">
+																			<div class="">
+																				<p>Access your account information and manage
+																					your bookings.</p>
+																				<div class="field-input">
+																					<input type="email" class="input-text"
+																						placeholder="Email ID" ng-model="login.user.email"
+																						required>
+																				</div>
+																				<div class="field-input">
+																					<input type="password" class="input-text"
+																						placeholder="Password"
+																						ng-model="login.user.password" required>
+																				</div>
+																				<div style="text-align: -webkit-center; text-align: -moz-center;" class="field-input">
+																					<a class="awe-btn arrow-right"
+																						ng-click="loginUser()">Sign in</a>
+																					<!-- <a class="awe-btn arrow-right pull-right" ng-click="signupRedc();">Sign Up</a> -->
+																				</div>
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+														<!-- <div style="font-size: 1.5em;background-color: white;width: 100%;text-align: -webkit-center;margin-top: -10%;"> or </div>
+														<div class="bg-white clearfix" style="text-align: -webkit-center;padding-bottom: 5%;">
+															<a href="" class="field-input" target="_self" ng-click="socailLoginRedc();">
+																<img src="/system/assets/img/custom/custom/icons/f.png" alt="facebook login" >
+															</a>
+														</div> -->
+													</div>
+												</div>
+											</div>
+										</section>
+										<section class="signup-section">
+											<div class="login">
+												<div class="main">
+													<div class="">
+														<div class="main-cn element-page bg-white clearfix">
+															<div class="user-profile user-login-page" id="signin">
+																<div class="user-form user-signup">
+																	<form>
+																		<div class="row">
+																			<div class="">
+																				<p>Continue As Guest</p>
+																				<div class="field-input">
+																					<input type="text" class="input-text"
+																						data-ng-model="guest.first_name"
+																						placeholder="Name" required>
+																				</div>
+																				<div class="field-input">
+																					<input type="email" class="input-text"
+																						data-ng-model="guest.email" placeholder="Email ID"
+																						required>
+																				</div>
+																				<div class="field-input">
+																					<input type="number" class="input-text"
+																						data-ng-model="guest.phone"
+																						placeholder="Phone Number" required>
+																				</div>
+																				
+																				<!-- Insert address from user table display -->
+																				<span class="searchBookingTitle"><br></span>
+																				<span class="searchBookingTitle">Address :<br></span>
+																				<span class="user-form field-input">
+																					<input style="padding: 2px;" type="text" class="input-text" placeholder="Address Line 1" ng-model="loggeduser.address1" required>
+																				</span><br>
+										
+																				<span class="user-form field-input">
+																					<input style="padding: 2px;" type="text" class="input-text" placeholder="Address Line 2" ng-model="loggeduser.address2" required>
+																				</span><br>
+																				<span class="user-form field-input"> 
+																					<input style="padding: 2px;" type="text" class="input-text" placeholder="City" ng-model="loggeduser.city" required>
+																				</span><br>
+																				<span class="user-form field-input">
+																					<input style="padding: 2px;" type="text" class="input-text" placeholder="State" ng-model="loggeduser.state" required>
+																				</span><br>
+																				<span class="user-form field-input">
+																					<input style="padding: 2px;" type="text" class="input-text" placeholder="Postal Code" ng-model="loggeduser.pinCode" required>
+																				</span><br>
+																				<span class="user-form field-input">
+																					<input style="padding: 2px;" type="text" class="input-text" placeholder="Country" ng-model="loggeduser.country" required>
+																				</span><br>
+																				<span ng-show="!loggeduser.address1 || !loggeduser.city || !loggeduser.state || !loggeduser.pinCode || !loggeduser.country" class="err-msgclr">
+																					*All fields are required<br/></span>
+										
+																				<span ng-show="!guest.phone"
+																					class="err-msgclr">*Phone number required to proceed</span>
+																				
+																			</div>
+																		</div>
+																	</form>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</section>
+									</div>
+								</div>
+								 <div ng-hide="validated">
+                                    <div class="submit text-center">
+                                        <label class="text-right err-msgclr">*Please login or
+                                        fill in your details to continue as guest.</label>
+                                    </div>
+                                </div>
+							</div>
+						</div>
+					</div>
+					  <!-- <div class="row" ng-hide = "validated">
+                               <div class="submit text-center">
+                                 <label class="text-right err-msgclr">*Please login or fill in your details to continue as guest.</label>
+                            </div>
+                          </div>  -->
+                          <div class="row" ng-if="emailError">
+							<div class="submit text-center">
+								<label class="text-right err-msgclr">*Email already exists ,please login to continue.</label>
+							</div>
+						</div>
+
+                            <div class="row sfCPromoCode" data-ng-if="authenticated">
+                                <div class="col-md-2 user-form sfCPromoCodeField" style="clear: both;margin-left: 1%;">
+                                  <div class="field-input">
+                                    <input type="text" class="input-text" id="promoCodeField" ng-click="resetpromoCodeField();" data-ng-model="discountCoupon.coupon"  placeholder="ENTER PROMO CODE">
+                                  </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0;">
+                                    <button style="width: 100%;" class="awe-btn arrow-right sfCPromoCodeApplyBtn" data-ng-disabled="!discountCoupon.coupon" ng-click="ValidateCouponCode(discountCoupon.coupon)">APPLY</button>
+                                </div>
+                                <div class="col-md-3" ng-if="codeValid">
+                                    <h4 style="margin: 10px 0 0 0;vertical-align: sub;">&nbsp;&nbsp;<span style="vertical-align: sub;"><i style="color: #0fd20c;font-size: 1.5em;" class="fa fa-2x fa-check-circle" aria-hidden="true"></i></span><span style="line-height: 40px;">&nbsp;&nbsp;Code Applied</span></h4>
+                                </div>
+                                <div class="col-md-3" ng-if="codeInvalid">
+                                     <h4 style="margin: 10px 0 0 0;vertical-align: sub;">&nbsp;&nbsp;<span style="vertical-align: sub;"><i style="color: rgba(236, 10, 10, 0.62);font-size: 1.5em;" class="fa fa-2x fa-exclamation-circle" aria-hidden="true"></i></span><span style="line-height: 40px;">&nbsp;&nbsp;Code Invalid</span></h4>
+                                </div>
+                                <div class="col-md-3" ng-if="codeUsed">
+                                  <h4 style="margin: 10px 0 0 0;vertical-align: sub;">&nbsp;&nbsp;<span style="vertical-align: sub;"><i style="color: rgba(236, 10, 10, 0.62);font-size: 1.5em;" class="fa fa-2x fa-exclamation-circle" aria-hidden="true"></i></span><span style="line-height: 40px;">&nbsp;&nbsp;Code already claimed</span></h4>
+                                </div>
+                                <div class="col-md-4" ng-if="codeExpired">
+                                  <h4 style="margin: 10px 0 0 0;vertical-align: sub;">&nbsp;&nbsp;<span style="vertical-align: sub;"><i style="color: rgba(236, 10, 10, 0.62);font-size: 1.5em;" class="fa fa-2x fa-exclamation-circle" aria-hidden="true"></i></span><span style="line-height: 40px;">&nbsp;&nbsp;Code expired</span></h4>
+                                </div>
+                          </div>
+                      <!--     <div class="row" style="margin-left: 2%;" data-ng-if="!authenticated">
+                            <div class="col-md-12" >
+                              <h4 style="color: red;">&#42;&#32;Sign in to enter promo code.</h4>
+                            </div>
+                          </div> -->
+
+					<div class="col-md-10 specialNoteBoxLow" style="background-color: #f8f8f8;margin: 1%;">
+						<h4>Special Requests</h4>
+						<small>
+							<span><i>
+								Please write your requests in English.
+								Special requests cannot be guaranteed - but the service provider will do their best to meet your needs.
+							</i>
+							<br/></span>
+						</small>						
+						<br/>
+						<textarea style="width: 100%;border: none;padding: 10px 10px 0px 10px;" type="text" name="description" class="input-text" placeholder="Enter special requests" ng-model="specialNote.description" ng-trim="false" maxlength="500"></textarea>
+						<span style="float: right;padding-top: 10px;padding-bottom: 10px;">{{500-specialNote.description.length}} characters left</span>
+					</div>
+
+
+					<div class="row" data-ng-hide="showMessage">
+						<div class="col-md-12" style="margin-top: 2%;">
+							<div class="submit text-center">
+								<div class="radio-checkbox text-center"
+									style="margin-bottom: 2%;">
+									<input type="checkbox" class="checkbox" id="accept"
+										data-ng-model="isAgreed"> <label for="accept">
+										I agree to <a href="" ng-click="redirectTCOND();">Terms and conditions</a>,</label>
+										<div class="taxTooltip cancelPolicy help-tool-tip" style="position: absolute;text-align: justify;background-color: transparent;border-radius: initial;width: 100%;margin-left: 0%;cursor: pointer;">
+											<a href="">Booking &amp; Cancellation policy</a>.
+											<p style="width: 40vw;right: 60vw;">Cancellations are non-refundable. Should an extenuating circumstance prevent you from using the service booked by you, please contact us on +91 98447 55000. We will do our best to provide a solution. In case of cancellation by the Center, the booking amount will be refunded within 5-7 working days.</p>
+										</div>
+								</div>
+
+								<button data-ng-hide="retry"
+									class="{{isAgreed ? 'awe-btn awe-btn-1 awe-btn-lager' : 'awe-btndefault awe-btn-1  awe-btn-lager'}}"
+									id="booknow"
+									data-ng-click="validateLogin(room,isAgreed,guest,discountCoupon.coupon, specialNote.description,loggeduser);"
+									data-ng-disabled="!isAgreed">Pay &amp; Book now</button>
+								<div  class="text-center" data-ng-hide="showMessage ||booking.status == 'Confirmed' || booking.status == 'Failed'">
+									<button data-ng-show="retry"
+									class="{{isAgreed ? 'awe-btn awe-btn-1 awe-btn-lager' : 'awe-btndefault awe-btn-1  awe-btn-lager'}}"
+									data-ng-click="retryPayment()" data-ng-hide="!retry"	
+									data-ng-disabled="!isAgreed">Retry Payment</button>
+									<button data-ng-hide="!retry"
+									class="" id="awe-btn awe-default1 forgotPwdButton"
+									data-ng-click="cancelBookingRetry()">Cancel</button>
+									</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row">
+						<div class="submit text-center">
+							<p class="text-center completed-text">{{error.data.error}}</p>
+						</div>
+					</div>
+                      <div class="row" data-ng-hide="!showMessage">
+						<div class="submit text-center">
+							<p class="text-center completed-text">Booking Aborted Successfully</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<form name="payumoneyForm" id="payumoneyForm">
+		<input type="hidden" name="hash" value="" id="payu_hash" /> <input
+			type="hidden" name="key" value="" id="payu_key" /> <input
+			type="hidden" name="txnid" value="" id="payu_txnid" /> <input
+			type="hidden" name="amount" value="" id="payu_amount" /> <input
+			type="hidden" name="productinfo" value="" id="payu_productinfo" /> <input
+			type="hidden" name="firstname" value="" id="payu_firstname" /> <input
+			type="hidden" name="email" value="" id="payu_email" /> <input
+			type="hidden" name="surl" value="" id="payu_surl" /> <input
+			type="hidden" name="furl" value="" id="payu_furl" /> <input
+			type="hidden" name="curl" value="" id="payu_curl" /> <input
+			type="hidden" name="phone" value="" id="payu_phone" /> <input
+			type="hidden" name="service_provider" value="" id="payu_service" />
+	</form>
+</section>
+

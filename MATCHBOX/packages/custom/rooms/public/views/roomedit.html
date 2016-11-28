@@ -1,0 +1,413 @@
+<section class="partnerinfo mydetails" ng-controller="RoomsController" ng-init="singleRoomDetail();loadroomtypes();checkingLoggedinUserIsAdmin();">
+<div data-ng-include="'/system/views/alert.html'"></div>
+<!--     <div ng-if="loaderEnabled">
+        <div id="preloaderImage">
+            <div class="tb-cell">
+                <div id="page-loadingImage">
+                    <div>
+                    </div>
+                    <p>
+                        <h4 class="h-image-caption">
+                            Uploading....
+                        </h4>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="container-fluid">
+        <!-- Banner Content -->
+        <div class="banner-cn">
+            <!-- Tabs Content -->
+            <div class="tab-content" style="background: transparent;">
+                <div class="row">
+                    <div data-ng-include="'/superAdmin/views/adminLeftPanel.html'">
+                    </div>
+                    <!-- End Tabs Cat -->
+                    <div class="col-xs-9 col-lg-10">
+                        <div class="page-content page-thin dashboard-content">
+                            <div class="row">
+                                <div class="panel-body" style="padding: 15px 0;">
+                                    <div class="form-hotel tab-pane in no-padding" id="addroom">
+                                        <div class="col-xs-12">
+                                            <form class="form-validation" name="spaceeditroomForm" novalidate="" role="form">
+                                                <div class="panel-body bg-white">
+                                                    <div class="row panel-heade text-left" style="padding: 15px;">
+                                                        <h3>
+                                                            Room Details
+                                                        </h3>
+                                                    </div>
+                                                    <div class="row" >
+                                                        <div class="col-md-12 col-xs-12 col-xs-12">
+                                                            <div class="row">
+                                                                <div class="col-xs-5">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label">
+                                                                            Room Type
+                                                                        </label>
+                                                                        <div class="option-group">
+                                                                            <select class="type col-xs-12 form-control" ng-model="room.roomtype._id" required="" ng-disabled="true">
+                                                                                <option disabled="disabled" selected="selected" value="">
+                                                                                    Select Room Type...
+                                                                                </option>
+                                                                                <option ng-repeat="items in roomtypeoptions" value="{{items._id}}">
+                                                                                    {{items.name}}
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="box get_hd panel panel-default no-bd" ng-if='roomtypevalue != ""'>
+                                                    <div class="panel-body bg-white">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-xs-12 col-xs-12">
+                                                                <div class="row" >
+                                                                    <div class="col-xs-12">
+                                                                        <div class="get_hd box">
+                                                                            <div class="row">
+                                                                                <div class="col-xs-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label">
+                                                                                            Name
+                                                                                        </label>
+                                                                                        <div class="append-icon">
+                                                                                            <input class="form-control" name="roomname" ng-model="room.name" placeholder="Minimum 4 characters..." required="" type="text" ng-disabled="true">
+                                                                                                <i class="icon-user">
+                                                                                                </i>
+                                                                                                <div ng-class="errorRed" ng-show="submitted && spaceeditroomForm.roomname.$invalid">
+                                                                                                    <span class="errorRed" ng-show="spaceeditroomForm.roomname.$error.required">
+                                                                                                        Please enter name
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                                <div class="errorRed" ng-if="err.param =='name'" ng-repeat="err in error.data">
+                                                                                                    {{err.msg}}
+                                                                                                </div>
+                                                                                            </input>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class="col-xs-2" data-ng-if="response.roomtype.name !== 'Training Room'">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label">
+                                                                                            Per Hour
+                                                                                        </label>
+                                                                                        <div class="append-icon">
+                                                                                            <input class="form-control" name="roomperhour" ng-model="room.pricePerhour" required="" type="number" ng-disabled="room.isPublished && !loggedinuserisadmin">
+                                                                                                <i class="fa fa-inr">
+                                                                                                </i>
+                                                                                                <div ng-show="submitted && spaceeditroomForm.roomperhour.$invalid">
+                                                                                                    <span class="" ng-show="spaceeditroomForm.roomperhour.$error.required">
+                                                                                                        Please enter the price per hour
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                                <div class="errorRed" ng-if="err.param =='pricePerhour'" ng-repeat="err in error.data">
+                                                                                                    {{err.msg}}
+                                                                                                </div>
+                                                                                            </input>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-2">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label">
+                                                                                            Half Day
+                                                                                        </label>
+                                                                                        <div class="append-icon">
+                                                                                            <input class="form-control" name="roomperhalfday" ng-model="room.pricePerhalfday" required="" type="number" ng-disabled="room.isPublished   && !loggedinuserisadmin">
+                                                                                                <i class="fa fa-inr">
+                                                                                                </i>
+                                                                                                <div ng-show="submitted && spaceeditroomForm.roomperhalfday.$invalid">
+                                                                                                    <span class="" ng-show="spaceeditroomForm.roomperhalfday.$error.required">
+                                                                                                        Please enter the price per halfday
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                                <div class="errorRed" ng-if="err.param =='pricePerhalfday'" ng-repeat="err in error.data">
+                                                                                                    {{err.msg}}
+                                                                                                </div>
+                                                                                            </input>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-xs-2">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label">
+                                                                                            Full Day
+                                                                                        </label>
+                                                                                        <div class="append-icon">
+                                                                                            <input class="form-control" name="roomperfullday" ng-model="room.pricePerfullday" required="" type="number" ng-disabled="room.isPublished   && !loggedinuserisadmin">
+                                                                                                <i class="fa fa-inr">
+                                                                                                </i>
+                                                                                                <div ng-show="submitted && spaceeditroomForm.roomperfullday.$invalid">
+                                                                                                    <span class="" ng-show="spaceeditroomForm.roomperfullday.$error.required">
+                                                                                                        Please enter the price for fullday
+                                                                                                    </span>
+                                                                                                </div>
+                                                                                                <div class="errorRed" ng-if="err.param =='pricePerfullday'" ng-repeat="err in error.data">
+                                                                                                    {{err.msg}}
+                                                                                                </div>
+                                                                                            </input>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row">
+                                                                                <div class=" row col-sm-12">
+                                                                                    <div class="form-group">
+                                                                                        <label class="col-md-12 col-xs-12 control-label">
+                                                                                            Amenities
+                                                                                        </label>
+                                                                                        <div class="col-sm-3" style="height: 125px;" ng-repeat="amenity in room.amenities">
+                                                                                            <div class="col-xs-12">
+                                                                                                <label>
+                                                                                                    {{amenity.name}}
+                                                                                                </label>
+                                                                                                <br>
+                                                                                                    <input class="not-show wdth-meetngdtls" data-ng-click="toggleSpaceAmenityApplicable(amenity)" id="amenity{{$index}}" name="amenity{{$index}}" ng-model="amenity.isApplicable" type="checkbox"/>
+                                                                                                    <span>
+                                                                                                        Is
+																									Applicable
+                                                                                                    </span>
+                                                                                                    <br>
+                                                                                                        <input class="not-show wdth-meetngdtls" data-ng-click="toggleSpaceAmenityChargeable(amenity);" id="isChargeable{{$index}}" name="isChargeable{{$index}}" ng-if="!amenity.isStatus" ng-model="amenity.isChargeable" type="checkbox"/>
+                                                                                                        <span ng-if="!amenity.isStatus">
+                                                                                                            Is Chargeable
+                                                                                                        </span>
+                                                                                                        <div ng-if="!amenity.isStatus" ng-show="amenity.isChargeable">
+                                                                                                            <div>
+                                                                                                                <label>
+                                                                                                                    Price:
+                                                                                                                </label>
+                                                                                                                <input name="price" ng-model="amenity.price" type="number"/>
+                                                                                                                <a class="clear" ng-click="amenity.price = null">
+                                                                                                                    <span class="glyphicon glyphicon-remove">
+                                                                                                                    </span>
+                                                                                                                </a>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row" style="margin-top: 15px;" >
+                                                                                <div class="col-xs-6">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label">
+                                                                                            Description
+                                                                                        </label>
+                                                                                        <div class="append-icon">
+                                                                                            <textarea class="form-control" name="roomdescription" ng-model="room.description" maxlength="140" required="" rows="4" ng-disabled="room.isPublished && !loggedinuserisadmin">
+                                                                                            </textarea>
+                                                                                            <div ng-show="submitted && spaceeditroomForm.roomdescription.$invalid">
+                                                                                                <span class="" ng-show="spaceeditroomForm.roomdescription.$error.required">
+                                                                                                    Please Enter Description
+                                                                                                </span>
+                                                                                            </div>
+                                                                                            <div class="errorRed" ng-if="err.param =='description'" ng-repeat="err in error.data">
+                                                                                                {{err.msg}}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="row" ng-hide="room.roomtype.name == 'Hot Desk'">
+                                                                                <div class="col-xs-3">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label">
+                                                                                            Total Seats /
+																							Desks
+                                                                                        </label>
+                                                                                        <div class="option-group">
+                                                                                            <select class="type col-xs-12 form-control" id="seats" name="roomseats" ng-model="room.capacity" required="" ng-disabled="room.isPublished && !loggedinuserisadmin">
+                                                                                                <option value="">
+                                                                                                    Select Total Seats /
+																									Desks
+                                                                                                </option>
+                                                                                             <option ng-repeat="capacity in roomseats" value="{{capacity.capacityvalue}}">
+                                                                                              {{capacity.capacityvalue}}
+                                                                                            </option>   
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div ng-show="submitted && spaceeditroomForm.roomseats.$invalid">
+                                                                                            <span class="" ng-show="spaceeditroomForm.roomseats.$error.required">
+                                                                                                Please select the total seats
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default no-bd" id="get_images">
+                                                        <div class="panel-body bg-white">
+                                                            <div class="row">
+                                                                <div class="col-md-12 col-xs-12">
+                                                                    <div class="form-group" id="img_container">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-6">
+                                                                                <div class="form-group">
+                                                                                    <label class="control-label">
+                                                                                        Image
+                                                                                    </label>
+                                                                                    <div class="option-group">
+                                                                                        <div accept="image/png, image/jpeg" class="btn btn-default append-icon" data-ng-disabled="counter>=5" ngf-select="roomImageUpload($files)" ng-if="!room.isPublished || loggedinuserisadmin">
+                                                                                            Upload
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="err-msg errorRed validaion-color">
+                                                                                      (Allowed Type:  jpeg/png, Maximum-Size:10MB)
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div data-ng-if="room.images && room.images.length>0">
+                                                                            <div class="row mt10" ng-repeat="image in room.images">
+                                                                                <div class="col-xs-2">
+                                                                                    <img alt="uploaded image" class="img-responsive img150 image-border" src="{{image.tempUrl}}">
+                                                                                        <!-- <div ng-show="isImage" ng-init="image.url = imageurl"></div> -->
+                                                                                    </img>
+                                                                                </div>
+                                                                                <div class="col-xs-4">
+                                                                                 <input class=" form-control" data-ng-model="image.name" name="name" placeholder="Image Name" type="text" ng-disabled="room.isPublished && !loggedinuserisadmin">
+                                                                                        <textarea class="mt10 form-control" cols="19" data-ng-model="image.description" name="description" placeholder="Image Description" rows="2" ng-disabled="room.isPublished && !loggedinuserisadmin">
+                                                                                        </textarea>
+                                                                                    </input>
+                                                                                </div>
+                                                                                <div class="col-xs-1">
+                                                                                    <div class="image-text-delete" >
+                                                                                        <a ng-if="!room.isPublished || loggedinuserisadmin" data-ng-click="removeRoomImage($index,partnerDetailForm,room);" href="" >
+                                                                                            <i class="fa fa-times" >
+                                                                                            </i>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <div class="col-md-2 col-xs-2 col-xs-4">
+                                  <a href="javascript:void(0);" id="add_img" class="cancel awe-btn awe-btn-5 awe-btn-lager text-uppercase">Add</a>
+                                </div> -->
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-body bg-white">
+                                                            <div class="row">
+                                                                <div class="col-xs-12 col-lg-12">
+                                                                    <div class="row col-xs-12 col-lg-12">
+                                                                        <div class="row col-xs-12 col-lg-12">
+                                                                            <h3>
+                                                                                Weekly Timing
+                                                                            </h3>
+                                                                            <div class="table-responsive">
+                                                                                <table class="table table-striped mb30 table table-bordered mb30">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th class="textalign table-capitalize">
+                                                                                                Day
+                                                                                            </th>
+                                                                                            <th class="textalign table-capitalize">
+                                                                                                Start Time
+                                                                                            </th>
+                                                                                            <th class="textalign table-capitalize">
+                                                                                                End
+																								Time
+                                                                                            </th>
+                                                                                            <th class="textalign table-capitalize">
+                                                                                                24
+																								hours
+                                                                                            </th>
+                                                                                            <th class="textalign table-capitalize">
+                                                                                                Is
+																								closed
+                                                                                            </th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr ng-repeat="hoursObj in officeHoursRoomsSlot">
+                                                                                            <td align="center">
+                                                                                                {{hoursObj.day}}
+                                                                                            </td>
+                                                                                            <td align="center">
+                                                                                                <uib-timepicker hour-step="hstep" max="hoursObj.max" min="hoursObj.min" minute-step="mstep" ng-change="changed(hoursObj.startTime, hoursObj.endTime, $index)" ng-disabled="hoursObj.isAllday || hoursObj.isClosed" ng-model="hoursObj.startTime" show-meridian="ismeridian">
+                                                                                                </uib-timepicker>
+                                                                                            </td>
+                                                                                            <td align="center">
+                                                                                                <uib-timepicker hour-step="hstep" max="hoursObj.max" min="hoursObj.min" minute-step="mstep" ng-change="changed(hoursObj.startTime, hoursObj.endTime, $index)" ng-disabled="hoursObj.isAllday || hoursObj.isClosed" ng-model="hoursObj.endTime" show-meridian="ismeridian">
+                                                                                                </uib-timepicker>
+                                                                                                <p class="error-msg" ng-show="err{{$index}}">
+                                                                                                    End time must be greater than start time
+                                                                                                </p>
+                                                                                            </td>
+                                                                                            <td align="center">
+                                                                                                <input id="isAllDay{{$index}}" name="isAllDay{{$index}}" ng-change="toggleAllDayAddRoom(hoursObj);" ng-disabled="!hoursObj.isAlldaylogic" ng-model="hoursObj.isAllday" type="checkbox"/>
+                                                                                            </td>
+                                                                                            <td align="center">
+                                                                                                <input id="isClosed{{$index}}" name="isClosed{{$index}}" ng-change=" toggleClosedAddRoom(hoursObj);" ng-disabled="hoursObj.isClosedaylogic" ng-model="hoursObj.isClosed" type="checkbox"/>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel-body text-center">
+                                                            <a class="cancel awe-btn awe-btn-5 awe-btn-lager text-uppercase" data-toggle="tab" href="#spaces" id="back2" ng-click="cancelRoomEdit();">
+                                                                Back
+                                                            </a>
+                                                            <a class="awe-btn arrow-right" style="line-height: 50px !important;width: 120px;text-align: center;text-transform: uppercase;" href="#" ng-click="saveEditedRoomDetail(spaceeditroomForm.$valid);">
+                                                                Update
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" ng-click="cancelscheduleedit();" type="button">
+                        ×
+                    </button>
+                    <h4 class="modal-title">
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Booking already done for this schedule you cannot edit the
+						schedule
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="confirmscheduleedit()">Yes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cancelscheduleedit();">No</button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--End Banner-->

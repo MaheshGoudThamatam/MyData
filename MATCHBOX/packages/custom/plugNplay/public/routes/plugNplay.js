@@ -1,0 +1,26 @@
+'use strict';
+
+angular.module('mean.plugNplay').config(['$stateProvider' , 'PLUGNPLAY',
+    function ($stateProvider, PLUGNPLAY) {
+		$stateProvider
+		.state(PLUGNPLAY.STATE.PLUG_N_PLAY, {
+			url : PLUGNPLAY.URL_PATH.PLUG_N_PLAY,
+			templateUrl : PLUGNPLAY.FILE_PATH.PLUG_N_PLAY,
+			
+		})
+		.state(PLUGNPLAY.STATE.PLUGANDPLAY, {
+			url : PLUGNPLAY.URL_PATH.PLUGANDPLAY,
+			templateUrl : PLUGNPLAY.FILE_PATH.PLUGANDPLAY,
+			
+		})
+		.state(PLUGNPLAY.STATE.PLUGANDPLAYDETAILS, {
+			url : PLUGNPLAY.URL_PATH.PLUGANDPLAYDETAILS,
+			templateUrl : PLUGNPLAY.FILE_PATH.PLUGANDPLAYDETAILS,
+			
+		}).state(PLUGNPLAY.STATE.PLUGANDPLAYRESULTS, {
+			url : PLUGNPLAY.URL_PATH.PLUGANDPLAYRESULTS,
+			templateUrl : PLUGNPLAY.FILE_PATH.PLUGANDPLAYRESULTS,
+			
+		});
+	}
+]);

@@ -1,0 +1,130 @@
+<section data-ng-controller="SpaceController"
+	data-ng-init="teamRoles();">
+	<div>
+		<div class="col-lg-12 portlets">
+			<div class="row col-xs-12">
+				<div class="panel" style="padding: 15px 0;">
+					<h3>Team</h3>
+				</div>
+				<div class="col-sm-12">
+					<div class="row">
+						<form role="form" class="form-validation" name="partnerDetailForm"
+							id="teamForm">
+							<div class="row" ng-repeat="team in space.teams">
+								<div class="">
+									<div class="col-sm-3">
+										<div class="form-group"
+											ng-class="{ 'has-error' : submitted && partnerDetailForm.first_name.$invalid }">
+											<label class="control-label">Name</label>
+											<div class="append-icon">
+												<input type="text" name="first_name{{$index}}" class="form-control"
+												 ng-model="team.first_name" placeholder="Name"
+													required> 
+											</div>
+											<div ng-repeat="err in error.data">
+												<div class="errRed" ng-if="err.param=='first_name'">{{err.msg}}</div>
+											</div>
+											<div
+												ng-show="submitted && partnerDetailForm.first_name{{$index}}.$invalid">
+												<span class="err-msg errorText validaion-color"
+													ng-show="partnerDetailForm.first_name{{$index}}.$error.required">Please
+													enter the name </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="">
+									<div class="col-sm-3">
+										<div class="form-group"
+											ng-class="{ 'has-error' : submitted && partnerDetailForm.email.$invalid }">
+											<label class="control-label">Email</label>
+											<div class="append-icon">
+												<input type="email" name="email{{$index}}" class="form-control"
+													 ng-model="team.email" placeholder="email"   
+													required>
+											</div>
+											<div ng-repeat="err in error.data">
+												<div class="errRed" ng-if="err.param=='email'">{{err.msg}}</div>
+											</div>
+											<div ng-show="submitted && partnerDetailForm.email{{$index}}.$invalid">
+												<span class="err-msg errorText validaion-color"
+													ng-show="partnerDetailForm.email{{$index}}.$error.required">Please
+													enter the email </span>
+											     <span class="err-msg errorText validaion-color"
+													ng-show="partnerDetailForm.email{{$index}}.$error.pattern">Please
+													enter the valid email </span>
+													<span class="err-msg errorText validaion-color" ng-show="partnerDetailForm.email{{$index}}.$error.email">
+                                                            Not valid email</span>		
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="">
+									<div class="col-sm-3">
+										<div class="form-group"
+											ng-class="{ 'has-error' : submitted && partnerDetailForm.phone.$invalid }">
+											<label class="control-label">Phone Number</label>
+											<div class="append-icon">
+												<input type="text" name="phone{{$index}}" class="form-control"
+												 ng-model="team.phone" placeholder="Phone Number" maxlength="10" 
+													required> 
+											</div>
+											<div ng-repeat="err in error.data">
+												<div class="errRed" ng-if="err.param=='phone'">{{err.msg}}</div>
+											</div>
+											<div
+												ng-show="submitted && partnerDetailForm.phone{{$index}}.$invalid">
+												<span class="err-msg errorText validaion-color"
+													ng-show="partnerDetailForm.phone{{$index}}.$error.required">Please
+													enter the Phone Number </span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="control-label">Role</label>
+											<div class="append-icon">
+												<select ng-model="team.role"
+													class="col-md-12 branchwidth selectRole" name="role{{$index}}" required>
+													<option value="">Select</option>
+													<option ng-repeat="role in teamRoles" value="{{role._id}}">{{role.name}}</option>
+												</select>
+												<div ng-show="submitted && partnerDetailForm.role{{$index}}.$invalid">
+											<span class="err-msg errorText validaion-color"
+												ng-show="partnerDetailForm.role{{$index}}.$error.required">Please
+												select the role </span>
+										</div>
+											</div>
+										</div>
+										<!-- <a data-ng-click="removeTeamMember($index)">remove</a> -->
+										
+									</div>
+								</div>
+
+								<div class="">
+									<div class="col-sm-1">
+										<div class="image-text-delete">
+											<a data-ng-click="removeTeamMember($index)"
+												title="Delete this team"> <i class="fa fa-times"></i>
+											</a>
+										</div>
+
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-11">
+									<button type="button" class="awe-btn awe-default"
+										ng-click="addTeamMember()">Add Team Member</button>
+
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

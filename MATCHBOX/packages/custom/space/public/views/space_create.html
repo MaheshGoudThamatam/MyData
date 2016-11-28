@@ -1,0 +1,842 @@
+<section class="partnerinfo mydetails" ng-controller="SpaceController"
+	data-ng-init="assignSpaceObject(); loadSpaceType(); loadPartners(); isSpaceDefined(); loadCities();">
+	<div data-ng-include="'/system/views/alert.html'"></div>
+<!-- 	<div ng-if="loaderEnabled">
+		<div id="preloaderImage">
+			<div class="tb-cell">
+				<div id="page-loadingImage">
+					<div></div>
+					<p>
+					<h4 class="h-image-caption">Uploading.</h4>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+			<!-- Tabs Content -->
+			<div class="tab-content">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+					<!-- End Tabs Cat -->
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div
+							class="page-content page-thin dashboard-content col-sm-12 col-lg-12 no-left-pad">
+							<div class="row">
+								<div class="col-lg-12 portlets">
+									<div class="panel panel-default no-bd">
+										<div class="panel-body bg-white">
+											<div class="row">
+												<form role="form" class="form-validation"
+													name="partnerDetailForm" id="partnerDetailForm">
+													<div class="col-xs-12"></div>
+													<div class="col-md-6 col-sm-6 col-xs-6">
+														<div class="row">
+															<div class="col-sm-6" ng-hide="hidePartnerDropDown">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.partner.$invalid }">
+																	<label class="control-label">Partner</label>
+																	<div class="append-icon">
+																		<select ng-model="space.partner" name="partner"
+																			class="custom_dropdown selectRole"
+																			data-placeholder="Choose One" required>
+																			<option value="">Select One</option>
+																			<option ng-repeat="partner in partners"
+																				value="{{partner._id}}">{{partner.first_name}}
+																				{{partner.last_name}}</option>
+																		</select>
+																		<div
+																			ng-show="submitted && partnerDetailForm.partner.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.partner.$error.required">Please
+																				enter the partner </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-sm-6">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.spaceType.$invalid }">
+																	<label class="control-label">Space Type</label>
+																	<div class="append-icon">
+																		<select id="select-search-hide"
+																			class="custom_dropdown selectRole"
+																			data-placeholder="Choose One" name="spaceType"
+																			ng-model="space.space_type"
+																			ng-change="loadAmenities(space.space_type)"
+																			ng-options="spaceType._id as spaceType.name for spaceType in spaceTypes"
+																			ng-selected="{{spaceType._id == space.space_type}}"
+																			required>
+																			<option value="">Select One</option>
+																		</select>
+																		<div
+																			ng-show="submitted && partnerDetailForm.spaceType.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.spaceType.$error.required">Please
+																				enter the spaceType </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row col-xs-12">
+															<div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.name.$invalid }">
+																	<label class="control-label">Name</label>
+																	<div class="append-icon">
+																		<input type="text" name="name" class="form-control"
+																			minlength="4" ng-model="space.name"
+																			placeholder="Minimum 4 characters" required>
+																		<i class="icon-user"></i>
+																		<div
+																			ng-show="submitted && partnerDetailForm.name.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.name.$error.required">Please
+																				enter the name </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+														</div>
+														<div class="row col-xs-12">
+															<div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.city.$invalid }">
+																	<label class="control-label">City</label>
+																	<div class="append-icon">
+																		<select name="city" id="city" class="form-control"
+																			ng-options="city.city for city in cities track by city._id"
+																			data-ng-model="space.city"
+																			placeholder="Enter your city"
+																			data-ng-change="assignCityToSpace(space)" required></select>
+																		<div
+																			ng-show="submitted && partnerDetailForm.city.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.city.$error.required">Please
+																				enter the city </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.address1.$invalid }">
+																	<label class="control-label">Address line1</label>
+																	<div class="append-icon">
+																		<input type="text" name="address1"
+																			class="form-control" ng-model="space.address1"
+																			placeholder="Enter your address1"
+																			data-ng-change="fetchMap(space)" required>
+																		<div
+																			ng-show="submitted && partnerDetailForm.address1.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.address1.$error.required">Please
+																				enter the address1 </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.address2.$invalid }">
+																	<label class="control-label">Address line2</label>
+																	<div class="append-icon">
+																		<input type="text" name="address2"
+																			class="form-control" ng-model="space.address2"
+																			placeholder="Enter your address2"
+																			data-ng-change="fetchMap(space)" required>
+																		<div
+																			ng-show="submitted && partnerDetailForm.address2.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.address2.$error.required">Please
+																				enter the address2 </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row col-xs-12">
+															<div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.locality.$invalid }">
+																	<label class="control-label">Locality</label>
+																	<div class="append-icon">
+																		<input type="text" name="locality"
+																			class="form-control" ng-model="space.locality"
+																			placeholder="Enter your locality" required>
+																		<div
+																			ng-show="submitted && partnerDetailForm.locality.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.locality.$error.required">Please
+																				enter the locality </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<!-- <div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.city.$invalid }">
+																	<label class="control-label">City</label>
+																	<div class="append-icon">
+																		<input type="text" name="city" class="form-control"
+																			ng-model="space.city"
+																			placeholder="Enter your city"
+																			data-ng-change="fetchMap(space)" required>
+																		<div
+																			ng-show="submitted && partnerDetailForm.city.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.city.$error.required">Please
+																				enter the city </span>
+																		</div>
+																	</div>
+																</div>
+															</div> -->
+														</div>
+
+														<div class="row col-xs-12">
+															<div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.state.$invalid }">
+																	<label class="control-label">State</label>
+																	<div class="append-icon">
+																		<input type="text" name="state" class="form-control"
+																			ng-model="space.state"
+																			placeholder="Enter your state"
+																			data-ng-change="fetchMap(space)" readonly>
+																		<div
+																			ng-show="submitted && partnerDetailForm.state.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.state.$error.required">Please
+																				enter the state </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.country.$invalid }">
+																	<label class="control-label">Country</label>
+																	<div class="append-icon">
+																		<input type="text" name="country" class="form-control"
+																			ng-model="space.country"
+																			placeholder="Enter your country"
+																			data-ng-change="fetchMap(space)" readonly>
+																		<div
+																			ng-show="submitted && partnerDetailForm.country.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.country.$error.required">Please
+																				enter the country </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+														</div>
+
+														<div class="row col-xs-12">
+															<div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.postalCode.$invalid }">
+																	<label class="control-label">Pincode</label>
+																	<div class="append-icon">
+																		<input type="text" name="postalCode"
+																			class="form-control" ng-model="space.postal_code"
+																			placeholder="Enter your postal code" 
+																			data-ng-change="fetchMap(space)" required>
+																		<div
+																			ng-show="submitted && partnerDetailForm.postalCode.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.country.$error.required">Please
+																				enter the pincode </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div>
+															<div class="panel" style="padding: 15px 0;">
+																<h3>Contact Details</h3>
+															</div>
+
+															<div class="row">
+																<div class="col-xs-5">
+																	<div class="row marginLeft-Initial">
+																		<div class="form-group"
+																			ng-class="{ 'has-error' : submitted && partnerDetailForm.contact_details_1_contactType.$invalid }">
+																			<label class="control-label">Contact Type</label>
+																			<div class="append-icon">
+																				<select name="contact_details_1_contactType"
+																					id="contact_details_1_contactType"
+																					class="form-control"
+																					data-ng-disabled="contactDetail"
+																					ng-options="contactType.contactType for contactType in contactTypes track by contactType.contactType"
+																					data-ng-model="space.contact_details_1"></select>
+																			</div>
+																		</div>
+																		<div
+																			ng-show="submitted && partnerDetailForm.contact_details_1_contactType.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.contact_details_1_contactType.$error.required">Please
+																				select contact type </span>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="col-xs-7">
+																	<div class="row">
+																		<div class="form-group"
+																			ng-class="{ 'has-error' : submitted && partnerDetailForm.contact_details_1_contactNo.$invalid }">
+																			<label class="control-label col-xs-offset-1">Phone
+																				no.</label>
+																			<div class="append-icon">
+																				<div class="col-xs-12">
+																					<!-- <angucomplete-alt id="countryCode"
+																						name="countryCode" class="autoCompleteField"
+																						placeholder="Country Code" pause="100"
+																						selected-object="assignCountryCode"
+																						local-data="countryCodes" search-fields="code"
+																						title-field="code" minlength="1"
+																						focus-in="onFocus(space, 1)"
+																						disable-input="disableInput"
+																						input-class="form-control form-control-small"
+																						match-class="highlight" required /> -->
+																					<input class="form-control"
+																						id="contact_details_1_contactNo"
+																						name="contact_details_1_contactNo" type="tel"
+																						style="padding-left: 4em !important;"
+																						data-ng-disabled="contactDetail" maxlength="10"
+																						required>
+																				</div>
+																				<!-- <div class="col-xs-8">
+																					<input type="text"
+																						name="contact_details_1_contactNo"
+																						class="form-control"
+																						data-ng-disabled="disableInput"
+																						ng-model="space.contact_details_1.contactNo"
+																						placeholder="Enter your phone no" required>
+																				</div> -->
+																				<div
+																					ng-show="submitted && partnerDetailForm.contact_details_1_contactNo.$invalid">
+																					<span class="err-msg errorText validaion-color"
+																						ng-show="partnerDetailForm.contact_details_1_contactNo.$error.required">Please
+																						enter the contact number </span>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div class="row">
+																<div class="col-xs-5">
+																	<div class="row marginLeft-Initial">
+																		<div class="form-group"
+																			ng-class="{ 'has-error' : submitted && partnerDetailForm.contact_details_2_contactType.$invalid }">
+																			<label class="control-label">Contact Type</label>
+																			<div class="append-icon">
+																				<select name="contact_details_2_contactType"
+																					id="contact_details_2_contactType"
+																					class="form-control"
+																					data-ng-disabled="contactDetail"
+																					ng-options="contactType.contactType for contactType in contactTypes track by contactType.contactType"
+																					data-ng-model="space.contact_details_2"></select>
+																			</div>
+																		</div>
+																		<div
+																			ng-show="submitted && partnerDetailForm.contact_details_2_contactType.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.contact_details_2_contactType.$error.required">Please
+																				select contact type </span>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="col-xs-7">
+																	<div class="row">
+																		<div class="form-group"
+																			ng-class="{ 'has-error' : submitted && partnerDetailForm.contact_details_2_contactNo.$invalid }">
+																			<label class="control-label col-xs-offset-1">Phone
+																				no.</label>
+																			<div class="append-icon">
+																				<div class="col-xs-12">
+																					<!-- <angucomplete-alt id="countryCode"
+																						name="countryCode" class="autoCompleteField"
+																						placeholder="Country Code" pause="100"
+																						selected-object="assignCountryCode"
+																						local-data="countryCodes" search-fields="code"
+																						title-field="code" minlength="1"
+																						focus-in="onFocus(space, 2)"
+																						disable-input="disableInput"
+																						input-class="form-control form-control-small"
+																						match-class="highlight" required /> -->
+																					<input class="form-control"
+																						id="contact_details_2_contactNo"
+																						name="contact_details_2_contactNo" type="tel"
+																						style="padding-left: 4em !important;"
+																						data-ng-disabled="contactDetail" maxlength="10"
+																						required>
+																				</div>
+																				<!-- <div class="col-xs-8">
+																					<input type="text"
+																						name="contact_details_2_contactNo"
+																						class="form-control" data-ng-disabled="disableInput"
+																						ng-model="space.contact_details_2.contactNo"
+																						placeholder="Enter your phone no" required>
+																				</div> -->
+																				<div
+																					ng-show="submitted && partnerDetailForm.contact_details_2_contactNo.$invalid">
+																					<span class="err-msg errorText validaion-color"
+																						ng-show="partnerDetailForm.contact_details_2_contactNo.$error.required">Please
+																						enter the contact number </span>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<!-- <div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.phone.$invalid }">
+																	<label class="control-label">Phone no.</label>
+																	<div class="append-icon">
+																		<input type="text" name="phone" class="form-control"
+																			ng-model="space.phone"
+																			placeholder="Enter your phone no" required>
+																		<div
+																			ng-show="submitted && partnerDetailForm.phone.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.phone.$error.required">Please
+																				enter the phone number </span>
+																		</div>
+																	</div>
+																</div>
+															</div> -->
+														</div>
+
+														<div class="row col-xs-4" style="margin-right: 1%;">
+															<div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.service_tax.$invalid }">
+																	<label class="control-label">Service Tax
+																		Registration Number</label>
+																	<div class="append-icon">
+																		<input type="text" name="service_tax" style="text-transform:uppercase"
+																			class="form-control" ng-model="space.service_tax"
+																			placeholder="Service Tax" maxlength="15">
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="row col-xs-4" style="margin-right: 1%;">
+															<div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.company_PAN.$invalid }">
+																	<label class="control-label">Company PAN</label>
+																	<div class="append-icon">
+																		<input type="text" name="company_PAN" style="text-transform:uppercase"
+																			class="form-control" ng-model="space.company_PAN"
+																			placeholder="Company PAN" maxlength="10" required>
+																		<div
+																			ng-show="submitted && partnerDetailForm.company_PAN.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.company_PAN.$error.required">Please
+																				enter the Company PAN </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="row col-xs-4" style="margin-right: 1%;">
+															<div class="">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.company_TIN.$invalid }">
+																	<label class="control-label">Company TIN</label>
+																	<div class="append-icon">
+																		<input type="text" name="company_TIN"
+																			class="form-control" ng-model="space.company_TIN"
+																			placeholder="Company TIN" required>
+																		<div
+																			ng-show="submitted && partnerDetailForm.company_TIN.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.company_TIN.$error.required">Please
+																				enter the Company TIN </span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.registered_company_name.$invalid }">
+																	<label class="control-label">Registered Company Name</label>
+																	<div class="append-icon">
+																		<input type="text" name="registered_company_name"
+																			class="form-control"
+																			data-ng-model="space.registered_company_name"
+																			placeholder="Enter your Registered Company Name"
+																			required>
+																		<!-- <i class="icon-envelope"></i> -->
+																		<div
+																			ng-show="submitted && partnerDetailForm.registered_company_name.$invalid">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.registered_company_name.$error.required">Please
+																				enter the company name </span>
+																		</div>
+																	</div>
+																</div>
+
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="form-group"
+																	ng-class="{ 'has-error' : submitted && partnerDetailForm.registered_company_address.$invalid }">
+																	<label class="control-label">Registered Company Address</label>
+																	<!-- Address 1 -->
+																	<div class="append-icon margin_bottom_10">
+																		<input type="text"
+																			name="registered_company_address_address1"
+																			class="form-control"
+																			data-ng-model="space.registered_company_address.address1"
+																			placeholder="Enter Address Line 1" required>
+																		<!-- <i class="icon-envelope"></i> -->
+																		<div
+																			ng-show="submitted && partnerDetailForm.registered_company_address_address1.$invalid"
+																			class="margin_bottom_10">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.registered_company_address_address1.$error.required">Please
+																				enter the address line 1 </span>
+																		</div>
+																	</div>
+																	<!-- Address 2 -->
+																	<div class="append-icon margin_bottom_10">
+																		<input type="text"
+																			name="registered_company_address_address2"
+																			class="form-control"
+																			data-ng-model="space.registered_company_address.address2"
+																			placeholder="Enter Address Line 2" required>
+																		<!-- <i class="icon-envelope"></i> -->
+																		<div
+																			ng-show="submitted && partnerDetailForm.registered_company_address_address2.$invalid"
+																			class="margin_bottom_10">
+																			<span class="err-msg errorText validaion-color"
+																				ng-show="partnerDetailForm.registered_company_address_address2.$error.required">Please
+																				enter the address line 2 </span>
+																		</div>
+																	</div>
+																	<!-- City -->
+																	<div class="col-md-6 row">
+																		<div class="append-icon margin_bottom_10">
+																			<input type="text"
+																				name="registered_company_address_city"
+																				class="form-control"
+																				data-ng-model="space.registered_company_address.city"
+																				placeholder="Enter city" required>
+																			<!-- <i class="icon-envelope"></i> -->
+																			<div
+																				ng-show="submitted && partnerDetailForm.registered_company_address_city.$invalid"
+																				class="margin_bottom_10">
+																				<span class="err-msg errorText validaion-color"
+																					ng-show="partnerDetailForm.registered_company_address_city.$error.required">Please
+																					enter the city </span>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- State -->
+																	<div class="col-md-6 row  margin_left_45">
+																		<div class="append-icon margin_bottom_10">
+																			<input type="text"
+																				name="registered_company_address_state"
+																				class="form-control"
+																				data-ng-model="space.registered_company_address.state"
+																				placeholder="Enter state" required>
+																			<!-- <i class="icon-envelope"></i> -->
+																			<div
+																				ng-show="submitted && partnerDetailForm.registered_company_address_state.$invalid"
+																				class="margin_bottom_10">
+																				<span class="err-msg errorText validaion-color"
+																					ng-show="partnerDetailForm.registered_company_address_state.$error.required">Please
+																					enter the state </span>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- Country -->
+																	<div class="col-md-6 row">
+																		<div class="append-icon margin_bottom_10">
+																			<input type="text"
+																				name="registered_company_address_country"
+																				class="form-control"
+																				data-ng-model="space.registered_company_address.country"
+																				placeholder="Enter country" required>
+																			<!-- <i class="icon-envelope"></i> -->
+																			<div
+																				ng-show="submitted && partnerDetailForm.registered_company_address_country.$invalid"
+																				class="margin_bottom_10">
+																				<span class="err-msg errorText validaion-color"
+																					ng-show="partnerDetailForm.registered_company_address_country.$error.required">Please
+																					enter the country </span>
+																			</div>
+																		</div>
+																	</div>
+																	<!-- Postal Code -->
+																	<div class="col-md-6 row margin_left_45">
+																		<div class="append-icon margin_bottom_10">
+																			<input type="number"
+																				name="registered_company_address_postal_code"
+																				class="form-control"
+																				data-ng-model="space.registered_company_address.postal_code"
+																				placeholder="Enter postal code" required>
+																			<!-- <i class="icon-envelope"></i> -->
+																			<div
+																				ng-show="submitted && partnerDetailForm.registered_company_address_postal_code.$invalid"
+																				class="margin_bottom_10">
+																				<span class="err-msg errorText validaion-color"
+																					ng-show="partnerDetailForm.registered_company_address_postal_code.$error.required">Please
+																					enter the postal code </span>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="row col-xs-12">
+															<div class="">
+																<div class="form-group">
+																	<label class="control-label">Image</label>
+																	<div class="btn btn-default append-icon"
+																		ngf-select="uploadImage($files)"
+																		accept="image/png, image/jpeg"
+																		data-ng-disabled="counter>=5">Upload</div>
+																	<div class="err-msg errorRed validaion-color">
+																		(Allowed Type: jpeg/png, Maximum-Size:10MB)</div>
+																</div>
+															</div>
+														</div>
+
+														<div data-ng-if="space.images && space.images.length>0">
+															<div class="row mt10" ng-repeat="image in space.images">
+
+																<div class="col-sm-2">
+																	<img class="image-border img-responsive img150"
+																		src="{{image.tempUrl}}" alt="uploaded image">
+
+																</div>
+																<div class="col-sm-4">
+
+																	<input type="text" name="name"
+																		data-ng-model="image.name" class=" form-control"
+																		placeholder="Image Name">
+																	<textarea name="description" rows="2" cols="19"
+																		data-ng-model="image.description"
+																		class="mt10 form-control"
+																		placeholder="Image Description"></textarea>
+																</div>
+																<div class="col-sm-1">
+																	<div class="image-text-delete">
+																		<a href=""
+																			data-ng-click="removeImage($index,partnerDetailForm,space);">
+																			<i class="fa fa-times"></i>
+																		</a>
+
+																	</div>
+
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6 mapCreate"
+														data-ng-include="'/space/views/space_map.html'"></div>
+
+													<div class="row col-md-12">
+														<div data-ng-include="'/space/views/space_team.html'"></div>
+														<div class="text-center  m-t-20">
+															<a href="" id="next1" data-toggle="tab"
+																data-ng-hide="addMore" class="awe-btn awe-default"
+																data-ng-click="cancel()">Cancel</a> <a href=""
+																id="next1" data-toggle="tab" class="awe-btn arrow-right"
+																data-ng-hide="addMore"
+																data-ng-click="create(partnerDetailForm)">Submit</a> <a
+																href="" id="next1" data-toggle="tab"
+																data-ng-show="addMore"
+																class="awe-btn awe-default pull-right"
+																data-ng-click="enableAddMore()">Add Space Details</a>
+														</div>
+													</div>
+
+												</form>
+											</div>
+											<div class="row"></div>
+										</div>
+										<!-- Add Room -->
+									</div>
+
+								</div>
+							</div>
+
+							<div class="row" ng-show="enableAddMoreForm">
+								<form role="form" class="form-validation"
+									name="partnerMoreDetailForm" id="partnerMoreDetailForm">
+									<div class="col-lg-12 portlets">
+										<div class="panel panel-default no-bd">
+											<div class="panel-body bg-white">
+												<div class="row">
+													<div class="col-md-12 col-sm-12 col-xs-12">
+
+														<div class="row">
+															<div class="col-sm-12">
+																<div class="col-sm-12">
+																	<h2>Amenities</h2>
+																	<div class="col-sm-3"
+																		ng-repeat="amenity in space.amenities">
+																		<label>{{amenity.name}}</label><br> <input
+																			data-ng-click="toggleAmenityApplicable(amenity)"
+																			name='amenity{{$index}}' id='amenity{{$index}}'
+																			type="checkbox" class="not-show wdth-meetngdtls"
+																			ng-model="amenity.isApplicable" /><span>Is
+																			Applicable</span><br> <input ng-if="!amenity.isStatus"
+																			data-ng-click="toggleAmenityChargeable(amenity);"
+																			name='isChargeable{{$index}}'
+																			id='isChargeable{{$index}}' type="checkbox"
+																			class="not-show wdth-meetngdtls"
+																			ng-model="amenity.isChargeable" /><span
+																			ng-if="!amenity.isStatus"> Is Chargeable</span>
+																		<div ng-show="amenity.isChargeable"
+																			ng-if="!amenity.isStatus">
+																			<div>
+																				<label>Price:</label> <input type="number"
+																					name="price" class="form-control"
+																					ng-model="amenity.price"
+																					placeholder="Enter the price" />
+
+																			</div>
+																		</div>
+																	</div>
+
+
+																	<div class="col-sm-3"
+																		ng-show="space.amenities.length === 0">No
+																		Amenities available for the Space type</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-lg-12 portlets">
+										<div class="panel panel-default no-bd">
+											<div class="panel-body bg-white">
+												<div class="row">
+													<!-- <div class="col-md-12 col-sm-12 col-xs-12"> -->
+													<div data-ng-include="'/space/views/space_hoildays.html'">
+														<!-- </div> -->
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="col-lg-12 portlets">
+										<div class="panel panel-default no-bd">
+											<div class="panel-body bg-white">
+												<div class="row">
+													<div class="col-md-12 col-sm-12 col-xs-12">
+														<div class="row">
+															<div class="col-sm-12 col-lg-12">
+																<div class="col-sm-12 col-lg-12">
+																	<div class="col-sm-12 col-lg-12">
+																		<h2>Weekly Timing</h2>
+																		<table
+																			class="table table-striped mb30 table table-bordered mb30">
+																			<thead>
+																				<tr>
+																					<td>Day</td>
+																					<td>Start Time</td>
+																					<td>End Time</td>
+																					<td>24 hours</td>
+																					<td>Is closed</td>
+																				</tr>
+
+																			</thead>
+																			<tbody>
+																				<tr ng-repeat="hoursObj in space.officeHours">
+																					<td align="center">{{hoursObj.day}}</td>
+																					<td align="center"><uib-timepicker
+																							ng-model="hoursObj.startTime"
+																							ng-change="changed(hoursObj.startTime, hoursObj.endTime, $index)"
+																							hour-step="hstep" minute-step="mstep"
+																							show-meridian="ismeridian" mousewheel="false"
+																							ng-disabled="hoursObj.isAllday || hoursObj.isClosed"></uib-timepicker></td>
+																					<td align="center"><uib-timepicker
+																							ng-model="hoursObj.endTime"
+																							ng-change="changed(hoursObj.startTime, hoursObj.endTime, $index)"
+																							hour-step="hstep" minute-step="mstep"
+																							show-meridian="ismeridian" mousewheel="false"
+																							ng-disabled="hoursObj.isAllday || hoursObj.isClosed"></uib-timepicker>
+																						<p ng-show="err{{$index}}" class="error-msg">End
+																							time must be greater than start time</p></td>
+																					<td align="center"><input
+																						name='isAllDay{{$index}}' id='isAllDay{{$index}}'
+																						type="checkbox" ng-model="hoursObj.isAllday"
+																						ng-change="setFullDay(hoursObj); toggleAllDay(hoursObj);" /></td>
+																					<td align="center"><input
+																						name='isClosed{{$index}}' id='isClosed{{$index}}'
+																						type="checkbox" ng-model="hoursObj.isClosed"
+																						ng-change="setClosedDaySpace(hoursObj); toggleClosed(hoursObj);" /></td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+													</div>
+
+													<div class="row col-md-12">
+														<div class="text-center  m-t-20">
+															<a href="" id="next1" data-toggle="tab"
+																class="awe-btn awe-default" data-ng-click="cancel()">Cancel</a>
+															<a href="" id="next1" data-toggle="tab"
+																class="awe-btn arrow-right"
+																data-ng-click="update(partnerDetailForm, partnerMoreDetailForm, 'CREATE')">Submit</a>
+														</div>
+													</div>
+
+												</div>
+											</div>
+											<!-- Add Room -->
+										</div>
+
+									</div>
+								</form>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- End Tabs Content -->
+			</div>
+			<!-- End Banner Content -->
+		</div>
+	</div>
+</section>
+<!--End Banner-->
+<script type="text/javascript" src="/system/assets/js/plugins.js"></script>

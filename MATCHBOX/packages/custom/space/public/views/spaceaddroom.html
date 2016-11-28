@@ -1,0 +1,785 @@
+<section class="partnerinfo mydetails" ng-controller="SpaceController"
+	ng-init="loadroomtypes();loadspaceloc();loadRoomsAllotedToParticulerSpace();checkingLoggedinUserIsAdmin();loadvirtualOffices();">
+	<div data-ng-include="'/system/views/alert.html'"></div>
+<!-- 	<div ng-if="roomImageEnabled">
+		<div id="preloaderImage">
+			<div class="tb-cell">
+				<div id="page-loadingImage">
+					<div></div>
+					<p>
+					<h4 class="h-image-caption">Uploading....</h4>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+			<!-- Tabs Content -->
+			<div class="tab-content" style="background: transparent;">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'">
+					</div>
+					<!-- End Tabs Cat -->
+					<div class="col-sm-9 col-lg-10">
+						<div class="page-content page-thin dashboard-content">
+							<div class="row">
+								<div class="col-lg-12">
+									<a
+										class="add-partner add-partner-cursor awe-btn awe-btn-5 arrow-right awe-btn-lager text-uppercase float-right"
+										id="addnewrooms" ng-click="showroomtype();"> Add New Rooms
+									</a>
+								</div>
+								<div class="panel-body" ng-if="showroomtypecheck"
+									style="padding: 15px 0;">
+									<div class="form-hotel tab-pane in no-padding" id="addroom">
+										<div class="col-xs-12">
+											<form class="form-validation" name="spaceaddroomForm"
+												novalidate="" role="form">
+												<div class="panel-body bg-white">
+													<div class="row">
+														<div class="col-md-12 col-sm-12 col-xs-12">
+															<div class="row">
+																<div class="col-sm-4">
+																	<div class="form-group">
+																		<label class="control-label"> Room Type </label>
+																		<div class="option-group">
+																			<select class="form-control"
+																				ng-change="changingroomtype(room.roomtype);"
+																				ng-model="room.roomtype" required="">
+																				<option disabled="disabled" selected="selected"
+																					value="">Select Room Type...</option>
+																				<option ng-repeat="items in roomtypeoptions"
+																					value="{{items._id}}"
+																					ng-hide="items.name == 'Plug-N-Play'">
+																					{{items.name}}</option>
+																			</select>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="box get_hd panel panel-default no-bd"
+													ng-if='(roomtypevalue != "") && !(isVirtualOffice)'>
+													<div class="panel-heade text-left" style="padding: 15px;">
+														<h2 class="panel-title">
+															<strong> Room Details </strong>
+														</h2>
+													</div>
+													<div class="panel-body bg-white">
+														<div class="row">
+															<div class="col-md-12 col-sm-12 col-xs-12">
+																<div class="row">
+																	<div class="col-sm-12">
+																		<div class="get_hd box">
+																			<div class="row">
+																				<div class="col-sm-4">
+																					<div class="form-group">
+																						<label class="control-label"> Name </label>
+																						<div class="append-icon">
+																							<input class="form-control" name="roomname"
+																								ng-model="room.name" required="" type="text">
+																							<i class="icon-user"> </i>
+																							<div
+																								ng-show="submitted && spaceaddroomForm.roomname.$invalid">
+																								<span class="err-msg errorRed validaion-color"
+																									ng-show="spaceaddroomForm.roomname.$error.required">
+																									Please enter name </span>
+																							</div>
+																							<div class="errorRed"
+																								ng-repeat="err in error.data"
+																								ng-if="err.param =='name'">{{err.msg}}</div>
+
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="row">
+																				<div class="col-sm-4"  data-ng-if= "roomtypename !== 'Training Room'">
+																					<div class="form-group">
+																						<label class="control-label"> Per Hour </label>
+																						<div class="append-icon">
+																							<input class="form-control" name="roomperhour"
+																								ng-model="room.pricePerhour" required=""
+																								type="number"> <i class="fa fa-inr">
+																							</i>
+																							<div
+																								ng-show="submitted && spaceaddroomForm.roomperhour.$invalid">
+																								<span class="err-msg errorRed validaion-color"
+																									ng-show="spaceaddroomForm.roomperhour.$error.required">
+																									Please enter the price per hour </span>
+																							</div>
+																							<div class="errorRed"
+																								ng-repeat="err in error.data"
+																								ng-if="err.param =='pricePerhour'">{{err.msg}}</div>
+
+																						</div>
+																					</div>
+																				</div>
+																				<div class="col-sm-4">
+																					<div class="form-group">
+																						<label class="control-label"> For Half Day
+																						</label>
+																						<div class="append-icon">
+																							<input class="form-control" name="roomperhalfday"
+																								ng-model="room.pricePerhalfday" required=""
+																								type="number"> <i class="fa fa-inr">
+																							</i>
+																							<div
+																								ng-show="submitted && spaceaddroomForm.roomperhalfday.$invalid">
+																								<span class="err-msg errorRed validaion-color"
+																									ng-show="spaceaddroomForm.roomperhalfday.$error.required">
+																									Please enter the price per halfday </span>
+																							</div>
+																							<div class="errorRed"
+																								ng-repeat="err in error.data"
+																								ng-if="err.param =='pricePerhalfday'">{{err.msg}}</div>
+
+																						</div>
+																					</div>
+																				</div>
+																				<div class="col-sm-4">
+																					<div class="form-group">
+																						<label class="control-label"> For Full Day
+																						</label>
+																						<div class="append-icon">
+																							<input class="form-control" name="roomperfullday"
+																								ng-model="room.pricePerfullday" required=""
+																								type="number"> <i class="fa fa-inr">
+																							</i>
+																							<div
+																								ng-show="submitted && spaceaddroomForm.roomperfullday.$invalid">
+																								<span class="err-msg errorRed validaion-color"
+																									ng-show="spaceaddroomForm.roomperfullday.$error.required">
+																									Please enter the price for fullday </span>
+																							</div>
+																							<div class="errorRed"
+																								ng-repeat="err in error.data"
+																								ng-if="err.param =='pricePerfullday'">{{err.msg}}</div>
+
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="row">
+																				<div class="row col-sm-12">
+																					<div class="form-group">
+																						<label class="col-md-12 col-xs-12 control-label">
+																							Amenities </label>
+																						<div class="col-sm-3" style="height: 125px;"
+																							ng-repeat="spaceamenity in amenities ">
+																							<label>{{spaceamenity.name}}</label><br> <input
+																								data-ng-click="toggleSpaceAmenityApplicable(spaceamenity)"
+																								name='spaceamenity{{$index}}'
+																								id='spaceamenity{{$index}}' type="checkbox"
+																								class="not-show wdth-meetngdtls"
+																								ng-model="spaceamenity.isApplicable" /><span>Is
+																								Applicable</span><br> <input
+																								ng-if="!spaceamenity.isStatus"
+																								data-ng-click="toggleSpaceAmenityChargeable(spaceamenity);"
+																								name='isChargeable{{$index}}'
+																								id='isChargeable{{$index}}' type="checkbox"
+																								class="not-show wdth-meetngdtls"
+																								ng-model="spaceamenity.isChargeable" /><span
+																								ng-if="!spaceamenity.isStatus"> Is
+																								Chargeable</span>
+																							<div ng-show="spaceamenity.isChargeable"
+																								ng-if="!spaceamenity.isStatus">
+																								<div>
+																									<label>Price:</label>
+																									<div class="append-icon">
+																										<input class="form-control" type="number"
+																											ng-model="spaceamenity.price" id="price" /><i
+																											class="fa fa-inr"> </i>
+																									</div>
+																								</div>
+																							</div>
+																						</div>
+																					</div>
+																					<!--       <div ng-repeat="amenity in room.amenities">
+                                                                                    <div class="col-md-2">
+                                                                                        <div class="append-icon">
+                                                                                            <input data-ng-model="amenity.facilityavailable" type="checkbox">
+                                                                                            {{amenity.name}}
+                                                                                            </input>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div> -->
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row" style="margin-top: 10px;">
+																			<div class="col-sm-12">
+																				<div class="form-group">
+																					<label class="control-label"> Description (Max 140 Characters)</label>
+																					<div class="append-icon">
+																						<textarea class="form-control"
+																							name="roomdescription"
+																							ng-model="room.description" required=""
+																							maxlength="140" rows="4">
+                                                                                    </textarea>
+																						<div
+																							ng-show="submitted && spaceaddroomForm.roomdescription.$invalid">
+																							<span class="err-msg errorRed validaion-color"
+																								ng-show="spaceaddroomForm.roomdescription.$error.required">
+																								Please Enter Description </span>
+																						</div>
+																						<div class="errorRed"
+																							ng-repeat="err in error.data"
+																							ng-if="err.param =='description'">{{err.msg}}</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row" >
+																			<div class="col-sm-2">
+																				<div class="form-group">
+																					<label class="control-label"> Total Seats /
+																						Desks </label>
+																					<div class="option-group">
+																						<select ng-if="!hotDesk" class="form-control"
+																							id="seats" name="roomseats"
+																							ng-model="room.capacity" required="">
+																							<option disabled="disabled" selected="selected"
+																								value="">Select Total Seats / Desks</option>
+																							<option ng-repeat="capacity in roomseats"
+																								value="{{capacity.capacityvalue}}">
+																								{{capacity.capacityvalue}}</option>
+																						</select> <input ng-if="hotDesk" class="form-control"
+																							name="totaldesks" ng-model="room.capacity"
+																							required type="number" min="1" max="1000000">
+																					</div>
+																					<div
+																						ng-show="submitted && spaceaddroomForm.roomseats.$invalid">
+																						<span class="err-msg errorRed validaion-color"
+																							ng-show="spaceaddroomForm.roomseats.$error.required">
+																							Please select the total seats </span>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="panel panel-default no-bd" id="get_images">
+														<!--  <div class="panel-heade text-left" style="padding: 15px;">
+                                                        <h2 class="panel-title">
+                                                        <strong>
+                                                        Room Details
+                                                        </strong>
+                                                        </h2>
+                                                    </div> -->
+														<div class="panel-body bg-white">
+															<div class="row">
+																<div class="col-md-12 col-sm-12 col-xs-12">
+																	<div class="form-group" id="img_container">
+																		<label class="control-label"> </label>
+																		<div class="row">
+																			<div class="col-sm-6">
+																				<div class="form-group">
+																					<label class="control-label"> Image </label>
+																					<div accept="image/png, image/jpeg"
+																						class="btn btn-default append-icon"
+																						data-ng-disabled="counter>=5"
+																						ngf-select="roomImageUpload($files)">Upload
+																					</div>
+																					<div class="err-msg errorRed validaion-color">
+                                                                                      (Allowed Type:  jpeg/png, Maximum-Size:10MB)
+                                                                                    </div>
+																				</div>
+																			</div>
+																		</div>
+																		<div data-ng-if="room.images && room.images.length>0">
+																			<div class="row mt10"
+																				ng-repeat="image in room.images">
+																				<div class="col-sm-2">
+																					<img alt="uploaded image"
+																						class="image-border img-responsive img150"
+																						src="{{image.tempUrl}}">
+																					<!-- <div ng-show="isImage" ng-init="image.url = imageurl"></div> -->
+																					</img>
+																				</div>
+																				<div class="col-sm-4">
+																					<input class=" form-control"
+																						data-ng-model="image.name" name="name"
+																						placeholder="Image Name" type="text">
+																					<textarea class="mt10 form-control" cols="19"
+																						data-ng-model="image.description"
+																						name="description" placeholder="Image Description"
+																						rows="2">
+                                                                                </textarea>
+																					</input>
+																				</div>
+																				<div class="col-sm-1">
+																					<div class="image-text-delete">
+																						<a
+																							data-ng-click="removeRoomImage($index,partnerDetailForm,room);"
+																							href=""> <i class="fa fa-times"> </i>
+																						</a>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<!-- <div class="file">
+                                                                        <div class="option-group">
+                                                                            <span class="file-button btn-primary">Choose File</span>
+                                                                            <input type="file" class="custom-file" name="room_img"  onchange="document.getElementById('uploader').value = this.value;" multiples>
+                                                                            <input type="text" class="form-control" id="uploader" placeholder="no file selected" readonly="">
+                                                                        </div>
+                                                                    </div> -->
+																	</div>
+																</div>
+																<!-- <div class="col-md-2 col-sm-2 col-xs-4">
+                                                                <a href="javascript:void(0);" id="add_img" class="cancel awe-btn awe-btn-5 awe-btn-lager text-uppercase">Add</a>
+                                                            </div> -->
+															</div>
+														</div>
+													</div>
+													<div class="panel-body bg-white">
+														<div class="row">
+															<div class="col-sm-12 col-lg-12">
+																<div class="row col-sm-12 col-lg-12">
+																	<div class="row col-sm-12 col-lg-12">
+																		<h2>Weekly Timing</h2>
+																		<table
+																			class="table table-striped mb30 table table-bordered mb30">
+																			<thead>
+																				<tr>
+																					<td class="weekly-timing">Day</td>
+																					<td class="weekly-timing">Start Time</td>
+																					<td class="weekly-timing">End Time</td>
+																					<td class="weekly-timing">24 hours</td>
+																					<td class="weekly-timing">Is closed</td>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				<tr ng-repeat="hoursObj in officeHoursRoomsSlot">
+																					<td align="center">{{hoursObj.day}}</td>
+																					<td align="center"><uib-timepicker
+																							hour-step="hstep" max="hoursObj.max"
+																							min="hoursObj.min" minute-step="mstep"
+																							ng-change="changed(hoursObj.startTime, hoursObj.endTime, $index)"
+																							ng-disabled="hoursObj.isAllday || hoursObj.isClosed"
+																							ng-model="hoursObj.startTime" mousewheel="false"
+																							show-meridian="ismeridian"> </uib-timepicker></td>
+																					<td align="center"><uib-timepicker
+																							hour-step="hstep" max="hoursObj.max"
+																							min="hoursObj.min" minute-step="mstep"
+																							ng-change="changed(hoursObj.startTime, hoursObj.endTime, $index)"
+																							ng-disabled="hoursObj.isAllday || hoursObj.isClosed"
+																							ng-model="hoursObj.endTime" mousewheel="false"
+																							show-meridian="ismeridian"> </uib-timepicker>
+																						<p class="error-msg" ng-show="err{{$index}}">
+																							End time must be greater than start time</p></td>
+																					<td align="center"><input
+																						id="isAllDay{{$index}}" name="isAllDay{{$index}}"
+																						ng-change="toggleAllDayAddRoom(hoursObj);"
+																						ng-model="hoursObj.isAllday"
+																						ng-disabled="!hoursObj.isAlldaylogic"
+																						type="checkbox"/ ></td>
+																					<td align="center"><input
+																						id="isClosed{{$index}}" name="isClosed{{$index}}"
+																						ng-change="toggleClosedAddRoom(hoursObj);"
+																						ng-model="hoursObj.isClosed"
+																						ng-disabled="hoursObj.isClosedaylogic"
+																						type="checkbox" /></td>
+																				</tr>
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="text-center m-t-20">
+														<a
+															class="cancel awe-btn awe-btn-5 awe-btn-lager text-uppercase"
+															data-toggle="tab" href="#spaces" id="back2"
+															ng-click="cancelAddingRoom();"> Back </a> <input
+															type="button" class="awe-btn arrow-right"
+															style="line-height: 50px !important; width: 120px; text-align: center; text-transform: uppercase;"
+															ng-click="createroom(spaceaddroomForm.$valid);"
+															id="addRoomButtonSpace" value="Add">
+													</div>
+												</div>
+												<div class="box get_hd panel panel-default no-bd"
+													ng-if='(roomtypevalue != "") && isVirtualOffice'>
+													<div class="panel-heade text-left" style="padding: 15px;">
+														<h2 class="panel-title">
+															<strong> Details </strong>
+														</h2>
+													</div>
+													<div class="panel-body bg-white">
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<label class="control-label"> Virtual Office
+																		Image </label>
+																	<div>
+																		<img class=" img-responsive img150"
+																			src="{{virtualOffice.image}}">
+																		<!-- <div ng-show="isImage" ng-init="image.url = imageurl"></div> -->
+																	</div>
+																	<div accept="image/png, image/jpeg"
+																		class="btn btn-default append-icon mt10"
+																		data-ng-disabled="counter>=5"
+																		ngf-select="virtualOfficeImageUpload($files)">Upload</div>
+																</div>
+															</div>
+														</div>
+
+
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<label class="control-label">Description</label>
+																	<div class="append-icon">
+																		<input class="form-control" name="description"
+																			ng-model="virtualOffice.description" type="text"
+																			required>
+																		<div ng-show="submitted && spaceaddroomForm.description.$invalid">
+																			<span class="err-msg errorRed validaion-color"
+																				ng-show="spaceaddroomForm.description.$error.required">
+																				Please enter description </span>
+																		</div>
+																		<div class="errorRed" ng-repeat="err in error.data"
+																			ng-if="err.param =='description'">{{err.msg}}</div>
+																	   </div>
+																</div>
+															</div>
+														</div>
+
+
+														<div class="row"
+															ng-repeat="package in virtualOffice.packages">
+
+															<div class="col-md-12 col-sm-12 col-xs-12">
+																<div class="row">
+																	<div class="col-sm-12">
+																		<div class="get_hd box">
+																			<div class="row">
+																				<div class="col-sm-4">
+																					<div class="form-group">
+																						<label class="control-label">Package Name</label>
+																						<div class="append-icon">
+																							<input class="form-control" name="packageName{{$index}}"
+																								ng-model="package.packageName" type="text"
+																								required>
+																							<div
+																								ng-show="submitted && spaceaddroomForm.packageName{{$index}}.$invalid">
+																								<span class="err-msg errorRed validaion-color"
+																									ng-show="spaceaddroomForm.packageName{{$index}}.$error.required">
+																									Please enter name </span>
+																							</div>
+																							<div class="errorRed"
+																								ng-repeat="err in error.data"
+																								ng-if="err.param =='packageName'">{{err.msg}}</div>
+
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+                                                                            <div class="row">
+                                                                                <div class="col-sm-4">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label">Url</label>
+                                                                                        <div class="append-icon">
+                                                                                            <input ng-pattern="/^(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})$/" class="form-control" name="urlPath{{$index}}" ng-model="package.packageUrl" 
+                                                                                            type="text" required>
+                                                                                            <div
+                                                                                                ng-show="submitted && spaceaddroomForm.urlPath{{$index}}.$invalid">
+                                                                                                <span class="err-msg errorRed validaion-color"
+                                                                                                    ng-show="spaceaddroomForm.urlPath{{$index}}.$error.required">
+                                                                                                    Please enter package url </span>
+                                                                                            </div>
+                                                                                            <div  ng-show="submitted && spaceaddroomForm.urlPath{{$index}}.$error.pattern">
+                                                                                                  <span class="err-msg errorRed validaion-color"
+                                                                                                    ng-show="spaceaddroomForm.urlPath{{$index}}.$error.pattern">
+                                                                                                    Please enter valid url </span>
+                                                                                             </div> 
+                                                                                            <div class="errorRed"
+                                                                                                ng-repeat="err in error.data"
+                                                                                                ng-if="err.param =='packageUrl'">{{err.msg}}</div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+																			<!--<div class="row">
+																				<div class="col-sm-12">
+																					<div class="form-group">
+																						<label class="control-label"> Facilities
+																							available </label>
+																						<div class="row mt10"
+																							ng-repeat="facilityObj in package.facilityList">
+																							<div class="col-sm-1">
+																								<input type="checkbox" class="form-control"
+																									ng-model="facilityObj.isAvailable">
+																							</div>
+																							<div class="col-sm-3">
+																								<label>{{facilityObj.facility}}</label>
+																							</div>
+																							<div class="col-sm-8">
+																								<input class="form-control" type="text"
+																									ng-model="facilityObj.description" />
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+
+																			</div>-->
+
+
+																			<div class="row">
+																				<div class="col-sm-12">
+																					<div class="form-group">
+																						<label class="control-label"> Payment </label>
+																						<div class="row">
+																						<div class="col-sm-8">
+																							<table class="table mb30 table table-bordered">
+																								<thead>
+																									<tr align="center" style="font-weight: bold;">
+																										<td>Payment Plan</td>
+																										<td>Monthly Amount</td>
+																									</tr>
+																								</thead>
+																								<tbody>
+																									<tr ng-repeat="payment in package.paymentPlan">
+																										<td>{{payment.plan}}</td>
+																										<td><input type="number" ng-model="payment.amount" class="form-control" name="packageAmount{{$index}}" required>
+																										<div
+                                                                                                            ng-show="submitted && spaceaddroomForm.packageAmount{{$index}}.$invalid">
+		                                                                                                 <span class="err-msg errorRed validaion-color"
+		                                                                                                    ng-show="spaceaddroomForm.packageAmount{{$index}}.$error.required">
+		                                                                                                    Please enter the amount </span>
+                                                                                                          </div>
+                                                                                                       </td>
+																									</tr>
+																								</tbody>
+																							</table>
+
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+
+																			</div>
+
+
+																		</div>
+
+																	</div>
+																</div>
+															</div>
+                                                             <div ng-hide="$first">
+                                                                <a ng-click="removeVirtualofficePackage($index)" class="mouse-pointer"><i
+                                                                    class="fa fa-minus-circle"></i> <span>Remove Package</span></a>
+                                                            </div>
+														</div>
+														<hr>
+														<div>
+															<a ng-click="addPackage()" class="mouse-pointer"><i
+																class="fa fa-plus-circle"></i> <span>Add Package</span></a>
+														</div>
+													</div>
+
+
+
+
+													<div class="text-center m-t-20">
+														<a class="awe-btn awe-default" data-toggle="tab"
+															href="#spaces" id="back2" ng-click="cancelAddingRoom();">
+															Back </a> <a class="awe-btn arrow-right" href="#"
+															ng-click="createVirtualOffice(spaceaddroomForm.$valid);">
+															Add </a>
+													</div>
+												</div>
+										</div>
+
+
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="panel" style="padding: 0 15px;">
+								<div class="panel-header panel-controls">
+									<h2>Meeting Room</h2>
+								</div>
+								<div class="panel-content pagination2 table-responsive"
+									style="padding: 20px 0;">
+									<table class="table table-hover table-dynamic">
+										<thead>
+											<tr>
+												<th>NAME</th>
+												<th>SPACE</th>
+												<th>CAPACITY</th>
+												<th>PRICE PER HOUR</th>
+												<th>PRICE PER HALF DAY</th>
+												<th>PRICE PER DAY</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="calendar"
+												ng-repeat="room in roomsparticulertospace"
+												ng-if="room.roomtype.name=='Meeting Room'">
+												<a href=".calendars">
+													<td>{{room.name}}</td>
+													<td>{{room.spaceId.name}}</td>
+													<td>{{room.capacity}}</td>
+													<td>{{room.pricePerhour}}</td>
+													<td>{{room.pricePerhalfday}}</td>
+													<td>{{room.pricePerfullday}}</td>
+												</a>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="panel" style="padding: 0 15px;">
+								<div class="panel-header panel-controls">
+									<h2>Training Room</h2>
+								</div>
+								<div class="panel-content pagination2 table-responsive"
+									style="padding: 20px 0;">
+									<table class="table table-hover table-dynamic">
+										<thead>
+											<tr>
+												<th>NAME</th>
+												<th>SPACE</th>
+												<th>CAPACITY</th>
+												<th>PRICE PER HOUR</th>
+												<th>PRICE PER HALF DAY</th>
+												<th>PRICE PER DAY</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="calendar"
+												ng-repeat="room in roomsparticulertospace"
+												ng-if="room.roomtype.name=='Training Room'">
+												<a href=".calendars">
+													<td>{{room.name}}</td>
+													<td>{{room.spaceId.name}}</td>
+													<td>{{room.capacity}}</td>
+													<td>{{room.pricePerhour}}</td>
+													<td>{{room.pricePerhalfday}}</td>
+													<td>{{room.pricePerfullday}}</td>
+												</a>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="panel" style="padding: 0 15px;">
+								<div class="panel-header panel-controls">
+									<h2>Board Room</h2>
+								</div>
+								<div class="panel-content pagination2 table-responsive"
+									style="padding: 20px 0;">
+									<table class="table table-hover table-dynamic">
+										<thead>
+											<tr>
+												<th>NAME</th>
+												<th>SPACE</th>
+												<th>CAPACITY</th>
+												<th>PRICE PER HOUR</th>
+												<th>PRICE PER HALF DAY</th>
+												<th>PRICE PER DAY</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="calendar"
+												ng-repeat="room in roomsparticulertospace"
+												ng-if="room.roomtype.name=='Board Room'">
+												<a href=".calendars">
+													<td>{{room.name}}</td>
+													<td>{{room.spaceId.name}}</td>
+													<td>{{room.capacity}}</td>
+													<td>{{room.pricePerhour}}</td>
+													<td>{{room.pricePerhalfday}}</td>
+													<td>{{room.pricePerfullday}}</td>
+												</a>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="panel" style="padding: 0 15px;">
+								<div class="panel-header panel-controls">
+									<h2>Virtual Office</h2>
+								</div>
+								<div class="panel-content pagination2 table-responsive"
+									style="padding: 20px 0;">
+									<table class="table table-hover table-dynamic">
+										<thead>
+											<tr>
+												<th>Space Name</th>
+												<th>Partner Name</th>
+												<th>Description</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="calendar" ng-repeat="virtualOff in virtualOffices"
+												ng-if="virtualOff.roomtype.name=='Virtual Office'">
+												<a href=".calendars">
+													<td>{{virtualOff.spaceId.name}}</td>
+													<td>{{virtualOff.spaceId.partner.first_name}}</td>
+													<td>{{virtualOff.description}}</td>
+												</a>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="panel" style="padding: 0 15px;">
+								<div class="panel-header panel-controls">
+									<h2>Hot Desk</h2>
+								</div>
+								<div class="panel-content pagination2 table-responsive"
+									style="padding: 20px 0;">
+									<table class="table table-hover table-dynamic">
+										<thead>
+											<tr>
+												<th>NAME</th>
+												<th>SPACE</th>
+												<th>CAPACITY</th>
+												<th>PRICE PER HOUR</th>
+												<th>PRICE PER HALF DAY</th>
+												<th>PRICE PER DAY</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="calendar"
+												ng-repeat="room in roomsparticulertospace"
+												ng-if="room.roomtype.name=='Hot Desk'">
+												<a href=".calendars">
+													<td>{{room.name}}</td>
+													<td>{{room.spaceId.name}}</td>
+													<td>{{room.capacity}}</td>
+													<td>{{room.pricePerhour}}</td>
+													<td>{{room.pricePerhalfday}}</td>
+													<td>{{room.pricePerfullday}}</td>
+												</a>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- </div> -->
+
+			</div>
+		</div>
+	</div>
+	</div>
+</section>
+<!--End Banner-->

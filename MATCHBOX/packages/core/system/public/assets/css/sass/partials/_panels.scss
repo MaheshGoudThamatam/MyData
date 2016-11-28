@@ -1,0 +1,129 @@
+@import "../mixins/margin-padding";
+@import "../mixins/transitions";
+@import "../mixins/borders";
+@import "../mixins/backgrounds";
+
+$font-stack: 'Open Sans';
+
+.panel-group {
+  @include bottomMargin(0);
+}
+
+.panel-group.no-margin .panel {
+  background-image: none;
+  @include bottomPadding(0);
+}
+
+.panel-group.no-margin .panel + .panel {
+  @include topMargin(0);
+}
+
+.panel-group.no-margin .panel .panel-heading .panel-title {
+  font-weight: 600;
+}
+.panel-group.no-margin .panel .panel-heading .panel-title a {
+  font-size: 16px;
+}
+.panel-group.no-margin .panel .panel-heading .panel-title a .icon {
+  font-size: 20px;
+  color: #cccccc;
+}
+
+.panel-group .panel {
+  border-width: 0;
+  background: url('../images/bg-border-v.png') repeat-x bottom left;
+  @include bottomPadding(1px);
+  @include shadows(none);
+  @include borderRadius(0);
+  @include clips(padding-box);
+  -moz-background-clip: padding;
+}
+
+.panel-group .panel + .panel {
+  @include topMargin(10px);
+}
+
+.panel-group .panel .panel-heading {
+  @include borderRadius(0);
+  @include clips(padding-box);
+  -moz-background-clip: padding;
+  @include paddings(1px, 0, 0, 0);
+  background: url('../images/bg-border-v.png') repeat-x top left;
+}
+
+.panel-group .panel .panel-heading .panel-title {
+  font-family: $font-stack;
+}
+
+.panel-group .panel .panel-heading .panel-title a {
+  text-decoration: none;
+  font-size: 14px;
+  display: block;
+  line-height: 44px;
+}
+
+.panel-group .panel .panel-heading .panel-title a small {
+  font-size: 14px;
+  font-weight: normal;
+  @include rightMargin(10px);
+}
+
+.panel-group .panel .panel-heading .panel-title a .icon {
+  float: right;
+  line-height: 44px;
+  font-size: 14px;
+  color: #333333;
+}
+.panel-group .panel .panel-heading .panel-title a .icon:before {
+  content: '\f106';
+}
+
+.panel-group .panel .panel-heading .panel-title a.collapsed .icon:before {
+  content: '\f107';
+}
+
+.panel-group .panel .panel-heading .panel-title .num {
+  display: inline-block;
+  width: 45px;
+  text-align: center;
+  color: #343434;
+  @include rightMargin(25px);
+  @include bgndcolor(#dfdfdf);
+}
+
+.panel-group .panel .panel-heading .panel-title .num._1 {
+  color: #fff;
+  @include bgndcolor(#dec001);
+}
+
+.panel-group .panel .panel-heading .panel-title .num._2 {
+  color: #fff;
+  @include bgndcolor(#b55b24);
+}
+
+.panel-group .panel .panel-heading .panel-title .num._3 {
+  color: #fff;
+  @include bgndcolor(#447498);
+}
+
+.panel-group .panel .panel-heading .panel-title .num._4 {
+  color: #fff;
+  @include bgndcolor(#b3af91);
+}
+
+.panel-group .panel .panel-heading .panel-title .num._5 {
+  color: #fff;
+  @include bgndcolor(#94b4c5);
+}
+
+.panel-group .panel .panel-heading + .panel-collapse > .panel-body {
+  border-width: 0;
+}
+
+.panel-group .panel .panel-body {
+  @include paddings(0, 0, 15px, 0);
+  border-width: 0;
+  font-family: $font-stack;
+  line-height: 25px;
+  color: #555555;
+}

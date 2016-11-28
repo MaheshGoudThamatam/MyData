@@ -1,0 +1,122 @@
+ <section id="backOfficeBookedFormSuccess">
+<div class="modal-header">
+	<h3>
+		<b class="table-capitalize">Booking Summary</b>
+	</h3>
+</div>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-sm-12">
+			<form name="bookingForm" id="backOfficeBookingForm">
+				<div class="booking-tabs">
+					<div class="row form-group">
+						<div class="col-sm-3">
+						
+							<input type="text" name="current_date" class="form-control" 
+								 placeholder="Current date" value="{{bookingDetails.bookingDate|date:'dd-MM-yyyy'}}" required data-ng-disabled="true">
+						</div>
+						<div class="col-sm-3">
+							<input type="text" name="start_time" class="form-control"
+								 value="{{bookingStartTime |date:'ha'}}" placeholder="Start time" required data-ng-disabled="true">
+						</div>
+						<div class="col-sm-3">
+							<input type="text" name="end_time" class="form-control"
+								 value="{{bookingEndTime |date:'ha'}}" placeholder="End Time" required data-ng-disabled="true">
+						</div>
+					</div>
+				</div>
+				<div class="booking-tabs">
+				<div>
+				    <label>Reservation Details</label>
+				</div>
+				<div>
+				                     <div>
+                              <div class="col-md-12 booking-tabs">
+                              <div class="col-md-6">
+                              <div>Selected Room</div>
+                              <div>
+                             <span class="time-weght"> {{bookingDetails.room.name}}</span><br>
+                              <span class="time-weght">{{bookingDetails.space.name}}</span><br>
+                               <span class="time-weght">{{bookingDetails.space.address1}} {{bookingDetails.space.address2}} {{bookingDetails.space.city}}</span><br>
+                              </div>
+                              </div>
+                              <div class="col-md-6">
+                             <div>
+                            <div>
+                                <div>
+                                                 <div class="col-md-6">
+                                                 <span>Price</span>
+                                                 </div>
+                                                 <div class="col-md-6">
+                                                 <span class="time-weght"> Rs.{{bookingDetails.room.pricePerhour}}<small>/hour</small></span>
+                                                 </div><br>
+                                                  <div>
+                                                    <div class="col-md-6">
+                                                    <span>Total Hours</span>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                     <span class="time-weght">{{bookingDetails.totalHours}}</span>
+                                                    </div>
+                                                  </div><br>
+                                                   <div>
+                                                    <div class="col-md-6 ">
+                                                      <span>Total Price</span>
+                                                        </div>
+                                                   <div class="col-md-6">
+                                                   <span class="time-weght">Rs.{{bookingDetails.priceWithoutTax}}</span>
+                                                         </div>
+                                                       </div><br>
+                                                            <div>
+                                                        <div class="col-md-6">
+                                                             <span>Service Tax</span>
+                                                                    </div>
+                                                        <div class="col-md-6">
+                                                          <span class="time-weght">15%</span>
+                                                        </div>
+                                                        </div><br>
+                                                           <div>
+                                                       <div class="col-md-6">
+                                                            <span>Total Price<span class="lessFont">(Including tax)</span></span>
+                                                               </div>
+                                                        <div class="col-md-6">
+                                                                <span class="time-weght">Rs.{{bookingDetails.price}}</span>
+                                                         </div>
+                                                      </div><br>
+                                             </div>
+                              </div>
+                              </div>
+                              </div>
+                              </div>
+                     </div>
+				</div>
+				</div>
+					<div class="booking-tabs">
+					<div>
+						<label>User Details</label>
+                               
+					</div>
+					
+					<div class="form-group">
+						<div class="append-icon">
+							<input type="text" name="name" class="form-control" minlength="4"
+								value="{{(bookingDetails.user.first_name) ? bookingDetails.user.first_name : bookingDetails.guestUser.first_name}}" placeholder="Title" required data-ng-disabled="true"> 
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="append-icon">
+							<input type="text" name="name" class="form-control" minlength="4"
+								value="{{(bookingDetails.user.email) ? bookingDetails.user.email : bookingDetails.guestUser.email}}"
+								placeholder="xyz@email.com " required data-ng-disabled="true"> 
+						</div>
+
+					</div> 
+					
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button class="awe-btn awe-default" data-ng-click="cancelBookedDetails()">Back</button>
+</div>
+</section>

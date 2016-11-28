@@ -1,0 +1,287 @@
+<section class="partnerinfo mydetails" ng-controller="TeamController" data-ng-init="findOne()">
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+			<!-- Tabs Content -->
+			<div class="tab-content" style="background: transparent;">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+					<!-- End Tabs Cat -->
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div class="page-content page-thin dashboard-content">
+							<!-- <section class="breakcrumb-sc">
+								<ul class="breadcrumb arrow">
+									<li><a href="home.html"><i class="fa fa-home"></i></a></li>
+									<li>Add Space</li>
+								</ul>
+							</section> -->
+							<div class="row">
+								<div class="col-lg-12 portlets">
+									<div class="">
+											<div class="col-lg-12" style="padding-left: 0;">
+											<div class="tab-content">
+												<!-- Basic Info -->
+												<div class="form-hotel tab-pane active in no-padding"
+													id="basicInfo">
+													<div class="col-xs-8" style="padding-left: 0;">
+														<div class="panel panel-default no-bd">
+															<!-- <div class="panel-heade text-left" style="padding: 15px;">
+																<h2 class="panel-title">
+																	<strong>Basic Info</strong>
+																</h2>
+															</div> -->
+															<div class="panel-body bg-white">
+																<div class="row">
+																	<div class="col-md-12 col-sm-12 col-xs-12">
+																		<form role="form" class="form-validation"
+																			name="teamForm" id="teamForm">
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && teamForm.first_name.$invalid }">
+																						<label class="control-label">First Name</label>
+																						<div class="append-icon">
+																							<input type="text" name="first_name"
+																								class="form-control" minlength="4"
+																								ng-model="team.first_name"
+																								placeholder="Minimum 4 characters..." required>
+																							<i class="icon-user"></i>
+																							<div
+																								ng-show="submitted && teamForm.first_name.$invalid">
+																								<span class="err-msg errorText validaion-color"
+																									ng-show="teamForm.first_name.$error.required">Please
+																									enter the first_name </span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && teamForm.last_name.$invalid }">
+																						<label class="control-label">Last Name</label>
+																						<div class="append-icon">
+																							<input type="text" name="last_name"
+																								class="form-control" minlength="4"
+																								ng-model="team.last_name"
+																								placeholder="Minimum 4 characters..." required>
+																							
+																							<div
+																								ng-show="submitted && teamForm.last_name.$invalid">
+																								<span class="err-msg errorText validaion-color"
+																									ng-show="teamForm.last_name.$error.required">Please
+																									enter the last_name </span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && teamForm.email.$invalid }">
+																						<label class="control-label">Email</label>
+																						<div class="append-icon">
+																							<input type="text" name="email"
+																								class="form-control" minlength="4"
+																								ng-model="team.email"
+																								placeholder="email" required>
+																								<div ng-show="submitted && teamForm.email.$invalid">
+																								<span class="err-msg errorText validaion-color"
+																									ng-show="teamForm.email.$error.required">Please
+																									enter the email </span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && teamForm.phone.$invalid }">
+																						<label class="control-label">Phone no.</label>
+																						<div class="append-icon">
+																							<input type="number" name="phone"
+																								class="form-control" ng-model="team.phone"
+																								placeholder="Enter your phone no..." required>
+																							<div
+																								ng-show="submitted && teamForm.phone.$invalid">
+																								<span class="err-msg errorText validaion-color"
+																									ng-show="teamForm.phone.$error.required">Please
+																									enter the phone number </span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && teamForm.address1.$invalid }">
+																						<label class="control-label">Address line1</label>
+																						<div class="append-icon">
+																							<input type="text" name="address1"
+																								class="form-control" ng-model="team.address1"
+																								placeholder="Enter your address1..." required>
+																							<div
+																								ng-show="submitted && teamForm.address1.$invalid">
+																								<span class="err-msg errorText validaion-color"
+																									ng-show="teamForm.address1.$error.required">Please
+																									enter the address1 </span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && teamForm.address2.$invalid }">
+																						<label class="control-label">Address line2</label>
+																						<div class="append-icon">
+																							<input type="text" name="address2"
+																								class="form-control" ng-model="team.address2"
+																								placeholder="Enter your address2..." required>
+																							<div
+																								ng-show="submitted && teamForm.address2.$invalid">
+																								<span class="err-msg errorText validaion-color"
+																									ng-show="teamForm.address2.$error.required">Please
+																									enter the address2 </span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && teamForm.locality.$invalid }">
+																						<label class="control-label">Locality</label>
+																						<div class="append-icon">
+																							<input type="text" name="locality"
+																								class="form-control" ng-model="team.locality"
+																								placeholder="Enter your locality..." required>
+																							<div
+																								ng-show="submitted && teamForm.locality.$invalid">
+																								<span class="err-msg errorText validaion-color"
+																									ng-show="teamForm.locality.$error.required">Please
+																									enter the locality </span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && teamForm.city.$invalid }">
+																						<label class="control-label">City</label>
+																						<div class="append-icon">
+																							<input type="text" name="city"
+																								class="form-control" ng-model="team.city"
+																								placeholder="Enter your city..." required>
+																							<div
+																								ng-show="submitted && teamForm.city.$invalid">
+																								<span class="err-msg errorText validaion-color"
+																									ng-show="teamForm.city.$error.required">Please
+																									enter the city </span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && teamForm.state.$invalid }">
+																						<label class="control-label">State</label>
+																						<div class="append-icon">
+																							<input type="text" name="state"
+																								class="form-control" ng-model="team.state"
+																								placeholder="Enter your state..." required>
+																							<div
+																								ng-show="submitted && teamForm.state.$invalid">
+																								<span class="err-msg errorText validaion-color"
+																									ng-show="teamForm.state.$error.required">Please
+																									enter the state </span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group"
+																						ng-class="{ 'has-error' : submitted && teamForm.country.$invalid }">
+																						<label class="control-label">Country</label>
+																						<div class="append-icon">
+																							<input type="text" name="country"
+																								class="form-control" ng-model="team.country"
+																								placeholder="Enter your country..." required>
+																							<div
+																								ng-show="submitted && teamForm.country.$invalid">
+																								<span class="err-msg errorText validaion-color"
+																									ng-show="teamForm.country.$error.required">Please
+																									enter the country </span>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+																			<div class="row">
+																				<div class="col-sm-6 col-sm-offset-3">
+																					<div class="form-group">
+																						<label class="control-label">Pincode</label>
+																						<div class="append-icon">
+																							<input type="number" name="pinCode"
+																								class="form-control" ng-model="team.pinCode"
+																								placeholder="Enter your postal code..." required>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																			
+																			
+																			<div class="row col-md-12">
+																				<div class="text-center  m-t-20">
+																					<a href="" id="next1" data-toggle="tab"
+																						class="awe-btn awe-btn-2 arrow-right arrow-white awe-btn-lager text-uppercase"
+																						data-ng-click="cancel()">Cancel</a> <a href=""
+																						id="next1" data-toggle="tab"
+																						class="awe-btn awe-btn-2 arrow-right arrow-white awe-btn-lager text-uppercase"
+																						data-ng-click="update(teamForm.$valid)">Submit</a>
+																				</div>
+																			</div>
+
+																		</form>
+																	</div>
+																</div>
+																<!-- Add Room -->
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End Tabs Content -->
+					</div>
+					<!-- End Banner Content -->
+					</div>
+					</div>
+					</div>
+					</div>
+</section>
+

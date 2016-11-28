@@ -1,0 +1,69 @@
+<style type="text/css">
+	footer {
+		position: fixed;
+	}
+	@media only screen and (min-width: 320px) and (max-width: 415px) {
+		footer
+			{
+				top: 87%;
+			    height: 17vh;
+			    box-shadow: none;
+			    background-color: rgba(0, 0, 0, 0.5);
+			}
+		.contactSubmitBtnLow {
+			left: 35%;
+		}
+	}
+	.liOption:before {
+    	content: '✔';   
+    	margin-right: 1em;
+	}
+	ul {
+		text-indent:2px;
+		list-style: none;
+		list-style-position:outside;
+	}
+	.marg-li-2 {
+    	margin-left: 2%;
+	}
+	.textM1:before {
+		margin-right: 1em;
+	}
+</style>
+<section data-ng-controller="ProfileController">
+	<div class="container-fluid">
+		<div class="mar-top-5p">
+			<div class="row">
+				<div class="col-md-offset-2 col-md-8" style="padding-bottom: 10%;">
+						<h2 style="text-align: -webkit-center;">ABOUT US</h2>
+						<h3>Who are We?</h3>
+							<p class="p-justify">We are your permanent solution for all temporary office space needs. You could be </p>
+							<li class="marg-li-2 textM1">An independent professional/consultant</li>
+							<li class="marg-li-2 textM1">A start-up </li>
+							<li class="marg-li-2 textM1">A traveling businessman</li>
+							<li class="marg-li-2 textM1">A freelancer</li>
+							<li class="marg-li-2 textM1">A company executive travelling for interviews/vendor meetings</li>
+							<li class="marg-li-2 textM1">An entrepreneur who operates from home or just anybody needing a place to work</li>
+						<h3 class="p-justify"><strong><i>mymatchbox</i></strong> has a wide range of workspaces ranging from Hot Desk, Meeting Rooms, Board Rooms, and Training Rooms to suit the dynamic needs of today’s professional.</h3>
+						<h3>Price Guarantee</h3>
+						<p class="p-justify">Our prices are the lowest in the market. Guaranteed. If you come across any of our competitors charging lower prices for the same room, please bring it to our notice and we promise to match it.</p>
+						<h3>Real Time Availability</h3>
+						<p class="p-justify">Using the latest in Software Architecture mymatchbox is able to provide you Real Time availability of desks, meeting rooms, board rooms and training rooms across Bangalore, Mumbai and Pune for the moment. By using our proprietary backend booking system, our partners (please refer below for list of empaneled partners) are equipped to deal with last minute bookings effortlessly.</p>
+						<h3>Choose Productivity Over Trendy</h3>
+						<p class="p-justify">Working at a Café is trendy! Working at one of our listed spaces is Productive! Why so? All of our 100% verified partner listings are equipped with</p>
+						<ul>
+							<li class="liOption marg-li-2">Sufficient charging points at each desk</li>
+							<li class="liOption marg-li-2">Comfortable seating options</li>
+							<li class="liOption marg-li-2">Well-stocked cafeterias </li>
+							<li class="liOption marg-li-2">Breakout spaces</li>
+							<li class="liOption marg-li-2">Private spaces </li>
+							<li class="liOption marg-li-2">Reprography services (Printing, Photocopying, Scanning)</li>
+						</ul>
+						<div class="col-md-12" style="text-align: -webkit-center;">
+							<a href="" id="" data-toggle="tab" class="awe-btn arrow-right" data-ng-click="redirectClose();">Close</a>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -1,0 +1,182 @@
+<section class="partnerinfo mydetails"
+	data-ng-controller="ProfileController">
+	
+<!-- 	<div ng-if="loaderEnabled">
+		<div id="preloaderImage">
+			<div class="tb-cell">
+				<div id="page-loadingImage">
+					<div></div>
+					<p><h4 class="h-image-caption">Uploading....</h4></p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+<div class="container-fluid">
+	<div class="main-cn element-page bg-white clearfix">
+		<!--Breakcrumb-->
+		<!-- <section class="breakcrumb-sc">
+			<ul class="breadcrumb arrow">
+				<li><a href="index.html"><i class="fa fa-home"></i></a></li>
+				<li>My Profile</li>
+			</ul>
+		</section> -->
+		<!--End Breakcrumb-->
+		<section class="user-login-page" ng-init = "loadUser();initPhoneProfile();">
+
+			<div class="row">
+
+				<div class="col-md-3">
+					  <div class="user-profile__header">
+                                    <h4>{{userDetail.first_name}}</h4>
+                                    <p>
+                                        <!-- <img class="img-responsive" src="{{userDetailObj.avatar}}" alt="Profile Photo"> -->
+                                        <img ng-if = "userDetail.avatar" src="{{thumbimg}}" alt = "">
+                                        <img ng-if = "!userDetail.avatar" src="/system/assets/img/custom/avatars/avatar4.png" alt = "">
+                                    </p>
+                                    
+                                </div>
+                              <ul class="user-profile__navigation">
+                                    <li style="padding-top: 10px;"><span align="center"> <button class="btn btn-default" ngf-select="onFileSelect($files)"
+        									accept="image/png, image/jpeg">Upload Image</button></span></li>
+                                    <li style="cursor: pointer;"><a data-ng-click="userBookings()" ><i class="fa fa-shopping-cart" aria-hidden="true"></i> My Bookings</a></li>
+                                    <li style="cursor: pointer;" class="current"><a><i class="fa fa-user" aria-hidden="true"></i> My Profile</a></li>
+                                    <li style="cursor: pointer;"><a href="" data-ng-click="changePassword()"><i class="fa fa-cog" aria-hidden="true"></i> Change Password</a></li>
+                                   <!--  <li><a href="" data-ng-click="hdrctr.logout()"><img src="images/icon/icon-back.png" alt="">Sign out</a></li> -->
+
+                                </ul>
+				</div>
+				<div class="col-md-9">
+					<div class="my-profile">
+							<div class="col-md-6 user-form userform">
+										<div class="row text-edit">
+                                             <div class="col-sm-12 col-lg-12">
+											     <div data-ng-include="'/system/views/alert.html'"></div>
+											</div>
+									     </div>
+								<h3>Personal Information</h3>
+<form role="form" class="form-validation" name="profileFormDetail" id="profileFormDetail">
+								<div class="field-input">
+									<input type="text" name="firstName" class="input-text"
+										 data-ng-model="userDetail.first_name"
+										placeholder="Enter your first name..." required />
+								</div>
+								<div class="field-input">
+									<input type="text" name="lastName" class="input-text"
+									 data-ng-model="userDetail.last_name"
+										placeholder="Enter your last name" required />
+								</div>
+
+								<div class="field-input" ng-class="{ 'has-error' : submitted && profileFormDetail.email.$invalid }">
+									<input type="email" name="email" class="input-text" data-ng-pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/"
+										data-ng-model="userDetail.email"
+										placeholder="Enter your email..." required />
+								<div ng-show="submitted && profileFormDetail.email.$invalid">
+									<span class="err-msg errorText validaion-color" ng-show="profileFormDetail.email.$error.required">Please enter the email</span>
+									<span class="err-msg errorText validaion-color" data-ng-show="profileFormDetail.email.$error.pattern">Please enter valid email</span>
+								</div>
+								</div>
+
+
+
+
+
+
+
+								<div class="field-input">
+									<input type="text" name="address1" class="input-text"
+										data-ng-model="userDetail.address1"
+										placeholder="Enter address line 1" required />
+								</div>
+								<div class="field-input">
+									<input type="text" name="address2" class="input-text"
+										data-ng-model="userDetail.address2"
+										placeholder="Enter address line 2" required />
+								</div>
+								<div class="field-input">
+									<input type="text" name="city" class="input-text"
+										data-ng-model="userDetail.city" placeholder="Enter your city" required />
+								</div>
+								<div class="field-input">
+									<input type="text" name="state" class="input-text"
+										data-ng-model="userDetail.state"
+										placeholder="Enter your state" required />
+								</div>
+								<div class="field-input">
+									<input type="text" onkeypress="return isNumber(event)" name="pinCode" class="input-text"
+										data-ng-model="userDetail.pinCode"
+										placeholder="Enter your pin code" required />
+								</div>
+								<div class="field-input">
+									<input type="text" name="country" class="input-text"
+										data-ng-model="userDetail.country"
+										placeholder="Enter your country" required />
+								</div>
+<div class="field-input">
+			<!-- <input ng-minlength="10" type="text" onkeypress="return isNumber(event)" name="phone" class="input-text" data-ng-model="userDetail.phone" placeholder="Mobile Number..." required /> -->
+				<input onkeypress="return isNumber(event)" class="input-text"
+					id="contactPhoneNo" ng-click="flagTrueProfile()"
+					name="phone" type="tel"
+					style="padding-left: 4em !important;" maxlength="10"
+					placeholder="Mobile Number..." required />
+
+				<!-- <div ng-show="submitted && profileFormDetail.phone.$invalid">
+					<span class="err-msg errorText validaion-color" ng-show="profileFormDetail.phone.$error.required">Please enter the phone number</span>
+					<span style="display: block;" class="err-msg errorText validaion-color" ng-show="profileFormDetail.phone.$invalid">Phone number should be 10 digits</span>
+			</div> -->
+			<div ng-show="isPhNoInvalid">
+				<span class="err-msg errorText validaion-color" ng-show="isPhNoInvalid">Please enter the phone number</span>
+				<span style="display: block;" class="err-msg errorText validaion-color" ng-show="isPhNoInvalid">Phone number should be 10 digits</span>
+			</div>
+</div>
+
+								<div class="field-input">
+									<!-- <input type="reset"
+										class="awe-btn awe-default text-uppercase"
+										value="Cancel" />  -->
+									<a ng-if="profileFormDetail.$invalid" class="awe-btn" href="" id="next1" ng-class="{cursorDisabledBtn : profileFormDetail.$invalid}" data-ng-click="update(userDetail,profileFormDetail)" style="color: grey !important;border: 0.2em solid grey !important;padding: 10px 20px;cursor: not-allowed !important;text-decoration: initial;">Save</a>
+									<a ng-if="!profileFormDetail.$invalid" class="awe-btn arrow-right" href="" id="next1" ng-click="update(userDetail,profileFormDetail)">Save</a>
+								</div>
+</form>
+							</div>
+
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+<script type="text/javascript">
+		function isNumber(evt) {
+                    evt = (evt) ? evt : window.event;
+                    var charCode = (evt.which) ? evt.which : evt.keyCode;
+                    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                        return false;
+                    }
+                    /*
+                        Uncomment to accept '+' in phone number field.
+                    */
+                        // if (charCode == 43) {
+                        //     return true;
+                        // }
+                    return true;
+                }
+	</script>
+	<style type="text/css">
+		.intl-tel-input .country-list , .intl-tel-input .country-list.dropup {
+		    width: 35em !important;
+		    top: -15em !important;
+		}
+		.intl-tel-input .country-list .flag-box, .intl-tel-input .country-list .country-name {
+		    left: 18% !important;
+    		padding-left: 1% !important;
+		}
+		.intl-tel-input .country-list .country .dial-code {
+    		color: #999 !important;
+	    	padding-left: 3em !important;
+		}
+	</style>
+</section>

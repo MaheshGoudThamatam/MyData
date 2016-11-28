@@ -1,0 +1,73 @@
+<section data-ng-controller="AmenityController">
+	<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+	<div class=" row col-sm-9 col-lg-10 mydetailsnav">
+		<!-- <div class="page-content page-thin dashboard-content">
+			<div class=" row breakcrumb-sc">
+				<ul class="breadcrumb arrow">
+					<li><a href="home.html"><i class="fa fa-home"></i></a></li>
+					<li>Add Amenity</li>
+				</ul>
+			</div>
+		</div> -->
+		
+		<div class=" col-md-12 portlets margin-left">
+			<div class="">
+				<div class="form-hotel tab-pane active in no-padding" id="basicInfo">
+					<div class="col-xs-8" style="padding-left: 0;">
+						<div class="panel panel-default no-bd">
+							<div class="panel-heade text-left" style="padding: 15px;">
+								<h2 class="panel-title">
+									<strong>Basic Info</strong>
+								</h2>
+							</div>
+							<div class="panel-body bg-white">
+								<form role="form" class="form-validation">
+									<div class="row form-group">
+										<label class="control-label col-md-4">Amenity Name</label>
+										<div class=" col-md-8 append-icon">
+											<input type="text" name="name" class="form-control"
+												minlength="4" placeholder="name"
+												data-ng-model="amenity.name" required> <i
+												class="icon-user"></i>
+										</div>
+									</div>
+
+									<div class="row form-group">
+										<label class="col-md-4 control-label">Description</label>
+										<div class="col-md-8 append-icon">
+											<textarea name="description" class="form-control"
+												data-ng-model="amenity.description" rows="3" required></textarea>
+										</div>
+									</div>
+									<div class="row form-group">
+										<label class="col-md-4 control-label"></label>
+										<!-- <div class="col-md-8 append-icon">
+											<input type="file" class="form-control" id="upload"
+												ng-model="fileUpload" name='image' ng-init="iconUpload()"
+												required></input>
+											<button ng-click="uploadImage()">upload</button>
+										</div> -->
+										 <button class="btn btn-default" ngf-select="onFileSelect($files)"
+        									accept="image/png, image/jpeg">upload Image</button>
+
+									</div>
+									<div class="row col-md-12">
+										<div class="text-center  m-t-20">
+											<input type="reset"
+												class="cancel  awe-btn awe-btn-5 awe-btn-lager text-uppercase"
+												value="Cancel" data-ng-click="cancel()" /> 
+											<a href=""
+												id="next1" data-toggle="tab"
+												class="awe-btn awe-btn-2 arrow-right arrow-white awe-btn-lager text-uppercase"
+												data-ng-click="create()">Submit</a>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

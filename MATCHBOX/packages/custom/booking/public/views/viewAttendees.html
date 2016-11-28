@@ -1,0 +1,321 @@
+<style type="text/css">
+    .help-tip {
+      margin-left: 40%;
+    }
+</style>
+<section data-ng-controller="BookingController" data-ng-init="loadMyBookingDetails(); getPartner();">
+       <div class="main">
+            <div class="container-fluid">
+                <div class="row">
+                 <div class="col-xs-4 " style="padding: 0;">
+                       <div class="hotel-detail-map absoluteOne2 searchHotelBooking searchBookingMap">
+                           <div data-ng-include="'/search/views/map_view_booking.html'"></div>
+                       </div>
+                   </div> 
+                <div class="col-xs-8 main-cn bg-white clearfix process-bar">
+                  <div class="col-md-6 payment-details booking-summary-margin ">
+                              <div class="col-md-8 booking-details zero-padding">
+                              <div class="ur-booking-border your-booking">
+                              <i class="fa fa-shopping-cart fa-font" aria-hidden="true"></i>
+                                <span class="booking-details-ur">BOOKING SUMMARY</span>
+                              </div>
+                              <div class="time-padding">
+                              <div>Booking Date</div>
+                              <div>
+                             <span class="time-weght"> {{bookingDetail.bookingDate|date:'dd-MM-yyyy'}}</span><br>
+                              </div>
+                              <div class="col-md-6  zero-padding">
+                               <span>Start Time</span>
+                              </div>
+                              <div class="col-md-6">
+                               <span>End Time</span>
+                              </div>
+                              <div class="col-md-6  zero-padding">
+                                <span class="time-weght">{{bookingStartTime |date:'ha'}}</span>
+                              </div>
+                              <div class="col-md-6">
+                               <span class="time-weght">{{bookingEndTime |date:'ha'}}</span>
+                              </div>
+                              </div>
+                              <div class="ur-booking-border time-padding" >
+                              <div>Selected Room</div>
+                              <div>
+                             <span class="time-weght"> {{bookingDetail.room.name}}</span><br>
+                              <span class="time-weght">{{bookingDetail.space.name}}</span><br>
+                               <span class="time-weght">{{bookingDetail.space.address1}} {{bookingDetail.space.address2}} {{bookingDetail.space.city}}</span><br>
+                              </div>
+                              </div>
+                              <div class="time-padding">
+
+                              <div>
+
+                              <div>
+                              <div class="col-md-6  zero-padding">
+                                          <span class="searchBookingTitle">Price</span>
+                                 </div>
+                               <div class="col-md-6">
+                                     <span class="time-weght">Rs.{{bookingDetail.room.pricePerhour}}</span>
+                                 </div>
+                              </div>
+                              <div>
+                              <div class="col-md-6  zero-padding">
+                                          <span class="searchBookingTitle">Total Hours</span>
+                                 </div>
+                               <div class="col-md-6">
+                                     <span class="time-weght">{{bookingDetail.totalHours}}</span>
+                                 </div>
+                              </div>
+                               <div>
+                              <div class="col-md-6  zero-padding">
+                                          <span class="searchBookingTitle">Price Without Tax</span>
+                                 </div>
+                               <div class="col-md-6">
+                                     <span class="time-weght">Rs.{{bookingDetail.priceWithoutTax}}</span>
+                                 </div>
+                              </div>
+                              <div>
+                              <div class="col-md-6  zero-padding floatLeftLow">
+                                       <div class="taxTooltip help-tip help-tool-tip">
+                                                  <p><small>Service Tax @ 14%</small> <br/><small> Swachh Bharat Cess @ 0.5%</small> <br/><small> Krishi Kalyan @ 0.5%</small></p>
+                                       </div>
+                                          <span class="searchBookingTitle">Service Tax</span>
+                                 </div>
+                               <div class="col-md-6">
+                                     <span class="time-weght">15%</span>
+                                 </div>
+                              </div>
+                              <div>
+                              <div class="col-md-6  zero-padding totalPriceMargin">
+                                          <span class="searchBookingTitle">Total Price<span style="display: block;" class="lessFont">(Including tax)</span></span>
+                                 </div>
+                               <div class="col-md-6">
+                                     <span class="time-weght">Rs.{{bookingDetail.price}}</span>
+                                 </div>
+                              </div>
+                              </div>
+                              </div>
+                              </div>
+                     </div>
+                     <div class="col-md-6 booking-summary-margin">
+                                  <div>
+                                <div>
+                                    <div>
+                                       <div id="login-form">
+                                            <input type="radio" checked id="login" name="switch" class="hide">
+                                            <div>
+                                                <ul class="form-header">
+                                                    <li class="info-width"><label for="login">USER INFORMATION<label for="login"></li>
+                                                </ul>
+                                            </div>
+                                            <div class="section-out">
+                                                 <section class="login-section">
+                                                       <div class="login">
+                                                            <div class="main">
+                                                                 <div class="">
+                                                                      <div class="main-cn element-page bg-white clearfix">
+                                                                           <div class="user-profile user-login-page" id="signin">
+                                                                                <div class="user-form user-signup" data-ng-show="guestForm">
+                                                                                     <form>
+                                                                                         <div class="row">
+                                                                                              <div class="">
+                                                                                                     <div class="time-padding">
+                                                                                                               <div>
+                                                                                                                <span>Username :</span><br>
+                                                                                                                <span class="time-weght">{{bookingDetail.guestUser.first_name}}</span><br>
+                                                                                                                <span>Email :</span><br>
+                                                                                                                <span class="time-weght">{{bookingDetail.guestUser.email}}</span><br>
+                                                                                                                <span>Phone :</span><br>
+                                                                                                                <span class="time-weght">{{bookingDetail.guestUser.phone}}</span><br>
+                                                                                                               </div>
+                                                                                                     </div>
+                                                                                               </div> 
+                                                                                           </div>
+                                                                                      </form>
+                                                                                  </div>
+                                                                                   <div class="user-form user-signup" data-ng-hide="guestForm">
+                                                                                     <form>
+                                                                                         <div class="row">
+                                                                                              <div class="">
+                                                                                                     <div class="time-padding">
+                                                                                                               <div>
+                                                                                                                <span>Username :</span><br>
+                                                                                                                <span class="time-weght">{{bookingDetail.user.first_name}}</span><br>
+                                                                                                                <span>Email :</span><br>
+                                                                                                                <span class="time-weght">{{bookingDetail.user.email}}</span><br>
+                                                                                                                <span>Phone :</span><br>
+                                                                                                                <span class="time-weght">{{bookingDetail.user.phone}}</span><br>
+                                                                                                               </div>
+                                                                                                     </div>
+                                                                                               </div> 
+                                                                                           </div>
+                                                                                      </form>
+                                                                                  </div>
+                                                                              </div>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>                                       
+                                                             </div>
+                                                       </section>
+                                                </div>
+                                        </div>
+                                  </div>
+                               </div>
+                           </div>
+                           <div class="col-xs-12">
+                           <div class="col-xs-6">
+		                           <div class="field-input"  ng-hide = "bookingDetail.status == 'Failed' || bookingDetail.status == 'Cancelled' || bookingDetail.status=='timedout'||bookingDetail.status=='Pending'|| isLess || found"  align="right">
+		                    <button class="awe-btn awe-default1 forgotPwdButton"  ng-click = "cancelBooking()" >Cancel Booking</button>
+		                  </div>
+                           </div>
+                            <div class="col-xs-6">
+                             <div class="field-input" align="left">
+		                    <button type="submit" class="awe-btn arrow-right " data-ng-click="redirectBackAdminBooking()">My Bookings</button>
+		                  </div>  
+                            </div>
+		                  
+                           </div>
+                     </div>
+                     <div data-ng-if="bookingDetail.room.roomtype.name == 'Meeting Room'||bookingDetail.room.roomtype.name == 'Board Room'  || bookingDetail.status='timedout'||bookingDetail.status='Pending' || bookingDetail.status='Failed'">
+                                               <div class="payment-room" >
+                            <div class="row"> 
+                                <div class="col-md-12 attendee-padding">
+                                    <h2>Attendees List</h2>
+                                    <div>
+                                    <div class="col-sm-12 portlets attendee-padding">
+									<div class="panel">
+										<div class="panel-content pagination2">
+											<table datatable="ng"  class="table table-bordered row-border hover booking-table" dt-options="dtOptions3" dt-column-defs="dtColumnDefs3">
+												<thead>
+													<tr>
+													    <th class="text-center">ID</th>
+														<th class="text-center">Name</th>
+														<th class="text-center">Email</th>
+														<th class="text-center">Phone Number</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="attendeesDetail in attendeesDetails">
+														<td  class="text-center">{{attendeesDetail._id}}</td>
+														<td class="text-center">{{attendeesDetail.name}}</td>
+														<td class="text-center">{{attendeesDetail.email }}</td>
+														<td class="text-center">{{attendeesDetail.phoneNumber}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>	
+                                    </div>
+                                </div >
+                            </div>
+                        </div>
+                                 <div class="col-md-12" ng-hide = "bookingDetail.status == 'Cancelled'" data-ng-if="bookingDetail.room.roomtype.name == 'Meeting Room'||bookingDetail.room.roomtype.name == 'Board Room' ">
+                                    <h2>Add Attendees</h2>
+                                    <div >
+                                        <form role="form" class="form-validation" name="AttendeeFormAdmin" id="AttendeeFormAdmin">
+                                        <div class="row">
+                                        <div data-ng-repeat="attendee in addAttendeeForm track by $index">
+                                                <div class="col-md-3">
+                                                    <div class="form-group"
+                                                        ng-class="{ 'has-error' : submitted && AttendeeFormAdmin.name.$invalid }">
+                                                        <label class="control-label">Name</label>
+                                                        <div class="append-icon">
+                                                            <input type="text" name="name"
+                                                                class="form-control" minlength="4"
+                                                                ng-model="attendee.name"
+                                                                placeholder="Minimum 4 characters..." required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div
+                                                        ng-show="submitted && AttendeeFormAdmin.name.$invalid"
+                                                        class="help-block">
+                                                        <p class="validaion-color" ng-show="AttendeeFormAdmin.name.$error.required">Name
+                                                            is required</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group"
+                                                        ng-class="{ 'has-error' : submitted && AttendeeFormAdmin.email.$invalid }">
+                                                        <label class="control-label">Email</label>
+                                                        <div class="append-icon">
+                                                            <input type="email" name="email"
+                                                                class="form-control" minlength="4"
+                                                                ng-model="attendee.email"
+                                                                placeholder="Minimum 4 characters..." required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div
+                                                        ng-show="submitted && AttendeeFormAdmin.email.$invalid"
+                                                        class="help-block">
+                                                        <p class="validaion-color" ng-show="AttendeeFormAdmin.email.$error.required">Email
+                                                            is required</p>
+                                                            <span class="error" ng-show="AttendeeFormAdmin.input.$error.email">
+                                                              Not valid email!</span>
+                                                    </div>
+
+                                                </div>
+                                               <div class="col-md-4">
+                                                    <div class="form-group"
+                                                        ng-class="{ 'has-error' : submitted && AttendeeFormAdmin.phoneNumber.$invalid }">
+                                                        <label class="control-label">Phone Number</label>
+                                                        <div class="append-icon">
+                                                            <input type="number" name="phoneNumber"
+                                                                class="form-control" 
+                                                                ng-model="attendee.phoneNumber" placeholder="10 digit number"
+                                                                 required>
+                                                        </div>
+                                                    </div>
+
+                                                    <div
+                                                        ng-show="submitted && AttendeeFormAdmin.phoneNumber.$invalid"
+                                                        class="help-block">
+                                                        <p class="validaion-color" ng-show="AttendeeFormAdmin.phoneNumber.$error.required">Phone Number
+                                                            is required</p>
+                                                    </div>
+
+                                                </div>
+                                                 <div class="col-sm-2">
+														<div class="image-text-delete">
+															<a data-ng-click="removeAttendee($index)"
+																title="Delete this Attendee"> <i class="fa fa-times"></i>
+															</a>
+														</div>
+				
+													</div>
+                                            </div>
+                                          
+                                              <div class="col-md-4">
+                                                    <div class="col-md-4">
+                                                            <a href=""
+                                                            id="next1" data-toggle="tab"
+                                                            class="awe-btn arrow-right"
+                                                            data-ng-click="addAttendee(AttendeeFormAdmin.$valid,attendee,bookingDetail._id)" title="Add Invities" ><i class="fa fa-plus" ></i></a>
+                                                         
+                                                   </div>
+                                                     <div >
+                                                    <a href=""
+                                                            id="next1" data-toggle="tab"
+                                                            class="awe-btn arrow-right" 
+                                                            data-ng-click="createAttendeeByAdmin(AttendeeFormAdmin.$valid,attendee)" title="Invite">Invite</a>
+                                                            </div>
+                                                </div>
+                                              
+                                            </div>
+                                                  
+                                        </form>        
+                                    </div>
+                                </div >
+                          
+                           </div> 
+                           </div>
+                   </div>
+                 </div>
+            </div>
+                </div>
+            </div>
+            
+            
+</section>
+

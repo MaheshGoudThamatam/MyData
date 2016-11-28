@@ -1,0 +1,57 @@
+<div class="form-cn form-trainingroom tab-pane" id="">
+<h4 class="search-caption">Training Room (Upto 50 Attendees)</h4>
+<div class="form-search clearfix">
+	
+	<div class="form-field form-custom-low mar-1">
+		<select id="select-search-hide" class="select-ui" data-placeholder="City" ng-model="trainingRoom.city" ng-change="selectLocationObj(trainingRoom.city)" ng-options="location.seqNo as location.city for location in locations">
+			<option value="">City</option>
+		</select>
+	</div>
+	
+	<div class="form-field form-custom-low mar-1" style="margin-left: 2%;">
+		<angucomplete-alt id="meetingRoomDestination" name="meetingRoomDestination" class="autoCompleteField"
+			placeholder="Locality"
+			pause="100" selected-object="locality"
+			local-data="localityAreas" search-fields="value" disable-input="disableInput"
+			title-field="value" minlength="1" focus-in="onFocus(trainingRoom)"
+			input-class="form-control form-control-small" required />
+		</div>
+		<div class="form-custom-low mar-1 form-field">
+			<select id="select-search-hide" class="select-ui"
+				data-placeholder="Choose One" name="occupancy"
+				ng-model="trainingRoom.capacity"
+				ng-options="occupancy.range as occupancy.range for occupancy in occupancyRange"
+				ng-selected="{{occupancy.range  == trainingRoom.capacity}}">
+				<option value="">Capacity</option>
+			</select>
+		</div>
+		<div class="form-field form-custom-low mar-1">
+			<input readonly="true" type="text" name="daterange"  class="field-input trainingroomDateRange" style="font-size: 12px;border: none;color: #8f97a0;margin-left: 1%;" ng-click="loadDateRange();"  ng-model="search.trainingRoom" ng-change="trainingRoomDuration();" placeholder="Date" />
+		</div>
+		
+		<!-- <div class="form-custom-low mar-1 form-field">
+			<div class='input-group date'>
+				<input type='time' id='trainingroomcheckin' placeholder="Check In"
+				class="" style="font-size: 11px;color: #a2a2b9;border: none;" />
+				<span class="input-group-addon icon-timepicker" id="trainingCheckInIcon" style="padding-right: 4px;"> <span
+				class="glyphicon glyphicon-time"></span>
+			</span>
+		</div>
+	</div> -->
+	<div class="form-field form-custom-low mar-1">
+		<select id="select-search-hide" class="select-ui"
+			data-placeholder="Time" ng-model="trainingRoom.duration"
+			ng-change="setEndTimeForHalfFullDay(trainingRoom)"
+			ng-options="session.seqNo as session.duration for session in sessions" ng-click="trainingRoomDuration();durationError();">
+			<option disabled="disabled" value="">Duration</option>
+		</select>
+	</div>
+
+	<div class="form-submit" style="margin-left: 35%;width: 30% !important;margin-top: 5%;zoom: 75%;">
+		<a type="submit"
+			class="awe-btn awe-btn-lager awe-search aweSearchBtn search-button-align"
+			data-ng-click="searchTrainingRoom(trainingRoom, 'Training Room')"><i class="fa fa-search search-icon" aria-hidden="true"></i><span
+			class="search-search-button-media">Search</span></a>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,340 @@
+<section class="partnerinfo mydetails"
+	data-ng-controller="CalendarSchedulerController"
+	data-ng-init="init();loadRoomsForSpace();loadRoomTypes();loadClosedSchedules();trainingRoomTimeUI();hotDeskTimeUI();loadBasedOnRole();loadHoliday();loadSpaceAddress();spaceByRole();">
+<!-- 	<div ng-show="loaderEnabled">
+		<div id="preloaderImage">
+			<div class="tb-cell">
+				<div id="page-loadingImage">
+					<div></div>
+					<p><h4 class="h-image-caption">Loading....</h4></p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<style type="text/css">
+		.daterangepicker.dropdown-menu {
+        	top: 23% !important;
+    	}
+		.ieC .daterangepicker.ltr {
+		    zoom: 80% !important;
+		    margin-top: 3% !important;
+		    margin-right: 1.5% !important;
+		    left: 557px !important;
+		}
+		@media only screen and (max-width: 1359px) and (min-width: 1200px){}
+			.daterangepicker.dropdown-menu {
+				left: 430px !important;
+			}
+		}
+
+	</style>
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+
+			<!-- Tabs Content -->
+			<div class="tab-content" style="background: transparent;">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div class="page-content page-thin dashboard-content col-sm-12 col-lg-12">
+								<div class="col-xs-12 col-md-offset-3" style="clear: both;">
+									<div>
+										<h4 style="float: left;margin-right: 1%;">Space
+										
+											<select ng-model="spaceRelated"
+												data-ng-change="changeSpace(spaceRelated)">
+												<option value="" disabled="true">Select Space</option>
+												<option ng-repeat="spaceObj in spaceList"
+													value="{{spaceObj._id}}">{{spaceObj.name}}</option>
+											</select>
+											<!-- <p>Please select any room type</p> -->
+										</h4>
+									</div>
+									<div data-ng-show="isRoomType">
+										<h4 style="float: left;margin-right: 1%;">Room Type
+										
+											<select ng-model="roomTypeRoom"
+												data-ng-change="changeRoom(roomTypeRoom)">
+												<option value="" disabled="true">Select Room Type</option>
+												<option ng-repeat="roomType in roomTypes"
+													value="{{roomType._id}}">{{roomType.name}}</option>
+											</select>
+											<!-- <p>Please select any room type</p> -->
+										</h4>
+									</div>
+								</div>
+							<div class="row" style="clear: both;">
+								<div class="col-md-y portlets">
+									<div id="calendar-body"
+										class="panel-content pagination2 table-responsive">
+
+										<!--  <div id='calendar' data-ng-model="events"></div> -->
+										<div  ng-show="bMeetingRoom || bBoardRoom" ui-calendar="uiConfig.calendar" calendar="myCalendar" ng-model="eventSources" id='calendar'></div>
+									</div>
+								</div>
+<!-- 
+								<div class="row col-md-12">
+									<div class="text-center">
+										<a href="" id="next1" data-toggle="tab"
+											class="awe-btn arrow-right"
+											data-ng-click="searchingTrainingRoom()">Book Training Room</a>
+										<a href="" id="next1" data-toggle="tab"
+											class="awe-btn arrow-right"
+											data-ng-click="searchingHotDesk()">Book Hot Desk</a>
+									</div>
+								</div> -->
+
+								<!-- Search Training Room-->
+								<div ng-show="bTrainingRoom" style="clear: both;">
+									<div class="calTabPane form-cn form-trainingroom tab-pane"
+										id="trainingRoom">
+										<!-- <h2>Training Room</h2> -->
+										<h4 class="search-caption">Training Room (Upto 50
+											Persons)</h4>
+										<div class="form-search clearfix">
+											<!-- <div class="form-field field-destination col-xs-2">
+												<input type="text" id="destination" class="field-input"
+													style="font-size: 15px; color: #636e7b;"
+													placeholder="Country, City, Area, Landmark"
+													ng-model="trainingRoom.address" googleplace>
+											</div> -->
+											<div
+												class="capacity-select form-field field-select col-xs-3 qLow">
+												<select id="select-search-hide" class="select-ui"
+													data-placeholder="Choose One" name="occupancy"
+													ng-model="trainingRoom.capacity"
+													ng-options="occupancy.range as occupancy.range for occupancy in occupancyRange"
+													ng-selected="{{occupancy.range  == trainingRoom.capacity}}">
+													<option value="">Capacity</option>
+												</select>
+											</div>
+											<!-- <div class="form-field field-date field-custom">
+												<input type="text" class="field-input calendar-input"
+													style="font-size: 15px; color: #636e7b;" id="fromDate"
+													placeholder="From Date">
+											</div>
+											<div class="form-field field-date field-custom">
+												<input type="text" class="field-input calendar-input"
+													style="font-size: 15px; color: #636e7b;" id="endDate"
+													placeholder="End Date">
+											</div> -->
+											<div class="form-field field-date col-xs-3"> 
+												<input type="text" name="daterange"
+													class="field-input trainingroomDateRange dateHotdeskLow"
+													style="font-size: 16px; border: none; color: #8f97a0;"
+													ng-click="loadDateRange();" ng-model="search.trainingRoom"
+													ng-change="trainingRoomDuration();" placeholder="Date" />
+											</div>
+											
+											<!-- <div class="form-field field-select col-xs-2">
+												<select id="select-search-hide" class="select-ui"
+													data-placeholder="Choose One" name="timeType"
+													ng-model="trainingRoom.timeType"
+													ng-change="hideEndTime(trainingRoom)"
+													ng-options="timeType.data as timeType.data for timeType in trainingTimeTypes"
+													ng-selected="{{timeType.data == trainingRoom.timeType}}">
+													<option value="">Time Type</option>
+												</select>
+											</div>
+											<div
+												class="trainingroomcheckinLow trainingroomDateLow form-field">
+												<div class='input-group date'>
+													<input type='text' id='trainingroomcheckin'
+														placeholder="Check In" class="field-input"
+														style="font-size: 15px; color: #636e7b;" /> <span
+														class="input-group-addon icon-timepicker"> <span
+														class="glyphicon glyphicon-time"></span>
+													</span>
+												</div>
+											</div> -->
+
+											<div class="trainingroomcheckinLow trainingroomDateLow form-field marleft-1">
+												<select id="select-search-hide" class="select-ui trainingRoomDurationIcon"
+													data-placeholder="Time" ng-model="trainingRoom.duration"
+													ng-change="setEndTimeForHalfFullDay(trainingRoom)"
+													ng-options="session.seqNo as session.duration for session in sessions" ng-click="durationError();">
+													<option disabled="disabled" value="">Duration</option>
+												</select>
+											</div>
+
+											<div class="form-submit col-xs-3 pull-right searchButtonLow">
+												<a type="submit"
+													class="awe-btn awe-btn-lager awe-search aweSearchBtn search-button-align"
+													data-ng-click="searchTrainingRoom(trainingRoom, 'Training Room')"><i
+													class="fa fa-search search-icon" aria-hidden="true"></i><span
+													class="search-search-button-media">Search</span></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- End Search Training Room -->
+								
+								<!-- Search hot desk-->
+								<div class="calTabPane form-cn form-hotdesk tab-pane" id="hotDesk" data-ng-show="bHotDesk" style="clear: both;">
+									<h4 class="search-caption">Hot Desk (50 Persons)</h4>
+									<div class="form-search clearfix" id="datepairMeetingroom">
+										
+										<div class="capacity-select form-field field-select col-xs-2 qLow">
+											<select id="select-search-hide" class="select-ui"
+												data-placeholder="Choose One" name="occupancy"
+												ng-model="hotDesk.capacity"
+												ng-options="hotDeskData.data as hotDeskData.data for hotDeskData in hotDeskCapacity"
+												ng-selected="{{hotDeskData.data == hotDesk.capacity}}">
+												<option value="">Capacity</option>
+											</select>
+										</div>
+										
+										<!-- <div class="form-field field-date field-custom">
+											<input type="text" class="field-input calendar-input" style="font-size: 15px;color: #636e7b;"
+												id="fromDate" placeholder="From Date"  readonly="true" onfocus="this.blur()">
+										</div>
+										
+										<div class="form-field field-date field-custom">
+											<input type="text" class="field-input calendar-input" style="font-size: 15px;color: #636e7b;"
+												id="endDate" placeholder="End Date" readonly="true" onfocus="this.blur()">
+										</div> -->
+
+										<div class="form-field field-date col-xs-4">
+											<input type="text" name="daterange" id="hotdeskdaterangeCal"
+												class="field-input hotdeskDaterange dateHotdeskLow"
+												readonly="true"
+												style="font-size: 16px; border: none; color: #8f97a0;"
+												ng-click="loadDateRange()" placeholder="Date" />
+										</div>
+
+										<!-- <div class="form-field field-select col-xs-2">
+											<select id="select-search-hide" class="select-ui"
+												data-placeholder="Choose One" name="timeType"
+												ng-model="hotDesk.timeType"
+												ng-change="hideEndTime(hotDesk)"
+												ng-options="timeType.data as timeType.data for timeType in trainingTimeTypes"
+												ng-selected="{{timeType.data == hotDesk.timeType}}">
+												<option value="">Time Type</option>
+											</select>
+										</div> -->
+										
+										<div
+											class="trainingroomcheckinLow trainingroomDateLow form-field">
+											<div class='input-group date'>
+												
+												<input type="text" id='hotdeskcheckin'
+													ng-model="meetingRoom.startTime"
+													style="font-size: 15px; color: #636e7b; line-height: 41px;"
+													class="field-input start startTimeMeetinRoom"
+													placeholder="Start Time"
+													ng-change="hotDeskDuration(meetingRoom.startTime);" /> 
+												<span class="input-group-addon icon-timepicker" id="hotdeskCheckInIcon"> 
+													<span class="glyphicon glyphicon-time"></span>
+												</span>
+											</div>
+										</div>
+										
+										<div class="trainingroomcheckinLow trainingroomDateLow form-field">
+											<select id="select-search-hide" class="select-ui"
+												data-placeholder="Time" ng-model="hotDesk.duration"
+												ng-change="setEndTimeBasedOnTimeFrameHD(hotDesk)"
+												ng-options="session.seqNo as session.duration for session in hotDeskTimeFrame">
+												<option value="">Duration</option>
+											</select>
+										</div>
+
+										<div class="form-submit col-xs-2 pull-right searchButtonLow">
+											<a type="submit"
+												class="awe-btn awe-btn-lager awe-search aweSearchBtn search-button-align"
+												data-ng-click="searchHotDesk(hotDesk, 'Hot Desk')"><i class="fa fa-search search-icon" aria-hidden="true"></i><span
+												class="search-search-button-media">Search</span></a>
+										</div>
+										
+									</div>
+								</div>
+								<!-- End Search hot desk -->
+
+								<div data-ng-show="isTrainingRoomList">
+									<div class="col-sm-12 col-lg-12 portlets">
+										<div class="panel" style="padding: 15px;">
+											<div class="panel-content pagination2">
+												<table class="table table-bordered row-border hover booking-table">
+													<thead>
+														<tr>
+															<th>Name</th>
+															<th>Space</th>
+															<th>Capacity</th>
+															<th>Price Per Hour</th>
+															<th>Price Per Half Day</th>
+															<th>Price Per Day</th>
+															<th>Actions</th>
+														</tr>
+													</thead>
+													<tbody>												  
+														<tr data-ng-repeat="room in searchedList">
+															<td>{{room.name}}</td>
+															<td>{{room.spaceId.name}}</td>
+															<td>{{room.capacity}}</td>
+															<td>{{room.pricePerhour}}</td>
+															<td>{{room.pricePerhalfday}}</td>
+															<td>{{room.pricePerfullday}}</td>
+															<td>
+																<a href="" id="next1" data-toggle="tab" class="awe-btn arrow-right"
+																	data-ng-click="bookTrainingRoom(room)">Book</a>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-sm-12 portlets" data-ng-show="bTrainingRoom || bHotDesk">
+									<div class="panel" style="padding: 15px;">
+										<div class="panel-content pagination2">
+											<table class="table table-bordered row-border hover booking-table">
+												<thead>
+													<tr>
+														<th class="text-center">Space Name</th>
+														<th class="text-center">Room</th>
+														<th class="text-center">Partner</th>
+														<th class="text-center">Booked By</th>
+														<th class="text-center">Booking Date</th>
+														<th class="text-center">Status</th>
+														<th class="text-center">Booking Price</th>
+														<th class="text-center">Commission</th>
+														<th class="text-center">View Booking</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr data-ng-repeat="booking in bookings" data-ng-init="calculatePriceAfterCommission(booking.room.roomtype,booking.partner,booking.price)">
+														<td class="text-center">{{booking.space.name}}</td>
+														<td class="text-center">{{booking.room.name}}</td>
+														<td class="text-center">{{booking.partner.first_name}}</td>
+                                                         <td class="text-center">{{booking.user.first_name}}</td>
+                                                         <td class="text-center">{{booking.bookingDate|date:'shortDate'}}</td>
+                                                         <td class="text-center">{{booking.status}}</td>
+                                                         <td class="text-center">Rs.{{booking.price}}</td>
+                                                         <td class="text-center">Rs.{{finalCommissionValue | number:2}}</td>
+														<td class="text-center"><a class="menu-toggler editIcon"
+															ng-click="redirectAttendee(booking,BOOKING.URL_PATH.VIEWATTENDEES)"
+															title="View "><i class="fa fa-eye" aria-hidden="true"></i></a></td>
+													</tr>
+													<tr data-ng-hide="!bookings || bookings.length">
+													<td colspan="10">No Bookings available.........</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End Tabs Content -->
+
+		</div>
+		<!-- End Banner Content -->
+
+	</div>
+</section>

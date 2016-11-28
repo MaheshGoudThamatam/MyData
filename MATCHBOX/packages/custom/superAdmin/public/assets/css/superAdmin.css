@@ -1,0 +1,20 @@
+.superAdmin-example h1 {
+  background-color: purple
+}
+.margnTop{
+	margin-top:-48px;
+}
+.mgTop
+{
+	margin-top:5px;
+	font-size:27px;
+	font-family:'Open sans';
+}
+
+.margin_bottom_10 {
+	margin-bottom:10px!important;
+}
+
+.margin_left_45 {
+	margin-left:45px!important;
+}

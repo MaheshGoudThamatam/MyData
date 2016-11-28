@@ -1,0 +1,202 @@
+<section class="partnerinfo mydetails" ng-controller="RoomsController"
+	ng-init="getPackage()">
+<!-- 	<div ng-if="loaderEnabled">
+		<div id="preloaderImage">
+			<div class="tb-cell">
+				<div id="page-loadingImage">
+					<div></div>
+					<p>
+					<h4 class="h-image-caption">Uploading....</h4>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+			<!-- Tabs Content -->
+			<div class="tab-content" style="background: transparent;">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'">
+					</div>
+					<!-- End Tabs Cat -->
+					<div class="col-xs-9 col-lg-10">
+						<div class="page-content page-thin dashboard-content">
+							<div class="row">
+								<div class="panel-body" style="padding: 15px 0;">
+									<div class="form-hotel tab-pane in no-padding" id="addroom">
+										<div class="col-xs-12">
+											<form name="virtualOfficePckgEditForm"
+												class="form-validation" role="form" novalidate>
+												<div class="panel-body bg-white">
+													<div class="row panel-heade text-left"
+														style="padding: 15px;">
+														<h3>Package Details</h3>
+													</div>
+
+												</div>
+												<div class="box get_hd panel panel-default no-bd"
+													ng-if='roomtypevalue != ""'>
+													<div class="panel-body bg-white">
+
+														<div class="row">
+
+
+															<div class="col-md-12 col-sm-12 col-xs-12">
+																<div class="row">
+																	<div class="col-sm-12">
+																		<div class="get_hd box">
+																			<div class="row">
+																				<div class="col-sm-4">
+																					<div class="form-group">
+																						<label class="control-label">Package Name</label>
+																						<div class="append-icon">
+																							<input class="form-control" name="packageName"
+																								ng-model="packageObj.packageName" type="text"
+																								required>
+																							<div
+																								ng-show="submitted && virtualOfficePckgEditForm.packageName.$invalid">
+																								<span class="err-msg errorRed validaion-color"
+																									ng-show="virtualOfficePckgEditForm.packageName.$error.required">
+																									Please enter package name </span>
+																							</div>
+																							<div class="errorRed"
+																								ng-repeat="err in error.data"
+																								ng-if="err.param =='packageName'">{{err.msg}}</div>
+
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+
+
+																			<div class="row">
+                                                                                <div class="col-sm-4">
+                                                                                    <div class="form-group">
+                                                                                        <label class="control-label">Url</label>
+                                                                                        <div class="append-icon">
+                                                                                            <input ng-pattern="/^(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})$/" class="form-control" name="urlPath" ng-model="packageObj.packageUrl" 
+                                                                                            type="text" required>
+                                                                                            <div
+                                                                                                ng-show="submitted && virtualOfficePckgEditForm.urlPath.$invalid">
+                                                                                                <span class="err-msg errorRed validaion-color"
+                                                                                                    ng-show="virtualOfficePckgEditForm.urlPath.$error.required">
+                                                                                                    Please enter package url </span>
+                                                                                            </div>
+                                                                                            <div  ng-show="submitted && virtualOfficePckgEditForm.urlPath.$error.pattern">
+                                                                                                  <span class="err-msg errorRed validaion-color"
+                                                                                                    ng-show="virtualOfficePckgEditForm.urlPath.$error.pattern">
+                                                                                                    Please enter valid url </span>
+                                                                                             </div> 
+                                                                                            <div class="errorRed"
+                                                                                                ng-repeat="err in error.data"
+                                                                                                ng-if="err.param =='packageUrl'">{{err.msg}}</div>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+																			<!--<div class="row">
+																				<div class="col-sm-12">
+																					<div class="form-group">
+																						<label class="control-label"> Facilities
+																							available </label>
+																						<div class="row mt10"
+																							ng-repeat="facilityObj in packageObj.facilityList">
+																							<div class="col-sm-1">
+																								<input type="checkbox" class="form-control"
+																									ng-model="facilityObj.isAvailable">
+																							</div>
+																							<div class="col-sm-3">
+																								<label>{{facilityObj.facility}}</label>
+																							</div>
+																							<div class="col-sm-8">
+																								<input class="form-control" type="text"
+																									ng-model="facilityObj.description" />
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+
+																			</div>-->
+
+
+																			<div class="row">
+																				<div class="col-sm-12">
+																					<div class="form-group">
+																						<label class="control-label"> Payment </label>
+																						<div class="row">
+																							<div class="col-sm-8">
+																								<table class="table mb30 table table-bordered">
+																									<thead>
+																										<tr align="center" style="font-weight: bold;">
+																											<td>Payment Plan</td>
+																											<td>Monthly Amount</td>
+																										</tr>
+																									</thead>
+																									<tbody>
+																										<tr ng-repeat="payment in packageObj.paymentPlan">
+																											<td>{{payment.plan}}</td>
+																											<td><input type="number"
+																												ng-model="payment.amount"
+																												class="form-control" name="packageAmount{{$index}}" required>
+																												
+																										 <div
+                                                                                                            ng-show="submitted && virtualOfficePckgEditForm.packageAmount{{$index}}.$invalid">
+		                                                                                                 <span class="err-msg errorRed validaion-color"
+		                                                                                                    ng-show="virtualOfficePckgEditForm.packageAmount{{$index}}.$error.required">
+		                                                                                                    Please enter the amount </span>
+                                                                                                          </div>	
+                                                                                                        </td>
+
+																										</tr>
+
+
+
+																									</tbody>
+																								</table>
+																							</div>
+																						</div>
+																					</div>
+																				</div>
+
+																			</div>
+
+
+																		</div>
+
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+
+
+													<div class="panel-body text-center">
+														<a id="back2" href="#spaces" data-toggle="tab"
+															class="awe-btn awe-default"
+															ng-click="cancelRoomEdit();">Back</a> <a href="#"
+															class="awe-btn arrow-right"
+															ng-click="saveEditedPackage(virtualOfficePckgEditForm.$valid);">Update</a>
+													</div>
+												</div>
+											</form>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- Modal -->
+
+</section>
+<!--End Banner-->

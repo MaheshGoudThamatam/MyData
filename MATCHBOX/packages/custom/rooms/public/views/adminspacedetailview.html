@@ -1,0 +1,275 @@
+<section class="partnerinfo mydetails" data-ng-controller="AdminRoomsController" ng-init="loadCompleteSpaceDetail();loadRoomsAllotedToParticulerSpace();">
+    <div class="container-fluid">
+        <!-- Banner Content -->
+        <div class="banner-cn">
+
+            <!-- Tabs Content -->
+            <div class="tab-content" style="background: transparent;">
+
+                <div class="row">
+                    <div data-ng-include="'/system/views/alert.html'"></div>
+                    <div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+                    <div class="col-sm-9 col-lg-10 mydetailsnav">
+                        <div class="page-content page-thin dashboard-content col-sm-12 col-lg-12">
+                            <div class="row">
+                                <style type="text/css">
+    footer {
+        position: fixed;
+        width: 67%;
+        left: 33%;
+        padding: 5px 0;
+        height: auto;
+        background: rgba(0,0,0,0.5);
+        box-shadow: none;
+    }
+
+    footer .copyright {
+        line-height: 30px;
+    }
+
+    #header.header {
+        background-color: #fff !important;
+        
+    box-shadow: 0px -12px 17px 7px rgba(0,0,0,0.9);
+    }
+
+    .bg-1, .bg-3 {
+        background: transparent;
+    }
+</style>
+        <div class="main main-dt">
+            <div class="container-fluid">
+                <div class="">
+
+                    <div class="space-detail-media col-xs-12 main-cn bg-white clearfix" style="margin-top: 12.5%;">
+                        <section class="" style="margin-bottom: 4%;">
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <h2 style="font-size:22px;">Space: {{space.name}}</h2>
+                                <div class="start-address">
+                                    <div>
+                                        <h3>Space Type: {{space.space_type.name}}</h3></br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <h2 style="font-size:22px;">Address</h2>
+                                <div class="start-address">
+                                <div>
+                                    <h2>{{space.address1}},{{space.address2}}
+                                    {{space.locality}}, {{space.city}}
+                                    {{space.state}}, {{space.country}}</h2>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        </section>
+                        <!-- End Header Detail -->
+ 
+                        <!-- Detail Slide -->
+                        <section class="" ng-if = "photos.length>0">
+                            <div>
+                                <div class="row">
+                                        <div class="gal-slider">
+                                            <!-- enumerate all photos -->
+                                            <img ng-repeat="photo in photos" class="gal-slide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ng-show="isActive($index)" ng-src="{{generateTempUrl1(photo.src)}}" />
+                                            <!-- prev / next controls -->
+                                            <a class="gal-arrow gal-prev" href="#" ng-click="showPrev()"></a>
+                                            <a class="gal-arrow gal-next" href="#" ng-click="showNext()"></a>
+                                            <!-- extra navigation controls -->
+                                            <ul class="gal-nav">
+                                                <li ng-repeat="photo in photos" ng-class="{'gal-active':isActive($index)}">
+                                                    <img src="{{generateTempUrl(photo.src)}}" ng-click="showPhoto($index);" />
+                                                </li>
+                                            </ul>
+                                        </div>
+                                       
+                                </div>
+                            </div>
+                            <!-- End Thumnail Image -->
+                        </section>
+                        <!-- End Detail Slide -->
+                        <div ng-if = "!photos.length">
+                            <h2>No images has been uploaded.</h2>
+                        </div>
+
+                        <section class="hl-features detail-cn" id="hl-features">
+                            <div class="row">
+                                <div class="col-md-3 detail-sidebar">
+                                    <div class="scroll-heading">
+                                        <h2>Features</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-9 hl-features-cn">
+                                    <div class="featured-service">
+                                        <h3 class="mgTop">Facilities</h3>
+                                        <ul class="service-list">
+                                            <li class="unselected" data-ng-repeat="amenity in space.amenities">
+                                                <figure data-ng-if="amenity.facilityavailable">
+                                                    <div class="icon-service">
+                                                        <img src="{{amenity.icon}}"  alt="" style="height: 25px; width: 25px;">
+                                                    </div>
+                                                    <h4>{{amenity.name}}<span ng-hide = '$last'>,</span></h4>
+                                                </figure>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="featured-service">
+                                        <h3>Space Timings</h3>
+                                        <table class="service-spoken">
+                                                  <tr data-ng-repeat="timing in space.officeHours">
+                                                   <td ng-show="!timing.isClosed && !timing.isAllday">{{timing.day|limitTo:3}}</td>
+                                                   <td ng-show="!timing.isClosed && !timing.isAllday">&emsp;:&emsp;{{timing.startTime|date:'ha'}}&emsp;-&emsp;</td>
+                                                   <td ng-show="!timing.isClosed && !timing.isAllday">{{timing.endTime|date:'ha'}}</td>
+                                                   <td ng-show="timing.isClosed">{{timing.day|limitTo:3}}</td>
+                                                   <td ng-show="timing.isClosed">&emsp;:&emsp;Closed</td>
+                                                   <td ng-show="timing.isAllday">{{timing.day|limitTo:3}}</td>
+                                                   <td ng-show="timing.isAllday">&emsp;:&emsp;24 hours</td>
+                                                  </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="detail-footer detail-cn">
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-9 detail-footer-cn">
+                                
+                                    <div class="row">
+                                      <div class="col-xs-6 text-right">
+                                        <p class="price-book"> 
+                                        <a  title="" class="awe-btn arrow-right" data-ng-click = "backtoadminspaceList();">Back</a> 
+                                         <a  title="" class="awe-btn arrow-right" ng-if =  "space.approveStatus == 'Pending'" data-ng-click="approveSpaceAdmin(space);">Approve</a>
+                                         <a ng-if = "space.approveStatus == 'Approved'">Approved</a>
+                                        </p>
+                                      </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </section>
+
+
+
+
+
+            <section class="partnerinfo mydetails">
+                <div class="container-fluid">
+ 
+                            <div class="row">
+                                <div class="mydetailsnav">
+                                    <div class="page-content page-thin dashboard-content col-sm-12 col-lg-12">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-lg-12 portlets">
+                                                <div class="panel" style="padding: 15px;">
+                                                    <div class="panel-content pagination2">
+                                                        <table datatable="ng"  class="table table-bordered row-border hover booking-table" dt-options="dtOptions1" dt-column-defs="dtColumnDefs1">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Name</th>
+                                                                    <th>Type</th>
+                                                                    <th>Space</th>
+                                                                    <th>Created By</th>
+                                                                    <th>Capacity</th>
+                                                                    <th>Price Per Hour</th>
+                                                                    <th>Price Per Half Day</th>
+                                                                    <th>Price Per Day</th>
+                                                                    <th>Status</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>                                               
+                                                                <tr class="partnerList"  data-ng-repeat="room in roomsparticulertospace">
+                                                                    <td>{{room._id}}</td>
+                                                                    <td>{{room.name}}</td>
+                                                                    <td>{{room.roomtype.name}}</td>
+                                                                    <td>{{room.spaceId.name}}</td>
+                                                                    <td>{{room.createdBy.first_name}}</td>
+                                                                    <td>{{room.capacity}}</td>
+                                                                    <td>{{room.pricePerhour}}</td>
+                                                                    <td>{{room.pricePerhalfday}}</td>
+                                                                    <td>{{room.pricePerfullday}}</td>                                                   
+                                                                    <td style="width:11%;"><p class="colorYellow"  style="display: inline;" ng-if="room.sentToAdminApproval && room.status == 'Pending'">Awaiting Approval</p><p style="display: inline;"  ng-hide="room.sentToAdminApproval && room.status == 'Pending'" ng-class="{colorGreenApproved : room.status== 'Approved',colorRed : room.status== 'Rejected',colorGreen : room.status == 'Published',colorBlue:room.status == 'Pending'}">{{room.status}}</p>
+                                                                    <div class="taxTooltip help-tip help-tool-tip" style="margin-left:0.5% !important;" ng-if="room.status == 'Pending' && room.reasonForRejection != ''">
+                                                                       <p><small>{{room.reasonForRejection}}</small> </p>
+                                                                    </div>
+                                                                    <div class="taxTooltip help-tip help-tool-tip" style="margin-left:0.5% !important;" ng-if="room.status == 'Rejected' && room.reasonForRejection != ''">
+                                                                       <p><small>{{room.reasonForRejection}}</small> </p>
+                                                                    </div>
+                                                                    </td>                                                   
+                                                                    <td>
+                                                                        <a ng-click="editroom(room)" title="Edit this room" class="editIcon"><i class="fa fa-pencil-square-o"></i></a>
+                                                                        <a ng-if="room.isActive && room.isPublished" ng-click="deactivateRoom(room)" title="Deactivate room" class="clred"><i class="fa fa-times-circle-o" aria-hidden="true"></i></i></a>
+                                                                        <a ng-if="!room.isActive && room.isPublished" ng-click="activateRoom(room)" title="Activate room" class="clred"><i class="fa fa-check-circle-o" aria-hidden="true"></i></a>
+                                                                        <a ng-click="approveOrRejectRoomPage(room);" title="View detail"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                                                        <a ng-if="room.status == 'Approved' && !room.isPublished && room.isActive" ng-click="publishRoom(room);" title="Publish room"><i class="fa fa-cloud-upload" aria-hidden="true"></i></a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                </div>
+
+       </section>
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                                </div>
+                            </div>                     
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Tabs Content -->
+
+        </div>
+        <!-- End Banner Content -->
+
+    </div>
+
+
+    <div id="myModalDeactivatePopup" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"></h4>
+          </div>
+          <div class="modal-body">
+            <p>Booking already done for this room you cannot deactivate this room</p>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+
+      </div>
+  </div>
+
+
+</section>

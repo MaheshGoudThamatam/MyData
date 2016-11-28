@@ -1,0 +1,169 @@
+<style type="text/css">
+	textarea:focus {
+		outline: none;
+	}
+	footer {
+		position: fixed;
+	}
+	section {
+	    background: white;
+    	margin-top: 5%;
+	}
+	@media only screen and (min-width: 320px) and (max-width: 415px) {
+		footer
+			{
+				top: 87%;
+			    height: 17vh;
+			    box-shadow: none;
+			    background-color: rgba(0, 0, 0, 0.5);
+			}
+		.contactSubmitBtnLow {
+			left: 35%;
+		}
+	}
+	input[type=number] {
+    	-moz-appearance:textfield;
+	}
+</style>
+<section data-ng-controller="ProfileController" style="padding-bottom: 8.7%;">
+	<div class="container-fluid">
+		<!-- <div class="mar-top-5p"> -->
+			<div class="row">
+				<div class="col-md-3 col-md-offset-2">
+					<h2>Contact Us</h2>
+				</div>
+				<form  name="contactUsForm" id="contactUsForm" novalidate ng-controller="ProfileController">
+				<div class="col-md-3 col-md-offset-2" style="clear: both;">
+					<div class="user-form">
+						<div class="field-input">
+							<div class="form-group" ng-class="{ 'has-error' : submitted && contactUsForm.enquiryType.$invalid }">
+								<label class="control-label">TYPE OF ENQUIRY</label>
+								<select ng-model="contactDetail.enquiryType" name="enquiryType" class="custom_dropdown selectRole" required>
+									<option selected="selected" disabled="disabled" value="">Select One</option>
+									<option value="Booking">Booking</option>
+									<option value="FeedbackOrCompl">Feedback / Complaints</option>
+									<option value="ListSpace">List Space</option>
+								</select>
+								<div ng-show="submitted && contactUsForm.enquiryType.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="contactUsForm.enquiryType.$error.required">Please select enquiry type</span>
+								</div>
+							</div>
+						</div>
+						<div class="field-input">
+							<div class="form-group" ng-class="{ 'has-error' : submitted && contactUsForm.name.$invalid }">
+								<input type="text" name="name" class="input-text" placeholder="* Name" ng-model="contactDetail.name" required>
+								<div ng-show="submitted && contactUsForm.name.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="contactUsForm.name.$error.required">Please enter name</span>
+								</div>
+							</div>
+						</div>
+						<div class="field-input">
+							<div class="form-group" ng-class="{ 'has-error' : submitted && contactUsForm.email.$invalid }">
+								<input type="text" name="email" class="input-text" placeholder="* E-mail" ng-model="contactDetail.email" required>
+								<div ng-show="submitted && contactUsForm.email.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="contactUsForm.email.$error.required">Please enter Email</span>
+								</div>
+							</div>
+						</div>
+						<div class="field-input">
+							<div class="form-group" ng-class="{ 'has-error' : submitted && contactUsForm.phone.$invalid }">
+								<input onkeypress="return isNumber(event)" type="text" name="phone" class="input-text" placeholder="* Phone" ng-model="contactDetail.phone" required>
+								<div ng-show="submitted && contactUsForm.phone.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="contactUsForm.phone.$error.required">Please enter phone number</span>
+								</div>
+							</div>
+						</div>
+						<div class="field-input" ng-if="!(contactDetail.enquiryType == 'ListSpace')">
+							<input type="text" class="input-text" placeholder="Booking ID (Optional)" ng-model="contactDetail.bookingId">
+						</div>
+						<div class="field-input" ng-show="contactDetail.enquiryType == 'ListSpace'">
+							<div class="form-group" ng-class="{ 'has-error' : submitted && contactUsForm.spaceType.$invalid }">
+								<label class="control-label">SPACE TYPE</label>
+								<select ng-model="contactDetail.spaceType" name="spaceType" class="custom_dropdown selectRole" required>
+									<!-- <option selected="selected" disabled="disabled" value="">Select One</option> -->
+									<option selected="selected" value="Hotel">Hotel</option>
+									<option value="BusinessCenter">Business Center</option>
+									<option value="CoworkingSpace">Co-working Space</option>
+								</select>
+								<div ng-show="submitted && contactUsForm.spaceType.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="contactUsForm.spaceType.$error.required">Please select space type</span>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="field-input" ng-if="!(contactDetail.enquiryType == 'ListSpace')"> -->
+						<div class="field-input">
+							<div class="form-group" ng-class="{ 'has-error' : submitted && contactUsForm.description.$invalid }">
+								<textarea type="text" name="description" class="input-text" placeholder="* Description" ng-model="contactDetail.description" ng-trim="false" maxlength="140" required></textarea>
+								<span style="float: right;">{{140-contactDetail.description.length}} characters left</span>
+								<div ng-show="submitted && contactUsForm.description.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="contactUsForm.description.$error.required">Please enter description</span>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="field-input" ng-if="contactDetail.enquiryType == 'ListSpace'">
+							<div class="form-group" ng-class="{ 'has-error' : submitted && contactUsForm.listDescription.$invalid }">
+								<textarea type="text" name="listDescription" class="input-text" placeholder="* Description" ng-model="contactDetail.listDescription" required></textarea>
+								<div ng-show="submitted && contactUsForm.listDescription.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="contactUsForm.listDescription.$error.required">Please enter description</span>
+								</div>
+							</div>
+						</div> -->
+
+						<script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script>
+						<div class="field-input">
+						<div class="form-group" ng-class="{ 'has-error' : submitted && !captchaResponse }">
+							<div vc-recaptcha key="'6LdaFCYTAAAAAGABIelgcHnB18bdS4lq9hgFZgM6'" on-success="setResponse(response)"></div>
+						<div ng-show="submitted && !captchaResponse">
+									<span class="err-msg errorText validaion-color"
+										ng-show="!captchaResponse">Please verify captcha</span>
+								</div>
+							</div>
+						</div>
+						<div class="field-input">
+						<span style="float: left;line-height: 0px;">(* Fields are mandatory)</span>
+							<a style="margin-right: 2em;margin-top: 7%;" href="" id="next1" data-toggle="tab" class="awe-btn awe-default" data-ng-click="cancel()">Cancel</a>
+							<a style="margin-top: 7%;" class="awe-btn arrow-right contactSubmitBtnLow" data-ng-click="submitQuery(contactUsForm)">Submit</a>
+						</div>
+					</div>
+				</div>
+				</form>
+				<div class="col-md-3 col-md-offset-1" style="border-left: 1px solid grey;height: 40em;">
+					<p style="font-size: 1.5em;margin-left: 1.3em;font-weight: bold;">PurplePatch Software Private Limited</p>
+					<p style="margin-left: 2em;">No.18/273, 2nd Cross, Chikkadugodi, New Extn Madiwala,</p>
+					<p style="margin-left: 2em;">Bangalore - 560029,</p>
+					<p style="margin-left: 2em;">Karnataka, INDIA</p>
+
+					<p style="margin-left: 2em;"><b>Need assistance? </b> +91 98447 55000</p>
+					<p style="margin-left: 2em;"><b>Timings: </b>Monday to Friday - 09:00 AM - 09:00 PM (IST)</p>
+				 </div>
+			</div>
+		<!-- </div> -->
+	</div>
+	 <script type='text/javascript'>
+            /*
+                Author: Rajesh
+                Description : Function for phone number field to accept only [0-9].
+            */
+                function isNumber(evt) {
+                    evt = (evt) ? evt : window.event;
+                    var charCode = (evt.which) ? evt.which : evt.keyCode;
+                    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                        return false;
+                    }
+                    /*
+                        Uncomment to accept '+' in phone number field.
+                    */
+                        // if (charCode == 43) {
+                        //     return true;
+                        // }
+                    return true;
+                }
+            </script>
+</section>

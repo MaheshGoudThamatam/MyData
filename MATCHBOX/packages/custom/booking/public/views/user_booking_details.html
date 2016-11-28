@@ -1,0 +1,419 @@
+
+<style type="text/css">
+@media only screen and (min-width: 320px) and (max-width: 415px) {
+	.dataTables_paginate .paging_full_numbers {
+		width: 100vw;
+		margin-left: -16%;
+	}
+}
+</style>
+<style type="text/css">
+.help-tip {
+	margin-left: 40%;
+}
+</style>
+<section data-ng-controller="BookingController"
+	data-ng-init="loadMyBookingDetails();loadReasonForBookingCancel();">
+	<div class="main">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-4 mapUserBookingPage" style="padding: 0;">
+					<div
+						class="hotel-detail-map absoluteOne2 searchHotelBooking searchBookingMap">
+						<div data-ng-include="'/search/views/map_view_booking.html'"></div>
+					</div>
+				</div>
+				<div
+					class="col-xs-8 main-cn bg-white clearfix process-bar bookingPageTable">
+					<div class="col-md-6 payment-details booking-summary-margin ">
+						<div class="col-md-8 booking-details zero-padding">
+							<div class="ur-booking-border your-booking">
+								<i class="fa fa-shopping-cart fa-font" aria-hidden="true"></i> <span
+									class="booking-details-ur">BOOKING SUMMARY</span>
+							</div>
+							<div class="time-padding">
+								<div>Booking Date</div>
+								<div>
+									<span class="time-weght">
+										{{bookingDetail.bookingDate|date:'dd-MM-yyyy'}}</span><br>
+								</div>
+								<div class="col-md-6  zero-padding floatLeftLow">
+									<span>Start Time</span>
+								</div>
+								<div class="col-md-6 mar-left-30">
+									<span>End Time</span>
+								</div>
+								<div class="col-md-6  zero-padding floatLeftLow">
+									<span class="time-weght">{{bookingStartTime |date:'ha'}}</span>
+								</div>
+								<div class="col-md-6 mar-left-30">
+									<span class="time-weght">{{bookingEndTime |date:'ha'}}</span>
+								</div>
+							</div>
+							<div class="ur-booking-border time-padding">
+								<div>Selected Room</div>
+								<div>
+									<span class="time-weght"> {{bookingDetail.room.name}}</span><br>
+									<span class="time-weght">{{bookingDetail.space.name}}</span><br>
+									<span class="time-weght">{{bookingDetail.space.address1}}
+										{{bookingDetail.space.address2}} {{bookingDetail.space.city}}</span><br>
+								</div>
+							</div>
+							<div class="time-padding">
+
+								<div>
+
+									<div>
+										<div class="col-md-6  zero-padding floatLeftLow">
+											<span class="searchBookingTitle">Price</span>
+										</div>
+										<div class="col-md-6 mar-left-30">
+											<span class="time-weght">Rs.{{bookingDetail.room.pricePerhour}}</span>
+
+										</div>
+									</div>
+									<div>
+										<div class="col-md-6  zero-padding floatLeftLow">
+											<span class="searchBookingTitle">Total Hours</span>
+										</div>
+										<div class="col-md-6 mar-left-30">
+											<span class="time-weght">{{bookingDetail.totalHours}}</span>
+										</div>
+									</div>
+									<div>
+										<div class="col-md-6  zero-padding floatLeftLow">
+											<span class="searchBookingTitle">Price Without Tax</span>
+										</div>
+										<div class="col-md-6 mar-left-30">
+											<span class="time-weght">Rs.{{bookingDetail.priceWithoutTax}}</span>
+										</div>
+									</div>
+									<div>
+										<div class="col-md-6  zero-padding floatLeftLow">
+											<div class="taxTooltip help-tip help-tool-tip">
+												<p>
+													<small>Service Tax @ 14%</small> <br />
+													<small> Swachh Bharat Cess @ 0.5%</small> <br />
+													<small> Krishi Kalyan @ 0.5%</small>
+												</p>
+											</div>
+
+											<span class="searchBookingTitle">Service Tax</span>
+										</div>
+										<div class="col-md-6 mar-left-30">
+											<span class="time-weght">15%</span>
+										</div>
+									</div>
+									<div>
+										<div
+											class="col-md-6  zero-padding totalPriceMargin floatLeftLow">
+											<span class="searchBookingTitle">Total Price<span
+												style="display: block;" class="lessFont">(Including
+													tax)</span></span>
+										</div>
+										<div class="col-md-6 mar-left-30">
+											<span class="time-weght">Rs.{{bookingDetail.price}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 booking-summary-margin">
+						<div>
+							<div>
+								<div>
+									<div id="login-form">
+										<input type="radio" checked id="login" name="switch"
+											class="hide">
+										<div>
+											<ul class="form-header">
+												<li class="info-width"><label for="login">USER
+														INFORMATION<label for="login"></li>
+											</ul>
+										</div>
+										<div class="section-out">
+											<section class="login-section">
+												<div class="login">
+													<div class="main">
+														<div class="">
+															<div class="main-cn element-page bg-white clearfix">
+																<div class="user-profile user-login-page" id="signin">
+																	<div class="user-form user-signup"
+																		data-ng-show="guestForm">
+																		<form>
+																			<div class="row">
+																				<div class="">
+																					<div class="time-padding">
+																						<div>
+																							<span>Username :</span><br> <span
+																								class="time-weght">{{bookingDetail.guestUser.first_name}}</span><br>
+																							<span>Email :</span><br> <span
+																								class="time-weght">{{bookingDetail.guestUser.email}}</span><br>
+																							<span>Phone :</span><br> <span
+																								class="time-weght">{{bookingDetail.guestUser.phone}}</span><br>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</form>
+																	</div>
+																	<div class="user-form user-signup"
+																		data-ng-hide="guestForm">
+																		<form>
+																			<div class="row">
+																				<div class="">
+																					<div class="time-padding">
+																						<div>
+																							<span>Username :</span><br> <span
+																								class="time-weght">{{bookingDetail.user.first_name}}</span><br>
+																							<span>Email :</span><br> <span
+																								class="time-weght">{{bookingDetail.user.email}}</span><br>
+																							<span>Phone :</span><br> <span
+																								class="time-weght">{{bookingDetail.user.phone}}</span><br>
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</form>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</section>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12">
+							<div class="col-xs-6 bookingPageCancelBookingBtn"
+								data-ng-show="!bookingDetail.isWalkin">
+								<div class="field-input"
+									ng-hide="bookingDetail.status == 'Failed' ||  bookingDetail.status == 'Cancelled' || isLess || found"
+									align="right">
+									<button class="awe-btn awe-default1 forgotPwdButton"
+										data-ng-if="authenticated" ng-click="cancelBooking()">Cancel
+										Booking</button>
+								</div>
+							</div>
+							<div class="col-xs-6 bookingPageMyBookingBtn pull-right">
+								<div class="field-input" align="left">
+									<button type="submit" class="awe-btn arrow-right "
+										data-ng-click="redirectBackBooking()"
+										data-ng-if="authenticated">My Bookings</button>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<div
+						data-ng-if="(bookingDetail.room.roomtype.name == 'Meeting Room'||bookingDetail.room.roomtype.name == 'Board Room') && (attendeesDetails.length > 0) ">
+						<div class="payment-room">
+							<div class="row">
+								<div class="col-md-12 attendee-padding">
+									<h2>Attendees List</h2>
+									<div>
+										<div class="col-sm-12 portlets attendee-padding">
+											<div class="panel">
+												<div class="panel-content pagination2">
+													<table datatable="ng"
+														class="table table-bordered row-border hover booking-table bookingPageAttendeeTable"
+														dt-options="dtOptions3" dt-column-defs="dtColumnDefs3">
+														<thead>
+															<tr>
+																<th class="text-center">ID</th>
+																<th class="text-center">Name</th>
+																<th class="text-center">Email</th>
+																<th class="text-center">Phone Number</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="attendeesDetail in attendeesDetails">
+																<td class="text-center">{{attendeesDetail._id}}</td>
+																<td class="text-center">{{attendeesDetail.name}}</td>
+																<td class="text-center">{{attendeesDetail.email }}</td>
+																<td class="text-center">{{attendeesDetail.phoneNumber}}</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12 bookingPageFontsize"
+							ng-hide="bookingDetail.status == 'Cancelled'"
+							data-ng-if="bookingDetail.room.roomtype.name == 'Meeting Room'||bookingDetail.room.roomtype.name == 'Board Room' ">
+							<h2>Add Attendees</h2>
+							<div>
+								<form role="form" class="form-validation"
+									name="AttendeeFormAdmin" id="AttendeeFormAdmin">
+									<div class="row">
+										<div
+											data-ng-repeat="attendee in addAttendeeForm track by $index">
+											<div class="col-md-3 bookingPageclearBoth">
+												<div class="form-group"
+													ng-class="{ 'has-error' : submitted && AttendeeFormAdmin.name{{$index}}.$invalid }">
+													<label class="control-label">Name</label>
+													<div class="append-icon">
+														<input type="text" name="name{{$index}}" class="form-control"
+															minlength="4" ng-model="attendee.name"
+															placeholder="Minimum 4 characters..." required>
+													</div>
+												</div>
+
+												<div ng-show="submitted && AttendeeFormAdmin.name{{$index}}.$invalid"
+													class="help-block">
+													<p class="validaion-color"
+														ng-show="AttendeeFormAdmin.name{{$index}}.$error.required">Name
+														is required</p>
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group"
+													ng-class="{ 'has-error' : submitted && AttendeeFormAdmin.email{{$index}}.$invalid }">
+													<label class="control-label">Email</label>
+													<div class="append-icon">
+														<input type="email" name="email{{$index}}" class="form-control"
+															minlength="4" ng-model="attendee.email"
+															placeholder="Minimum 4 characters..." required>
+													</div>
+												</div>
+
+												<div ng-show="submitted && AttendeeFormAdmin.email{{$index}}.$invalid"
+													class="help-block">
+													<p class="validaion-color"
+														ng-show="AttendeeFormAdmin.email{{$index}}.$error.required">Email
+														is required</p>
+													<span class="error"
+														ng-show="AttendeeFormAdmin.input.$error.email"> Not
+														valid email!</span>
+												</div>
+
+											</div>
+											<div class="col-md-4 bookingPageFormPh">
+												<div class="form-group"
+													ng-class="{ 'has-error' : submitted && AttendeeFormAdmin.phoneNumber{{$index}}.$invalid }">
+													<label class="control-label">Phone Number</label>
+													<div class="append-icon">
+														<input type="number" name="phoneNumber{{$index}}" maxlength="10"
+															class="form-control" ng-model="attendee.phoneNumber"
+															placeholder="10 digit number" required>
+													</div>
+												</div>
+
+												<div
+													ng-show="submitted && AttendeeFormAdmin.phoneNumber{{$index}}.$invalid"
+													class="help-block">
+													<p class="validaion-color"
+														ng-show="AttendeeFormAdmin.phoneNumber{{$index}}.$error.required">Phone
+														Number is required</p>
+												</div>
+
+											</div>
+											<div class="col-sm-2 bookingPageFormDel" data-ng-if="$index !== (addAttendeeForm.length-1)">
+												<div class="image-text-delete">
+													<a data-ng-click="removeAttendee($index)"
+														title="Delete this Attendee"> <i class="fa fa-times"></i>
+													</a>
+												</div>
+
+											</div>
+										</div>
+
+										<div class="col-md-4">
+											<div class="col-md-4 bookingPageAddBtn">
+												<a href="" id="next1" data-toggle="tab"
+													class="awe-btn arrow-right"
+													data-ng-click="addAttendee(AttendeeFormAdmin,attendee,bookingDetail._id)"
+													title="Add Invities"><i class="fa fa-plus"></i></a>
+
+											</div>
+											<div class="bookingPageInviteBtn">
+												<a href="" id="next1" data-toggle="tab"
+													class="awe-btn arrow-right"
+													data-ng-click="createAttendeeByAdmin(AttendeeFormAdmin.$valid,attendee)"
+													title="Invite">Invite</a>
+											</div>
+										</div>
+
+									</div>
+
+								</form>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="cancelBookingModel" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title"></h4>
+				</div>
+				<div class="modal-body">
+
+					<div class="form-group">
+						<p>Are you sure you want to cancel ?</p>
+						<div class="form-group col-md-12 text-center">
+							<input class="awe-btn awe-default1" type="button" value="No"
+								ng-click="cancelConfirmCancelledBooking();"
+								ng-disabled="disabledNoInPopup"> <input
+								class="awe-btn arrow-right" type="button" value="Yes"
+								data-ng-click="showBookingCancelReasons();">
+						</div>
+					</div>
+
+					<div class="form-group" ng-show="showcancelbookingreason">
+						<label class="control-label"> Reason </label>
+						<div class="option-group">
+							<select class="type col-xs-12 form-control"
+								ng-model="cancelreason" required="">
+								<option disabled="disabled" selected="selected" value="">
+									Select Reason</option>
+								<option ng-repeat="reasonobject in cancelbookingreasons"
+									value="{{reasonobject.reason}}">{{reasonobject.reason}}</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group" ng-show="cancelreason == 'Other'">
+						<label class="control-label"> Description </label>
+						<div>
+							<textarea style="width: 100%;" type="text" name="cancelreason"
+								class="input-text" placeholder="Description"
+								ng-model="cancelreasondescription" ng-trim="false"
+								maxlength="140" required></textarea>
+							<span style="float: right;">{{140-cancelreasondescription.length}}
+								characters left</span>
+						</div>
+					</div>
+					<div class="form-group col-md-12 text-center"
+						ng-show="showcancelbookingreason">
+						<input class="awe-btn awe-default1" type="button" value="Cancel"
+							ng-click="cancelConfirmCancelledBooking();"> <input
+							class="awe-btn arrow-right" type="button" value="Submit"
+							data-ng-click="confirmCancelledBooking();">
+					</div>
+				</div>
+				<div class="modal-footer"></div>
+			</div>
+		</div>
+	</div>
+
+
+</section>
+

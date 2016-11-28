@@ -1,0 +1,833 @@
+<style type="text/css">
+footer {
+	position: fixed;
+	width: 67%;
+	left: 33%;
+	padding: 5px 0;
+	height: auto;
+	background: rgba(0, 0, 0, 0.5);
+	box-shadow: none;
+}
+
+footer .copyright {
+	line-height: 30px;
+}
+
+#header.header {
+	background-color: #fff !important;
+	box-shadow: 0px -12px 17px 7px rgba(0, 0, 0, 0.9);
+}
+
+.bg-1, .bg-3 {
+	background: transparent;
+}
+
+div#listView {
+	margin-left: 2%;
+	margin-right: 1%;
+}
+</style>
+<section data-ng-controller="RoomResultController"
+	data-ng-init="findSearchRoomsList();loadAmenities();intializeCounter();cssFunction();"
+	class="listFullPage" style="margin-top: 15%;">
+	<div class="main listPageTop">
+		<div class="sort-view clearfix searchSort"
+			style="padding-left: 4%; padding-top: 0%;">
+			<div class="sort-by float-right" style="width: 100%;">
+				<label style="font-size: 10px;">Sort by: </label>
+				<div class="sort-select select float-left"
+					style="width: 23%; overflow: hidden;">
+					<span style="font-size: 10px;" data-placeholder="Select">Sort By</span> 
+					<select name="start" ng-change="sortingFilter(sortObj)"
+						ng-model="sortObj">
+						<option value="">Select One</option>
+						<option value="D">Distance</option>
+						<option value="-R">Popularity</option>
+						<option value="-1">Price - (High - Low)</option>
+						<option value="+1">Price - (Low - High)</option>
+					</select>
+				</div>
+				<!-- <div class="sort-select select float-left"
+					style="width: 23%; overflow: hidden;">
+					<span style="font-size: 10px;" data-placeholder="Select">Pricing</span>
+					<select name="pricing" ng-change="priceFilter(priceSort)"
+						ng-model="priceSort">
+						<option value="">Pricing</option>
+						<option value="-1">High - Low</option>
+						<option value="+1">Low - High</option>
+					</select>
+				</div> -->
+				<div class="" style="overflow: hidden;">
+					<a class="text-uppercase float-right filterBtn" id="filterMe"
+						style="color: #3c3c3c; font-size: 12px; margin-top: 1%; font-weight: 700;">Filter</a><i
+						class="fa fa-filter rightmar15"></i>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12 filterSection">
+			<div class=" sidebar-cn">
+				<div class="col-xs-12 widget-sidebar" style="padding: 0px !important;">
+					<h5><b>Hotel Facilities</b></h5>
+					<ul class="widget-ul" ng-repeat="amenity in amenities" style="width: 50%;float: left;">
+						<li>
+							<div>
+								<label style="font-size: 11px; display: block;"><input
+									type="checkbox" ng-click="addAmenities(amenity)"
+									style="vertical-align: text-bottom;" /> {{amenity.name}}</label>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="col-xs-12 applyfilters">
+					<!-- <button
+						class="filterCancel float-left awe-btn text-uppercase rightmar15"
+						id="cancelBtn">Cancel</button>
+					<button
+						class="filterApply float-left awe-btn text-uppercase rightmar15"
+						id="applyBtn" ng-click="filters()"
+						style="border: 2px solid #d72128;">Apply</button> -->
+
+					<a id="cancelBtn" data-toggle="tab" class="awe-btn awe-default" style="padding: 0px 5px;">Cancel</a>
+					<a id="applyBtn" class="awe-btn arrow-right" data-toggle="tab" ng-click="filters()" style="padding: 0 8px;">Apply</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-12" style="overflow: hidden;">
+			<h6>
+				<b>Place</b> : {{searchObj.place}}
+			</h6>
+		</div>
+		<div class="col-xs-4" style="height: 5.7vh;">
+			<h6 data-ng-show="isTrainingOrHotDesk">
+				<b>Capacity</b> : {{searchObj.capacity.max}}
+			</h6>
+			<h6 data-ng-show="!isTrainingOrHotDesk">
+				<b>Capacity</b> : {{searchObj.capacity.min}}
+			</h6>
+		</div>
+		<div class="row col-xs-12" style="margin-top: -2%">
+			<div class="col-xs-12" style="height: 5.7vh; overflow: hidden;">
+				<h6>
+					<b>Time</b> : {{bookingStartTime}}&nbsp; &#8210;
+					&nbsp;{{bookingEndTime}}&nbsp;&nbsp;<span class="pull-right"
+						data-ng-hide="isTrainingOrHotDesk"><b>Date</b> :
+						{{bookingDate}}</span>
+				</h6>
+			</div>
+			<div class="col-xs-12" data-ng-show="isTrainingOrHotDesk"
+				style="height: 5.7vh; overflow: hidden; margin-top: -5%; padding-top: 0%;">
+				<h6>
+					<span><b>Date</b> : {{bookingFromDate}}&nbsp; &#8210;
+						&nbsp;{{bookingToDate}}</span>
+				</h6>
+			</div>
+		</div>
+
+		<div class="col-xs-12 singleListCol" ng-repeat="room in rooms">
+			<div class="col-xs-6" style="margin-left: -5%;">
+				<h5 ng-if="timeType == 1">
+					&#8377;&nbsp;{{room.pricePerhour}}<small>/hr</small>
+				</h5>
+				<h5 ng-if="timeType == 2">
+					&#8377;&nbsp;{{room.pricePerhalfday}}<small>/half day</small>
+				</h5>
+				<h5 ng-if="timeType == 3">
+					&#8377;&nbsp;{{room.pricePerfullday}}<small>/full day</small>
+				</h5>
+			</div>
+			<div class="col-xs-6" style="text-align: right; margin-left: 5%;">
+				<h5 ng-show="!room.spaceId.rating"><i class="fa fa-minus"></i></h5>
+				<h5 ng-show="room.spaceId.rating < 1"><i class="fa fa-minus"></i></h5>
+				<h5 ng-show="room.spaceId.rating > 1">{{room.spaceId.rating | number:1}}</h5>
+				<!-- 										
+				<h5 ng-if="room.avgRating">{{room.avgRating}}</h5>
+				<h5 ng-if="!room.avgRating">N/A</h5> -->
+			</div>
+			<div style="margin-left: -5%;">
+				<div class="col-xs-4" ng-repeat="img in room.images"
+					ng-show="$first">
+					<figure class="" ng-show="img.url">
+						<a href=""
+							data-ng-click="detail(SEARCH.URL_PATH.SEARCH_DETAILS,room)"
+							title=""> <img src="{{img.url}}" alt=""
+							style="height: 75px; width: 75px;">
+						</a>
+					</figure>
+					<figure class="" ng-show="!img.url">
+						<a href=""
+							data-ng-click="detail(SEARCH.URL_PATH.SEARCH_DETAILS,room)"
+							title=""> <img
+							src="http://res.cloudinary.com/tarento/image/upload/v1460693602/570e8f207c9c6c001e1460d9.png"
+							alt="" style="height: 75px; width: 75px;">
+						</a>
+					</figure>
+					<div class="searchAmenityLow">
+						<div class="Availabilities divHeigthImg pull-left"
+							data-ng-repeat="amenity in room.amenities">
+							<img src="{{amenity.icon}}" class="imgHeight searchDetailImage"
+								data-ng-if="amenity.facilityavailable" title="{{amenity.name}}" />
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-8" style="width: 70%; margin-left: -4%;">
+					<div class=""
+						style="min-height: 30px; max-height: 30px; line-height: 14px;">
+						<a href="" style="font-size: 12px;"
+							data-ng-click="detail(SEARCH.URL_PATH.SEARCH_DETAILS,room)">{{room.spaceId.name}}</a>
+					</div>
+					<div class="">
+						<div style="font-size: 14px;">{{room.name}}</div>
+					</div>
+					<div class="hotel-places">
+						<div>{{room.spaceId.locality}}</div>
+					</div>
+					<div class="hotel-places searchHotelPlaceLow" style="color: black;">
+						<div style="text-align: justify; font-size: 10px;">{{room.description}}</div>
+					</div>
+
+				</div>
+			</div>
+
+
+		</div>
+		<div class="row col-xs-12 page-navigation-cn">
+			<div class="col-xs-6" style="text-align: -webkit-center;"
+				ng-hide="pageNo == 0">
+				<a href="" style="padding: 0 1em;" title=""
+					class="awe-btn arrow-right" data-ng-click="prev()"> Previous</a>
+			</div>
+			<div class="col-xs-6 pull-right" style="text-align: -webkit-center;"
+				ng-hide="rooms.length < 6">
+				<a href="" style="padding: 0 1em;" title=""
+					class="awe-btn arrow-right pull-right" data-ng-click="next()">
+					Next</a>
+			</div>
+		</div>
+	</div>
+</section>
+<section data-ng-controller="RoomResultController"
+	data-ng-init="findSearchRoomsList();loadAmenities();intializeCounter();cssFunction();"
+	class="listPage-d320">
+	<div class="main">
+		<div class="">
+			<div class="main-cn hotel-page ">
+				<div class="row">
+					<div class="col-xs-4">
+						<div class="hl-maps-cn absoluteOne">
+							<div class="col-sm-9 col-lg-10 mydetailsnav">
+								<div
+									class="page-content page-thin dashboard-content col-sm-12 col-lg-12">
+									<div class="row">
+
+										<div class="col-md-5 portlets listMapMargin">
+											<div class="panel-content pagination2 table-responsive">
+
+												<ng-map id="myMatchBoxMap" scale-control="true"
+													style="display: grid !important; height: 100vh !important; padding-top: 11%;">
+												</ng-map>
+
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-8 bg-white shadowBox">
+
+
+						<section class="hotel-list">
+							<div class="sort-view clearfix searchSort"
+								style="margin-top: 7%;">
+								<div class="sort-by float-right">
+									<label>Sort by: </label>
+									<div class="sort-select select float-left">
+										<span data-placeholder="Select">Sort By</span> <select
+											name="start" ng-change="sortingFilter(sortObj)"
+											ng-model="sortObj">
+											<option value="">Select One</option>
+											<option value="D">Distance</option>
+											<option value="-R">Popularity</option>
+											<option value="-1">Price - (High - Low)</option>
+											<option value="+1">Price - (Low - High)</option>
+										</select>
+									</div>
+									<!-- <div class="sort-select select float-left">
+										<span data-placeholder="Select">Pricing</span> <select
+											name="pricing" ng-change="priceFilter(priceSort)"
+											ng-model="priceSort">
+											<option value="">Pricing</option>
+											<option value="-1">High - Low</option>
+											<option value="1">Low - High</option>
+										</select>
+									</div> -->
+									<div class="sort-select select float-left">
+										<a class="text-uppercase float-right filterBtn" id="filterMe"
+											style="color: #3c3c3c;"><i
+											class="fa fa-filter rightmar15"></i>Filter</a>
+									</div>
+								</div>
+
+								<div class="view-by float-right">
+									<ul id="tabs">
+										<li><a href="#gridView" title="" class="current"><img
+												src="/system/assets/img/custom/icon-grid.png" alt=""></a></li>
+										<li><a href="#listView" title=""><img
+												src="/system/assets/img/custom/icon-list.png" alt=""></a></li>
+									</ul>
+								</div>
+							</div>
+
+							<!-- Hotel Grid Content-->
+							<div class="col-xs-12 filterSection">
+								<div class=" sidebar-cn">
+									<!-- Hotel facilities -->
+									<div class="col-xs-12 widget-sidebar facilities-sidebar">
+										<h4 class="title-sidebar">Amenities</h4>
+										<ul class="widget-ul" ng-repeat="amenity in amenities">
+											<li>
+												<div>
+													<input type="checkbox" ng-click="addAmenities()"
+														ng-model="amenity.amenityfilter" /> <label>{{amenity.name}}</label>
+												</div>
+											</li>
+										</ul>
+									</div>
+									<!-- End Hotel facilities -->
+
+									<div class="col-xs-12 applyfilters">
+										<!-- <button
+											class="filterCancel float-left awe-btn text-uppercase rightmar15"
+											id="cancelBtn">Cancel</button>
+										<button
+											class="filterApply float-left awe-btn text-uppercase rightmar15"
+											id="applyBtn" ng-click="filters()"
+											style="border: 2px solid #d72128;">Apply</button> -->
+
+										<a id="cancelBtn" data-toggle="tab"
+											class="awe-btn awe-default">Cancel</a> <a id="applyBtn"
+											class="awe-btn arrow-right" data-toggle="tab"
+											ng-click="filters()">Apply</a>
+									</div>
+									<!-- End Area -->
+
+								</div>
+							</div>
+
+							<div class="hotel-grid-cn clearfix tab-section" id="gridView">
+								<div class="col-xs-4 searchRoomType mar-b-6">
+									<div class="input-group location">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-map-marker fa-2x"></i>
+										</div>
+										<input type="text" class="form-control" id="location"
+											value={{searchObj.roomType}} ng-disabled="true"
+											style="text-transform: uppercase; font-size: 15px !important; padding: 11px !important;">
+									</div>
+								</div>
+								<a href="/" title="" class="awe-btn arrow-right mar-b-6"
+									style="margin: 0;" data-ng-click="">Modify Search</a>
+								<div class="listPageFilter">
+									<div class="col-xs-12 mar-top-5" style="width: 100% !important">
+										<div
+											class="form-group row full-width main-filter searchFilter10"
+											style="margin-left: -7%;">
+											<div class="col-lg-4 col-md-8 col-sm-8 col-xs-12 searchPlace">
+												<div class="input-group location">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-map-marker fa-2x"></i>
+													</div>
+													<input type="text" class="form-control" id="location"
+														value={{searchObj.place}} ng-disabled="true"
+														style="text-transform: uppercase; font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"
+												style="width: 12% !important"
+												data-ng-hide="isTrainingOrHotDesk">
+												<div class="input-group peoples">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-users fa-2x"></i>
+													</div>
+													<input type="text" class="form-control"
+														value={{searchObj.capacity.min}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<!-- <div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"
+												style="width: 12% !important" data-ng-show="isTraining">
+												<div class="input-group peoples">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-users fa-2x"></i>
+													</div>
+													<input type="text" class="form-control"
+														value={{searchObj.capacity.min}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div> -->
+											<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"
+												style="width: 12% !important"
+												data-ng-show="isTrainingOrHotDesk && isTraining">
+												<div class="input-group peoples">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-users fa-2x"></i>
+													</div>
+													<input type="text" class="form-control"
+														value={{searchObj.capacity.min}}-{{searchObj.capacity.max}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;padding-left: 7px !important;">
+												</div>
+											</div>
+
+											<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"
+												style="width: 12% !important"
+												data-ng-show="isTrainingOrHotDesk && !isTraining">
+												<div class="input-group peoples">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-users fa-2x"></i>
+													</div>
+													<input type="text" class="form-control"
+														value={{searchObj.capacity.max}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+
+
+											<div
+												class="col-lg-2 col-md-4 col-sm-4 col-xs-12 mrleft3 wid-27">
+												<div class="input-group peoples">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-clock-o fa-2x" data-toggle="popover"
+															title="Find special offers for your meeting"></i>
+													</div>
+													<input type="text" class="form-control searchTime"
+														value={{bookingStartTime}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+
+												</div>
+											</div>
+
+											<div class="col-lg-1 col-md-1 col-sm-1 searchLine"
+												style="width: 1vw; margin-left: -14px; margin-top: 10px;">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											</div>
+
+											<div
+												class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchTime1366 wid-27">
+												<div class="input-group peoples">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-clock-o fa-2x" data-toggle="popover"
+															title="Find special offers for your meeting"></i>
+													</div>
+													<input type="text" class="form-control searchTime"
+														value={{bookingEndTime}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+
+											<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchDate"
+												style="width: 20% !important"
+												data-ng-hide="isTrainingOrHotDesk">
+
+												<div class="input-group start-date">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-calendar fa-2x" data-toggle="popover"
+															title="Find special offers for your meeting"></i>
+													</div>
+													<input type="text"
+														class="form-control searchStartDateInput" id="start-date"
+														value={{bookingDate}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchDate"
+												style="width: 20% !important;"
+												data-ng-show="isTrainingOrHotDesk">
+												<div class="input-group start-date">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-calendar fa-2x" data-toggle="popover"
+															title="Find special offers for your meeting"></i>
+													</div>
+													<input type="text"
+														class="form-control searchStartDateInput" id="start-date"
+														value={{bookingFromDate}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<div
+												class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchToDate searchToDateLowQ"
+												style="width: 20%; margin-top: 1%;"
+												data-ng-show="isTrainingOrHotDesk">
+												<div class="input-group end-date">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-calendar fa-2x" data-toggle="popover"
+															title="Find special offers for your meeting"></i>
+													</div>
+													<input type="text"
+														class="form-control searchStartDateToInput" id="end-date"
+														value={{bookingToDate}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<!--  <div class="col-lg-2 col-md-4 col-sm-4 col-xs-12">
+										        <div class="input-group end-date">
+										            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+										            <input type="text" class="form-control popup-toggle" id="end-date" value={{searchObj.etime|date:ha}}>
+										        </div>
+										    </div> -->
+										</div>
+
+
+
+										<div
+											class="col-xs-6 col-sm-4 col-md-6 col-lg-4 searchListSingleCol"
+											ng-repeat="room in rooms">
+											<div class="hotel-item" ng-repeat="img in room.images"
+												ng-show="$first">
+												<figure class="hotel-img" ng-show="img.url">
+													<a href=""
+														data-ng-click="detail(SEARCH.URL_PATH.SEARCH_DETAILS,room)"
+														title=""> <img src="{{img.url}}" alt="">
+													</a>
+
+												</figure>
+												<figure class="hotel-img" ng-show="!img.url">
+													<a href=""
+														data-ng-click="detail(SEARCH.URL_PATH.SEARCH_DETAILS,room)"
+														title=""> <img
+														src="http://res.cloudinary.com/tarento/image/upload/v1460693602/570e8f207c9c6c001e1460d9.png"
+														alt="">
+													</a>
+												</figure>
+												<div class="hotel-text descHeight searchHotel">
+													<div class="searchHotelInner">
+														<div class="hotel-name">
+															<a href=""
+																data-ng-click="detail(SEARCH.URL_PATH.SEARCH_DETAILS,room)">{{room.spaceId.name}}</a>
+														</div>
+														<div class="hotel-places"
+															style="font-size: 20px !important">
+															<div style="overflow: hidden; font-size: 14px;">{{room.name.split('(')[0].trim()}}</div>
+														</div>
+														<div class="hotel-places searchHotelLocalityLow">
+															<div>{{room.spaceId.locality}}</div>
+														</div>
+														<div></div>
+														<div class="hotel-places searchHotelPlaceLow"
+															style="color: black;">
+															<div>{{room.description}}</div>
+														</div>
+
+														<div class="listPageRating">
+															<span ng-show="!room.spaceId.rating"><i
+																class="fa fa-minus"></i></span> <span
+																ng-show="room.spaceId.rating < 1"><i
+																class="fa fa-minus"></i></span> <span
+																ng-show="room.spaceId.rating > 1">{{room.spaceId.rating
+																| number:1}}</span>
+														</div>
+
+														<div class="price-box">
+															<!-- <span class="price special-price">&#8377;{{room.pricePerhour}}<small>/hour</small></span> -->
+															<div>
+
+																<div ng-if="timeType == 1">
+																	<span class="price special-price" style="color: white;">&#8377;&nbsp;{{room.pricePerhour}}<small
+																		style="color: white;">/hr</small>
+																	</span>
+																</div>
+																<div ng-if="timeType == 2">
+																	<span class="price special-price" style="color: white;">&#8377;&nbsp;{{room.pricePerhalfday}}<small
+																		style="color: white;">/half day</small>
+																	</span>
+																</div>
+																<div ng-if="timeType == 3">
+																	<span class="price special-price" style="color: white;">&#8377;&nbsp;{{room.pricePerfullday}}<small
+																		style="color: white;">/full day</small>
+																	</span>
+																</div>
+
+															</div>
+														</div>
+														<div class="searchAmenityLow">
+															<div class="Availabilities divHeigth pull-left"
+																data-ng-repeat="amenity in room.amenities">
+																<img src="{{amenity.icon}}"
+																	class="imgHeight searchDetailImage"
+																	data-ng-if="amenity.facilityavailable"
+																	title="{{amenity.name}}" />
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="hotel-list-cn clearfix tab-section" id="listView">
+								<div class="col-xs-4 searchRoomType mar-b-6">
+									<div class="input-group location">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-map-marker fa-2x"></i>
+										</div>
+										<input type="text" class="form-control" id="location"
+											value={{searchObj.roomType}} ng-disabled="true"
+											style="text-transform: uppercase; font-size: 15px !important; padding: 11px !important;">
+									</div>
+								</div>
+								<a href="/" title="" class="awe-btn arrow-right mar-b-6"
+									style="margin: 0;" data-ng-click="">Modify Search</a>
+								<div class="listPageFilter">
+									<div class="col-xs-12 mar-top-5" style="width: 100% !important">
+										<div
+											class="form-group row full-width main-filter searchFilter10"
+											style="margin-left: -7%;">
+											<div class="col-lg-4 col-md-8 col-sm-8 col-xs-12 searchPlace">
+												<div class="input-group location">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-map-marker fa-2x"></i>
+													</div>
+													<input type="text" class="form-control" id="location"
+														value={{searchObj.place}} ng-disabled="true"
+														style="text-transform: uppercase; font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"
+												style="width: 12% !important"
+												data-ng-hide="isTrainingOrHotDesk">
+												<div class="input-group peoples">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-users fa-2x"></i>
+													</div>
+													<input type="text" class="form-control"
+														value={{searchObj.capacity.min}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"
+												style="width: 12% !important" data-ng-show="isTraining">
+												<div class="input-group peoples">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-users fa-2x"></i>
+													</div>
+													<input type="text" class="form-control"
+														value={{searchObj.capacity.min}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"
+												style="width: 12% !important"
+												data-ng-show="isTrainingOrHotDesk">
+												<div class="input-group peoples">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-users fa-2x"></i>
+													</div>
+													<input type="text" class="form-control"
+														value={{searchObj.capacity.max}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<div
+												class="col-lg-2 col-md-4 col-sm-4 col-xs-12 mrleft3 wid-27">
+												<div class="input-group peoples">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-clock-o fa-2x" data-toggle="popover"
+															title="Find special offers for your meeting"></i>
+													</div>
+													<input type="text" class="form-control searchTime"
+														value={{bookingStartTime}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+
+												</div>
+											</div>
+
+											<div class="col-lg-1 col-md-1 col-sm-1 searchLine"
+												style="width: 1vw; margin-left: -14px; margin-top: 10px;">
+												<i class="fa fa-minus" aria-hidden="true"></i>
+											</div>
+
+											<div
+												class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchTime1366 wid-27">
+												<div class="input-group peoples">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-clock-o fa-2x" data-toggle="popover"
+															title="Find special offers for your meeting"></i>
+													</div>
+													<input type="text" class="form-control searchTime"
+														value={{bookingEndTime}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+
+											<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchDate"
+												style="width: 20% !important;"
+												data-ng-hide="isTrainingOrHotDesk">
+
+												<div class="input-group start-date">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-calendar fa-2x" data-toggle="popover"
+															title="Find special offers for your meeting"></i>
+													</div>
+													<input type="text"
+														class="form-control searchStartDateInput" id="start-date"
+														value={{bookingDate}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchDate"
+												style="width: 20% !important;"
+												data-ng-show="isTrainingOrHotDesk">
+												<div class="input-group start-date">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-calendar fa-2x" data-toggle="popover"
+															title="Find special offers for your meeting"></i>
+													</div>
+													<input type="text"
+														class="form-control searchStartDateInput" id="start-date"
+														value={{bookingFromDate}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<div
+												class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchToDate searchToDateLowQ"
+												style="width: 20%; margin-top: 1%;"
+												data-ng-show="isTrainingOrHotDesk">
+												<div class="input-group end-date">
+													<div class="input-group-addon searchbord">
+														<i class="fa fa-calendar fa-2x" data-toggle="popover"
+															title="Find special offers for your meeting"></i>
+													</div>
+													<input type="text"
+														class="form-control searchStartDateToInput" id="end-date"
+														value={{bookingToDate}} ng-disabled="true"
+														style="font-size: 15px !important; padding: 11px !important;">
+												</div>
+											</div>
+											<!--  <div class="col-lg-2 col-md-4 col-sm-4 col-xs-12">
+										        <div class="input-group end-date">
+										            <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+										            <input type="text" class="form-control popup-toggle" id="end-date" value={{searchObj.etime|date:ha}}>
+										        </div>
+										    </div> -->
+										</div>
+
+										<div class="hotel-list-item searchSingle"
+											ng-repeat="room in rooms">
+											<div ng-repeat="img in room.images" ng-show="$first">
+												<figure class="hotel-img float-left">
+													<a href=""
+														data-ng-click="detail(SEARCH.URL_PATH.SEARCH_DETAILS,room)"
+														title=""> <img src="{{img.url}}" alt="">
+													</a>
+												</figure>
+												<div class="hotel-text">
+													<div class="hotel-name hotelNameListPage">
+														<a href=""
+															data-ng-click="detail(SEARCH.URL_PATH.SEARCH_DETAILS,room)">{{room.spaceId.name}}</a>
+													</div>
+													<div class="hotel-places"
+														style="font-size: 20px !important">
+														<div>
+															<i>{{room.name}}</i>
+														</div>
+													</div>
+													<div class="listPageRating">
+														<span ng-show="!room.spaceId.rating"><i
+															class="fa fa-minus"></i></span> <span
+															ng-show="room.spaceId.rating < 1"><i
+															class="fa fa-minus"></i></span> <span
+															ng-show="room.spaceId.rating > 1">{{room.spaceId.rating
+															| number:1}} </span>
+													</div>
+													<address style="padding: 0;" class="hotel-address">
+														<!--  {{room.spaceId.address1}},
+                                                    {{room.spaceId.address2}}, -->
+														{{room.spaceId.locality}}
+													</address>
+													<p>{{room.description|limitTo:140}}</p>
+													<div class="price-box float-left">
+														<!-- <span class="price special-price">&#8377;{{room.pricePerhour}}<small>/hour</small></span> -->
+														<div>
+															<div ng-if="timeType == 1">
+																<span class="price special-price"
+																	style="background: none; color: #d7252c;">&#8377;&nbsp;{{room.pricePerhour}}<small
+																	style="color: #d7252c;">/hr</small>
+																</span>
+															</div>
+															<div ng-if="timeType == 2">
+																<span class="price special-price"
+																	style="background: none; color: #d7252c;">&#8377;&nbsp;{{room.pricePerhalfday}}<small
+																	style="color: #d7252c;">/half day</small>
+																</span>
+															</div>
+															<div ng-if="timeType == 3">
+																<span class="price special-price"
+																	style="background: none; color: #d7252c;">&#8377;&nbsp;{{room.pricePerfullday}}<small
+																	style="color: #d7252c;">/full day</small>
+																</span>
+															</div>
+
+														</div>
+													</div>
+													<div class="hotel-service float-right">
+														<div class="Availabilities1 divHeigth pull-left"
+															data-ng-repeat="amenity in room.amenities">
+															<img src="{{amenity.icon}}" class="imgHeight"
+																data-ng-if="amenity.facilityavailable"
+																title={{amenity.name}}>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- End Hotel Grid Content-->
+							<!-- Page Navigation -->
+							<div class="row col-xs-12 page-navigation-cn">
+								<div class="col-xs-6" ng-hide="pageNo == 0">
+
+									<a href="" title="" class="awe-btn arrow-right"
+										data-ng-click="prev()"> Previous</a>
+								</div>
+								<div class="col-xs-6" ng-show="showNext">
+									<a href="" title="" class="awe-btn arrow-right pull-right"
+										data-ng-click="next()"> Next</a>
+								</div>
+							</div>
+
+							<!-- Page Navigation -->
+						</section>
+						<!-- End Hotel List -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</section>
+<!-- <script type="text/javascript">
+        $(document).ready(function(){
+            $('#tabs a').bind('click', function(e){
+                console.log('i m here');
+                $('#tabs a.current').removeClass('current');
+                $('.tab-section:visible').fadeOut(1000);
+                $(this.hash).fadeIn(1000);
+                $(this).addClass('current');
+                e.preventDefault();
+            }).filter(':first').click();
+
+            $('.filterSection').hide();
+            $('#filterMe').on('click',function(){
+                $('.filterSection').slideToggle('medium');
+            });
+            $('#cancelBtn , #applyBtn').on('click',function(){
+                $('.filterSection').slideUp('medium');
+            });
+        });
+    </script> -->

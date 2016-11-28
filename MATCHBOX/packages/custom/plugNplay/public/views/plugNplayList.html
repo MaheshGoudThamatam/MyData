@@ -1,0 +1,341 @@
+<section class="partnerinfo mydetails"
+	ng-controller="PlugNplayController"">
+	<!-- 	<div ng-if="plugNplayImageEnabled">
+		<div id="preloaderImage">
+			<div class="tb-cell">
+				<div id="page-loadingImage">
+					<div></div>
+					<p>
+					<h4 class="h-image-caption">Uploading....</h4>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div> -->
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+			<!-- Tabs Content -->
+			<div class="tab-content" style="background: transparent;">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'">
+					</div>
+					<!-- End Tabs Cat -->
+					<div class="col-sm-9 col-lg-10">
+						<div class="page-content page-thin dashboard-content">
+							<div class="row">
+								<div class="col-lg-12">
+									<a
+										class="add-partner add-partner-cursor awe-btn awe-btn-5 arrow-right awe-btn-lager text-uppercase float-right"
+										id="addnewplugNplays" ng-click="showForm();"> Add New Rooms </a>
+								</div>
+								<div class="panel-body" ng-if="showformcheck"
+									style="padding: 15px 0;">
+									<div class="form-hotel tab-pane in no-padding" id="addplugNplay">
+										<div class="col-xs-12">
+											<form class="form-validation" name="plugNplayForm"
+												novalidate="" role="form">
+
+												<div class="box get_hd panel panel-default no-bd">
+													<div class="panel-heade text-left" style="padding: 15px;">
+														<h2 class="panel-title">
+															<strong> Room Details </strong>
+														</h2>
+													</div>
+													<div class="panel-body bg-white">
+														<div class="row">
+															<div class="col-md-12 col-sm-12 col-xs-12">
+																<div class="row">
+																	<div class="col-sm-12">
+																		<div class="get_hd box">
+																			<div class="row">
+																				<div class="col-sm-4">
+																					<div class="form-group">
+																						<label class="control-label"> Name </label>
+																						<div class="append-icon">
+																							<input class="form-control" minlength="4"
+																								name="plugNplayname" ng-model="plugNplay.name" required=""
+																								type="text"> <i class="icon-user"> </i>
+																							<div
+																								ng-show="submitted && plugNplayForm.plugNplayname.$invalid">
+																								<span class="err-msg errorRed"
+																									ng-show="plugNplayForm.plugNplayname.$error.required">
+																									Please enter name </span>
+																							</div>
+																							<div class="errorRed"
+																								ng-repeat="err in error.data"
+																								ng-if="err.param =='name'">{{err.msg}}</div>
+
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+
+																	</div>
+																</div>
+
+
+																<div class="row">
+																	<div class="col-sm-4">
+																		<div class="form-group">
+																			<label class="control-label"> Address line 1 </label>
+																			<div class="append-icon">
+																				<input class="form-control" name="address1"
+																					ng-model="plugNplay.address1" required=""
+																					type="text"> <i class="fa fa-inr"> </i>
+																				<div
+																					ng-show="submitted && plugNplayForm.address1.$invalid">
+																					<span class="err-msg errorRed"
+																						ng-show="plugNplayForm.address1.$error.required">
+																						Please enter address line 1 </span>
+																				</div>
+																				<div class="errorRed" ng-repeat="err in error.data"
+																					ng-if="err.param =='address1'">{{err.msg}}</div>
+
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-sm-4">
+																		<div class="form-group">
+																			<label class="control-label"> Address line 2 </label>
+																			<div class="append-icon">
+																				<input class="form-control" name="address2"
+																					ng-model="plugNplay.address2" required=""
+																					type="text"> <i class="fa fa-inr"> </i>
+																				<div
+																					ng-show="submitted && plugNplayForm.address2.$invalid">
+																					<span class="err-msg errorRed"
+																						ng-show="plugNplayForm.address2.$error.required">
+																						Please enter address line 2 </span>
+																				</div>
+																				<div class="errorRed" ng-repeat="err in error.data"
+																					ng-if="err.param =='address2'">{{err.msg}}</div>
+
+																			</div>
+																		</div>
+																	</div>
+																
+																</div>
+																
+																
+																
+																<div class="row">
+																	<div class="col-sm-4">
+																		<div class="form-group">
+																			<label class="control-label"> City </label>
+																			<div class="append-icon">
+																				<input class="form-control" name="city"
+																					ng-model="plugNplay.city" required=""
+																					type="text"> <i class="fa fa-inr"> </i>
+																				<div
+																					ng-show="submitted && plugNplayForm.city.$invalid">
+																					<span class="err-msg errorRed"
+																						ng-show="plugNplayForm.city.$error.required">
+																						Please enter the price per hour </span>
+																				</div>
+																				<div class="errorRed" ng-repeat="err in error.data"
+																					ng-if="err.param =='city'">{{err.msg}}</div>
+
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-sm-4">
+																		<div class="form-group">
+																			<label class="control-label">State </label>
+																			<div class="append-icon">
+																				<input class="form-control" name="state"
+																					ng-model="plugNplay.state" required=""
+																					type="text"> <i class="fa fa-inr"> </i>
+																				<div
+																					ng-show="submitted && plugNplayForm.state.$invalid">
+																					<span class="err-msg errorRed"
+																						ng-show="plugNplayForm.state.$error.required">
+																						Please enter the price per halfday </span>
+																				</div>
+																				<div class="errorRed" ng-repeat="err in error.data"
+																					ng-if="err.param =='pricePerhalfday'">{{err.msg}}</div>
+
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-sm-4">
+																		<div class="form-group">
+																			<label class="control-label"> Country </label>
+																			<div class="append-icon">
+																				<input class="form-control" name="country"
+																					ng-model="plugNplay.country" required
+																					type="text"> <i class="fa fa-inr"> </i>
+																				<div
+																					ng-show="submitted && plugNplayForm.plugNplayperfullday.$invalid">
+																					<span class="err-msg errorRed"
+																						ng-show="plugNplayForm.plugNplayperfullday.$error.required">
+																						Please enter the price for fullday </span>
+																				</div>
+																				<div class="errorRed" ng-repeat="err in error.data"
+																					ng-if="err.param =='pricePerfullday'">{{err.msg}}</div>
+
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																
+
+
+
+
+																<div class="row" style="margin-top: 10px;">
+																	<div class="col-sm-12">
+																		<div class="form-group">
+																			<label class="control-label"> Description </label>
+																			<div class="append-icon">
+																				<textarea class="form-control"
+																					name="description" ng-model="plugNplay.description"
+																					required="" maxlength="140" rows="4">
+                                                                                    </textarea>
+																				<div
+																					ng-show="submitted && plugNplayForm.description.$invalid">
+																					<span class="err-msg errorRed"
+																						ng-show="plugNplayForm.description.$error.required">
+																						Please Enter Description </span>
+																				</div>
+																				<div class="errorRed" ng-repeat="err in error.data"
+																					ng-if="err.param =='description'">{{err.msg}}</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+
+
+
+<!-- 
+													<div class="panel panel-default no-bd" id="get_images">
+														<div class="panel-heade text-left" style="padding: 15px;">
+															<h2 class="panel-title">
+																<strong> Room Details </strong>
+															</h2>
+														</div>
+														<div class="panel-body bg-white">
+															<div class="row">
+																<div class="col-md-12 col-sm-12 col-xs-12">
+																	<div class="form-group" id="img_container">
+																		<label class="control-label"> </label>
+																		<div class="row">
+																			<div class="col-sm-6">
+																				<div class="form-group">
+																					<label class="control-label"> Image </label>
+																					<div accept="image/png, image/jpeg"
+																						class="btn btn-default append-icon"
+																						data-ng-disabled="counter>=5"
+																						ngf-select="plugNplayImageUpload($files)">Upload
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div data-ng-if="plugNplay.images && plugNplay.images.length>0">
+																			<div class="row mt10"
+																				ng-repeat="image in plugNplay.images">
+																				<div class="col-sm-2">
+																					<img alt="uploaded image"
+																						class="image-border img-responsive img150"
+																						src="{{image.tempUrl}}">
+																					<div ng-show="isImage" ng-init="image.url = imageurl"></div>
+																					</img>
+																				</div>
+																				<div class="col-sm-4">
+																					<input class=" form-control"
+																						data-ng-model="image.name" name="name"
+																						placeholder="Image Name" type="text">
+																					<textarea class="mt10 form-control" cols="19"
+																						data-ng-model="image.description"
+																						name="description" placeholder="Image Description"
+																						rows="2">
+                                                                                </textarea>
+																					</input>
+																				</div>
+																				<div class="col-sm-1">
+																					<div class="image-text-delete">
+																						<a
+																							data-ng-click="removeRoomImage($index,partnerDetailForm,plugNplay);"
+																							href=""> <i class="fa fa-times"> </i>
+																						</a>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="file">
+                                                                        <div class="option-group">
+                                                                            <span class="file-button btn-primary">Choose File</span>
+                                                                            <input type="file" class="custom-file" name="plugNplay_img"  onchange="document.getElementById('uploader').value = this.value;" multiples>
+                                                                            <input type="text" class="form-control" id="uploader" placeholder="no file selected" readonly="">
+                                                                        </div>
+                                                                    </div>
+																	</div>
+																</div>
+																<div class="col-md-2 col-sm-2 col-xs-4">
+                                                                <a href="javascript:void(0);" id="add_img" class="cancel awe-btn awe-btn-5 awe-btn-lager text-uppercase">Add</a>
+                                                            </div>
+															</div>
+														</div>
+													</div> -->
+
+													<div class="text-center m-t-20">
+														<a
+															class="cancel awe-btn awe-btn-5 awe-btn-lager text-uppercase"
+															data-toggle="tab" href="#spaces" id="back2"
+															ng-click="cancelAddingRoom();"> Back </a> <a
+															class="awe-btn awe-btn-2 awe-btn-lager text-uppercase"
+															href="#" ng-click="createplugNplay()">
+															Add </a>
+													</div>
+												</div>
+
+
+
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="panel" style="padding: 0 15px;">
+								<div class="panel-header panel-controls">
+									<h2>Plug N Play</h2>
+								</div>
+								<div class="panel-content pagination2 table-responsive"
+									style="padding: 20px 0;">
+									<table class="table table-hover table-dynamic">
+										<thead>
+											<tr>
+												<th>NAME</th>
+												<th>SPACE</th>
+												<th>CAPACITY</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="calendar"
+												ng-repeat="plugNplay in plugNplaysparticulertospace"
+												ng-if="plugNplay.plugNplaytype=='Meeting Room'">
+
+												<td>{{plugNplay.name}}</td>
+												<td>{{plugNplay.spaceId.name}}</td>
+												<td>{{plugNplay.capacity}}</td>
+
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- </div> -->
+
+			</div>
+		</div>
+	</div>
+</section>
+<!--End Banner-->

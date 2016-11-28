@@ -1,0 +1,597 @@
+<style type="text/css">
+footer {
+	position: fixed;
+	width: 67%;
+	left: 33%;
+	padding: 5px 0;
+	height: auto;
+	background: rgba(0, 0, 0, 0.5);
+	box-shadow: none;
+}
+
+footer .copyright {
+	line-height: 30px;
+}
+
+#header.header {
+	background-color: #fff !important;
+	box-shadow: 0px -12px 17px 7px rgba(0, 0, 0, 0.9);
+}
+
+.bg-1, .bg-3 {
+	background: transparent;
+}
+hr { 
+  border : 0;
+  height: 1px; 
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); 
+}
+</style>
+<section data-ng-controller="RoomResultController" data-ng-init="findOne();loadRoomSpace();initializeGoTop();" class="detailFullPage">
+<style type="text/css">
+	body {
+		background-color: white;
+	}
+</style>
+	<div class="main">
+		<div class="col-xs-12" style="margin-top: 20%;margin-bottom: 2%;">
+			<h5><b>{{rooms.spaceId.name}}</b></h5><h6 style="margin: 0;">{{rooms.name}}</h6>
+				<span style="font-size: 10px;">{{rooms.spaceId.address1}},{{rooms.spaceId.address2}}</span>
+		</div>
+		<div class="col-xs-12">
+			<span class="priceSpan" ng-if="timeType == 1">&#8377;&nbsp;{{pricePerHour}}<small> (+Taxes)</small></span>
+			<span class="priceSpan" ng-if="timeType == 2">&#8377;&nbsp;{{pricePerHour}}<small> (+Taxes)</small></span>
+			<span class="priceSpan" ng-if="timeType == 3">&#8377;&nbsp;{{pricePerHour}}<small> (+Taxes)</small></span>
+			<a href="" title="" style="padding-right: 10px !important;line-height: 25px !important;margin: 0;float: right;" class="awe-btn arrow-right searchDetailBookNow" data-ng-click="bookNow(BOOKING.URL_PATH.BOOKINGS,rooms._id)">Book Now</a>
+		</div>
+		<div class="col-xs-12">
+			<div class="gal-slider">
+				<img ng-repeat="photo in photos" class="gal-slide" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ng-show="isActive($index)"
+				ng-src="{{generateTempUrl1(photo.src)}}" />
+				<a class="slideshowBtn gal-arrow gal-prev" href="#" ng-click="showPrev()"></a>
+				<a class="slideshowBtn gal-arrow gal-next" href="#" ng-click="showNext()"></a>
+				<ul class="gal-nav">
+					<li ng-repeat="photo in photos" ng-class="{'gal-active':isActive($index)}">
+						<img src="{{generateTempUrl(photo.src)}}" ng-click="showPhoto($index);" />
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- <div class="col-xs-12 divTagBorder">
+			<h6><b>Price Details</b></h6>
+			<table class="table table-responsive priceTable" style="border: none;">
+				<tbody>
+					<tr ng-hide="rooms.roomtype.name == 'Training Room'">
+						<td style="width: 40%;">Price per hour</td>
+						<td>&#8377;&nbsp;{{rooms.pricePerhour}}</td>
+					</tr>
+					<tr>
+						<td style="width: 40%;">Price for half day</td>
+						<td>&#8377;&nbsp;{{rooms.pricePerhalfday}}</td>
+					</tr>
+					<tr>
+						<td style="width: 40%;">Price for full day</td>
+						<td>&#8377;&nbsp;{{rooms.pricePerfullday}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div> -->
+		<div class="col-xs-12 divTagBorder">
+			<h6><b>Cancellation Policy</b></h6>
+				<!-- <span style="font-size: 10px;">Cancellation or cancelled means the inability to proceed with any or all of the booking(s) prior to commencement.</span> -->
+				<span style="font-size: 10px;">Cancellations are non-refundable. Should an extenuating circumstance prevent you from using the service booked by you, please contact us on +91 98447 55000. We will do our best to provide a solution. In case of cancellation by the Center, the booking amount will be refunded within 5-7 working days.</span>
+		</div>
+		<div class="col-xs-12 divTagBorder">
+			<h6><b>Facilities</b></h6>
+			<div class="amenityTag" data-ng-repeat="amenity in rooms.amenities" data-ng-if="amenity.facilityavailable" style="float: left;margin-right: 1%;">
+					<figure data-ng-if="amenity.facilityavailable">
+						<img class="searchAmenityImg25" style="height: 25px;width: 25px;display: inline-block;border: 1px solid grey;padding: 1%;" src="{{amenity.icon}}" alt="">
+						<figcaption style="display: inline-block;font-size: 11px;">{{amenity.name}}</figcaption>
+					</figure>
+			</div>
+		</div>
+		<div class="col-xs-12 divTagBorder">
+			<h6><b>Centre Timings</b></h6>
+				<table class="centerTimingTag">
+					<tr data-ng-repeat="timing in rooms.spaceId.officeHours">
+						<td ng-show="!timing.isClosed && !timing.isAllday">{{timing.day|limitTo:3}}</td>
+						<td ng-show="!timing.isClosed && !timing.isAllday">&emsp;:&emsp;{{timing.startTime|date:'ha'}}&emsp;-&emsp;</td>
+						<td ng-show="!timing.isClosed && !timing.isAllday">{{timing.endTime|date:'ha'}}</td>
+						<td ng-show="timing.isClosed">{{timing.day|limitTo:3}}</td>
+						<td ng-show="timing.isClosed">&emsp;:&emsp;Closed</td>
+						<td ng-show="timing.isAllday">{{timing.day|limitTo:3}}</td>
+						<td ng-show="timing.isAllday">&emsp;:&emsp;24 hours</td>
+					</tr>
+				</table>
+		</div>
+		<div class="col-xs-12 divTagBorder">
+			<h6><b>Description &amp; Details</b></h6>
+				<h6><b>{{rooms.roomtype.name}}</b></h6>
+					<span style="font-size: 10px;">{{rooms.description}}</span>
+		</div>
+		<div class="col-xs-12" ng-if="totalCount > 5">
+			<h6><b>Reviews</b></h6>
+				<div style="float: right;margin-top: -7%;">
+					<h6 style="color: #049905;display: inline;" ng-if="(averageRating) < 1">Overall - NA</h6>
+					<h6 style="color: #049905;display: inline;" ng-if="(averageRating) >= 1 && (averageRating) < 2">Overall - Average</h6>
+					<h6 style="color: #049905;display: inline;" ng-if="(averageRating) >= 2 && (averageRating) < 3">Overall - Good</h6>
+					<h6 style="color: #049905;display: inline;" ng-if="(averageRating) >= 3 && (averageRating) < 4">Overall - Great</h6>
+					<h6 style="color: #049905;display: inline;" ng-if="(averageRating) >= 4 && (averageRating) < 5">Overall - Fantastic</h6>
+					<h6 style="font-size:17px;display: inline;">{{averageRating}}</h6>
+					<h6 style="display: inline;">from&nbsp;<strong>{{totalRating}}&nbsp;</strong>reviews</h6>
+				</div>
+		</div>
+		<div class="col-xs-12 divTagBorder" ng-if="totalCount > 5">
+			<div class="review-all">
+				<h6><b>All reviews</b></h6>
+				<div class="row review-item" ng-repeat="rating in ratingArray" style="padding: 4px 0;">
+					<div class="col-xs-3 review-number">
+						<ins style="width: 40px;height: 40px;font-size: 15px;line-height: 40px;">{{rating.rating}}<span style="display: inline;font-size: 75%;">/5</span></ins>
+						<span style="font-size: 10px;padding-top: 1%;line-height: 30px;">{{rating.createdBy.first_name}}</span>
+					</div>
+					<div class="col-xs-9 review-text">
+						<ul>
+							<li style="line-height: 15px;font-size: 12px;">{{rating.title}}</li>
+						</ul>
+						<p style="line-height: 10px;font-size: 10px;font-weight: lighter;" class="align">{{rating.text}}</p>
+					</div>
+				</div>
+				<div class="review-more text-center">
+					<a href="#" ng-if="totalRating > 0" ng-click="loadRating(roomSpaceId)" title=""><i class="icon"></i> Show more reviews</a>
+					<a href="#" ng-if="(pageValue > 1 && totalRating <= 0)" style="cursor: default;"><i class="icon"></i> No more reviews</a>
+					<a href="#" ng-if="(pageValue <= 1 && totalRating <= 0)" style="cursor: default;"><i class="icon"></i> No reviews yet.</a>
+				</div>
+			</div>
+		</div>
+		<div id="myID" class="hide col-md-4 endPage" style="cursor: pointer;left: 90%;">
+			<h4> <i class="fa fa-2x fa-arrow-circle-up" aria-hidden="true" style="color: #DF5156;background-color: white;border-radius: 50px;"></i>&nbsp; <a href=""></a> </h4>
+		</div>
+
+
+	</div>
+</section>
+<section data-ng-controller="RoomResultController"
+	data-ng-init="findOne();loadRoomSpace();initializeGoTop();" class="detailPage-d320">
+	<div class="main main-dt">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-4 " style="padding: 0;">
+					<div class="hotel-detail-map absoluteOne2 searchDetailMap">
+						<div data-ng-include="'/search/views/map_view.html'"></div>
+						<p class="about-area-location">
+							<!-- <i class="fa  fa-map-marker"></i>Old Madras road,Bangalore
+							Near:Cafe Coffe Day -->
+						</p>
+					</div>
+				</div>
+				<div
+					class="space-detail-media col-xs-8 main-cn bg-white clearfix searchDetailOne"
+					style="margin-top: 12.5%;">
+					<!-- Header Detail -->
+					<section class="head-detail">
+						<div class="col-xs-12">
+							<div class="form-group row full-width main-filter detailFilterPageWidLow"
+								style="margin: 7px 20px 15px;">
+								<div
+									class="col-lg-4 col-md-8 col-sm-8 col-xs-12 searchDetailPlace">
+									<div class="input-group location">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-map-marker fa-2x"></i>
+										</div>
+										<input type="text" class="form-control" id="location"
+											value={{searchObj.place}} ng-disabled="true"
+											style="text-transform: uppercase; font-size: 13px !important; padding: 12px !important;">
+									</div>
+								</div>
+								<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12" data-ng-hide="isHotDesk"
+									style="width: 12% !important">
+									<div class="input-group peoples">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-users fa-2x"></i>
+										</div>
+										<input type="text" class="form-control"
+											value={{searchObj.capacity.min}} ng-disabled="true"
+											style="font-size: 17px !important;">
+									</div>
+								</div>
+								<div class="col-lg-1 col-md-1 col-sm-1 searchDetailLine"  data-ng-show="isTraining"
+									style="width: 1vw; margin-left: -27px; margin-top: 10px;">
+									<i class="fa fa-minus" aria-hidden="true"></i>
+								</div>
+								<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"  data-ng-show="isTrainingOrHotDesk"
+									style="width: 12% !important">
+									<div class="input-group peoples">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-users fa-2x"></i>
+										</div>
+										<input type="text" class="form-control"
+											value={{searchObj.capacity.max}} ng-disabled="true"
+											style="font-size: 17px !important;">
+									</div>
+								</div>
+								<div
+									class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchDetailTime">
+									<div class="input-group peoples">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-clock-o fa-2x" data-toggle="popover"
+												title="Find special offers for your meeting"
+												ng-disabled="true"></i>
+										</div>
+										<input type="text" class="form-control"
+											value={{bookingStartTime}} ng-disabled="true"
+											style="font-size: 15px !important; padding: 11px !important;">
+									</div>
+								</div>
+								<div class="col-lg-1 col-md-1 col-sm-1 searchDetailLine"
+									style="width: 1vw; margin-left: -27px; margin-top: 10px;">
+									<i class="fa fa-minus" aria-hidden="true"></i>
+								</div>
+								<div
+									class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchDetailTimeEnd">
+									<div class="input-group peoples">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-clock-o fa-2x" data-toggle="popover"
+												title="Find special offers for your meeting"
+												ng-disabled="true"></i>
+										</div>
+										<input type="text" class="form-control"
+											value={{bookingEndTime}} ng-disabled="true"
+											style="font-size: 15px !important; padding: 11px !important">
+									</div>
+								</div>
+								<div
+									class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchDetailDate"
+									style="width: 20%"
+									data-ng-hide="isTrainingOrHotDesk">
+									<div class="input-group start-date">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-calendar fa-2x" data-toggle="popover"
+												title="Find special offers for your meeting"></i>
+										</div>
+										<input type="text" class="form-control" id="start-date"
+											value={{bookingDate}} ng-disabled="true"
+											style="font-size: 15px !important; padding: 11px !important;">
+									</div>
+								</div>
+								<div
+									class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchDetailDate searchDetailDateSpan"
+									style="width: 20%;" data-ng-show="isTrainingOrHotDesk">
+									<div class="input-group start-date">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-calendar fa-2x" data-toggle="popover"
+												title="Find special offers for your meeting"></i>
+										</div>
+										<input type="text" class="form-control" id="start-date"
+											value={{bookingFromDate}} ng-disabled="true"
+											style="font-size: 15px !important; padding: 11px !important;">
+									</div>
+								</div>
+								<div
+									class="col-lg-2 col-md-4 col-sm-4 col-xs-12 searchDetailDate searchDetailDateQLow"
+									style="width:20%;margin-top: 1%;" data-ng-show="isTrainingOrHotDesk">
+									<div class="input-group start-date">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-calendar fa-2x" data-toggle="popover"
+												title="Find special offers for your meeting"></i>
+										</div>
+										<input type="text" class="form-control" id="start-date"
+											value={{bookingToDate}} ng-disabled="true"
+											style="font-size: 15px !important; padding: 11px !important;">
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-7 sfcZ80">
+							
+								<h2 class="ieFontSize20">{{rooms.spaceId.name}} - {{rooms.name.split('(')[0].trim()}}</h2>
+								<div class="start-address">
+									<div>
+										<h3 class="ieFontSize17 roomDetailFont14">{{rooms.spaceId.address1}},{{rooms.spaceId.address2}}</h3>
+										</br>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-5 price-media sfcZ80">
+								<p class="price-book">
+									<span ng-if="timeType == 1" class="detailPagePriceSpan">
+										&#8377;&nbsp;{{pricePerHour}} <small style="font-size: 50%;">(+
+											Taxes)</small>
+									</span> <span ng-if="timeType == 2">&#8377;&nbsp;{{pricePerHour}} <small style="font-size: 50%;">(+
+											Taxes)</small>
+									</span> <span ng-if="timeType == 3">&#8377;&nbsp;{{pricePerHour}} <small style="font-size: 50%;">(+
+											Taxes)</small>
+									</span> 
+									<a href="" title=""
+										class="awe-btn arrow-right searchDetailBookNow"
+										data-ng-click="bookNow(BOOKING.URL_PATH.BOOKINGS,rooms._id)">
+										Book Now</a>
+									<!-- Modal -->
+								<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+									aria-labelledby="myModalLabel">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+												<h4 class="modal-title" id="myModalLabel">Modify
+													Booking</h4>
+											</div>
+											<div class="modal-body">
+												<div class="form-search clearfix">
+													<div class="form-field field-select">
+														<div class="select">
+															<span>Select locality</span> <select>
+																<option>Select locality</option>
+																<option>Bannerghatta Road</option>
+																<option>Chandapura - Anekal Main Road</option>
+															</select>
+														</div>
+													</div>
+													<div class="form-field field-date">
+														<input type="text" class="field-input calendar-input"
+															placeholder="Select Date">
+													</div>
+													<div class="form-field field-select">
+														<div class="select">
+															<span>Start Time</span> <select>
+																<option>5PM</option>
+																<option>6PM</option>
+																<option>7pm</option>
+															</select>
+														</div>
+													</div>
+													<div class="form-field field-select">
+														<div class="select">
+															<span>End Time</span> <select>
+																<option>8PM</option>
+																<option>9PM</option>
+																<option>10PM</option>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="awe-btn awe-btn1"
+													data-dismiss="modal">Close</button>
+												<button type="button" class="awe-btn awe-btn1">Save
+													changes</button>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								</p>
+							</div>
+						</div>
+
+					</section>
+					<!-- End Header Detail -->
+
+					<!-- Detail Slide -->
+					<section class="slideshow-margin">
+						<div class="imageSlideshow">
+							<div class="row">
+								<div class="gal-slider">
+									<!-- enumerate all photos -->
+									<img ng-repeat="photo in photos" class="gal-slide"
+										ng-swipe-right="showPrev()" ng-swipe-left="showNext()"
+										ng-show="isActive($index)"
+										ng-src="{{generateTempUrl1(photo.src)}}" />
+									<!-- prev / next controls -->
+									<a class="gal-arrow gal-prev" href="#" ng-click="showPrev()"></a>
+									<a class="gal-arrow gal-next" href="#" ng-click="showNext()"></a>
+									<!-- extra navigation controls -->
+									<ul class="gal-nav">
+										<li ng-repeat="photo in photos"
+											ng-class="{'gal-active':isActive($index)}"><img
+											src="{{generateTempUrl(photo.src)}}"
+											ng-click="showPhoto($index);" /></li>
+									</ul>
+								</div>
+
+							</div>
+						</div>
+						<!-- End Thumnail Image -->
+					</section>
+					<!-- End Detail Slide -->
+
+					<!-- Hotel Content One -->
+					
+					<!-- <section class="hotel-content detail-cn" id="hotel-content"> -->
+						<!-- <div class="row" style="margin-left: 1%;">
+							<div class="col-md-12">
+								<h2>Price Details</h2>
+							</div>
+								<div data-ng-if="(rooms.roomtype.name !== 'Training Room')" class="col-md-4">
+									<p style="display: inline-block;float: left;font-size: 1.2em;line-height: 28px;">Price per hour</p>
+									<p style="display: inline-block;font-size: 1em;line-height: 28px;">&nbsp;&nbsp;&nbsp;&nbsp;&#8377;&nbsp;{{rooms.pricePerhour}}</p>
+								</div>
+								<div class="col-md-4">
+									<p style="display: inline-block;float: left;font-size: 1.2em;line-height: 28px;">Price for half day</p> 
+									<p style="display: inline-block;font-size: 1em;line-height: 28px;">&nbsp;&nbsp;&nbsp;&nbsp;&#8377;&nbsp;{{rooms.pricePerhalfday}}</p>
+								</div>
+								<div class="col-md-4">
+									<p style="display: inline-block;float: left;font-size: 1.2em;line-height: 28px;">Price for full day</p>
+									<p style="display: inline-block;font-size: 1em;line-height: 28px;">&nbsp;&nbsp;&nbsp;&nbsp;&#8377;&nbsp;{{rooms.pricePerfullday}}</p>
+								</div>
+						</div>
+						<hr> -->
+					<!-- </section> -->
+
+
+					<!-- <section class="hotel-content detail-cn" id="hotel-content"> -->
+						<div class="row" style="margin-left: 1%;">
+							<div class="col-md-12">
+								<h2>Cancellation Policy</h2>
+							</div>
+							<div class="col-md-12">
+								<p class="cancellationPTag" style="display: inline-block;float: left;font-size: 15px;">Cancellations are non-refundable. Should an extenuating circumstance prevent you from using the service booked by you, please contact us on +91 98447 55000. We will do our best to provide a solution. In case of cancellation by the Center, the booking amount will be refunded within 5-7 working days.</p>
+							</div>
+						</div>
+						<hr>
+					<!-- </section> -->
+
+					<!-- End Hotel Content One -->
+
+					<!-- Hotel Features -->
+					<!-- <section class="hl-features detail-cn" id="hl-features"> -->
+						<div class="row" style="margin-left: 1%;">
+							<div class="col-md-12">
+									<h2>Amenities</h2>
+							</div>
+							<div style="display: inline-block;margin-left: 1.3%;" data-ng-repeat="amenity in rooms.amenities">
+								<figure data-ng-if="amenity.facilityavailable">
+									<div style="text-align: -webkit-center;">
+										<img class="searchAmenityImg25" src="{{amenity.icon}}" alt="">
+									</div>
+									<figcaption style="font-size: 15px;">{{amenity.name}}</figcaption>
+								</figure>
+							</div>
+						</div>
+						<hr>
+						<div class="row featured-service" style="margin-top: 0;margin-left: 1%;">
+							<div class="col-md-12">
+								<h2>Centre Timings</h2>
+							</div>
+							<table class="service-spoken" style="margin-left: 1.3%;width: 100%;">
+								<tr style="display: inline-block;float: left;padding: 2%;" data-ng-repeat="timing in rooms.spaceId.officeHours">
+									<td style="display: block;text-align: -webkit-center;font-size: 15px;" ng-show="!timing.isClosed && !timing.isAllday">{{timing.day|limitTo:3}}</td>
+									<td style="display: block;text-align: -webkit-center;font-size: 15px;float: left;" ng-show="!timing.isClosed && !timing.isAllday">{{timing.startTime|date:'ha'}}-</td>
+									<td style="display: block;text-align: -webkit-center;font-size: 15px;float: left;" ng-show="!timing.isClosed && !timing.isAllday">{{timing.endTime|date:'ha'}}</td>
+									<td style="display: block;text-align: -webkit-center;font-size: 15px;" ng-show="timing.isClosed">{{timing.day|limitTo:3}}</td>
+									<td style="display: block;text-align: -webkit-center;font-size: 15px;" ng-show="timing.isClosed">Closed</td>
+									<td style="display: block;text-align: -webkit-center;font-size: 15px;" ng-show="timing.isAllday">{{timing.day|limitTo:3}}</td>
+									<td style="display: block;text-align: -webkit-center;font-size: 15px;" ng-show="timing.isAllday">24 hours</td>
+								</tr>
+							</table>
+						</div>
+						<hr>
+					<!-- </section> -->
+					<!-- End Hotel Features -->
+
+					<!-- Details-Policies -->
+					<!-- <section class="about-area detail-cn" id="about-area"> -->
+						<div class="row" style="margin-left: 1%;">
+							<div class="col-md-12">
+									<h2>Description &amp; Details</h2>
+							</div>
+							<div class="col-md-12">
+									<p style="font-size: 20px;">{{rooms.roomtype.name}}</p>
+									<p style="font-size: 15px;text-align: justify;">{{rooms.description}}</p>
+							</div>
+						</div>
+						<hr>
+					<!-- </section> -->
+					<!-- End Details-Policies -->
+					<!-- <section class="about-area detail-cn" id="about-area">
+						<div class="row">
+							<div class="col-md-3 detail-sidebar about-media">
+								<div class="scroll-heading ">
+									<h2>About the area</h2>
+								</div>
+							</div>
+							<div class="col-md-9 ">
+
+
+
+								<div class="about-area-text">
+									<h2>What to do</h2>
+									<p>
+										<b>Shop.</b> Lorem ipsum dolor sit amet, at nam consul
+										omittantur, oratio possit vim ut, ex nec etiam nusquam
+										vivendo. Eius harum usu ad, diam case delenit qui no, at adhuc
+										luptatum per. Paulo officiis usu eu, dicta abhorreant ut nec,
+										munere voluptaria vim in. Te pri tale possit accusam, ea sea
+										denique intellegebat. Graece deleniti pertinacia in sea,
+										consul partiendo in nam.
+									</p>
+									<p>
+										<b>Thai Done Right.</b> Lorem ipsum dolor sit amet, at nam
+										consul omittantur, oratio possit vim ut, ex nec etiam nusquam
+										vivendo. Eius harum usu ad, diam case delenit qui no, at adhuc
+										luptatum per. Paulo officiis usu eu, dicta abhorreant ut nec,
+										munere voluptaria vim in. Te pri tale possit accusam, ea sea
+										denique intellegebat. Graece deleniti pertinacia in sea,
+										consul partiendo in nam.
+									</p>
+									<p>Lorem ipsum dolor sit amet, at nam consul omittantur,
+										oratio possit vim ut, ex nec etiam nusquam vivendo. Eius harum
+										usu ad, diam case delenit qui no, at adhuc luptatum per. Paulo
+										officiis usu eu, dicta abhorreant ut nec, munere voluptaria
+										vim in. Te pri tale possit accusam, ea sea denique
+										intellegebat. Graece deleniti pertinacia in sea, consul
+										partiendo in nam.</p>
+								</div>
+
+							</div>
+						</div>
+					</section> -->
+
+					<!-- Hotel Detail Reviews -->
+					<!-- <section class="review-detail detail-cn" id="review-detail"> -->
+						<div class="row" style="margin-left: 1%;" ng-if="totalCount > 5">
+							<div class="col-md-9">
+									<h2>Reviews</h2>
+							</div>
+							<div class="col-md-3">
+									<div class="review-vote text-center" ng-hide="(averageRating) < 1">
+										<h4 style="color: #049905;" ng-if="(averageRating) < 1">Overall: NA</h4>
+										<h4 style="color: #049905;" ng-if="(averageRating) >= 1 && (averageRating) < 2">Overall: Average</h4>
+										<h4 style="color: #049905;" ng-if="(averageRating) >= 2 && (averageRating) < 3">Overall: Good</h4>
+										<h4 style="color: #049905;" ng-if="(averageRating) >= 3 && (averageRating) < 4">Overall: Great</h4>
+										<h4 style="color: #049905;" ng-if="(averageRating) >= 4 && (averageRating) < 5">Overall: Fantastic</h4>
+										<span class="vote-score">{{averageRating}}</span>
+									</div>
+							</div>
+								<div class="row" style="margin-left: 1%;">
+									<div class="row col-md-12">
+										<h4>All reviews</h4>
+										<div class="row review-item" ng-repeat="rating in ratingArray">
+											<div class="col-xs-3 review-number">
+												<ins>{{rating.rating}}<span style="display: inline;font-size: 75%;">/5</span></ins>
+												<span>{{rating.createdBy.first_name}}</span> 
+											</div>
+											<div class="col-xs-9 review-text">
+												<ul>
+													<li>{{rating.title}}</li>
+												</ul>
+												<p class="align">{{rating.text}}</p>
+											</div>
+										</div>
+									</div>
+								</div>
+						
+
+							<div class="row" style="margin-left: 1%;">
+								<div class="col-md-12 detail-footer-cn">
+									<div class="row" ng-if="totalCount > 5">
+										<div class="col-xs-12">
+											<div class="review-more text-center">
+												<a href="#" ng-if="totalRating > 0" ng-click="loadRating(roomSpaceId)" title=""><i class="icon"></i> Show more reviews</a>
+												<a href="#" ng-if="(pageValue > 1 && totalRating <= 0)" style="cursor: default;"><i class="icon"></i> No more reviews</a>
+												<a href="#" ng-if="(pageValue <= 1 && totalRating <= 0)" style="cursor: default;"><i class="icon"></i> No reviews yet.</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+					<div id="myID" class="hide col-md-4 endPage" style="cursor: pointer;">
+						<h4>
+							<i class="fa fa-2x fa-arrow-circle-up" aria-hidden="true"
+								style="color: #DF5156;background-color: white;border-radius: 50px;"></i>&nbsp; <a href=""></a>
+						</h4>
+						
+					</div>
+					<hr style="margin-bottom: 5%;" ng-if="totalCount > 5">
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

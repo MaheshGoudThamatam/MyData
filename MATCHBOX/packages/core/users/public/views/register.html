@@ -1,0 +1,133 @@
+<section class="sub-banner" id="registerPage" style="padding: 0% 15px 0 15px;" data-ng-controller="RegisterCtrl as reg">
+    <!-- <div class="bg-parallax"></div> -->
+    <!--End Background-->
+    <!-- Logo -->
+    <style type="text/css">
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance:textfield;
+            -webkit-appearance:textfield;
+            appearance:textfield;
+        }
+    </style>
+    <div class="logo-banner text-center">
+        <a href="/" title="">
+            <img src="/system/assets/img/logo/logo.png" alt="">
+        </a>
+    </div>
+    <div class="main registerMedia registerPageFirefox">
+        <div class="container">
+            <div class="main-cn element-page bg-white clearfix iPageLow">
+                <!--Breakcrumb-->
+               <!--  <section class="breakcrumb-sc" style="padding:15px 30px;">
+                    <ul class="breadcrumb arrow">
+                        <li><a href="index.html"><i class="fa fa-home"></i></a></li>
+                        <li>GET IN</li>
+                    </ul>
+                    <div class="support pull-right">
+                        <small>Got a question?</small> +91 1231 231 234
+                    </div>
+                </section> -->
+                <div class="user-profile user-login-page" id="signup">
+                    <div class="user-form user-signup">
+                       <!--  <div ng-repeat="error in reg.registerError" ng-show="$index == 0" class="registerErrorMedia">
+                            <div class="alert alert-danger animated fadeIn">{{error.msg}}</div>
+                        </div> -->
+                        <form ng-submit="reg.register()">
+                            <div class="row">
+                                <h2 class="col-xs-12 user-profile__title text-center">Sign up</h2>
+                                <div class="col-md-5">
+                                    <p class="dNoneLow">Sign up now and have access to the bookings </p>
+                                    <div class="field-input">
+                                        <input type="text" class="input-text" name="first_name" placeholder="Name" ng-model="reg.user.first_name">
+                                    </div>
+                                    <div class="field-input">
+                                        <input type="email" name="email" class="input-text" placeholder="Email ID" ng-model="reg.user.email">
+                                    </div>
+                                    <div class="field-input">
+                                        <input onkeypress="return isNumber(event)"  type="text" class="input-text" name="phone" placeholder="Phone Number" ng-model="reg.user.phone">
+                                    </div>
+                                    <div class="field-input">
+                                        <input  type="password" name="password" class="input-text" placeholder="Password" ng-model="reg.user.password">
+                                    </div>
+                                    <div class="field-input">
+                                        <input type="password" name="password" class="input-text" placeholder="Confirm Password" ng-model="confirmPassword">
+                                      <!--   <span ng-show ="!isPasswordMatch">Password do not match</span> -->
+                                    </div>
+
+                                    <div class="field-input btnCenterLow registerPageMarLow">
+                                        <a style="margin-right: 1em;" class="awe-btn awe-default" href="/">Cancel</a>
+                                        <button type="submit" class="awe-btn arrow-right signUpBtn">Sign up</button>
+                                        <!--<a href="#" class="awe-btn arrow-right" ng-click="signup(user)">Sign up</a> -->
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-md-offset-2 btnCenterLow"  ng-controller="AuthCtrl">
+                                    <!-- <p class="btnCenterLow">Sign up with your social login credentials </p> -->
+
+									<!-- <ul class="social" ng-controller="AuthCtrl">
+										<li ng-repeat="(key, val) in socialButtons"
+											class="social_icon social_icon_{{key}}"><a
+											target="_self" ng-href="/api/auth/{{key}}" class="button">
+												<span class="text-capitalize">Log In With {{key}}</span>
+										</a></li>
+
+									</ul> -->
+
+									<a href="" class="field-input blockDisplay facbook-loginmtop" target="_self" ng-href="/api/auth/facebook">
+                                        <img src="/system/assets/img/custom/custom/icons/f.png" alt="facebook login" >
+                                    </a>
+                                    <a ng-hide = true href="" class="field-input blockDisplay" target="_self" ng-href="/api/auth/google">
+                                        <img src="/system/assets/img/custom/custom/icons/g.png" alt="googleplus login">
+                                    </a>
+                                    <a ng-hide = true ng-href="/api/auth/linkedin" class="field-input blockDisplay" target="_self" ng-href="/api/auth/linkedin">
+                                        <img src="/system/assets/img/custom/custom/icons/l.png" alt="linkedin login">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-5 widthLow" style="margin: 1%;">
+                                    Already a registered user? <a href="/login" id="logUser" class="">Sign in here</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Logo -->
+     <script type="text/javascript">
+                $(document).keypress(function(e)
+                {
+                if (e.which == 13) {
+                    console.log("in fn");
+                    $('.signUpBtn').click();
+                }
+                });
+            </script>
+
+            <script type='text/javascript'>
+            /*
+                Author: Rajesh
+                Description : Function for phone number field to accept only [0-9].
+            */
+                function isNumber(evt) {
+                    evt = (evt) ? evt : window.event;
+                    var charCode = (evt.which) ? evt.which : evt.keyCode;
+                    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                        return false;
+                    }
+                    /*
+                        Uncomment to accept '+' in phone number field.
+                    */
+                        // if (charCode == 43) {
+                        //     return true;
+                        // }
+                    return true;
+                }
+            </script>
+</section>

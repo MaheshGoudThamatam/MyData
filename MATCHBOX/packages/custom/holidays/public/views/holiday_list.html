@@ -1,0 +1,86 @@
+<section class="partnerinfo mydetails" data-ng-controller="HolidaysController" data-ng-init="list();">
+  <div class="container-fluid">
+    <!-- Banner Content -->
+    <div class="banner-cn">
+
+      <!-- Tabs Content -->
+      <div class="tab-content">
+        <div class="row">
+          <div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+
+          <div class="col-sm-9 col-lg-10 mydetailsnav">
+            <div class="page-content page-thin dashboard-content col-sm-12 col-lg-12 no-left-pad">
+              <div class="row">
+               <div class="col-sm-12 col-lg-12">
+                  <div class="col-sm-12 panel-header pull-left panel-controls no-padding">
+                    <!-- <section class="breakcrumb-sc pull-left">
+                      <ul class="breadcrumb arrow">
+                        <li><a href="admin-dashboard.html"><i
+                            class="fa fa-home"></i></a></li>
+                        <li>Holiday</li>
+                      </ul>
+                    </section> -->
+                    <div class="row">
+                      <div class="col-sm-12 col-lg-12">
+                           <div data-ng-include="'/system/views/alert.html'"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+               
+                <div class="col-sm-12 col-lg-12 portlets">
+                  <div class="panel" style="padding: 15px;">
+                    <div class="panel-content pagination2 table-responsive">
+
+                      <div class="col-lg-7 calendarListPage">
+                        <!-- <div class="btn-toolbar" select="renderCalender('myCalendar')">
+                          <div class="btn-group"> 
+                            <button class="btn btn-success" ng-click="changeView('agendaDay', 'myCalendar')">Day</button>
+                            <button class="btn btn-success" ng-click="changeView('agendaWeek', 'myCalendar')">Week</button>
+                            <button class="btn btn-success" ng-click="changeView('month', 'myCalendar')">Month</button>   
+                          </div>
+                        </div> -->
+                        <div ui-calendar="uiConfig.calendar" calendar="myCalendar" class="mt10"
+                        ng-model="eventSources">
+                        </div> 
+                      </div>
+                      <div class="col-lg-5 calendarListPage">
+                       <table datatable="ng"  class="table table-bordered row-border hover booking-table" dt-options="dtOptions" dt-column-defs="dtColumnDefs">
+                          <thead>
+                            <tr>
+                              <th class="text-center">ID</th>
+                              <th class="text-center">List Of Holidays</th>
+                              <th class="text-center">Holiday Date</th>
+                              <th class="text-center">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr data-ng-repeat="holiday in holidays">
+                               <td class="text-center">{{holiday._id}}</td>
+                              <td class="text-center">{{holiday.name}}</td>
+                               <td class="text-center">{{holiday.holiday_date | date:'dd-MMM-yyyy'}}</td>
+                              <td class="text-center">
+                                <a ng-click="editHoliday(HOLIDAY.URL_PATH.HOLIDAYEDIT,holiday._id)" title="Edit this holiday" class="editIcon"><i class="fa fa-pencil-square-o"></i></a>
+                                <a ng-click="remove(holiday)" class="clred" title="Remove this holiday"><i class="fa fa-trash-o"></i></a>
+                       </td>
+                            </tr>
+                          </tbody>
+                        </table> 
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+      <!-- End Tabs Content -->
+
+    </div>
+    <!-- End Banner Content -->
+
+  </div>
+</section>

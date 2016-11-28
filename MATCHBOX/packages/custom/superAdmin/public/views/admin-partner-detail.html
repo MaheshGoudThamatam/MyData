@@ -1,0 +1,320 @@
+<!-- <section class="partnerinfo mydetails">
+	<div class="container-fluid">
+		Banner Content
+		<div class="banner-cn">
+
+			Tabs Content
+			<div class="tab-content" style="background: transparent;">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div class="page-content page-thin dashboard-content">
+
+							Breakcrumb
+							<section class="breakcrumb-sc">
+								<ul class="breadcrumb arrow">
+									<li><a href="index.html"><i class="fa fa-home"></i></a></li>
+									<li>Partner Detail</li>
+								</ul>
+							</section>
+							End Breakcrumb
+							<div class="panel-body bg-white">
+								<div class="row">
+									<div class="col-lg-12 portlets">
+										<section data-ng-controller="adminPartnerCtrl"
+											data-ng-init="findOne()">
+											<div class="row">
+												<h3>Partner Information</h3>
+												<div id="partnerProfile">
+													<div class="col-md-3 pull-right">
+														<div class="user-profile__header">
+															<p>
+																<img src="{{partnerObj.avatar}}" alt="">
+															</p>
+														</div>
+													</div>
+													<div class="col-md-9">
+														<div class="my-profile">
+
+															<div class="row">
+																<div class="col-md-12 user-form userform">
+
+
+																	<div class="append-icon">
+																		<div>{{partnerObj.first_name}}
+																			{{partnerObj.last_name}}</div>
+																	</div>
+
+																	<div class="append-icon">
+																		<div>{{partnerObj.email}}</div>
+																	</div>
+																	<div class="append-icon">
+																		<div>{{partnerObj.address1}}</div>
+																	</div>
+																	<div class="append-icon">
+																		<div>{{partnerObj.address2}}</div>
+																	</div>
+																	<div class="append-icon">
+																		<div>{{partnerObj.city}}</div>
+																	</div>
+																	<div class="append-icon">
+																		<div>{{partnerObj.state}}</div>
+																	</div>
+																	<div class="append-icon">
+																		<div>{{partnerObj.pinCode}}</div>
+																	</div>
+																	<div class="append-icon">
+																		<div>{{partnerObj.country}}</div>
+																	</div>
+																	<div class="append-icon">
+																		<div>{{partnerObj.phone}}</div>
+																	</div>
+
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-12">
+													<input
+														class="cancel awe-btn awe-btn-5 awe-btn-lager text-uppercase pull-right"
+														type="reset" value="Edit"
+														data-ng-click="edit(partnerDetail)" />
+												</div>
+											</div>
+										</section>
+										<section data-ng-controller="SpaceController"
+											data-ng-init="find()">
+											<div class="col-lg-12 portlets">
+												<div class="panel" style="padding: 15px;">
+													<div class="panel-content pagination2 table-responsive">
+														<table class="table table-hover table-dynamic">
+															<thead>
+																<tr>
+																	<th>Name</th>
+																	<th>Locality</th>
+																	<th>City</th>
+																	<th>Actions</th>
+																</tr>
+															</thead>
+															<tbody data-ng-repeat="space in spaces">
+																<tr class="partnerList">
+																	<td>{{space.name}}</td>
+																	<td>{{space.locality}}</td>
+																	<td>{{space.city}}</td>
+																	<td><a ng-if="updatePermission"
+																		ng-click="edit(space)"><i
+																			class="fa fa-pencil-square-o"></i></a> <a
+																		ng-if="deletePermission" ng-click="delete(space)"><i
+																			class="fa fa-trash-o"></i></a></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</section>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="partnerinfo mydetails">
+	<div class="container-fluid">
+		<!-- Banner Content -->
+		<div class="banner-cn">
+
+			<!-- Tabs Content -->
+			<div class="tab-content" style="background: transparent;">
+				<div class="row">
+					<div data-ng-include="'/superAdmin/views/adminLeftPanel.html'"></div>
+
+					<div class="col-sm-9 col-lg-10 mydetailsnav">
+						<div class="page-content page-thin dashboard-content">
+
+							<!--Breakcrumb-->
+							<section class="breakcrumb-sc">
+								<ul class="breadcrumb arrow">
+									<li><a href="index.html"><i class="fa fa-home"></i></a></li>
+									<li>Partner Detail</li>
+								</ul>
+							</section>
+							<!--End Breakcrumb-->
+							<div class="panel-body bg-white">
+								<div class="row">
+									<div class="col-lg-12 portlets">
+										<section data-ng-controller="adminPartnerCtrl"
+											data-ng-init="findOne()">
+											<div class="row">
+												<h3>Partner Information</h3>
+												<div class="row" id="partner_info_row">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="control-label col-sm-2">
+																<label>Name:</label>
+															</div>
+															<div class="control-label col-sm-4">
+																<label>{{partnerObj.first_name}}
+																	{{partnerObj.last_name}}</label>
+															</div>
+														</div>
+														<div class="row">
+															<div class="control-label col-sm-2">
+																<label>Email:</label>
+															</div>
+															<div class="control-label col-sm-4">
+																<label>{{partnerObj.email}}</label>
+															</div>
+														</div>
+														<div class="row">
+															<div class="control-label col-sm-2">
+																<label>Phone No:</label>
+															</div>
+															<div class="control-label col-sm-4">
+																<label>{{partnerObj.phone}}</label>
+															</div>
+														</div>
+														<div class="row">
+															<div class="control-label col-sm-2">
+																<label>Address:</label>
+															</div>
+															<div class="control-label col-sm-4">
+																<label>{{partnerObj.address1}}</label>
+															</div>
+															<div class="row">
+																<div class="control-label col-sm-offset-2 col-sm-4  lefPad5">
+																	<label>{{partnerObj.address2}}</label>
+																</div>
+															</div>
+															<div class="row">
+																<div class="control-label col-sm-offset-2 col-sm-4  lefPad5">
+																	<label>{{partnerObj.city}}</label>
+																</div>
+															</div>
+															<div class="row">
+																<div class="control-label col-sm-offset-2 col-sm-4  lefPad5">
+																	<label>{{partnerObj.state}}
+																		{{partnerObj.pinCode}}</label>
+																</div>
+															</div>
+															<div class="row">
+																<div class="control-label col-sm-offset-2 col-sm-4  lefPad5">
+																	<label>{{partnerObj.country}}</label>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="partner-profile__header">
+															<p>
+																<img src="{{partnerObj.avatar}}" alt="">
+															</p>
+														</div>
+													</div>
+													<div class="row">
+												<div class="col-sm-12">
+													<input
+														class="awe-btn awe-btn-5 awe-btn-lager text-uppercase"
+														type="reset" value="Edit"
+														data-ng-click="edit(partnerDetail)" />
+												</div>
+											</div>
+												</div>
+											</div>
+											
+										</section>
+										<section data-ng-controller="SpaceController"
+											data-ng-init="find()">
+											<div class="col-lg-12 portlets">
+												<div class="panel" style="padding: 15px;">
+													<div class="panel-content pagination2 table-responsive">
+														<table class="table table-hover table-dynamic">
+															<thead>
+																<tr>
+																	<th>Name</th>
+																	<th>Locality</th>
+																	<th>City</th>
+																	<th>Actions</th>
+																</tr>
+															</thead>
+															<tbody data-ng-repeat="space in spaces">
+																<tr class="partnerList">
+																	<td>{{space.name}}</td>
+																	<td>{{space.locality}}</td>
+																	<td>{{space.city}}</td>
+																	<td><a ng-if="updatePermission"
+																		ng-click="edit(space)"><i
+																			class="fa fa-pencil-square-o"></i></a> <a
+																		ng-if="deletePermission" ng-click="delete(space)"><i
+																			class="fa fa-trash-o"></i></a></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+										</section>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

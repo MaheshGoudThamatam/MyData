@@ -1,0 +1,270 @@
+<section data-ng-init="areaCityDetails()" id="plugNPlayUserForm" style="margin-top: -14%;">
+	<div class="modal-header">
+		<h3 style="text-align: center;">
+			<b class="table-capitalize">PLEASE FILL YOUR INFORMATION</b>
+		</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="row">
+					<form role="form" class="form-validation modalInputEnabled"
+						name="userDetailForm" id="userDetailForm">
+
+						<div class="row">
+							<div class="col-xs-6 col-xs-offset-3">
+								<div class="form-group"
+									ng-class="{ 'has-error' : submitted && userDetailForm.spaceType.$invalid }">
+									<label class="control-label">Type of Space</label>
+									<div class="append-icon">
+										<select name="spaceType" id="spaceType" class="form-control"
+											ng-options="option.spaceType for option in spaceTypeList.spaceTypeOptions track by option.id"
+											data-ng-model="plugnplayUser.spaceType"
+											placeholder="Type of Space"></select>
+									</div>
+								</div>
+								<div ng-show="submitted && userDetailForm.spaceType.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="userDetailForm.spaceType.$error.required">Please
+										enter type of space </span>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-6 col-xs-offset-3">
+								<div class="form-group"
+									ng-class="{ 'has-error' : submitted && userDetailForm.first_name.$invalid }">
+									<label class="control-label">Name</label>
+									<div class="append-icon">
+										<input type="text" name="first_name" class="form-control"
+											minlength="4" ng-model="plugnplayUser.first_name"
+											placeholder="Name (Min 4 Characters)" ng-click="validateName(plugnplayUser.first_name)" ng-blur="validateName(plugnplayUser.first_name)" required>
+									</div>
+								</div>
+								<div ng-show="submitted && userDetailForm.first_name.$invalid || nameInvalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="userDetailForm.first_name.$error.required || nameInvalid">Please
+										enter the name </span>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-6 col-xs-offset-3">
+								<div class="form-group"
+									ng-class="{ 'has-error' : submitted && userDetailForm.email.$invalid }">
+									<label class="control-label">Email Address</label>
+									<div class="append-icon">
+										<input type="email" data-ng-pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/" name="email" class="form-control"
+											data-ng-model="plugnplayUser.email" placeholder="Email"
+											required>
+									</div>
+								</div>
+						<div ng-show="submitted && userDetailForm.email.$invalid">
+							<span class="err-msg errorText validaion-color" ng-show="userDetailForm.email.$error.required">Please enter the email </span>
+							<span class="err-msg errorText validaion-color" data-ng-show="userDetailForm.email.$error.pattern">Please enter valid email </span>
+						</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-6 col-xs-offset-3">
+								<div class="form-group"
+									ng-class="">
+									<label class="control-label">Phone Number</label>
+									<div class="append-icon">
+										<input  onkeypress="return isNumber(event)" class="form-control" id="contact_details_2_contactNo"  name="phonenumber" type="tel" style="padding-left: 4em !important;line-height: 19px !important;"
+										data-ng-disabled="contactDetail" maxlength="10"
+										required>
+									</div>
+								</div>
+								<!-- <div ng-show="submitted && userDetailForm.phonenumber.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="userDetailForm.phonenumber.$error.required">Please
+										enter the phone number</span>
+								</div> -->
+								<div ng-show="isNumberInvalid">
+									<span class="err-msg errorText validaion-color">Please enter valid phone number</span>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-6 col-xs-offset-3">
+								<div class="form-group"
+									ng-class="{ 'has-error' : submitted && userDetailForm.companyName.$invalid }">
+									<label class="control-label">Company Name</label>
+									<div class="append-icon">
+										<input type="text" name="companyName" class="form-control"
+											data-ng-model="plugnplayUser.companyName"
+											placeholder="Company Name">
+									</div>
+								</div>
+								<!-- <div ng-show="submitted && userDetailForm.companyName.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="userDetailForm.companyName.$error.required">Please
+										enter Company Name </span>
+								</div> -->
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-3 col-xs-offset-3 widP-50">
+								<div class="form-group"
+									ng-class="{ 'has-error' : submitted && userDetailForm.duration.$invalid }">
+									<label class="control-label">Duration</label>
+									<div class="append-icon">
+										<select name="duration" id="duration" class="form-control"
+											ng-options="option.duration for option in durationList.durationOptions track by option.id"
+											data-ng-model="plugnplayUser.duration"
+											placeholder="Duration (In months)"></select>
+									</div>
+								</div>
+								<div ng-show="submitted && userDetailForm.duration.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="userDetailForm.duration.$error.required">Please
+										enter Duration </span>
+								</div>
+							</div>
+
+							<div class="col-xs-3 wid-5025">
+								<div class="form-group"
+									ng-class="{ 'has-error' : submitted && userDetailForm.startDate.$invalid }">
+									<label class="control-label">Start Date</label>
+									<div class="append-icon">
+										<input type="text" name="startDate"
+											data-ng-model="plugnplayUser.startDate"
+											class="form-control field-input dateHotdeskLow lineHg meetingRoomDateHg"
+											style="font-size: 16px; border: none; color: #8f97a0;cursor: pointer;"
+											ng-click="loadCalendarPlugnplay()" placeholder="Start Date" readonly/>
+									</div>
+								</div>
+								<div ng-show="submitted && userDetailForm.startDate.$invalid || dateInvalid">
+									<span class="err-msg errorText validaion-color" data-ng-show="userDetailForm.startDate.$error.required || dateInvalid">Please select Start Date</span>
+								</div>
+							</div>
+						
+						</div>
+						
+						<div class="row">
+							<div class="col-xs-2 col-xs-offset-3 widP-50">
+								<div class="form-group"
+									ng-class="{ 'has-error' : submitted && userDetailForm.noOfDesks.$invalid }">
+									<label class="control-label">No Of Desks</label>
+									<div class="append-icon">
+										<select name="noOfDesks" id="noOfDesks" class="form-control"
+											ng-options="option.desks for option in deskList.deskOptions track by option.id"
+											data-ng-model="plugnplayUser.noOfDesks"
+											placeholder="No Of Desks"></select>
+									</div>
+								</div>
+								<div ng-show="submitted && userDetailForm.noOfDesks.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="userDetailForm.noOfDesks.$error.required">Please
+										enter no Of Desks </span>
+								</div>
+							</div>
+						
+
+							<div class="col-xs-4 wid-5025">
+								<div class="form-group"
+									ng-class="{ 'has-error' : submitted && userDetailForm.budget.$invalid }">
+									<label class="control-label">Budget (INR)</label>
+									<div class="append-icon">
+										<select name="budget" id="budget" class="form-control"
+											ng-options="option.budget for option in budgetList.budgetOptions track by option.id"
+											data-ng-model="plugnplayUser.budget" placeholder="Budget"></select>
+									</div>
+								</div>
+								<div ng-show="submitted && userDetailForm.budget.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="userDetailForm.budget.$error.required">Please
+										enter Budget </span>
+								</div>
+							</div>
+						
+						</div>
+						
+						<div class="row">
+							<div class="col-xs-2 col-xs-offset-3 widP-50">
+								<div class="form-group"
+									ng-class="{ 'has-error' : submitted && userDetailForm.city.$invalid }">
+									<label class="control-label">City</label>
+									<div class="append-icon">
+										<input type="city" name="city" class="form-control"
+											data-ng-model="plugnplayUser.city" placeholder="City"
+											required ng-disabled="true">
+									</div>
+								</div>
+								<div ng-show="submitted && userDetailForm.city.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="userDetailForm.city.$error.required">Please
+										enter city </span>
+								</div>
+							</div>
+
+							<div class="col-xs-4 wid-5025">
+								<div class="form-group"
+									ng-class="{ 'has-error' : submitted && userDetailForm.area.$invalid }">
+									<label class="control-label">Area</label>
+									<div class="append-icon">
+										<input type="text" name="area" class="form-control"
+											data-ng-model="plugnplayUser.area" placeholder="Area"
+											required ng-disabled="true">
+									</div>
+								</div>
+								<div ng-show="submitted && userDetailForm.area.$invalid">
+									<span class="err-msg errorText validaion-color"
+										ng-show="userDetailForm.area.$error.required">Please
+										enter Area </span>
+								</div>
+							</div>
+
+						
+						</div>
+						
+						<div class="row">
+							<div class="col-xs-6 col-xs-offset-3">
+								<div class="form-group">
+									<label class="control-label">Comments</label>
+									<div class="append-icon">
+										<textarea name="comments" class="form-control"
+											data-ng-model="plugnplayUser.comments" rows="3"
+											placeholder="Comments"></textarea>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="text-center  m-t-20 addPartnerLow">
+							<a href="" id="next1" data-toggle="tab"
+								class="awe-btn awe-default ppCancel" data-ng-click="backToSearch()">Cancel</a>
+							<a id="next1" class="awe-btn arrow-right ppSubmit" href=""
+								style="margin-left: 4px"
+								data-ng-click="savePlugnplayUser(plugnplayUser,userDetailForm.$valid)">Submit</a>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type='text/javascript'>
+            /*
+                Author: Rajesh
+                Description : Function for phone number field to accept only [0-9].
+            */
+             function isNumber(evt) {
+                 evt = (evt) ? evt : window.event;
+                 var charCode = (evt.which) ? evt.which : evt.keyCode;
+                 if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                     return false;
+                 }
+                 /*
+                     Uncomment to accept '+' in phone number field.
+                 */
+                     // if (charCode == 43) {
+                     //     return true;
+                     // }
+                 return true;
+             }
+         </script>
+</section>
