@@ -1,0 +1,526 @@
+<section data-ng-controller="SecuritytasksController" data-ng-init="allTasks();findSecurityManager();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div data-ng-include = "'/securitytasks/views/myTasktabs.html'"></div>
+				<div class="col-md-12">
+					<div class="portlet-title">
+						<div class="row">
+							<div class="form-group">
+								<div class="col-md-2">
+									<input class="form-control" placeholder="Search.." type="text" ng-model="myTaskFilter">
+								</div>
+								<div class="col-xs-6 btn-group pull-right">
+									<button class="btn blue  pull-right" data-ng-click="newTask()">New Task</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="portlet-body scrollx">
+					<div class="col-sm-12">
+						<table ng-table="myTaskTable" class="table table-condensed table-bordered table-striped"  data-ng-show="mySecurityTasksArray.length > 0" ng-class="{'pendingStatus' : !task.status && task.responsible_action, 'completedStatus' : task.status && task.responsible_action}">
+							<tr ng-repeat="myTask in $data">
+							      <td data-title="'Task Name'" sortable="'company_name'">{{myTask.task_name}}</td>
+	                              <td data-title="'Responsible'" sortable="'city'">{{myTask.responsible_action.firstname}} {{myTask.responsible_action.lastname}}</td>
+	                              <td data-title="'Deadline'" sortable="'country'">{{myTask.deadline}}</td>
+	                              <td data-title="'Status'" sortable="'status'">
+	                              <span class="todo-blue" data-ng-if="myTask.status == true">{{CONFIG.status.PERFORMED}}</span>
+                                  <span class="todo-blue" data-ng-if="myTask.status == false">{{CONFIG.status.PENDING}}</span></td>
+								<td data-title="'Actions'" class="col-sm-1 col-half">
+					    			<div class="btn-group">
+					        			<a class="btn blue" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+					            			<i class="fa fa-wrench"></i> <i class="fa fa-angle-down"></i>
+					        			</a>
+					        			<ul class="dropdown-menu pull-right">
+					            			<li data-ng-hide="myTask.status == true">
+					                			<a  data-toggle="modal" data-backdrop="static" data-keyboard="false" href="#todo-task-modal" ng-click="getDetails(myTask);">
+					                    			<i class="fa fa-pencil-square-o"></i>Edit
+					                			</a>
+					            			</li>
+					            			<li data-ng-show="myTask.status == true">
+					            			<a  data-toggle="modal" data-backdrop="static" data-keyboard="false" href="#todo-task-modal" ng-click="getDetails(myTask);" >
+					                    			<i class="fa fa-eye"></i>View
+					                			</a>
+					                			</li>
+					            		</ul>
+					        		</div>
+								</td>
+							</tr>
+							<tr data-ng-show="!$data.length">
+								<td colspan = "11">No security task  matched your filter condition.</td>
+							</tr>
+						</table>
+						<div data-ng-show="!mySecurityTasksArray.length>0">
+							<label>No task is assigned to you</label>
+						</div>
+					</div>
+				</div>
+        	</div>
+    	</div>
+    </div>
+        <div id="todo-task-modal" class="modal fade" role="dialog" aria-labelledby="myModalLabel10" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div id="tasksListContainer" class="modal-dialog">
+            <div class="modal-content scroller" style="height: 100%;" data-always-visible="1" data-rail-visible="0">
+                <div class="modal-header">
+                    <h2>Security Task
+                    <button type="button" class="close" data-ng-click="closeModal()" aria-hidden="true"></button></h2>
+                </div>
+                <div class="modal-body todo-task-modal-body clearfix">
+                    <h3 class="todo-task-modal-bg" data-ng-if="securityTaskFromDB">{{selectedTask.task_name}} <button class="btn blue pull-right" data-ng-click="editSecurityTask(selectedTask)" data-ng-if="selectedTask.status == false && selectedTask.responsible_action && selectedTask.responsible_followUp">Edit</button></h3>
+                    <p class="todo-task-modal-bg" ng-if="securityTaskFromDB">{{selectedTask.description}}</p>
+                    <p class="todo-task-modal-bg" ng-if="selectedTask.attachments"><a href="" ng-click="downloadAttachedAuditSecurityTask(selectedTask.attachments);">Download Attachment</a>
+                    </p>
+                    <div class="todo-task-modal-bg" ng-if="securityTaskFromDB">
+                        <div class="row ">
+                            <div class="col-md-4">
+                                <div class="mt-widget-1" data-ng-if="selectedTask.responsible_action">
+                                    <h3 class="mt-username">{{selectedTask.responsible_action.firstname}}</h3>
+                                    <p class="mt-user-title">Responsible</p>
+                                </div>
+                                <div class="mt-widget-1" data-ng-if="!selectedTask.responsible_action">
+                                    <select class="form-control selectBackColor" name="responsible" ng-change="assignResponsible(selectedTask, responsiblePerson)" ng-model="responsiblePerson" ng-options="user as (user.firstname + ' ' + user.lastname) for user in users" data-ng-if="!selectedTask.responsible_action">
+                                        <option value="" disabled>Please Select</option>
+                                    </select>
+                                    <p class="mt-user-title text-danger">Please assign responsible person to security task.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mt-widget-1" data-ng-if="selectedTask.responsible_followUp">
+                                    <h3 class="mt-username">{{selectedTask.responsible_followUp.firstname}}</h3>
+                                    <p class="mt-user-title">Follow-up</p>
+                                </div>
+                                <div class="mt-widget-1" data-ng-if="!selectedTask.responsible_followUp">
+                                    <select class="form-control selectBackColor" name="followUp" ng-model="followUpPerson" ng-change="assignFollowUp(selectedTask, followUpPerson)" ng-options="user as (user.firstname + ' ' + user.lastname) for user in users">
+                                        <option value="" disabled>Please Select</option>
+                                    </select>
+                                    <p class="mt-user-title text-danger">Please assign follow up person to security task.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class=" mt-widget-1">
+                                    <h3 class="mt-username">{{selectedTask.deadline}}</h3>
+                                    <p class="mt-user-title">Due date</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form role="form" name="securityTaskForm" class="form-horizontal" data-ng-if="!securityTaskFromDB" novalidate>
+                        <div class="clearfix todo-div">
+                            <div class="form-group col-md-8 row" ng-class="{'has-error' : submitted && securityTaskForm.name.$invalid}">
+                                <div class="col-md-12 row">
+                                    <label class="control-label" mean-token="edit-name">Task Name
+                                        <span class="required" aria-required="true"> * </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-9 row">
+                                    <input type="text" ng-model="securityTaskObj.task_name" name="name" class="form-control" placeholder="Name" required />
+                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='name'">{{err.msg}}</div>
+                                    <div ng-show="submitted && securityTaskForm.name.$invalid">
+                                        <span class="text-danger" ng-show="securityTaskForm.name.$error.required">Please enter Security task name.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix todo-div">
+                            <div class="form-group" ng-class="{'has-error' : submitted && securityTaskForm.description.$invalid}">
+                                <div class="col-md-12">
+                                    <label class="control-label" mean-token="edit-name">Description
+                                        <span class="required" aria-required="true"> * </span>
+                                    </label>
+                                </div>
+                                <div class="col-md-9">
+                                    <textarea ng-model="securityTaskObj.description" name="description" class="form-control" placeholder="Description" required></textarea>
+                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='description'">{{err.msg}}</div>
+                                    <div ng-show="submitted && securityTaskForm.description.$invalid">
+                                        <span class="text-danger" ng-show="securityTaskForm.description.$error.required">Please enter Security task description.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="todo-div clearfix">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mt-widget-1">
+                                        <select class="form-control" name="responsible" ng-model="securityTaskObj.responsible_action" ng-options="user._id as (user.firstname + ' ' + user.lastname) for user in users" data-ng-if="!securityTaskFromDB">
+                                            <option value="" disabled>Please Select</option>
+                                        </select>
+                                        <p class="mt-user-title" data-ng-if="!securityTaskFromDB">Responsible</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mt-widget-1">
+                                        <select class="form-control" name="followUp" ng-model="securityTaskObj.responsible_followUp" ng-options="user._id as (user.firstname + ' ' + user.lastname) for user in users" data-ng-if="!securityTaskFromDB">
+                                            <option value="" disabled>Please Select</option>
+                                        </select>
+                                        <p class="mt-user-title" data-ng-if="!securityTaskFromDB">Follow-up</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class=" mt-widget-1">
+                                        <div class="input-group securityTaskDeadline">
+                                            <input type="text" ng-keydown="restrictInput($event)" name="deadline" class="form-control" data-ng-model="securityTaskObj.deadline" placeholder="Deadline" ng-init="initializeDatePicker();" id="securityTaskDeadline" />
+                                            <span class="input-group-addon add-on pointerCursor"><span class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                        <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='deadline'">{{err.msg}}</div>
+                                        <div ng-show="submitted && noDeadline">
+                                            <span class="text-danger">Please enter deadline for security task.</span>
+                                        </div>
+                                        <p class="mt-user-title">Due date</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-md-offset-9 row mt15">
+                                    <button class="btn default pull-left" data-ng-click="editSecurityTask()" ng-if="!securityTaskFromDB">Cancel</button>
+                                    <button class="btn dark pull-right" data-ng-click="updateSecurityTask(securityTaskForm.$valid, selectedTask)" ng-if="!securityTaskFromDB">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row" data-ng-if="selectedTask.responsible_action && selectedTask.responsible_followUp && securityTaskFromDB">
+                        <div class="col-md-12" ng-if="isSecurityManager">
+                            <div class="portlet-title mt20 col-md-offset-1">
+                                <div class="caption">
+                                    <span class="caption-subject font-hide bold uppercase">Tasks to be performed</span>
+                                </div>
+                            </div>
+                            <div class="portlet-body">
+                                <div class="row" ng-if="selectedTask.status == false">
+                                    <form role="form" name="addSubTask" class="" novalidate>
+                                        <div class="col-md-offset-1 col-md-3">
+                                            <div class="form-group" ng-class="{'has-error' : submittedSubtask && addSubTask.subtaskName.$invalid}">
+                                                <label>Subtask Name</label>
+                                                <div class="">
+                                                    <input type="text" class="form-control" placeholder="Subtask Name" name="subtaskName" data-ng-model="subTaskObj.name" required />
+                                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='name'">{{err.msg}}</div>
+                                                    <div ng-show="submittedSubtask && addSubTask.subtaskName.$invalid">
+                                                        <span class="text-danger" ng-show="addSubTask.subtaskName.$error.required">Please enter sub task name.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group" ng-class="{'has-error' : submittedSubtask && addSubTask.estimatedHour.$invalid}">
+                                                <label>Estimated Hours</label>
+                                                <div class="">
+                                                    <input type="number" name="estimatedHour" data-ng-model="subTaskObj.estimated_hour" class="form-control" placeholder="Estimated hours" min="1" required />
+                                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='estimated_hour'">{{err.msg}}</div>
+                                                    <div ng-show="submittedSubtask && addSubTask.estimatedHour.$invalid">
+                                                        <span class="text-danger" ng-show="addSubTask.estimatedHour.$error.required">Please enter estimated hours.</span>
+                                                        <span class="text-danger" ng-show="addSubTask.estimatedHour.$error.min">Please enter valid estimated hours.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label></label>
+                                                <div class="">
+                                                    <a class="btn dark" type="button" ng-click="addSubtaskPerformPage(addSubTask.$valid, subTaskObj)">ADD
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <div class="table-scrollable">
+                                            <table class="table table-bordered table-hover" ng-table="subTaskTable">
+                                                <tr ng-repeat="subTask in $data">
+                                                    <td data-title="'Task'" sortable="'name'">{{subTask.name}}</td>
+                                                    <td data-title="'Hours'" sortable="'estimated_hour'">{{subTask.estimated_hour}}</td>
+                                                    <td data-title="'isPerformed'" sortable="'isPerformed'">
+                                                        <button ng-disabled="subTask.isPerformed" class="btn blue" ng-click="completeSubtask(subTask);"><span data-ng-if="subTask.isPerformed">Completed</span><span data-ng-if="!subTask.isPerformed">Complete Subtask</span></button>
+                                                        <a class="todo-add-button remove" ng-click="deleteSubTask(subTask)" ng-if="selectedTask.status == false && !subTask.isPerformed && subTasks.length>1">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr data-ng-if="subTasks.length == 0">
+                                                    <td colspan="12">No data found</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="portlet-body">
+                                <form role="form" name="hoursForm" class="" ng-if="selectedTask.status == false" novalidate>
+                                    <div class="row mt20">
+                                        <div class="col-md-offset-1 col-md-11">
+                                            <label class="caption-subject font-hide bold uppercase">Add hours</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-offset-1 col-md-3">
+                                            <div class="form-group" ng-class="{'has-error' : submittedHour && hoursForm.subtask.$invalid}">
+                                                <label>Subtask
+                                                    <span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <div class="">
+                                                    <select class="form-control" name="subtask" ng-model="logHour.task" ng-options="subTask._id as subTask.name for subTask in subTasks" required>
+                                                        <option value="" disabled>Please Select</option>
+                                                    </select>
+                                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='task'">{{err.msg}}</div>
+                                                    <div ng-show="submittedHour && hoursForm.subtask.$invalid">
+                                                        <span class="text-danger" ng-show="hoursForm.subtask.$error.required">Please select Subtask.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group" ng-class="{'has-error' : submittedHour && hoursForm.person.$invalid}">
+                                                <label>Person
+                                                    <span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <div class="">
+                                                    <select class="form-control" name="person" ng-model="logHour.person" ng-options="user._id as (user.firstname + ' ' + user.lastname) for user in users" required>
+                                                        <option value="" disabled>Please Select</option>
+                                                    </select>
+                                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='person'">{{err.msg}}</div>
+                                                    <div ng-show="submittedHour && hoursForm.person.$invalid">
+                                                        <span class="text-danger" ng-show="hoursForm.person.$error.required">Please select Person.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" ng-class="{'has-error' : submittedHour && hoursForm.hours.$invalid}">
+                                                <label>Number of hours
+                                                    <span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <div class="">
+                                                    <input type="number" name="hours" ng-model="logHour.actual_time" class="form-control form-control-60" placeholder="Hours" min="1" required />
+                                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='actual_time'">{{err.msg}}</div>
+                                                    <div ng-show="submittedHour && hoursForm.hours.$invalid">
+                                                        <span class="text-danger" ng-show="hoursForm.hours.$error.required">Please enter hours.</span>
+                                                        <span class="text-danger" ng-show="hoursForm.hours.$error.min">Please enter valid time.</span>
+                                                    </div>
+                                                    <a class="btn dark" type="button" data-ng-click="addHours(hoursForm.$valid)">ADD
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <div class="table-scrollable">
+                                            <table class="table table-bordered table-hover" ng-table="logHourTable">
+                                                <tr data-ng-repeat="logHour in $data">
+                                                    <td data-title="'Subtask'" sortable="'task.name'">{{logHour.task.name}}</td>
+                                                    <td data-title="'Person'" sortable="'person.firstname'">{{logHour.person.firstname}} {{logHour.person.lastname}}</td>
+                                                    <td data-title="'Number of hours'" sortable="'actual_time'">{{logHour.actual_time}}
+                                                        <a class="todo-add-button remove" ng-click="deleteLogHour(logHour)" ng-if="selectedTask.status == false && !logHour.task.isPerformed">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr data-ng-if="logHours.length == 0">
+                                                    <td colspan="12">No data found</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form role="form" name="costForm" class="" ng-if="selectedTask.status == false" novalidate>
+                                    <div class="row mt20">
+                                        <div class="col-md-offset-1 col-md-11">
+                                            <label class="caption-subject font-hide bold uppercase">Add cost</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-offset-1 col-md-3">
+                                            <div class="form-group" ng-class="{'has-error' : submittedCost && costForm.subtask.$invalid}">
+                                                <label>Subtask
+                                                    <span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <div class="">
+                                                    <select class="form-control" name="subtask" ng-model="cost.task" ng-options="subTask._id as subTask.name for subTask in subTasks" required>
+                                                        <option value="" disabled>Please Select</option>
+                                                    </select>
+                                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='task'">{{err.msg}}</div>
+                                                    <div ng-show="submittedCost && costForm.subtask.$invalid">
+                                                        <span class="text-danger" ng-show="costForm.subtask.$error.required">Please select Subtask.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group" ng-class="{'has-error' : submittedCost && costForm.article.$invalid}">
+                                                <label>Article
+                                                    <span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <div class="">
+                                                    <select class="form-control" name="article" ng-model="cost.article" ng-options="article.name as article.name for article in articles" required>
+                                                        <option value="" disabled>Please Select</option>
+                                                    </select>
+                                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='article'">{{err.msg}}</div>
+                                                    <div ng-show="submittedCost && costForm.article.$invalid">
+                                                        <span class="text-danger" ng-show="costForm.article.$error.required">Please select Article.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group" ng-class="{'has-error' : submittedCost && costForm.actualCost.$invalid}">
+                                                <label>SEK
+                                                    <span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <div class="">
+                                                    <input type="number" name="actualCost" ng-model="cost.actual_cost" class="form-control form-control-60" placeholder="SEK" min="0" required>
+                                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='actual_cost'">{{err.msg}}</div>
+                                                    <div ng-show="submittedCost && costForm.actualCost.$invalid">
+                                                        <span class="text-danger" ng-show="costForm.actualCost.$error.required">Please enter cost.</span>
+                                                        <span class="text-danger" ng-show="costForm.actualCost.$error.min">Please enter valid cost.</span>
+                                                    </div>
+                                                    <a class="btn dark" ngf-select="attachCostInvoice($file, cost)" data-ng-disabled="!(cost.task && cost.article && cost.actual_cost)"> Invoice </a>
+                                                    <a class="btn dark" data-ng-click="addCosts(costForm.$valid)" ng-if="selectedTask.status == false">ADD</a>
+												</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <div class="table-scrollable">
+                                            <table class="table table-bordered table-hover" ng-table="costTable">
+                                                <tr data-ng-repeat="costs in $data">
+                                                    <td data-title="'Subtask'" sortable="'task.name'">{{costs.task.name}}</td>
+                                                    <td data-title="'Article'" sortable="'article'">{{costs.article}}</td>
+                                                    <td data-title="'Invoice'"><a ng-click="downloadInvoice(costs);" class="btn btn-icon-only blue"><i class="fa fa-file-o"></i></a>{{attachInvoiceCost}}</td>
+                                                    <td data-title="'Cost'" sortable="'actual_cost'">{{costs.actual_cost}}
+                                                        <a class="todo-add-button remove" ng-click="deleteCost(costs)" ng-if="selectedTask.status == false  && !costs.task.isPerformed">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr data-ng-if="costArray.length == 0">
+                                                    <td colspan="12">No data found</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form role="form" name="addExtTask" class="" novalidate>
+                                <div class="row mt20">
+                                    <div class="col-md-offset-1 col-md-11">
+                                        <label class="caption-subject font-hide bold uppercase">External task</label>
+                                    </div>
+                                     </div>
+                                    <div class="row" ng-if="selectedTask.status == false">
+                                        <div class="col-md-offset-1 col-md-3">
+                                            <div class="form-group">
+                                                <label>External Task Name</label>
+                                                <div class="">
+                                                    <input type="text" data-ng-model="externaltaskName" class="form-control" placeholder="External Task Name" name="exttaskName" value="external" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label></label>
+                                                <div class="">
+                                                    <a class="btn dark" type="button" ng-click="redirectToExternaltask(externaltaskName)">ADD
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                 </form>
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <div class="table-scrollable">
+                                            <table class="table table-bordered table-hover" ng-table="externalTaskTable">
+                                                <tr data-ng-repeat="externalTasks in $data">
+                                                    <td data-title="'Name'" sortable="'task_name'">{{externalTasks.task_name}}</td>
+                                                    <td data-title="'Status'" sortable="'status'">{{externalTasks.status}}</td>
+                                                    <td data-title="'Action'"><a ng-click="externalTaskRedirect(externalTasks);" class="btn dark" type="button">View</a></td>
+                                                </tr>
+                                                <tr data-ng-if="allexternalTasks.length == 0">
+                                                    <td colspan="12">No data found</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-sm-11">
+                                        <div class="form-group">
+                                            <div class="btn dark"  ng-click="generatePdf()" accept="image/png, image/jpeg" data-ng-if="selectedTask.status">Create status-PDF for this project</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                                                    <div class="visual">
+                                                        <i class="fa fa-comments"></i>
+                                                    </div>
+                                                    <div class="details">
+                                                        <div class="number">
+                                                            <span data-counter="counterup">{{subtaskPercentage}}%</span>
+                                                        </div>
+                                                        <div class="desc"> Project status </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                                                    <div class="visual">
+                                                        <i class="fa fa-comments"></i>
+                                                    </div>
+                                                    <div class="details">
+                                                        <div class="number">
+                                                            <span data-counter="counterup">{{totalHours}}</span>
+                                                        </div>
+                                                        <div class="desc"> Total Hours </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                                                    <div class="visual">
+                                                        <i class="fa fa-comments"></i>
+                                                    </div>
+                                                    <div class="details">
+                                                        <div class="number">
+                                                            <span data-counter="counterup">{{totalCosts}} SEK</span>
+                                                        </div>
+                                                        <div class="desc"> Total Cost </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" data-ng-hide="selectedTask.cost == '0'">
+                                                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                                                    <div class="visual">
+                                                        <i class="fa fa-comments"></i>
+                                                    </div>
+                                                    <div class="details">
+                                                        <div class="number">
+                                                            <span data-counter="counterup">{{selectedTask.cost}} SEK</span>
+                                                        </div>
+                                                        <div class="desc"> Estimated Cost </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn dark" data-ng-click="closeSecurityTask(selectedTask);" data-ng-if="isSecurityManager && selectedTask.responsible_action && selectedTask.responsible_followUp && !selectedTask.status && securityTaskFromDB">Finish</button>
+                    <button class="btn blue" data-ng-click="closeModal()" aria-hidden="true">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

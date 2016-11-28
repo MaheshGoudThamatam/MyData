@@ -1,0 +1,60 @@
+<section data-ng-controller="SecuritytasksController" data-ng-init="allTasks();findSecurityManager();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div data-ng-include = "'/securitytasks/views/externalTasktabs.html'"></div>
+				<div class="col-md-12">
+					<div class="portlet-title">
+						<div class="row">
+							<div class="form-group">
+								<div class="col-md-2">
+									<input class="form-control" placeholder="Search.." type="text" ng-model="externalTaskFilter">
+								</div>
+								<!-- <div class="col-xs-6 btn-group pull-right">
+									<button class="btn blue  pull-right" data-ng-click="externalTask()">New Task</button>
+								</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="portlet-body scrollx">
+					<div class="col-sm-12">
+						<table ng-table="externalTaskTable" class="table table-condensed table-bordered table-striped"  data-ng-show="externalTasksArray.length > 0" >
+							<tr ng-repeat="externalTask in $data">
+							      <td data-title="'Task Name'" sortable="'company_name'">{{externalTask.task_name}}</td>
+	                              <td data-title="'CreatedAt'" sortable="'country'">{{externalTask.createdAt| date : 'yyyy-MM-dd'}}</td>
+	                              <td data-title="'Status'" sortable="'status'">{{externalTask.status}}</td>
+								<td data-title="'Actions'" class="col-sm-1 col-half">
+					    			<div class="btn-group">
+					        			<a class="btn blue" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+					            			<i class="fa fa-wrench"></i> <i class="fa fa-angle-down"></i>
+					        			</a>
+					        			<ul class="dropdown-menu pull-right">
+					            			<li data-ng-hide="externalTask.status == 'COMPLETED'">
+					                			<a ng-click="externalTaskRedirect(externalTask);">
+					                    			<i class="fa fa-pencil-square-o"></i>Edit
+					                			</a>
+					            			</li>
+					            			<li data-ng-show="externalTask.status == 'COMPLETED'">
+					                			<a ng-click="getDetails(allTask);">
+					                    			<i class="fa fa-eye"></i>View
+					                			</a>
+					            			</li>
+					            		</ul>
+					        		</div>
+								</td>
+							</tr>
+							<tr data-ng-show="!$data.length">
+								<td colspan = "11">No security task  matched your filter condition.</td>
+							</tr>
+						</table>
+						<div data-ng-show="!externalTasksArray.length>0">
+							<label>No external task found</label>
+						</div>
+					</div>
+				</div>
+        	</div>
+    	</div>
+    </div>
+</section>

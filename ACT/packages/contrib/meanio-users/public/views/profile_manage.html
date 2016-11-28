@@ -1,0 +1,178 @@
+<div class="row" ng-controller="UserController" ng-init="getProfile();">
+    <div class="col-md-12">
+        <div class="profile-sidebar" ng-include="'/users/views/profile_sidebar.html'"></div>
+        <div class="profile-content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="portlet light ">
+                        <div class="portlet-title tabbable-line">
+                            <div class="caption caption-md">
+                                <i class="icon-globe theme-font hide"></i>
+                                <span class="caption-subject font-blue-madison bold uppercase">Manage Account</span>
+                            </div>
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#tab_1_1" data-toggle="tab">Personal Info</a>
+                                </li>
+                                <li>
+                                    <a href="#tab_1_2" data-toggle="tab">Change Avatar</a>
+                                </li>
+                                <li>
+                                    <a href="#tab_1_3" data-toggle="tab">Change Password</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="portlet-body">
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tab_1_1">
+                                    <form role="form" action="#" name="profileForm">
+                                        <div class="form-group" ng-class="{'has-error' : submitted && profileForm.firstname.$invalid}">
+                                            <label class="control-label">First Name<span class="required" aria-required="true"> * </span></label>
+                                            <input type="text" name="firstname" placeholder="First Name" class="form-control" ng-model="profile.firstname" required/>
+                                            <div ng-show="submitted && profileForm.firstname.$invalid">
+                                                <span class="text-danger" ng-show="profileForm.firstname.$error.required">
+                                                    Please enter the first name
+                                                </span>
+                                            </div>
+                                            <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param == 'firstname'"> {{err.msg}}</div>
+                                        </div>
+                                        <div class="form-group" ng-class="{'has-error' : submitted && profileForm.lastname.$invalid}">
+                                            <label class="control-label">Last Name<span class="required" aria-required="true"> * </span></label>
+                                            <input type="text" name="lastname" placeholder="Last Name" class="form-control" ng-model="profile.lastname" required />
+                                            <div ng-show="submitted && profileForm.lastname.$invalid">
+                                                <span class="text-danger" ng-show="profileForm.lastname.$error.required">
+                                                Please enter the last name
+                                            </span>
+                                            </div>
+                                            <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param == 'lastname'"> {{err.msg}}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Email<span class="required" aria-required="true"> * </span></label>
+                                            <input type="email" placeholder="Email" name="email" class="form-control" ng-model="profile.email" data-ng-disabled="true" />
+                                            <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param == 'email'"> {{err.msg}}</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label">Mobile Number</label>
+                                            <input type="text" name="mobileNumber" placeholder="Mobile Number" class="form-control" ng-model="profile.profile.phone" />
+                                            <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param == 'profile.phone'"> {{err.msg}}</div>
+                                        </div>
+                                        <div class="margiv-top-10 text-right">
+                                            <a href="javascript:;" class="btn default" data-ng-click="cancel()"> Cancel </a>
+                                            <a href="javascript:;" class="btn dark" data-ng-click="saveProfile(profileForm.$valid);"> Save Changes </a>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- END PERSONAL INFO TAB -->
+                                <!-- CHANGE AVATAR TAB -->
+                                <div class="tab-pane" id="tab_1_2">
+                                    <div class="clearfix margin-top-10">
+                                        <span class="label label-danger">NOTE! </span>
+                                        <span>Image size should be less than 2 Mb & supported image format should be jpg or jpeg</span>
+                                    </div>
+                                    <form action="#" role="form" name="profileImageForm">
+                                        <div class="form-group">
+                                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                <div class="fileinput-new">
+                                                    <div id="profileImage" ></div>
+                                                </div>
+                                                <!-- <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div> -->
+                                                <div class="margin-top-10">
+                                                    <span class="btn default btn-file" data-ng-if="!viewImageViewport">
+                                                        <span class="fileinput-new"> Select image </span>
+                                                        <input type="file" id="uploadProfile" accept="image/*" ngf-select="uploadImage($file);" />
+                                                    </span>
+                                                    <div class="text-center">
+                                                        <a href="javascript:;" class="btn default fileinput-exists" data-ng-click="removeProfileImage();" ng-if="viewImageViewport"> Remove </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="margin-top-10 text-right">
+                                            <a href="javascript:;" class="btn default" data-ng-click="cancel()"> Cancel </a>
+                                            <a href="javascript:;" class="btn dark" data-ng-click="saveProfileImage();"> Change Avatar </a>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- END CHANGE AVATAR TAB -->
+                                <!-- CHANGE PASSWORD TAB -->
+                                <div class="tab-pane" id="tab_1_3">
+                                    <div class="col-md-6">
+                                        <form role="form" action="#" name="changePasswordForm">
+                                            <div class="form-group" ng-class="{'has-error' : submitted3 && changePasswordForm.currentPassword.$invalid}">
+                                                <label class="control-label">Current Password<span class="required" aria-required="true"> * </span></label>
+                                                <div class="input-group">
+                                                    <input type="password" name="currentPassword" class="form-control" ng-model="changePassword.currentPassword" placeholder="Current Password" required />
+                                                    <span class="input-group-addon pointerCursor" ng-click="showPass($event);">
+                                                        <i class="fa fa-eye" ng-click="showPassAlt($event);"></i>
+                                                    </span>
+                                                </div>
+                                                <div ng-show="submitted3 && changePasswordForm.currentPassword.$invalid">
+                                                    <span class="text-danger" ng-show="changePasswordForm.currentPassword.$error.required">
+                                                        Please enter current password
+                                                    </span>
+                                                </div>
+                                                <div class="text-danger" ng-if="error.data.param == 'currentPassword'"> {{error.data.msg}}</div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error' : submitted3 && changePasswordForm.password.$invalid}">
+                                                <label class="control-label">New Password<span class="required" aria-required="true"> * </span></label>
+                                                <div class="input-group">
+                                                    <input type="password" name="password" placeholder="New Password" ng-model="changePassword.password" class="form-control" ng-required="true" ng-minlength="8" />
+                                                    <span class="input-group-addon pointerCursor" ng-click="showPass($event);">
+                                                        <i class="fa fa-eye" ng-click="showPassAlt($event);"></i>
+                                                    </span>
+                                                </div>
+                                                <div ng-show="submitted3 && changePasswordForm.password.$invalid">
+                                                    <span class="text-danger" ng-show="changePasswordForm.password.$error.required">
+                                                        Please enter new password
+                                                    </span>
+                                                </div>
+                                                <div ng-show="submitted3 && changePasswordForm.password.$error.minlength">
+                                                    <span class="text-danger" ng-show="changePasswordForm.password.$error.minlength">Minimum length for password is 8 characters</span>
+                                                </div>
+                                                <div ng-show="submitted3 && !validPassword">
+                                                    <span class="text-danger" ng-show="!validPassword">Password is too weak. Please retry.</span>
+                                                </div>
+                                                <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param == 'password'"> {{err.msg}}</div>
+                                            </div>
+                                            <div class="form-group" ng-class="{'has-error' : submitted3 && changePasswordForm.confirmPassword.$invalid}">
+                                                <label class="control-label">Re-type New Password<span class="required" aria-required="true"> * </span></label>
+                                                <div class="input-group">
+                                                    <input type="password" name="confirmPassword" placeholder="Confirm Password" ng-model="changePassword.confirmPassword" data-ng-change="changeErr()" class="form-control" ng-minlength="8" required />
+                                                    <span class="input-group-addon pointerCursor" ng-click="showPass($event);">
+                                                        <i class="fa fa-eye" ng-click="showPassAlt($event);"></i>
+                                                    </span>
+                                                </div>
+                                                <div ng-show="submitted3 && changePasswordForm.confirmPassword.$invalid">
+                                                    <span class="text-danger" ng-show="changePasswordForm.confirmPassword.$error.required">
+                                                        Please enter confirm password
+                                                    </span>
+                                                </div>
+                                                <div ng-show="submitted3 && changePasswordForm.confirmPassword.$error.minlength">
+                                                    <span class="text-danger" ng-show="changePasswordForm.confirmPassword.$error.minlength">Minimum length for password is 8 characters</span>
+                                                </div>
+                                                <span class="text-danger" ng-show="passMatch">Confirm password not match</span>
+                                                <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param == 'confirmPassword'"> {{err.msg}}</div>
+                                            </div>
+                                            <div class="margin-top-10 text-right">
+                                                <a href="javascript:;" class="btn default" data-ng-click="cancel()"> Cancel </a>
+                                                <a href="javascript:;" class="btn dark" data-ng-click="updatePassword(changePasswordForm.$valid);"> Change Password </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h1>Instructions</h1>
+                                        <p>Password should be minimum 8 characters long.</p>
+                                        <p>Password should contain atleast one lowercase letter.</p>
+                                        <p>Password should contain atleast one uppercase letter.</p>
+                                        <p>Password should contain atleast one number.</p>
+                                        <p>Password should contain atleast one special characters among <span>  (!, @, #, $, %, &, _, +, =)</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

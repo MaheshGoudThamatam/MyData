@@ -1,0 +1,103 @@
+<section data-ng-controller="ExternalTaskController" data-ng-init="init();allSecuritytasks();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-md-7">
+                <div class="portlet light bordered clearfix">
+                    <div class="portlet-body">
+                        <form role="form" class="form-horizontal" name="ExternalSecurityTaskForm" novalidate>
+                            <div class="form-body">
+                                <!-- <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">SecurityTask Name</label>
+                                        <div class="col-md-9">
+                                             <input type="text" data-ng-model="security_task_name" class="form-control" value="securitytaskId">
+                                            <select  data-ng-model="security_task_name">
+                                            <option>Select SecurityTask</option>
+                                            <option data-ng-repeat="sectask in allsecurityTasks">{{sectask.task_name}}</option>
+                                            </select> 
+                                            <select id="single" class="form-control select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                                <option data-ng-repeat="sectask in allsecurityTasks">{{sectask.task_name}}</option>
+                                            </select><span class="select2 select2-container select2-container--bootstrap select2-container--below select2-container--focus" dir="ltr"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-single-container"><span class="select2-selection__rendered" id="select2-single-container" title="Nevada">{{sectask.task_name}}</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+                                        </div>
+                                    </div>
+                                            <label class="col-md-3 control-label">SecurityTask Name</label>
+                                            <div class="col-md-9">
+                                            <select>
+                                                <option data-ng-repeat="sectask in allsecurityTasks">{{sectask.task_name}}></option>
+                                                
+                                            </select>
+                                        </div>
+                                        </div>
+                                </div> -->
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Task Name</label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="task_name" data-ng-model="externalsecuritytask.task_name" class="form-control" placeholder="Task name " disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" data-ng-class="{ 'has-error' : submitted && ExternalSecurityTaskForm.description.$invalid }">
+                                        <label class="col-md-3 control-label">Description<span class="required" aria-required="true"> * </span></label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="description" data-ng-model="externalsecuritytask.description" class="form-control" placeholder="Description" required>
+                                            <div class="text-danger" data-ng-repeat="err in error.data" data-ng-if="err.param =='description'">{{err.msg}}</div>
+                                            <div data-ng-show="submitted && ExternalSecurityTaskForm.description.$invalid">
+                                                <span class="help-block" data-ng-show="ExternalSecurityTaskForm.description.$error.required">
+                                                    Please enter description</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" data-ng-class="{ 'has-error' : submitted && ExternalSecurityTaskForm.name.$invalid }">
+                                        <label class="col-md-3 control-label">Name<span class="required" aria-required="true"> * </span></label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="name" data-ng-model="externalsecuritytask.name" class="form-control" placeholder="Name" required>
+                                            <div class="text-danger" data-ng-repeat="err in error.data" data-ng-if="err.param =='name'">{{err.msg}}</div>
+                                            <div data-ng-show="submitted && ExternalSecurityTaskForm.name.$invalid">
+                                                <span class="help-block" data-ng-show="ExternalSecurityTaskForm.name.$error.required">
+                                                    Please enter name</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" data-ng-class="{ 'has-error' : submitted && ExternalSecurityTaskForm.email.$invalid }">
+                                        <label class="col-md-3 control-label">Email<span class="required" aria-required="true"> * </span></label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="email" data-ng-model="externalsecuritytask.email" class="form-control" placeholder="Email" required>
+                                            <div class="text-danger" data-ng-repeat="err in error.data" data-ng-if="err.param =='email'">{{err.msg}}</div>
+                                            <div data-ng-show="submitted && ExternalSecurityTaskForm.email.$invalid">
+                                                <span class="help-block" data-ng-show="ExternalSecurityTaskForm.email.$error.required">
+                                                    Please enter email</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="row">
+									<div class="col-md-9 col-md-offset-3">
+										<div class="btn dark" ng-if="!externalTaskPhoto" ngf-select="attachPhoto($file)">Attach Photo</div>
+										<p ng-if="externalTaskPhoto"> {{externalTaskPhoto}} <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removePhoto()" ng-if="externalTaskPhoto"> </i>
+										</p>
+									</div>
+								</div>
+								<div class="row">
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-offset-4 col-md-8 text-right">
+                                                <button type="button" class="btn default" data-ng-click="taskList()">Cancel</button>
+                                                <button type="button" class="btn dark" data-ng-click="create(ExternalSecurityTaskForm.$valid,securitytaskId)">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

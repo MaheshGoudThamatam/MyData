@@ -1,0 +1,143 @@
+<section data-ng-controller="LocationController" data-ng-init="findOne();">
+<div class="row">
+ <div class="col-sm-12">
+   <div class="col-md-7">
+     <div class="portlet light bordered clearfix">
+      <!-- input from section -->
+		<div class="portlet-body">
+			<form role="form" class="form-horizontal" name="locationForm"  novalidate confirm-unsaved>
+			<div class="form-body">
+			<div class="row">
+				<div class="form-group" data-ng-class="{ 'has-error' : submitted && locationForm.name.$invalid }">
+					<label class="col-md-3 control-label">Location Name<span class="required" aria-required="true"> * </span></label>
+					<div class="col-md-9">
+						<input type="text" name="name" data-ng-model="location.name" class="form-control" placeholder="Location name " required>
+					<div class="text-danger" data-ng-repeat="err in error.data"
+						data-ng-if="err.param =='name'">{{err.msg}}</div>
+					<div data-ng-show="submitted && locationForm.name.$invalid">
+						<span class="help-block" data-ng-show="locationForm.name.$error.required">
+							 Please enter location name</span>
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group" data-ng-class="{ 'has-error' : submitted && locationForm.address_line_1.$invalid }">
+					<label class="col-md-3 control-label">Address line 1<span class="required" aria-required="true"> * </span></label>
+					<div class="col-md-9">
+						<input type="text" name="address_line_1" data-ng-model="location.address_line_1" data-ng-change="fetchMap(location)" class="form-control" placeholder="Address line 1" required>
+					<div class="text-danger" data-ng-repeat="err in error.data"
+						data-ng-if="err.param =='address_line_1'">{{err.msg}}</div>
+					<div data-ng-show="submitted && locationForm.address_line_1.$invalid">
+						<span class="help-block" data-ng-show="locationForm.address_line_1.$error.required">
+							 Please enter address line 1</span>
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group">
+					<label class="col-md-3 control-label">Address line 2</label>
+					<div class="col-md-9">
+						<input type="text" name="address_line_2" data-ng-model="location.address_line_2" class="form-control" placeholder="Address line 2" >
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group" data-ng-class="{'has-error' : submitted && locationForm.zip_code.$invalid}">
+					<label class="col-md-3 control-label">Zip code<span class="required" aria-required="true"> * </span></label>
+					<div class="col-md-9">
+						<input type="text" name="zip_code" data-ng-model="location.zip_code" class="form-control" placeholder="Zip code" required>
+					<div class="text-danger" data-ng-repeat="err in error.data"
+						data-ng-if="err.param =='zip_code'">{{err.msg}}</div>
+					<div data-ng-show="submitted && locationForm.zip_code.$invalid">
+						<span class="help-block" data-ng-show="locationForm.zip_code.$error.required">
+							 Please enter pin code</span>
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group" data-ng-class="{ 'has-error' : submitted && locationForm.city.$invalid }">
+					<label class="col-md-3 control-label">City<span class="required" aria-required="true"> * </span></label>
+					<div class="col-md-9">
+						<input type="text" name="city" data-ng-model="location.city" data-ng-change="fetchMap(location)" class="form-control" placeholder="City" required>
+					<div class="text-danger" data-ng-repeat="err in error.data"
+						data-ng-if="err.param =='city'">{{err.msg}}</div>
+					<div data-ng-show="submitted && locationForm.city.$invalid">
+						<span class="help-block" data-ng-show="locationForm.city.$error.required">
+							 Please enter city</span>
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group" data-ng-class="{ 'has-error' : submitted && locationForm.country.$invalid }">
+					<label class="col-md-3 control-label">Country<span class="required" aria-required="true"> * </span></label>
+					<div class="col-md-9">
+						<input type="text" name="country" data-ng-model="location.country" data-ng-change="fetchMap(location)" class="form-control" placeholder="Country" required>
+					<div class="text-danger" data-ng-repeat="err in error.data"
+						data-ng-if="err.param =='country'">{{err.msg}}</div>
+					<div data-ng-show="submitted && locationForm.country.$invalid">
+						<span class="help-block" data-ng-show="locationForm.country.$error.required">
+							 Please enter country</span>
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group" data-ng-class="{ 'has-error' : submitted && locationForm.contact_number.$invalid }">
+					<label class="col-md-3 control-label">Contact Number<span class="required" aria-required="true"> * </span></label>
+					<div class="col-md-9">
+						<input type="text" name="contact_number" data-ng-model="location.contact_number" data-ng-pattern="/^[\+\-\0-9]{1,20}$/" class="form-control" placeholder="Contact Number" required>
+					<div class="text-danger" data-ng-repeat="err in error.data"
+						data-ng-if="err.param =='contact_number'">{{err.msg}}</div>
+					<div data-ng-show="submitted && locationForm.contact_number.$invalid">
+						<span class="help-block" data-ng-show="locationForm.contact_number.$error.required">
+							 Please enter contact number</span>
+					</div>
+					<span class="text-danger" data-ng-show="locationForm.contact_number.$error.pattern">
+							 Please enter Number</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group">
+					<label class="col-md-3 control-label">Square meters</label>
+					<div class="col-md-9">
+						<input type="number" name="square_feet" data-ng-model="location.square_feet" class="form-control" placeholder="Square meters">
+						<div class="text-danger" data-ng-repeat="err in error.data" data-ng-if="err.param =='square_feet'">{{err.msg}}</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-actions">
+					<div class="row">
+						<div class="col-md-offset-4 col-md-8 text-right">
+							<button type="button" class="btn default" data-ng-click="cancelLocation()">Cancel</button>
+							<button type="button" class="btn dark" data-ng-click="update(locationForm.$valid)">Update</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		 </form>
+		</div>
+	   </div>
+	 </div>
+	<!-- map section-->
+	 <div class="col-md-5">
+        <div class="portlet light bordered clearfix">
+            <div class="portlet-title">
+                <div class="caption">
+                   <span class="caption-subject font-dark sbold uppercase">Map</span><h6 class="visible-lg-inline visible-md-inline visible-sm-inline visible-xs-inline"> (Fill all address fields for location)</h6>
+                 </div>
+                    </div>
+                  <div class="form" style="left:0">
+                      <div data-ng-include="'/company/views/map.html'"></div>
+                    </div>
+           </div>
+       </div>
+ </div>
+</div>
+</section>

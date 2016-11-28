@@ -1,0 +1,282 @@
+
+.notif-scroller {
+    width: auto;
+    height: 250px;
+    overflow-y: scroll;
+}
+
+.notif-scroller::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: rgba(66,118,164,.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(66,118,164,.3);
+}
+
+.notif-scroller::-webkit-scrollbar {
+    width: 8px;
+    background-color: rgba(66,118,164,.3);
+}
+
+.notif-scroller::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: rgba(66,118,164,.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(66,118,164,.3);
+}
+
+.notif-unread: {
+    background: rgba(152,180,205,.4);
+}
+
+.has-error .form-control,
+.has-error .checkbox,
+.has-error .checkbox-inline,
+.has-error .control-label,
+.has-error .help-block,
+.has-error .radio,
+.has-error .radio-inline,
+.has-error.checkbox label,
+.has-error.checkbox-inline label,
+.has-error.radio label,
+.has-error.radio-inline label {
+    color: #ed6b75 !important;
+    border-color: #ed6b75 !important;
+}
+/*
+.scrollx {
+    overflow-x: auto;
+}*/
+
+/*Alias for .scrollx because of refactoring issues*/
+.x-scroll {
+    overflow-x: auto;
+}
+.col-half {
+    width: 4% !important;
+}
+
+.angular-ui-tree-handle {
+    width: 100% !important;
+    height: auto;
+    min-height: 40px !important;
+    padding: 10px 10px;
+
+    color: #7c9eb2;
+    border: 1px solid #dae2ea;
+    background: #f8faff;
+}
+
+.tree-node-content {
+    margin: 10px 0 !important;
+}
+
+.mr10 {
+    margin-right: 10px;
+}
+
+.page-sidebar-closed .page-sidebar .page-sidebar-menu.page-sidebar-menu-closed:hover  li > a > .title {
+    display: inline !important;
+    padding-left: 0 !important;
+}
+
+.page-sidebar-closed .page-sidebar .page-sidebar-menu.page-sidebar-menu-closed:hover li > a > i {
+    margin-right: 5px;
+}
+
+.audit-due {
+    background-color: #e7505a !important;
+}
+
+.mt-list-item.audit-due-border {
+    border-color: #e7505a !important;
+    border-bottom-color: #e7ecf1 !important;
+}
+
+.mt-list-item.audit-due-border:hover {
+    background-color: rgba(231,80,80,.3) !important;
+}
+
+.audit-immedt {
+    background-color: #f4d03f !important;
+}
+
+.mt-list-item.audit-immedt-border {
+    border-color: #f4d03f !important;
+    border-bottom-color: #e7ecf1 !important;
+}
+
+.mt-list-item.audit-immedt-border:hover {
+    background-color: rgba(244,220,0,.3) !important;
+}
+
+.audit-7day {
+    background-color: #2ab4c0 !important;
+}
+
+.mt-list-item.audit-7day-border {
+    border-color: #2ab4c0 !important;
+    border-bottom-color: #e7ecf1 !important;
+}
+
+.mt-list-item.audit-7day-border:hover {
+    background-color: rgba(191, 237, 241,.5) !important;
+}
+.button-spacing {
+    margin-right: 5px;
+}
+
+.mt20{
+    margin-top: 20px;
+}  
+
+.ml5{
+    margin-left: 5px;
+} 
+
+.form-control-60{
+    display: inline; 
+    width: 60%;
+}
+
+
+.todo-add-button{
+    font-size: 14px!important;
+    margin: 0!important;
+}
+
+.todo-add-button.remove:hover {
+    background-color: #e7505a !important;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.mt-list-item {
+    cursor: pointer !important;
+}
+
+.list-toggle {
+    cursor: default !important;
+}
+
+input[type="text"].form-control {
+    height: 38px !important;
+}
+
+input[type="password"].form-control {
+    height: 38px !important;
+}
+
+input[type="date"].form-control {
+    height: 38px !important;
+}
+
+input[type="number"].form-control {
+    height: 38px !important;
+}
+
+input[type="tel"].form-control {
+    height: 38px !important;
+}
+.training-col-lg{
+    width:15%;
+}
+.training-col-xs{
+    width:1%;
+}
+.mb20{
+    margin-bottom: 20px;
+}
+.mb10{
+    margin-bottom: 10px;
+}
+.white-bg {
+    background-color: #ffffff !important;
+}
+.selectBackColor {
+    background-color: #f7f9fa;
+}
+.unassignedStatus > p > span:first-child {
+    font-weight: bold;
+}
+.unassignedStatus, .declineStatus {
+    background-color: #efd5d5;
+}
+.pendingStatus {
+    background-color: #f5f2c7
+}
+.completedStatus {
+    background-color: #d6f1cd
+}
+.approvedStatus {
+    background-color: #c9c9fa;
+}
+.todoList {
+    padding: 15px 10px 25px 10px!important;
+    margin: 0 0 10px 0!important;
+}
+.todoList > p {
+    color: #3a3a3a!important;
+}
+.todo-blue {
+    color: #2d52b8;
+}
+.easy-pie-chart .number{
+    width:200px;
+    height: 200px;
+    line-height: 200px;
+    font-size: 40px !important;
+}
+.todo-div {
+    background-color: #f7f9fa;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+.mt15 {
+    margin-top: 15px;
+}
+.trainingTable thead tr th a {
+    display: block;
+}
+.pointerCursor {
+    cursor: pointer;
+}
+.mt-element-list .list-simple.mt-list-container ul > .mt-list-item > .list-datetime {
+  width: 80px!important;
+}
+.mt-element-list .list-simple.mt-list-container ul > .mt-list-item > .list-item-content {
+    padding: 0!important;
+}
+
+.form-group-no-margin-bottom {
+    margin-bottom: 0 !important;
+}
+
+.form-group-margin-bottom > .input-group-addon {
+    border: 0;
+    background-color: transparent !important;
+    border-bottom: 1px solid #868e97 !important;
+}
+
+.datepicker > input {
+    height: 30px;
+    padding-left: 5px;
+}
+.orangebtn{
+	background-color: rgb(254,80,0);
+    color: #fff;
+    border: 1px solid rgb(255,142,78);
+}
+.orangebtn:hover{
+    color: #fff;
+}
+#clickable{
+	position:absolute;
+    width:55px;
+    height:25px;
+}
+@media (max-width: 325px){
+    .page-footer {
+        position: relative !important;
+    }
+}
+.paddingleft0{
+     padding-left: 0px !important;
+}

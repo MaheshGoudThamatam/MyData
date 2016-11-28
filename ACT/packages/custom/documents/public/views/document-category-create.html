@@ -1,0 +1,50 @@
+<section data-ng-controller="DocumentsController">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="form col-md-offset-2 col-md-6" style="left:0">
+                    <form role="form" name="docCategoryForm" class="form-horizontal" data-ng-submit="createDocCategory(docCategoryForm.$valid)" novalidate confirm-unsaved>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="form-group" ng-class="{'has-error' : submittedDocCategory && docCategoryForm.name.$invalid}">
+                                    <label mean-token="'create-name'" class="col-md-3 control-label">Name
+                                        <span class="required" aria-required="true"> * </span>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <input name="name" data-ng-model="docCategory.name" class="form-control" type="text" placeholder="Name" required />
+                                        <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='name'">{{err.msg}}</div>
+                                        <div ng-show="submittedDocCategory && docCategoryForm.name.$invalid">
+                                            <span class="text-danger" ng-show="docCategoryForm.name.$error.required">Please enter name.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group" ng-class="{'has-error' : submittedDocCategory && docCategoryForm.description.$invalid}">
+                                    <label mean-token="'create-description'" class="col-md-3 control-label">Description
+                                        <span class="required" aria-required="true"> * </span>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <textarea name="description" data-ng-model="docCategory.description" class="form-control" placeholder="Description" required></textarea>
+                                        <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='description'">{{err.msg}}</div>
+                                        <div ng-show="submittedDocCategory && docCategoryForm.description.$invalid">
+                                            <span class="text-danger" ng-show="docCategoryForm.description.$error.required">Please enter description.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-actions" style="clear: both;">
+                                <div class="col-sm-12 text-right">
+                                    <button type="button" class="btn default" data-ng-click="cancelDocCategory();">Cancel</button>
+                                    <button mean-token="'create-submit'" type="submit" class="btn dark">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

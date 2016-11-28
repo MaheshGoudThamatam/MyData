@@ -1,0 +1,76 @@
+<section data-ng-controller="DocumentsController" data-ng-init="findOneDocument();findAllDocCategory();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="form col-md-offset-2 col-md-6" style="left: 0">
+                    <form role="form" name="documentForm" class="form-horizontal" data-ng-submit="updateDocument(documentForm.$valid)" novalidate confirm-unsaved>
+                        <div class="form-body">
+                            <div class="row">
+                                <div class="form-group" ng-class="{'has-error' : submitted && documentForm.docCategory.$invalid}">
+                                    <label mean-token="'create-name'" class="col-md-3 control-label">Category<span class="required" aria-required="true"> *
+								</span>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <select name="docCategory" data-ng-model="document.document_category" class="form-control" required>
+                                            <option value="" disabled>Select Document Category</option>
+                                            <option data-ng-repeat="docCategory in docCategoryArray" value="{{docCategory._id}}">{{docCategory.name}}</option>
+                                        </select>
+                                         <div ng-show="submitted && documentForm.docCategory.$invalid">
+                                            <span class="text-danger" ng-show="documentForm.docCategory.$error.required">Please select document category</span>
+                                        </div>
+                                        <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='document_category'">{{err.msg}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group" ng-class="{'has-error' : submitted && documentForm.title.$invalid}">
+                                    <label mean-token="'create-name'" class="col-md-3 control-label">Name
+                                        <span class="required" aria-required="true"> * </span>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <input name="title" data-ng-model="document.title" class="form-control" type="text" placeholder="Name" required />
+                                        <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='title'">{{err.msg}}</div>
+                                        <div ng-show="submitted && documentForm.title.$invalid">
+                                            <span class="text-danger" ng-show="documentForm.title.$error.required">Please
+											enter name.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group" ng-class="{'has-error' : submitted && documentForm.description.$invalid}">
+                                    <label mean-token="'create-description'" class="col-md-3 control-label">Description <span class="required" aria-required="true"> * </span>
+                                    </label>
+                                    <div class="col-md-9">
+                                        <textarea name="description" data-ng-model="document.description" class="form-control" placeholder="Description" required></textarea>
+                                        <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='description'">{{err.msg}}</div>
+                                        <div ng-show="submitted && documentForm.description.$invalid">
+                                            <span class="text-danger" ng-show="documentForm.description.$error.required">Please
+											enter description.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-md-9 col-md-offset-3">
+                            <div class="btn dark" ng-if="!attachdocuments" ngf-select="attachDocument($file)">Upload document</div>
+                            <p ng-if="attachdocuments">
+                                {{attachdocuments}} <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeDocument()" ng-if="attachdocuments"> </i>
+                            </p>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-actions" style="clear: both;">
+                                <div class="col-sm-12 text-right">
+                                    <button type="button" class="btn default" data-ng-click="cancelDocument();">Cancel</button>
+                                    <button mean-token="'create-submit'" type="submit" class="btn dark">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

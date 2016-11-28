@@ -1,0 +1,84 @@
+<section data-ng-controller="UserController" data-ng-init="checkDataUsers()">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-title">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="col-sm-12">
+                                <div class="caption pull-left">
+                                    <!-- <i class="icon-settings font-dark"></i> -->
+                                    <span class="caption-subject font-dark sbold uppercase">
+                                        Success List
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <table class="table table-condensed table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    first name
+                                </th>
+                                <th class="text-center">
+                                    last name
+                                </th>
+                                <th class="text-center">
+                                    email
+                                </th>
+                                <th class="text-center">
+                                    sites
+                                </th>
+                                 <th class="text-center">
+                                    errors
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class = "{'success' :(successlist.errors.length <= 0), 'danger':  (successlist.errors.length > 0)}" data-ng-repeat="successlist in resultUsersSet.success" >
+                                <td>
+                                    {{successlist.firstname}}
+                                </td>
+                                <td>
+                                    {{successlist.lastname}}
+                                </td>
+                                <td>
+                                    {{successlist.email}}
+                                </td>
+                                <td>
+                                    {{successlist.userBuildings}}
+                                </td>
+                                <td ng-if = "successlist.errors.length > 0">
+                                    <span ng-repeat="error in successlist.errors">
+                                        {{error}}
+                                        <span ng-hide="$last">
+                                            ,
+                                        </span>
+                                    </span>
+                                </td>
+                                <td  ng-if = "successlist.errors.length <= 0">
+                                    User Saved
+                                </td>
+                            </tr>
+                            <tr data-ng-hide="resultUsersSet.success.length > 0">
+                                <td colspan="8" ng-if ="successlist.errors.length <= 0">
+                                    No error list found
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions" style="clear: both;">
+        <div class="col-sm-12 text-right">
+            <button class="btn default" ng-click="cancelRedirectList()" type="button">
+                Back
+            </button>
+        </div>
+    </div>
+</section>

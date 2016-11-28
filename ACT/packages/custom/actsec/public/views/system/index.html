@@ -1,0 +1,286 @@
+<section class="welcome container-fluid" data-ng-controller="IndexController"  ng-init="checkAdminData()">
+    <div class="col-md-12 row">
+        <div class="row">
+            <div class="col-md-offset-4 col-md-4">
+                <!--begin: widget 1-1 -->
+                <div class="mt-widget-1">
+                    <div class="mt-img">
+                        <img ng-src="{{loggedUser.profileImage}}">
+                        </img>
+                    </div>
+                    <div class="mt-body">
+                        <h3 class="mt-username">
+                            {{loggedUser.firstname}} {{loggedUser.lastname}}
+                        </h3>
+                        <p class="mt-user-title">
+                            {{loggedUser.role.name}}
+                        </p>
+                    </div>
+                </div>
+                <!--end: widget 1-1 -->
+            </div>
+            <!-- MAY require in future-->
+            <!--                     <div class="col-md-4">
+                        <!--begin: widget 1-2 -->
+            <!-- <div class="mt-widget-1">
+                            <div class="mt-img">
+                                <img src="/actsec/assets/pages/media/users/avatar80_7.jpg"> </div>
+                            <div class="mt-body">
+                                <h3 class="mt-username">Jason Baker</h3>
+                                <p class="mt-user-title"> Lorem Ipsum is simply dummy text. </p>
+                            </div>
+                        </div> -->
+            <!--end: widget 1-2 
+                    </div> -->
+        </div>
+        <div class="row mt20" ng-show = "loggedUser.role._id != config.roles.SUPER_ADMIN">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="row">
+                    <div class="col-md-offset-2 col-md-3">
+                        <div class="input-group bootstrap-touchspin">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default bootstrap-touchspin-down" ng-click="previousYear();" style="height:38px;" type="button">
+                                    <i aria-hidden="true" class="fa fa-angle-left">
+                                    </i>
+                                </button>
+                            </span>
+                            <span class="input-group-addon bootstrap-touchspin-prefix" style="display: none;">
+                            </span>
+                            <input class="form-control" id="touchspin_5" name="demo3_21" style="display: block;" type="text" value="{{year}}">
+                                <span class="input-group-addon bootstrap-touchspin-postfix" style="display: none;">
+                                </span>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default bootstrap-touchspin-up" ng-click="nextYear();" style="height:38px;" type="button">
+                                        <i aria-hidden="true" class="fa fa-angle-right">
+                                        </i>
+                                    </button>
+                                </span>
+                            </input>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" data-ng-model="dateObj.month" name="Month" required="">
+                            <option selected="selected" value="all">
+                                All
+                            </option>
+                            <option value="1">
+                                January
+                            </option>
+                            <option value="2">
+                                February
+                            </option>
+                            <option value="3">
+                                March
+                            </option>
+                            <option value="4">
+                                April
+                            </option>
+                            <option value="5">
+                                May
+                            </option>
+                            <option value="6">
+                                June
+                            </option>
+                            <option value="7">
+                                July
+                            </option>
+                            <option value="8">
+                                August
+                            </option>
+                            <option value="9">
+                                September
+                            </option>
+                            <option value="10">
+                                October
+                            </option>
+                            <option value="11">
+                                November
+                            </option>
+                            <option value="12">
+                                December
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-1 ">
+                        <button class="btn green" ng-click="monthAssign()" type="submit">
+                            Apply
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt20" style="padding:30px 0;">
+            <div class="col-md-offset-2 col-md-4 text-center" ng-show = "checkFeature(config.features.AUDIT)">
+                <div class="easy-pie-chart">
+                    <div class="number transactions">
+                        <span>
+                            {{auditDetail.percentage  | number:1}}%
+                        </span>
+                        <div easypiechart="" options="easyPieoptions" percent="auditDetail.percentage">
+                        </div>
+                    </div>
+                    <a class="title" href="javascript:;">
+                        Audit completion
+                    </a>
+                </div>
+            </div>
+            <div class="margin-bottom-10 visible-sm">
+            </div>
+            <div class="col-md-4" ng-show = "checkFeature(config.features.SECURITY_TASK)">
+                <div class="easy-pie-chart">
+                    <div class="number transactions">
+                        <span>
+                            {{percent2 | number:1}}%
+                        </span>
+                        <div easypiechart="" options="easyPieoptions" percent="percent2">
+                        </div>
+                    </div>
+                    <a class="title" href="javascript:;">
+                        Security Task Completion
+                    </a>
+                </div>
+            </div>
+            <div class="margin-bottom-10 visible-sm">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-show = "checkFeature(config.features.AUDIT)">
+                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                    <div class="visual">
+                        <i class="fa fa-comments">
+                        </i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span data-counter="counterup">
+                                {{auditDetail.totalAudits}}
+                            </span>
+                        </div>
+                        <div class="desc">
+                            Audits
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-show = "checkFeature(config.features.COMPANY)">
+                <a class="dashboard-stat dashboard-stat-v2 blue" href="#">
+                    <div class="visual">
+                        <i class="fa fa-comments">
+                        </i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span data-counter="counterup">
+                                {{companies}}
+                            </span>
+                        </div>
+                        <div class="desc">
+                            Total Companies
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-show = "checkFeature(config.features.SECURITY_TASK)">
+                <a class="dashboard-stat dashboard-stat-v2 green" href="#">
+                    <div class="visual">
+                        <i class="fa fa-shopping-cart">
+                        </i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span data-counter="counterup">
+                                {{securitytaskDetail.count}}
+                            </span>
+                        </div>
+                        <div class="desc">
+                            Security Tasks
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-show = "checkFeature(config.features.SECURITY_TASK)">
+                <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                    <div class="visual">
+                        <i class="fa fa-globe">
+                        </i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span data-counter="counterup">
+                            </span>
+                            {{securitytaskDetail.securitytime}}
+                        </div>
+                        <div class="desc">
+                            Total Hours
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-show = "checkFeature(config.features.SECURITY_TASK)">
+                <a class="dashboard-stat dashboard-stat-v2 red" href="#">
+                    <div class="visual">
+                        <i class="fa fa-bar-chart-o">
+                        </i>
+                    </div>
+                    <div class="details">
+                        <div class="number">
+                            <span data-counter="counterup">
+                                0
+                            </span>
+                            {{securitytaskDetail.securityCosts}}
+                        </div>
+                        <div class="desc">
+                            Total Cost
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6" ng-show = "checkFeature(config.features.INCIDENT)">
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption ">
+                            <span class="caption-subject font-dark bold uppercase">
+                                Incidents
+                            </span>
+                            <span class="caption-helper">
+                                Incidents reported in {{dateObj.month}} {{year}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="col-md-12">
+                            <div style="height: 400px;">
+                                <am-chart id="incidentChart" options="amChartOptions">
+                                </am-chart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6" ng-show = "checkFeature(config.features.TRAINING) && trainingDetail.length > 0 ">
+                <div class="portlet light ">
+                    <div class="portlet-title">
+                        <div class="caption ">
+                            <span class="caption-subject font-dark bold uppercase">
+                                Trainings
+                            </span>
+                            <span class="caption-helper">
+                                Overall statistics of completed trainings
+                            </span>
+                        </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="col-md-12">
+                            <div style="height: 400px;">
+                                <am-chart id="trainingChart" options="amChartdata">
+                                </am-chart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

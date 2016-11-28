@@ -1,0 +1,155 @@
+<!-- BEGIN Audit Category FORM -->
+<section data-ng-controller="AuditCategoryController">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="portlet light bordered clearfix">
+				<div class="form">
+					<form name="auditCatForm" class="form-horizontal" role="form"
+						data-ng-submit="create(auditCatForm.$valid)" novalidate confirm-unsaved>
+						<div class="form-body">
+							<div class="form-group"
+								data-ng-class="{ 'has-error' : submitted && auditCatForm.audit_category_name.$invalid }">
+								<label mean-token="'create-categoryname'"
+									class="col-md-3 control-label">Audit Category Name</label>
+								<div class="col-md-6">
+									<input type="text" name="audit_category_name"
+										class="form-control" placeholder="Audit Category Name"
+										data-ng-model="auditCategory.name" required>
+									<div class="text-danger" data-ng-repeat="err in error.data"
+										data-ng-if="err.param =='name'">{{err.msg}}</div>
+									<div
+										data-ng-show="submitted && auditCatForm.audit_category_name.$invalid">
+										<span class="help-block"
+											data-ng-show="auditCatForm.audit_category_name.$error.required">Please
+											enter Audit Category Name</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group"
+								data-ng-class="{ 'has-error' : submitted && auditCatForm.description.$invalid }">
+								<label mean-token="'create-description'"
+									class="col-md-3 control-label">Description</label>
+								<div class="col-md-6">
+									<textarea name="description" class="form-control"
+										placeholder="Description"
+										data-ng-model="auditCategory.description" rows="3" required></textarea>
+									<div class="text-danger" data-ng-repeat="err in error.data"
+										data-ng-if="err.param =='description'">{{err.msg}}</div>
+									<div
+										data-ng-show="submitted && auditCatForm.description.$invalid">
+										<span class="help-block"
+											data-ng-show="auditCatForm.description.$error.required">Please
+											enter Description</span>
+									</div>
+								</div>
+							</div>
+							<div class="form-group"
+								data-ng-class="{ 'has-error' : submitted && auditCatForm.description.$invalid }">
+								<div class="col-md-offset-3 col-md-6 ">
+									<a class="btn blue " data-toggle="modal" href="#basic">New
+										Question <i class="fa fa-plus"> </i>
+									</a>
+								</div>
+							</div>
+							<div class="modal fade" id="basic" tabindex="-1" role="basic"
+								aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-hidden="true" ng-click="resetVars();"></button>
+											<h4 class="modal-title">Add Question</h4>
+										</div>
+										<div class="modal-body">
+											<div class="form-group">
+												<div class="col-md-12">
+													<textarea name="question" data-ng-model="questionStr"
+														class="form-control" placeholder="Question" rows="3"></textarea>
+													<p class="text-danger" ng-show="Qerr">Please enter
+														question</p>
+												</div>
+												<div class="col-md-12">
+													<input  name="check" ng-model="securityTask" type="checkbox">
+                                                    <label>
+                                                        Security task
+                                                    </label> 
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn dark"
+												ng-click="addQuestion(questionStr)">Add</button>
+											<button type="button" class="btn default"
+												data-dismiss="modal" ng-click="resetVars();">Cancel</button>
+										</div>
+									</div>
+									<!--modal-content -->
+								</div>
+								<!--modal-dialog -->
+							</div>
+							<div class="modal fade" id="edit" tabindex="-1" role="basic"
+								aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-hidden="true" ng-click="resetVars();"></button>
+											<h4 class="modal-title">Edit Question</h4>
+										</div>
+										<div class="modal-body">
+											<div class="form-group">
+												<div class="col-md-12">
+													<textarea name="question" data-ng-model="questionStr"
+														class="form-control" placeholder="Question" rows="3"></textarea>
+													<p class="text-danger" ng-show="Qerr">Please enter
+														question</p>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn dark"
+												ng-click="updateQuestion(questionStr)">Update</button>
+											<button type="button" class="btn default"
+												data-dismiss="modal" ng-click="resetVars();">Cancel</button>
+										</div>
+									</div>
+									<!--modal-content -->
+								</div>
+								<!--modal-dialog -->
+							</div>
+							<div class="col-md-6 col-md-offset-3">
+								<tree-dnd tree-data="auditQuestions" tree-control="my_tree"
+									template-url="tree-dnd-template-render.html" enable-drop="true"
+									enable-drag="true" icon-leaf="none"></tree-dnd>
+							</div>
+							<div class="col-sm-12 text-right">
+								<button type="button" class="btn default"
+									data-ng-click="cancel()">Cancel</button>
+								<button type="submit" class="btn dark">Submit</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- END Audit Category FORM -->
+<script type="text/ng-template" id="tree-dnd-template-render.html">
+<div ng-class="(treeData.length > 0) ? '' : 'list-group-item '" ?>
+    <ul tree-dnd-nodes>
+        <li tree-dnd-node="node" ng-repeat="node in treeData track by node.__hashKey__" ng-show="node.__visible__" compile="expandingProperty.cellTemplate" ng-include="'tree-dnd-template-fetch.html'"></li>
+    </ul>
+</div>
+</script>
+<script type="text/ng-template" id="tree-dnd-template-fetch.html">
+<div class="list-group-item text-info" ng-class="(node.__selected__ ? 'list-group-item-success ':' ') + $node_class" ng-click="onClick(node)" ng-style="expandingProperty.cellStyle ? expandingProperty.cellStyle : {}">
+    <a class="btn btn-default" type="button" tree-dnd-node-handle><span class="glyphicon glyphicon-sort"></span></a>&nbsp;&nbsp;
+    <strong>{{ node.__index__ + 1 }}. {{node.audit_question}}</strong>
+    <div class="pull-right">
+        <a class="btn btn-default" type="button"  data-toggle="modal" href="#basic" ng-click="setQuestionIndex(node.__index__);"><span class="glyphicon glyphicon-plus"></span></a>
+        <a class="btn btn-default" type="button"   href="#edit" ng-click="findQuest(node)"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a class="btn btn-default orangebtn" type="button" ng-click="tree.remove_node(node);"><span class="glyphicon glyphicon-remove"></span></a>
+    </div>
+</div>
+</script>

@@ -1,0 +1,264 @@
+<section data-ng-controller="CompanyController">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-md-7">
+                <div class="portlet light bordered clearfix">
+                    <div class="form" style="left:0">
+                        <form role="form" name="companyForm" class="form-horizontal" data-ng-submit="create(companyForm.$valid)" novalidate confirm-unsaved>
+                            <div class="form-body">
+                                <div class="mt-element-step">
+                                    <div class="row step-line">
+                                        <div class="col-md-6 companyBar mt-step-col first active">
+                                            <div class="mt-step-number bg-white">1</div>
+                                            <div class="mt-step-title uppercase">Company</div>
+                                            <div class="mt-step-content">Add Company details & Address</div>
+                                        </div>
+                                        <div class="col-md-6 managerBar mt-step-col last">
+                                            <div class="mt-step-number bg-white">2</div>
+                                            <div class="mt-step-title uppercase">Security Manager</div>
+                                            <div class="mt-step-content">Add Security Manager</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="page1">
+                                    <div class="row">
+                                        <div class="form-group" ng-class="{'has-error' : submitted && companyForm.name.$invalid}">
+                                            <label mean-token="'create-name'" class="col-md-3 control-label">Company Name
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="name" data-ng-model="company.company_name" class="form-control" placeholder="Company Name" required>
+                                                <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='company_name'">{{err.msg}}</div>
+                                                <div ng-show="submitted && companyForm.name.$invalid">
+                                                    <span class="text-danger" ng-show="companyForm.name.$error.required">Please enter Company Name</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group" ng-class="{'has-error' : submitted && companyForm.addressLine1.$invalid}">
+                                            <label mean-token="'create-addressLine1'" class="col-md-3 control-label">Address Line 1
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <textarea class="form-control" rows="3" name="addressLine1" data-ng-model="company.address_line_1" placeholder="Address Line 1" ng-change="fetchMap(company)" required></textarea>
+                                                <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='address_line_1'">{{err.msg}}</div>
+                                                <div ng-show="submitted && companyForm.addressLine1.$invalid">
+                                                    <span class="text-danger" ng-show="companyForm.addressLine1.$error.required">Please enter the Address</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label mean-token="'create-addressLine2'" class="col-md-3 control-label">Address Line 2</label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="addressLine2" data-ng-model="company.address_line_2" class="form-control" placeholder="Address Line 2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group" ng-class="{'has-error' : submitted && companyForm.city.$invalid}">
+                                            <label mean-token="'create-city'" class="col-md-3 control-label">City
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="city" ng-change="fetchMap(company)" data-ng-model="company.city" class="form-control" placeholder="City" required>
+                                                <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='city'">{{err.msg}}</div>
+                                                <div ng-show="submitted && companyForm.city.$invalid">
+                                                    <span class="text-danger" ng-show="companyForm.city.$error.required">Please enter City</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group" ng-class="{'has-error' : submitted && companyForm.country.$invalid}">
+                                            <label mean-token="'create-country'" class="col-md-3 control-label">Country
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="country" ng-change="fetchMap(company)" data-ng-model="company.country" class="form-control" placeholder="Country" required>
+                                                <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='country'">{{err.msg}}</div>
+                                                <div ng-show="submitted && companyForm.country.$invalid">
+                                                    <span class="text-danger" ng-show="companyForm.country.$error.required">Please enter the Country</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group" ng-class="{'has-error' : submitted && companyForm.zipcode.$invalid}">
+                                            <label mean-token="'create-zipcode'" class="col-md-3 control-label">Zipcode
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="zipcode" data-ng-model="company.zipcode" class="form-control" placeholder="Zipcode" required>
+                                                <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='zipcode'">{{err.msg}}</div>
+                                                <div ng-show="submitted && companyForm.zipcode.$invalid">
+                                                    <span class="text-danger" ng-show="companyForm.zipcode.$error.required">Please enter Zipcode</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="form-group" ng-class="{'has-error' : submitted && companyForm.contact_number.$invalid}">
+                                            <label mean-token="'create-contact_number'" class="col-md-3 control-label">Telephone Number
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="contact_number" data-ng-model="company.contact_number" class="form-control" placeholder="Contact Number" required>
+                                                <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='contact_number'">{{err.msg}}</div>
+                                                <div ng-show="submitted && companyForm.contact_number.$invalid">
+                                                    <span class="text-danger" ng-show="companyForm.contact_number.$error.required">Please enter Telephone Number</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && companyForm.registration_number.$invalid}">
+                                        <label mean-token="'create-registration_number'" class="col-md-3 control-label">Registration Number
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="registration_number" data-ng-model="company.registration_number" class="form-control" placeholder="Registration Number" required>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='registration_number'">{{err.msg}}</div>
+                                            <div ng-show="submitted && companyForm.registration_number.$invalid">
+                                                <span class="text-danger" ng-show="companyForm.registration_number.$error.required">Please enter Registration Number</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div><div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && companyForm.customer_reference.$invalid}">
+                                        <label mean-token="'create-customer_reference'" class="col-md-3 control-label">Customer Reference
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="customer_reference" data-ng-model="company.customer_reference" class="form-control" placeholder="Customer Reference" required>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='customer_reference'">{{err.msg}}</div>
+                                            <div ng-show="submitted && companyForm.customer_reference.$invalid">
+                                                <span class="text-danger" ng-show="companyForm.customer_reference.$error.required">Please enter Customer Reference</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </div>
+                                        <div class="form-actions" style="clear: both;">
+                                            <div class="col-sm-12 text-right">
+                                                <button type="button" class="btn default" data-ng-click="cancel();">Cancel</button>
+                                                <button type="button" class="btn dark" data-ng-click="nextPage(companyForm.$valid,company);">Next</button>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div ng-if="page2">
+                                <div class="row">
+                                        <label class="control-label"><strong>Security Managers</strong></label>
+                                        <div ng-repeat="err in error.data" ng-if="err.param =='security_manager'">{{err.msg}}</div>
+                                        <div class="form-group" ng-class="{'has-error' : submittedPage2 && companyForm.title.$invalid}">
+                                            <label mean-token="'create-title'" class="col-md-3 control-label">Title
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="title" data-ng-model="company.security_manager.title" class="form-control" placeholder="Title" required>
+                                                <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='title'">{{err.msg}}</div>
+                                                <div ng-show="submittedPage2 && companyForm.title.$invalid">
+                                                    <span class="text-danger" ng-show="companyForm.title.$error.required">Please enter Security Manager Title</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div ng-repeat="err in error.data" ng-if="err.param =='security_manager'">{{err.msg}}</div>
+                                        <div class="form-group" ng-class="{'has-error' : submittedPage2 && companyForm.firstname.$invalid}">
+                                            <label mean-token="'create-firstname'" class="col-md-3 control-label">First name
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="firstname" data-ng-model="company.security_manager.firstname" class="form-control" placeholder="First Name" required>
+                                                <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='firstname'">{{err.msg}}</div>
+                                                <div ng-show="submittedPage2 && companyForm.firstname.$invalid">
+                                                    <span class="text-danger" ng-show="companyForm.firstname.$error.required">Please enter Security Manager Firstname</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    <div ng-repeat="err in error.data" ng-if="err.param =='security_manager'">{{err.msg}}</div>
+                                        <div class="form-group" ng-class="{'has-error' : submittedPage2 && companyForm.lastname.$invalid}">
+                                            <label mean-token="'create-lastname'" class="col-md-3 control-label">Last name
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="lastname" data-ng-model="company.security_manager.lastname" class="form-control" placeholder="Last Name" required>
+                                                <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='lastname'">{{err.msg}}</div>
+                                                <div ng-show="submittedPage2 && companyForm.lastname.$invalid">
+                                                    <span class="text-danger" ng-show="companyForm.lastname.$error.required">Please enter Security Manager Lastname</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="form-group" ng-class="{'has-error' : submittedPage2 && companyForm.email.$invalid}">
+                                            <label mean-token="'create-email'" class="col-md-3 control-label">Email
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                    <i class="fa fa-envelope"></i>
+                                                </span>
+                                                    <input type="email" data-ng-pattern="/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/" name="email" data-ng-model="company.security_manager.email" class="form-control" placeholder="Email Id" required>
+                                                </div>
+                                                <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='email'">{{err.msg}}</div>
+                                                <div ng-show="submittedPage2 && companyForm.email.$invalid">
+                                                    <span class="text-danger" ng-show="companyForm.email.$error.required">Please enter Security Manager Email id</span>
+                                                    <span class="text-danger" data-ng-show="companyForm.email.$error.pattern">Please enter Valid Email</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    <div ng-repeat="err in error.data" ng-if="err.param =='security_manager'">{{err.msg}}</div>
+                                        <div class="form-group" ng-class="{'has-error' : submittedPage2 && companyForm.phone.$invalid}">
+                                            <label mean-token="'create-phone'" class="col-md-3 control-label">Telephone Number
+                                                <span class="required" aria-required="true"> * </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input type="text" name="phone" data-ng-model="company.security_manager.phone" class="form-control" placeholder="Telephone Number" required>
+                                                <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='phone'">{{err.msg}}</div>
+                                                <div ng-show="submittedPage2 && companyForm.phone.$invalid">
+                                                    <span class="text-danger" ng-show="companyForm.phone.$error.required">Please enter Security Manager Telephone Number</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="form-actions" style="clear: both;">
+                                            <div class="col-sm-12 text-right">
+                                                <button type="button" class="btn dark" data-ng-click="previousPage(company);">Previous</button>
+                                                <button type="button" class="btn default" data-ng-click="cancel();">Cancel</button>
+                                                <button mean-token="'create-submit'" type="submit" class="btn dark">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="portlet light bordered clearfix">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="caption-subject font-dark sbold uppercase">Map</span>
+                            <h6 class="visible-lg-inline visible-md-inline visible-sm-inline visible-xs-inline"> (Fill all address fields for location)</h6>
+                        </div>
+                    </div>
+                    <div class="form" style="left:0">
+                        <div data-ng-include="'/company/views/map.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

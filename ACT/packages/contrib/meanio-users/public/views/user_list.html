@@ -1,0 +1,88 @@
+<section data-ng-controller="UserController" data-ng-init="getUsers()">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-title">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <input class="form-control" ng-model="tableFilter" placeholder="Search.." type="text">
+                                    </input>
+                                </div>
+                                <div class="col-xs-6 btn-group pull-right">
+                                    <button class="btn blue pull-right" data-ng-click="newUsers()" id="sample_editable_1_new">
+                                        New User
+                                        <i class="fa fa-plus">
+                                        </i>
+                                    </button>
+                                
+                                            <button class = "pull-right btn blue button-spacing" ng-click="bulkUploadRedirect()">
+                                                Bulk Upload
+                                            </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <div class="col-md-12">
+                        <table class="table table-condensed table-bordered table-striped" data-ng-show="userData.length > 0" ng-table="tableParams">
+                            <tr ng-repeat="row in $data">
+                                <td data-title="'First Name'" sortable="'firstname'">
+                                    {{row.firstname}}
+                                </td>
+                                <td data-title="'Last Name'" sortable="'lastname'">
+                                    {{row.lastname}}
+                                </td>
+                                <td data-title="'Email'" sortable="'email'">
+                                    {{row.email}}
+                                </td>
+                                <td data-title="'Role'" sortable="'role'">
+                                    {{row.role.name}}
+                                </td>
+                                <td class="col-sm-1 col-half" data-title="'Actions'">
+                                    <div class="btn-group">
+                                        <a aria-expanded="false" class="btn blue" data-toggle="dropdown" href="javascript:;">
+                                            <i class="fa fa-wrench">
+                                            </i>
+                                            <i class="fa fa-angle-down">
+                                            </i>
+                                        </a>
+                                        <ul class="dropdown-menu pull-right">
+                                            <li>
+                                                <a ng-click="edit(row._id)">
+                                                    <i class="fa fa-pencil-square-o">
+                                                    </i>
+                                                    Edit
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a ng-click="delete(row)">
+                                                    <i class="fa fa-trash-o">
+                                                    </i>
+                                                    Delete
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr data-ng-show="!tableParams.settings().dataset.length">
+                                <td colspan="11">
+                                    No User matched your filter condition.
+                                </td>
+                            </tr>
+                        </table>
+                        <div data-ng-show="!userData.length>0">
+                            <label>
+                                No Users Available
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

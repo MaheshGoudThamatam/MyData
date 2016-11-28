@@ -1,0 +1,4 @@
+<ng-map  scale-control="true" center="{{address}}" zoom="{{zoomLevel}}">
+	<marker ng-if="address" position="{{address}}" title="{{address.title}}" on-dragend="dragFn();" draggable="{{dragMarker}}"></marker>
+</ng-map>
+<small>Note:You can move the marker to select the location</small>

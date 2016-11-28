@@ -1,0 +1,141 @@
+<section data-ng-controller="BuildingController" data-ng-init="findOne();locationFilter();">
+    <div class="row">
+        <div class="col-sm-12">
+           <div class="col-md-7">
+            <div class="portlet light bordered clearfix">
+                <div class="form" style="left:0">
+                	<form role="form" name="buildingForm" class="form-horizontal" data-ng-submit="update(buildingForm.$valid)" novalidate confirm-unsaved>
+                		<div class="form-body">	
+                			 <div class="row">
+                                 <div class="form-group" ng-class="{'has-error' : submitted && buildingForm.location.$invalid}">
+                                        <label mean-token="'edit-name'" class="col-md-3 control-label">Location Name<span class="required" aria-required="true"> * </span></label>
+                                        <div class="col-md-9">
+                                            <select name="location"  data-ng-model="building.location" class="form-control" ng-options="location._id as location.name for location in locations" required>
+                                                <option value="" disabled>Select Location</option>
+                                            </select>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='location'">{{err.msg}}</div>
+                                            <div ng-show="submitted && buildingForm.location.$invalid">
+                                                <span class="text-danger" ng-show="buildingForm.location.$error.required">Please select Location</span>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                  </div>  
+                                    
+                                    <div class="row">
+                					<div class="form-group" ng-class="{'has-error' : submitted && buildingForm.name.$invalid}">
+                                        <label mean-token="'edit-name'" class="col-md-3 control-label">Site Name
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="name" data-ng-model="building.building_name" class="form-control" placeholder="Site Name" required>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='building_name'">{{err.msg}}</div>
+                                            <div ng-show="submitted && buildingForm.name.$invalid">
+                                                <span class="text-danger" ng-show="buildingForm.name.$error.required">Please enter Site Name</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && buildingForm.addressLine1.$invalid}">
+                                        <label mean-token="'edit-addressLine1'" class="col-md-3 control-label">Address Line 1
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" rows="3" name="addressLine1" data-ng-model="building.address_line_1" placeholder="Address Line 1" required></textarea>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='address_line_1'">{{err.msg}}</div>
+                                            <div ng-show="submitted && buildingForm.addressLine1.$invalid">
+                                                <span class="text-danger" ng-show="buildingForm.addressLine1.$error.required">Please enter the Address</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="form-group">
+                                        <label mean-token="'edit-addressLine2'" class="col-md-3 control-label">Address Line 2</label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="addressLine2" data-ng-model="building.address_line_2" class="form-control" placeholder="Address Line 2">
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && buildingForm.city.$invalid}">
+                                        <label mean-token="'edit-city'" class="col-md-3 control-label">City<span class="required" aria-required="true"> * </span></label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="city" data-ng-model="building.city" class="form-control" placeholder="City" required>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='city'">{{err.msg}}</div>
+                                            <div ng-show="submitted && buildingForm.city.$invalid">
+                                                <span class="text-danger" ng-show="buildingForm.city.$error.required">Please enter City</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && buildingForm.country.$invalid}">
+                                        <label mean-token="'edit-country'" class="col-md-3 control-label">Country<span class="required" aria-required="true"> * </span></label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="country" data-ng-model="building.country" class="form-control" placeholder="Country" required>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='country'">{{err.msg}}</div>
+                                            <div ng-show="submitted && buildingForm.country.$invalid">
+                                                <span class="text-danger" ng-show="buildingForm.country.$error.required">Please enter the Country</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && buildingForm.zipcode.$invalid}">
+                                        <label mean-token="'edit-zipcode'" class="col-md-3 control-label">Zipcode<span class="required" aria-required="true"> * </span></label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="zipcode" data-ng-model="building.zipcode" class="form-control" placeholder="Zipcode" required>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='zipcode'">{{err.msg}}</div>
+                                            <div ng-show="submitted && buildingForm.zipcode.$invalid">
+                                                <span class="text-danger" ng-show="buildingForm.zipcode.$error.required">Please enter Zipcode</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && buildingForm.contact_number.$invalid}">
+                                        <label mean-token="'edit-contact_number'" class="col-md-3 control-label">Contact Number<span class="required" aria-required="true"> * </span></label>
+                                        <div class="col-md-9">
+                                            <input type="text" name="contact_number" data-ng-model="building.contact_number" class="form-control" placeholder="Contact Number" required>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='contact_number'">{{err.msg}}</div>
+                                            <div ng-show="submitted && buildingForm.contact_number.$invalid">
+                                                <span class="text-danger" ng-show="buildingForm.contact_number.$error.required">Please enter Contact Number</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="row">
+                                    <div class="form-actions" style="clear: both;">
+	                                    <div class="text-right">
+                                            <button type="button" class="btn default" data-ng-click="cancel();">Cancel</button>
+	                                        <button mean-token="'edit-submit'" type="submit"  class="btn dark">Update</button>
+	                                    </div>
+	                                </div>
+	                                </div>
+                		</div>
+                	</form>
+                  </div>
+                </div>
+            </div>
+             <div class="col-md-5">
+                <div class="portlet light bordered clearfix">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <span class="caption-subject font-dark sbold uppercase">Map</span><h6 class="visible-lg-inline visible-md-inline visible-sm-inline visible-xs-inline"> (Fill all address fields for location)</h6>
+                        </div>
+                    </div>
+                    <div class="form" style="left:0">
+                        <div data-ng-include="'/company/views/map.html'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

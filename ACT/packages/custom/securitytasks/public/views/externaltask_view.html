@@ -1,0 +1,207 @@
+<section data-ng-controller="ExternalTaskController" data-ng-init="findOne();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="col-md-7">
+                <div class="portlet light bordered clearfix">
+                    <div class="portlet-body">
+                        <form class="form-horizontal" name="ExternalSecurityTaskForm" novalidate="" role="form">
+                            <div class="form-body">
+                                <div class="row" data-ng-if="submittedStatus">
+                                    <div class="row">
+                                        <div class="col-md-9 col-md-offset-3">
+                                            <div class="alert alert-info">
+                                                <strong>
+                                                    Info!
+                                                </strong>
+                                                {{statusForManager}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" data-ng-class="{ 'has-error' : submitted && ExternalSecurityTaskForm.task_name.$invalid }">
+                                        <label class="col-md-3 control-label">
+                                            Task Name
+                                            <span aria-required="true" class="required">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" data-ng-model="externalsecuritytask.task_name" disabled="" name="task_name" placeholder="Task name" type="text">
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" data-ng-class="{ 'has-error' : submitted && ExternalSecurityTaskForm.description.$invalid }">
+                                        <label class="col-md-3 control-label">
+                                            Description
+                                            <span aria-required="true" class="required">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" data-ng-model="externalsecuritytask.description" disabled="" name="description" placeholder="Description" type="text">
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">
+                                            Estimated Hours
+                                            <span aria-required="true" class="required">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" data-ng-model="externalsecuritytask.estimated_hours" disabled="" name="estimated_hours" placeholder="Estimated Hours" type="number">
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">
+                                            Estimated Cost
+                                            <span aria-required="true" class="required">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" data-ng-model="externalsecuritytask.estimated_cost" disabled="" name="estimated_cost" placeholder="Estimated Cost" type="number">
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">
+                                            Actual Hours
+                                            <span aria-required="true" class="required">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" data-ng-model="externalsecuritytask.actual_hours" disabled="" name="actual_hours" placeholder="Actual Hours" type="number">
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">
+                                            Actual Cost
+                                            <span aria-required="true" class="required">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" data-ng-model="externalsecuritytask.actual_cost" disabled="" name="actual_cost" placeholder="Actual Cost" type="number">
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">
+                                            Questions(if any)
+                                        </label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" data-ng-model="externalsecuritytask.query" disabled="" name="query" placeholder="Questions">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">
+                                            Photo
+                                        </label>
+                                        <div class="col-md-9">
+                                           <a href="" ng-click="downloadPhoto(externalsecuritytask.attach_photo);"><p>{{photo}}</p></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" data-ng-if="externalsecuritytask.actual_hours && externalsecuritytask.actual_cost">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">
+                                            External user invoice
+                                        </label>
+                                        <div class="col-md-9">
+                                           <a href="" ng-click="downloadPhoto(externalsecuritytask.attach_invoice);"><p>{{invoice}}</p></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">
+                                            Comments
+                                            <span aria-required="true" class="required">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" data-ng-model="commentsEntered" name="commentsEnter" placeholder="Comments" required="">
+                                            </textarea>
+                                            <div data-ng-show="submitted && ExternalSecurityTaskForm.commentsEnter.$invalid">
+                                                <span class="help-block" data-ng-show="ExternalSecurityTaskForm.commentsEnter.$error.required">
+                                                    Please enter comments
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">
+                                            Comments Listed
+                                        </label>
+                                        <div class="col-md-9">
+                                            <ul class="paddingleft0">
+                                                <li data-ng-repeat="comments in externalsecuritytask.comments" ng-class="comments.userRole == CONFIG.roles.SECURITY_MANAGER ? 'list-group-item list-group-item-info clearfix' : 'list-group-item list-group-item-warning clearfix'">
+                                                    <span>
+                                                        {{comments.comments}}
+                                                    </span>
+                                                    <span class="badge badge-default">
+                                                        {{comments.name}}
+                                                    </span>
+                                                    <span class="badge badge-default">
+                                                        {{comments.dateEntered | date : format : timezone }}
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-offset-4 col-md-8 text-right">
+                                                <button class="btn default" data-ng-click="taskList()" type="button">
+                                                    Back
+                                                </button>
+                                                <button class="btn dark" data-ng-click="approveOrdeclinetask(ExternalSecurityTaskForm.$valid,'FOR_ESTIMATE')" data-ng-show="externalsecuritytask.status == CONFIG.status.FOR_APPROVAL" type="button">
+                                                    Decline
+                                                </button>
+                                                <button class="btn dark" data-ng-click="approveOrdeclinetask(ExternalSecurityTaskForm.$valid,'APPROVED')" data-ng-show="externalsecuritytask.status == CONFIG.status.FOR_APPROVAL" type="button">
+                                                    Approve
+                                                </button>
+                                                <button class="btn dark" data-ng-click="approveOrdeclinetask(true,'COMPLETED')" data-ng-if="externalsecuritytask.actual_cost && externalsecuritytask.actual_hours && externalsecuritytask.status == CONFIG.status.APPROVED" type="button">
+                                                    Complete
+                                                </button>
+                                                <button class="btn dark" data-ng-click="externalsecuritytask_closed(true,'CLOSED')" data-ng-show="externalsecuritytask.status == CONFIG.status.FOR_ESTIMATE" type="button">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

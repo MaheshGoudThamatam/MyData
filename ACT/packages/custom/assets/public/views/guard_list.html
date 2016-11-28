@@ -1,0 +1,76 @@
+<section data-ng-controller="GuardController" data-ng-init="findAll();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div data-ng-include = "'/assets/views/guardTabs.html'"></div>
+				<div class="col-sm-12">
+					<div class="portlet-title">
+						<div class="row">
+							<div class="form-group">
+								<div class="col-md-2">
+									<input class="form-control" placeholder="Search.." type="text" ng-model="tableFilter">
+								</div>
+								<div class="col-xs-6 btn-group pull-right">
+									<button class="btn blue  pull-right" data-ng-click="addGuard();">New Guard <i class="fa fa-plus"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="portlet-body scrollx">
+					<div class="col-sm-12">
+						<table data-ng-table="guardTable" class="table table-condensed table-bordered table-striped"  data-ng-show="guards.length > 0">
+							<tr data-ng-repeat="guard in $data">
+								<td data-title="'Guard Provider'" sortable="'guarding_provider'">{{guard.guarding_provider}}</td>
+								<td data-title="'Name'" sortable="'name'">{{guard.contact_person.name}}</td>
+								<td data-title="'Email'" sortable="'email'">{{guard.contact_person.email}}</td>
+								<td data-title="'Contact number'" sortable="'contact_number'">{{guard.contact_person.contact_number}}</td>
+								<!-- <td data-title="'Active'" sortable="'active'">{{guard.active}}</td> -->
+								<td data-title="'Actions'" class="col-sm-1 col-half">
+					    			<div class="btn-group">
+					        			<a class="btn blue" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+					            			<i class="fa fa-wrench"></i> <i class="fa fa-angle-down"></i>
+					        			</a>
+					        			<ul class="dropdown-menu pull-right">
+					            			<li>
+					                			<a data-ng-click="editGuard(guard._id);">
+					                    			<i class="fa fa-pencil-square-o"></i>Edit
+					                			</a>
+					            			</li>
+					            			<!--  To be implemented later -->
+	                                        <!-- <li data-ng-if="!guard.active">
+	                                             <a data-ng-click="activate(guard);">
+	                                             <i class="fa fa-plus"></i> Activate </a>
+	                                         </li>
+	                                         <li data-ng-if="guard.active">
+	                                             <a data-ng-click="deactivate(guard);">
+	                                             <i class="fa fa-times"></i> Deactivate </a>
+	                                         </li> -->
+					                		 <li>
+					                    		<a data-ng-click="remove(guard);">
+					                        		<i class="fa fa-trash-o"></i>Delete
+					                    		</a>
+					                		 </li>
+					                		 <li>
+											     <a data-ng-click="cloneGuard(guard._id);"> <i
+													class="fa fa-clone"></i>Clone
+											</a>
+											</li>
+					            		</ul>
+					        		</div>
+								</td>
+							</tr>
+							<tr data-ng-show="!$data.length">
+								<td colspan = "11">No Guard service matched your filter condition.</td>
+							</tr>
+						</table>
+						<div data-ng-show="!guards.length>0">
+							<label>No Guard Service Available</label>
+						</div>
+					</div>
+				</div>
+        	</div>
+    	</div>
+    </div>
+</section>

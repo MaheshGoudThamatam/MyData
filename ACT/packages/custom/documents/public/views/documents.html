@@ -1,0 +1,71 @@
+<section data-ng-controller="DocumentsController"
+    data-ng-init="findAllDocCategory();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-title">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-4">
+                            <div class="form-group clearfix">
+                                <label class=" control-label">Document Category</label>
+                                <select name="docCategory" class="form-control"
+                                    data-ng-options="docCategory._id as docCategory.name for docCategory in docCategoryArray"
+                                    data-ng-change="findDocuments(docCategory);"
+                                    data-ng-model="docCategory.name" required>
+                                    <option value="" disabled>Select Document Category</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-4">
+                                <input class="form-control" placeholder="Search.." type="text"
+                                ng-model="tableFilter">
+                            </div>
+                            <div class="col-xs-6 btn-group pull-right">
+                                <button class="btn blue  pull-right"
+                                data-ng-click="addDocument();">
+                                New Document <i class="fa fa-plus"> </i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body scrollx">
+                    <table ng-table="documentsTable"
+                        class="table table-condensed table-bordered table-striped"
+                        data-ng-show="documents.length > 0">
+                        <tr ng-repeat="document in $data">
+                            <td data-title="'Name'" sortable="'document_name'">{{document.title}}</td>
+                            <td data-title="'Description'" sortable="'description'">{{document.description}}</td>
+                            <td data-title="'Download Attachment'"><a href="" ng-click="downloadAttachedDocument(document.documentCompletepath);">{{document.documentUpload}}</a></td>
+                            <td data-title="'Actions'" class="col-sm-1 col-half">
+                                <div class="btn-group">
+                                    <a class="btn blue" href="javascript:;" data-toggle="dropdown"
+                                        aria-expanded="false"> <i class="fa fa-wrench"></i> <i
+                                        class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a data-ng-click="editDocument(document)"> <i
+                                            class="fa fa-pencil-square-o"></i>Edit
+                                        </a></li>
+                                        <li><a data-ng-click="deleteDocument(document)"> <i
+                                            class="fa fa-trash-o"></i>Delete
+                                        </a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-ng-show="!$data.length">
+                            <td colspan="11">No documents matched your filter condition.</td>
+                        </tr>
+                    </table>
+                    <div data-ng-show="!documents.length>0">
+                        <label>No documents avialable</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

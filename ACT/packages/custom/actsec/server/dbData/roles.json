@@ -1,0 +1,150 @@
+{ 
+    "_id" : ObjectId("57837bfe114e3cca4d50f5d4"), 
+    "__v" : NumberInt(0), 
+    "admin" : false, 
+    "company" : ObjectId("576bd49583a78922644012a7"), 
+    "dashboard" : [
+
+    ], 
+    "description" : "Employee of the company", 
+    "isActive" : false, 
+    "name" : "Employee", 
+    "permissions" : {
+        "577a43146acff4282876e355" : {
+            "read" : true
+        }, 
+        "5779f7af6acff4282876e346" : {
+            "read" : true
+        }
+    }, 
+    "pristine" : true, 
+    "system" : false
+}
+{ 
+    "_id" : ObjectId("57679c41ea599c8421988554"), 
+    "__v" : NumberInt(0), 
+    "admin" : false, 
+    "company" : ObjectId("576bd49583a78922644012a7"), 
+    "dashboard" : [
+
+    ], 
+    "description" : "The super admin role.", 
+    "isActive" : false, 
+    "name" : "Super Admin", 
+    "permissions" : {
+        "5776130637336f226c926338" : {
+            "delete" : true, 
+            "update" : true, 
+            "read" : true, 
+            "create" : true
+        }, 
+        "577a43146acff4282876e355" : {
+            "read" : true
+        }, 
+        "57691cae83a789226440129f" : {
+            "read" : true, 
+            "create" : true, 
+            "update" : true, 
+            "delete" : true
+        }, 
+        "5779f7f86acff4282876e34c" : {
+            "read" : true, 
+            "create" : true, 
+            "update" : true, 
+            "delete" : true
+        }
+    }, 
+    "pristine" : true, 
+    "system" : true
+}
+{ 
+    "_id" : ObjectId("57837b76114e3cca4d50f5d3"), 
+    "__v" : NumberInt(0), 
+    "admin" : false, 
+    "company" : ObjectId("576bd49583a78922644012a7"), 
+    "dashboard" : [
+
+    ], 
+    "description" : "Company admin role", 
+    "isActive" : false, 
+    "name" : "Security Manager", 
+    "permissions" : {
+        "577612f637336f226c926336" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }, 
+        "57691cae83a789226440129f" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }, 
+        "5779f76f6acff4282876e342" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }, 
+        "577a43146acff4282876e355" : {
+            "read" : true
+        }, 
+        "5779f78a6acff4282876e344" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }, 
+        "5779f7df6acff4282876e34a" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }, 
+        "5779f7f86acff4282876e34c" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }, 
+        "5779f7af6acff4282876e346" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }, 
+        "5779f7cc6acff4282876e348" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }, 
+        "5779f88a6acff4282876e352" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }, 
+        "57a86b386acff4188e7d045a" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }, 
+        "57a86c1e6acff4188e7d045c" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }, 
+        "5779f8476acff4282876e34e" : {
+            "read" : true, 
+            "create" : true, 
+            "delete" : true, 
+            "update" : true
+        }
+    }, 
+    "pristine" : true, 
+    "system" : false
+}

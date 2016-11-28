@@ -1,0 +1,139 @@
+<!-- BEGIN SAMPLE FORM PORTLET-->
+<section data-ng-controller="UserController" data-ng-init="initLocBuildUpdate();findUser();getRoleSelect();checkLocation();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                    </div>
+                </div>
+                <div class=" form" style="left:0">
+                    <form class="form-horizontal" name="userEditForm" role="form" confirm-unsaved>
+                        <div class="form-body">
+                            <div class="col-sm-12 ">
+                                <div class="form-group" ng-class="{'has-error' : submitted && userEditForm.title.$invalid}">
+                                    <label class="col-md-3 control-label">
+                                        Title<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input class="form-control" name="title" ng-model="user.title" placeholder="Title" required="" type="text">
+                                            <div ng-show="submitted && userEditForm.title.$invalid">
+                                                <span class="text-danger" ng-show="userEditForm.title.$error.required">
+                                                    Please enter title
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-12 text-danger" ng-repeat = "error in err.data" ng-if = "error.param == 'title'">
+                                        {{error.msg}}</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" ng-class="{'has-error' : submitted && userEditForm.firstname.$invalid}">
+                                    <label class="col-md-3 control-label">
+                                        First Name<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input class="form-control" name="firstname" ng-model="user.firstname" placeholder="Enter first name" required="" type="text">
+                                            <div ng-show="submitted && userEditForm.firstname.$invalid">
+                                                <span class="text-danger" ng-show="userEditForm.firstname.$error.required">
+                                                    Please enter the first name
+                                                </span>
+                                            </div>
+                                            <div class="col-xs-12 text-danger" ng-repeat = "error in err.data" ng-if = "error.param == 'firstname'">
+                                        {{error.msg}}</div>
+                                    </div>
+                                </div>
+                            
+                                <div class="form-group" ng-class="{'has-error' : submitted && userEditForm.lastname.$invalid}">
+                                    <label class="col-md-3 control-label">
+                                        Last Name<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input class="form-control" name="lastname" ng-model="user.lastname" placeholder="Enter text" required="" type="text" />
+                                        <div ng-show="submitted && userEditForm.lastname.$invalid">
+                                                <span class="text-danger" ng-show="userEditForm.lastname.$error.required">
+                                                Please enter the last name
+                                            </span>
+                                        </div>
+                                          <div class="col-xs-12 text-danger" ng-repeat = "error in err.data" ng-if = "error.param == 'lastname'">
+                                        {{error.msg}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">
+                                        Email Address<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-envelope">
+                                                </i>
+                                            </span>
+                                            <input class="form-control" name="email" ng-model="user.email" placeholder="Email Address" ng-disabled = true type="email" />
+                                        </div>
+                                        <div class="col-xs-12 text-danger" ng-show="submitted">
+                                            <span ng-show="userEditForm.email.$error.required">
+                                                Please enter the email
+                                            </span>
+                                        </div>
+                                          <div class="col-xs-12 text-danger" ng-repeat = "error in err.data" ng-if = "error.param == 'email'">
+                                            {{error.msg}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error' : submitted && userEditForm.roles.$invalid}">
+                                    <label class="col-md-3 control-label" disabled="">
+                                        Roles<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <select class="form-control" name="roles" ng-model="user.role._id" ng-change="roleIsSecurityManagerUpdate();" required>
+                                            <option value="" disabled>Please Select</option>
+                                            <option ng-repeat="role in roleArray" value="{{role._id}}">
+                                                {{role.name}}
+                                            </option>
+                                        </select>
+                                        <div ng-show="submitted && userEditForm.roles.$invalid">
+                                            <span class="text-danger" ng-show="userEditForm.roles.$error.required">Please add roles</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error' : submitted && userEditForm.phone.$invalid}">
+                                    <label class="col-md-3 control-label">
+                                        Telephone Number<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input class="form-control" name="phone" ng-model="user.profile.phone" placeholder="Telephone Number" required="" type="text" />
+                                        <div ng-show="submitted && userEditForm.phone.$invalid">
+                                            <span class="text-danger" ng-show="userEditForm.phone.$error.required">
+                                                Please enter Telephone number
+                                            </span>
+                                        </div>
+                                        <div class="col-xs-12 text-danger" ng-repeat = "error in err.data" ng-if = "error.param == 'profile.phone'">{{error.msg}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group" ng-class="{'has-error' : submitted && !isBuildingSelected}">
+                                    <label class="col-md-3 control-label">
+                                        Assign Sites<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <div id="tree"></div>
+                                        <div class="text-danger" ng-if="submitted && !isBuildingSelected">Please Select a Site</div>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                    </form>
+                
+                <div class="form-actions" style="clear: both;">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn default" type="button" ng-click = "cancelRedirect()">
+                            Cancel
+                        </button>
+                        <button class="btn dark" data-ng-click="updateUser(USERS.URL_PATH.USER_LIST,userEditForm.$valid)" mean-token="'create-submit'" type="button">
+                            Update
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

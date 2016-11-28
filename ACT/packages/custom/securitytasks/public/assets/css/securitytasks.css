@@ -1,0 +1,50 @@
+.securitytasks-example span {
+    font-weight: bold;
+}
+
+
+.portlet .dashboard-stat:last-child{
+	margin-bottom: 20px;
+}
+
+
+.taskName{
+	font-size: 14px;
+	 font-weight: 600;
+	 background:#fff;
+	 margin-bottom: 20px;
+	 box-shadow: 0px 1px 20px rgba(0,0,0,.2);
+}
+
+.taskName .uppercase{
+	 letter-spacing: 1px;
+    word-spacing: 1.5px;
+    font-size:18px;
+}
+
+.subtaskName{
+	font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.subtaskName h4{
+	    font-weight: 400;
+        font-size: 16px;	
+}
+
+.subtaskName hr{
+	margin:	 5px 0;
+}
+
+
+.taskName .taskNameTable{
+	margin-bottom:  5px;
+}
+
+
+.table-responsive .taskTable{
+	border: 1px solid #eee; 
+}
+

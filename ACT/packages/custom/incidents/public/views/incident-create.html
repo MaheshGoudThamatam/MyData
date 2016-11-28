@@ -1,0 +1,184 @@
+<div class="page-content-wrapper" data-ng-controller="incidentController" ng-init="loadCompanyonToken();getIncidentTypes()">
+    <div class="col-md-offset-1 col-md-10 clearfix" ng-hide="descriptionPage">
+        <div class="col-sm-12 mt20" ng-hide="loggedin">
+            <h3 class="page-title">
+                Incident
+                <small>
+                    management
+                </small>
+            </h3>
+            <hr>
+            </hr>
+        </div>
+        <div class="col-sm-12">
+            <div class="light bordered clearfix">
+                <h4>
+                    What do you want to report ?
+                </h4>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12" ng-repeat = "incidenttype in incidenttypes" ng-click="showDescPage(incidenttype);">
+                        <a class="dashboard-stat dashboard-stat-v2 purple" href="#">
+                            <div class="visual">
+                                <i class="fa fa-exclamation-triangle">
+                                </i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="1349">
+                                        {{incidenttype.incidenttype}}
+                                    </span>
+                                </div>
+                                <div class="desc">
+                                    {{incidenttype.description}}
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 text-right">
+            <button class="btn btn-lg default" ng-click="cancelIncident();" type="button">
+                Cancel
+            </button>
+        </div>
+    </div>
+    <div class="col-md-offset-1 col-md-10 clearfix" ng-show="descriptionPage">
+        <div class="col-sm-12 mt20" ng-hide="loggedin">
+            <h3 class="page-title">
+                Incident
+                <small>
+                    create
+                </small>
+            </h3>
+            <hr>
+            </hr>
+        </div>
+        <div class="col-sm-12">
+            <div class=" light bordered clearfix">
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-sm-12">
+                            Reporting incident of type
+                            <span style="    font-weight: 600;
+    letter-spacing: 1px;">
+                                {{selectedIncident | uppercase}}
+                            </span>
+                            .
+                        </label>
+                    </div>
+                    <form class="form-horizontal" name="incidentForm" novalidate="" role="form" confirm-unsaved>
+                        <div class="col-md-offset-2 ">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="control-label">
+                                                Locations
+                                                <span aria-required="true" class="required">
+                                                    *
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select class="bs-select form-control" data-ng-change="userlocationBuilding(incidentObj.location,company._id)" data-ng-model="incidentObj.location" data-ng-options="location._id as location.name for location in companyLocaitons" name="location" required="">
+                                                <option disabled="" value="">
+                                                    Select location
+                                                </option>
+                                            </select>
+                                            <div ng-show="submitted && incidentForm.location.$invalid">
+                                                <span class="text-danger" ng-show="incidentForm.location.$error.required">
+                                                    Please enter location
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <div class="col-md-3">
+                                            <label class="control-label">
+                                                Sites
+                                                <span aria-required="true" class="required">
+                                                    *
+                                                </span>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select class="bs-select form-control" data-ng-model="incidentObj.building" data-ng-options="building._id  as building.building_name for building in buildings" name="building" required="">
+                                                <option disabled="" value="">
+                                                    Select site
+                                                </option>
+                                            </select>
+                                            <div ng-show="submitted && incidentForm.building.$invalid">
+                                                <span class="text-danger" ng-show="incidentForm.building.$error.required">
+                                                    Please enter site
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form" style="left:0">
+                                    <div class="form-body">
+                                        <div class="form-group" ng-class="{'has-error' : submitted && incidentForm.description.$invalid}">
+                                            <div class="col-md-3">
+                                                <label class="control-label">
+                                                    Description
+                                                    <span aria-required="true" class="required">
+                                                        *
+                                                    </span>
+                                                </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <textarea class="form-control" data-ng-model="incidentObj.description" name="description" placeholder="Describe what happened" required="" rows="4">
+                                                </textarea>
+                                                <div class="text-danger" ng-if="err.param =='description'" ng-repeat="err in error.data">
+                                                    {{err.msg}}
+                                                </div>
+                                                <div ng-show="submitted && incidentForm.description.$invalid">
+                                                    <span class="text-danger" ng-show="incidentForm.description.$error.required">
+                                                        Please enter Description
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <div class="btn dark pull-left" ngf-select="addIncidentPhoto($file)" ng-if="!incidentPhotoUploaded">
+                                                    Attach Photo
+                                                </div>
+												<p ng-if="incidentPhotoUploaded"> {{incidentPhotoUploaded}} <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeIncidentPhoto()" ng-if="incidentPhotoUploaded"> </i>
+												</p>
+											</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12 text-right">
+                                                <hr>
+                                                    <button class="btn default" ng-click="cancelDescPage();" type="button">
+                                                        Back
+                                                    </button>
+                                                    <button class="btn dark" mean-token="'create-submit'" ng-click="submitDescription(incidentForm.$valid, company._id);" type="submit">
+                                                        Report
+                                                    </button>
+                                                </hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-footer" ng-hide="loggedin" style="bottom: 0;  position: absolute; right: 0;">
+    <div class="page-footer-inner text-right">
+        2016 © Actsec
+    </div>
+    <div class="scroll-to-top">
+        <i class="icon-arrow-up">
+        </i>
+    </div>
+</div>

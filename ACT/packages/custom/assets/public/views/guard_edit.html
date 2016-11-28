@@ -1,0 +1,584 @@
+<section data-ng-controller="GuardController" data-ng-init="findOne();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-body clearfix">
+                    <div data-ng-include="'/assets/views/guardTabs.html'">
+                    </div>
+                    <div class="col-sm-12 row">
+                        <div class="portlet light bordered clearfix">
+                            <div class="form" style="left:0">
+                                <form class="form-horizontal" name="guardForm" novalidate="" role="form" confirm-unsaved>
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.guardProvider.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Guard Provider
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.guarding_provider" name="guardProvider" placeholder="Guard provider" required="" type="text">
+                                                            <div class="text-danger" data-ng-if="err.param =='guarding_provider'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.guardProvider.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.guardProvider.$error.required">
+                                                                    Please enter guard provider
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.name.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Contact Person
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.contact_person.name" name="name" placeholder="Contact Person Name" required="" type="text">
+                                                            <div class="text-danger" data-ng-if="err.param =='contact_person.name'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.name.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.name.$error.required">
+                                                                    Please enter contact person name
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.email.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Email
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.contact_person.email" name="email" placeholder="Email" required="" type="email">
+                                                            <div class="text-danger" data-ng-if="err.param =='contact_person.email'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.email.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.email.$error.required">
+                                                                    Please enter contact person email
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.contact_number.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Contact Number
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.contact_person.contact_number" name="contact_number" placeholder="Contact number" required="" type="text">
+                                                            <div class="text-danger" data-ng-if="err.param =='contact_person.contact_number'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.contact_number.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.contact_number.$error.required">
+                                                                    Please enter contact number
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <div class="mt-checkbox-inline">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="guard.service.stationary_service" id="inlineCheckbox21" type="checkbox" value="true">
+                                                                    Stationary Service
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="guard.service.mobile_service" id="inlineCheckbox22" type="checkbox" value="true">
+                                                                    Mobile Service
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <div class="mt-checkbox-inline">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="guard.service.reception_service" id="inlineCheckbox21" type="checkbox" value="true">
+                                                                    Reception Service
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="guard.service.scheduled_patrols" id="inlineCheckbox22" type="checkbox" value="true">
+                                                                    Scheduled Patrols
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <div class="mt-checkbox-inline">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="guard.service.scheduled_patrols_k9" id="inlineCheckbox21" type="checkbox" value="true">
+                                                                    Scheduled Patrols K9
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="guard.service.response" id="inlineCheckbox22" type="checkbox" value="true">
+                                                                    Response
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.duration.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Number of hours / month
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.duration" name="duration" placeholder="Number of hours / month" required="" type="number">
+                                                            <div class="text-danger" data-ng-if="err.param =='duration'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.duration.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.duration.$error.required">
+                                                                    Please enter Number of hours / month
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.cost.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Cost
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.cost" name="cost" placeholder="Cost" required="" type="number">
+                                                            <div class="text-danger" data-ng-if="err.param =='cost'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.cost.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.cost.$error.required">
+                                                                    Please enter cost
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <div class="mt-checkbox-inline">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="guard.guarding_allTime" id="inlineCheckbox21" type="checkbox" value="true">
+                                                                    Is the site guarded at all time &nbsp;?
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.description.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Describe the guarding service
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <textarea class="form-control" data-ng-model="guard.description" name="description" placeholder="Describe the guarding service" required="" rows="3">
+                                                        </textarea>
+                                                        <div class="text-danger" data-ng-if="err.param =='description'" data-ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div data-ng-show="submitted && guardForm.description.$invalid">
+                                                            <span class="text-danger" data-ng-show="guardForm.description.$error.required">
+                                                                Please enter guarding service
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.budget.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Budget
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.budget" name="budget" placeholder="Budget" required="" type="number">
+                                                            <div class="text-danger" data-ng-if="err.param =='budget'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.budget.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.budget.$error.required">
+                                                                    Please enter budget
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Contract is valid until
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group" id="contractValidity">
+                                                            <input ng-keydown="restrictInput($event)" class="form-control" data-ng-model="guard.contract_validity" name="contract_validity" placeholder="Contract validity" type="text">
+                                                            <span class="input-group-addon add-on pointerCursor"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="text-danger" data-ng-if="err.param =='contract_validity'" data-ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.notice_period.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Notice Period
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <select class="form-control" data-ng-model="guard.notice_period" name="notice_period" required="">
+                                                            <option value="">
+                                                                Select Location
+                                                            </option>
+                                                            <option>
+                                                                1 Week
+                                                            </option>
+                                                            <option>
+                                                                2 Week
+                                                            </option>
+                                                            <option>
+                                                                3 Week
+                                                            </option>
+                                                            <option>
+                                                                4 Week
+                                                            </option>
+                                                            <option>
+                                                                5 Week
+                                                            </option>
+                                                            <option>
+                                                                6 Week
+                                                            </option>
+                                                            <option>
+                                                                7 Week
+                                                            </option>
+                                                            <option>
+                                                                8 Week
+                                                            </option>
+                                                            <option>
+                                                                9 Week
+                                                            </option>
+                                                            <option>
+                                                                10 Week
+                                                            </option>
+                                                            <option>
+                                                                11 Week
+                                                            </option>
+                                                            <option>
+                                                                12 Week
+                                                            </option>
+                                                        </select>
+                                                        <div class="text-danger" data-ng-if="err.param =='notice_period'" data-ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div data-ng-show="submitted && guardForm.notice_period.$invalid">
+                                                            <span class="text-danger" data-ng-show="guardForm.notice_period.$error.required">
+                                                                Please select notice period
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="mt-radio-list">
+                                                    <label class="mt-checkbox mt-checkbox-outline">
+                                                        <input data-ng-model="guard.reminder" name="reminder" type="checkbox" /> Send reminder when the contract can be canceled
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+												<div class="form-group" data-ng-if="guard.reminder" ng-class="{'has-error' : submitted && guardForm.contractPersonEmail.$invalid && guard.reminder}">
+													<div class="col-md-12">
+														<label class="control-label" mean-token="'create-contractPersonEmail'"> Contract Person Email <span aria-required="true" class="required"> * </span>
+														</label>
+													</div>
+													<div class="col-md-5">
+														<div class="input-group">
+															<span class="input-group-addon"> <i
+																class="fa fa-envelope"> </i>
+															</span> <input class="form-control" data-ng-model="guard.contractPersonEmail" name="contractPersonEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="Email" required="" type="email"> </input>
+														</div>
+														<div class="text-danger" ng-if="err.param =='contractPersonEmail' && guard.reminder" ng-repeat="err in error.data">{{err.msg}}</div>
+														<div ng-show="submitted && guardForm.contractPersonEmail.$invalid && guard.reminder">
+															<span class="text-danger" ng-show="guardForm.contractPersonEmail.$error.required"> Please enter contract person email </span> <span class="text-danger" data-ng-show="cameraForm.contractPersonEmail.$error.pattern">
+																Please enter Valid Email </span>
+														</div>
+													</div>
+												</div>
+											</div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.responsibleName.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Responsible for Guarding
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.guarding_responsible.name" name="responsibleName" placeholder="Guarding responsible name" required="" type="text">
+                                                            <div class="text-danger" data-ng-if="err.param =='guarding_responsible.name'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.responsibleName.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.responsibleName.$error.required">
+                                                                    Please enter guarding responsible name
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.responsibleEmail.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Guarding Responsible Email
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.guarding_responsible.email" name="responsibleEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="Guarding responsible email" required="" type="email">
+                                                            <div class="text-danger" data-ng-if="err.param =='guarding_responsible.email'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.responsibleEmail.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.responsibleEmail.$error.required">
+                                                                    Please enter guarding responsible email
+                                                                </span>
+                                                                <span class="text-danger" data-ng-show="guardForm.responsibleEmail.$error.pattern">
+                                                                    Please enter Valid Email
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.responsibleContactNumber.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Guarding Responsible Contact Number
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.guarding_responsible.contact_number" name="responsibleContactNumber" placeholder="Guarding responsible contact number" required="" type="text">
+                                                            <div class="text-danger" data-ng-if="err.param =='guarding_responsible.contact_number'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.responsibleContactNumber.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.responsibleContactNumber.$error.required">
+                                                                    Please enter guarding responsible contact number
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.buildingProviderName.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Site Provider Contact Person
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.building_providers.name" name="buildingProviderName" placeholder="Site provider name" required="" type="text">
+                                                            <div class="text-danger" data-ng-if="err.param =='building_providers.name'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.buildingProviderName.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.buildingProviderName.$error.required">
+                                                                    Please enter site provider name
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.buildingProviderEmail.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Site Provider's Email
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.building_providers.email" name="buildingProviderEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="Site providers email" required="" type="email">
+                                                            <div class="text-danger" data-ng-if="err.param =='building_providers.email'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.buildingProviderEmail.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.buildingProviderEmail.$error.required">
+                                                                    Please enter site Provider email
+                                                                </span>
+                                                                <span class="text-danger" data-ng-show="guardForm.buildingProviderEmail.$error.pattern">
+                                                                    Please enter Valid Email
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" data-ng-class="{'has-error' : submitted && guardForm.buildingProviderContactNumber.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Site Provider's Contact Number
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="guard.building_providers.contact_number" name="buildingProviderContactNumber" placeholder="Guarding responsible contact number" required="" type="text">
+                                                            <div class="text-danger" data-ng-if="err.param =='building_providers.contact_number'" data-ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div data-ng-show="submitted && guardForm.buildingProviderContactNumber.$invalid">
+                                                                <span class="text-danger" data-ng-show="guardForm.buildingProviderContactNumber.$error.required">
+                                                                    Please enter site provider contact number
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <div class="btn dark" ng-if="!attachcontractguarding" ngf-select="attachContractGuarding($file)">
+                                                            Attach contract
+                                                        </div>
+                                                        <p ng-if="attachcontractguarding">
+                                                           <a href="" ng-click="downloadAttachedDocumentGuarding(attachcontractguardingcompletepath);">
+                                                            {{attachcontractguarding}}</a>
+                                                            <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachContractGuarding()" ng-if="attachcontractguarding">
+                                                            </i>
+                                                        </p>
+                                                        <div class="btn dark" ng-if="!attachbuildingmanualguarding" ngf-select="attachBuildingManualGuarding($file)">
+                                                            Attach building manual
+                                                        </div>
+                                                        <p ng-if="attachbuildingmanualguarding">
+                                                             <a href="" ng-click="downloadAttachedDocumentGuarding(attachbuildingmanualguardingcompletepath);">
+                                                            {{attachbuildingmanualguarding}}</a>
+                                                            <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachBuildingManualGuarding()" ng-if="attachbuildingmanualguarding">
+                                                            </i>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-md-12 text-right">
+                                                    <button class="btn default" data-ng-click="cancelGuard();" type="button">
+                                                        Cancel
+                                                    </button>
+                                                    <button class="btn dark" data-ng-click="update(guardForm.$valid)" type="button">
+                                                        Update
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

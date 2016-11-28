@@ -1,0 +1,207 @@
+<section data-ng-controller="SecuritytasksController" data-ng-init="initializeData();buildingList();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="row">
+                    <div class="form" style="left:0">
+                        <form role="form" name="securirtyTaskForm" class="form-horizontal" novalidate confirm-unsaved>
+                            <div class="col-sm-6">
+                                <div class="row">
+                                    <div class=" col-md-12">
+                                        <h4 class="block">Security task details</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && securirtyTaskForm.building.$invalid}">
+                                        <label mean-token="'create-risk'" class="col-md-3 control-label">Site
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <select name="building" ng-model="securityTask.building" class="form-control" ng-options="building._id as building.building_name for building in buildings" data-ng-change="fetchRisk(securityTask.building)" required>
+                                                <option value="" disabled>Please select</option>
+                                            </select>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='building'">{{err.msg}}</div>
+                                            <div ng-show="submitted && securirtyTaskForm.building.$invalid">
+                                                <span class="text-danger" ng-show="securirtyTaskForm.building.$error.required">Please select site.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && securirtyTaskForm.risk.$invalid}">
+                                        <label mean-token="'create-risk'" class="col-md-3 control-label">Risk
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <select name="risk" ng-model="securityTask.risk" class="form-control" ng-options="risk._id as risk.name for risk in risks" ng-disabled="!securityTask.building" required>
+                                                <option value="" disabled>Please select</option>
+                                            </select>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='risk'">{{err.msg}}</div>
+                                            <div ng-show="submitted && securirtyTaskForm.risk.$invalid">
+                                                <span class="text-danger" ng-show="securirtyTaskForm.risk.$error.required">Please select Risk.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && securirtyTaskForm.name.$invalid}">
+                                        <label class="col-md-3 control-label">Task Name
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" ng-model="securityTask.task_name" name="name" class="form-control" placeholder="Name" required />
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='name'">{{err.msg}}</div>
+                                            <div ng-show="submitted && securirtyTaskForm.name.$invalid">
+                                                <span class="text-danger" ng-show="securirtyTaskForm.name.$error.required">Please enter Security task name.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && securirtyTaskForm.description.$invalid}">
+                                        <label class="col-md-3 control-label">Description
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="text" ng-model="securityTask.description" name="description" class="form-control" placeholder="Description" required />
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='description'">{{err.msg}}</div>
+                                            <div ng-show="submitted && securirtyTaskForm.description.$invalid">
+                                                <span class="text-danger" ng-show="securirtyTaskForm.description.$error.required">Please enter Description.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && securirtyTaskForm.responsiblePerson.$invalid}">
+                                        <label mean-token="'create-risk'" class="col-md-3 control-label">Responsible for action
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <select name="responsiblePerson" ng-model="securityTask.responsible_action" class="form-control" ng-options="user._id as (user.firstname + ' ' + user.lastname) for user in users" ng-disabled="!securityTask.building" required>
+                                                <option value="" disabled>Please Select</option>
+                                            </select>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='responsible_action'">{{err.msg}}</div>
+                                            <div ng-show="submitted && securirtyTaskForm.responsiblePerson.$invalid">
+                                                <span class="text-danger" ng-show="securirtyTaskForm.responsiblePerson.$error.required">Please select Person responsible for action.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && securirtyTaskForm.responsibleFollowUp.$invalid}">
+                                        <label mean-token="'create-risk'" class="col-md-3 control-label">Responsible for follow up
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <select name="responsibleFollowUp" ng-model="securityTask.responsible_followUp" class="form-control" ng-options="user._id as (user.firstname + ' ' + user.lastname) for user in users" ng-disabled="!securityTask.building" required>
+                                                <option value="" disabled>Please Select</option>
+                                            </select>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='responsible_followUp'">{{err.msg}}</div>
+                                            <div ng-show="submitted && securirtyTaskForm.responsibleFollowUp.$invalid">
+                                                <span class="text-danger" ng-show="securirtyTaskForm.responsibleFollowUp.$error.required">Please select Person responsible for follow up.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && securirtyTaskForm.cost.$invalid}">
+                                        <label class="col-md-3 control-label">Estimated Cost/Budget(Euros)
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input type="number" name="cost" class="form-control" placeholder="Cost" data-ng-model="securityTask.cost" min="50" step="50" required />
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='cost'">{{err.msg}}</div>
+                                            <div ng-show="submitted && securirtyTaskForm.cost.$invalid">
+                                                <span class="text-danger" ng-show="securirtyTaskForm.cost.$error.required">Please enter Estimated Cost/Budget of security task.</span>
+                                                <span class="text-danger" ng-show="securirtyTaskForm.cost.$error.min">Estimated Cost/Budget should be greater than 0.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" ng-class="{'has-error' : submitted && !isDeadline}">
+                                        <label class="col-md-3 control-label">Deadline
+                                            <span class="required" aria-required="true"> * </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <div class="input-group" id="deadlineDate">
+                                                <input type="text" ng-keydown="restrictInput($event)" name="deadline" class="form-control" data-ng-model="securityTask.deadline" placeholder="Deadline" />
+                                                <span class="input-group-addon add-on pointerCursor"><span class="glyphicon glyphicon-calendar"></span></span>
+                                            </div>
+                                            <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='deadline'">{{err.msg}}</div>
+                                            <div ng-show="submitted && !isDeadline">
+                                                <span class="text-danger" ng-show="submitted && !isDeadline">Please enter deadline for security task.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <form role="form" name="subTaskForm" class="form-horizontal" novalidate>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class=" col-md-12">
+                                        <h4 class="block">Sub tasks details</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-5" ng-class="{'has-error' : submitted1 && subTaskForm.subtaskName.$invalid}">
+                                                <label class="control-label">Subtask Name
+                                                <span class="required" aria-required="true"> * </span></label>
+                                                <div class="">
+                                                    <input type="text" name="subtaskName" class="form-control" placeholder="Subtask name" data-ng-model="subTask.name" required />
+                                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='name'">{{err.msg}}</div>
+                                                    <div ng-show="submitted1 && subTaskForm.subtaskName.$invalid">
+                                                        <span class="text-danger" ng-show="subTaskForm.subtaskName.$error.required">Please enter sub task name.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" ng-class="{'has-error' : submitted1 && subTaskForm.estimatedHour.$invalid}">
+                                                <label class="control-label">Estimated Hours<span class="required" aria-required="true"> * </span>
+                                                </label>
+                                                <div class="">
+                                                    <input type="number" name="estimatedHour" data-ng-model="subTask.estimated_hour" class="form-control form-control-60" placeholder="Estimated hours" min="1" required />
+                                                    <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='estimated_hour'">{{err.msg}}</div>
+                                                    <div ng-show="submitted1 && subTaskForm.estimatedHour.$invalid" class="pull-left">
+                                                        <span class="text-danger form-control-60" ng-show="subTaskForm.estimatedHour.$error.required">Please enter estimated hours.</span>
+                                                        <span class="text-danger" ng-show="subTaskForm.estimatedHour.$error.min">Please enter valid estimated hours.</span>
+                                                    </div>
+                                                    <a class="btn dark" type="button" ng-click="addSubtask(subTaskForm.$valid)">ADD</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='subTasks' && (!securityTask.subTasks || securityTask.subTasks.length<1)">{{err.msg}}</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-scrollable">
+                                            <table class="table table-bordered table-hover" ng-table="subTaskTable" data-ng-show="securityTask.subTasks.length > 0">
+                                                <tr ng-repeat="subTask in $data">
+                                                    <td data-title="'Task'" sortable="'name'">{{subTask.name}}</td>
+                                                    <td data-title="'Hours'" sortable="'estimated_hour'">{{subTask.estimated_hour}}
+                                                        <a class="todo-add-button remove" ng-click="removeSubTask(subTask)">
+                                                            <i class="fa fa-times"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </form>
+                        <div class="form-actions" style="clear: both;">
+                            <div class="text-right">
+                                <button type="button" class="btn default" data-ng-click="cancel();">Cancel</button>
+                                <button mean-token="'create-submit'" type="button" class="btn dark" data-ng-click="create(securirtyTaskForm.$valid)">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

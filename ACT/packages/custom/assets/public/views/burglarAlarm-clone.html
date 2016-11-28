@@ -1,0 +1,737 @@
+<section data-ng-controller="BurglarAlarmController" data-ng-init="findOneBurglarAlarm(); initializeYear();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-body clearfix">
+                    <div data-ng-include="'/assets/views/burglarAlarm-tabs.html'">
+                    </div>
+                    <div class="col-sm-12 row">
+                        <div class="portlet light bordered clearfix">
+                            <div class="form" style="left:0">
+                                <form class="form-horizontal" data-ng-submit="create(burglarAlarmForm.$valid)" name="burglarAlarmForm" novalidate="" role="form" confirm-unsaved>
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.burglarAlarm_provider.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-burglarAlarm_provider'">
+                                                            Burglar alarm Provider
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="burglarAlarm.burglarAlarm_provider" name="burglarAlarm_provider" placeholder="Burglar alarm Provider" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='burglarAlarm_provider'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.burglarAlarm_provider.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.burglarAlarm_provider.$error.required">
+                                                                Please enter Burglar alarm provider
+                                                            </span>
+                                                            <!-- <span class="text-danger" ng-show="burglarAlarmForm.burglarAlarm_provider.$error.min">Invalid Year!</span>
+                                                       <span class="text-danger" ng-show="burglarAlarmForm.burglarAlarm_provider.$error.max">Invalid Year!</span> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.model.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-model'">
+                                                            Model
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="burglarAlarm.model" name="model" placeholder="Burglar alarm Model" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='model'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.model.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.model.$error.required">
+                                                                Please enter Replacement Year
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.year.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-model'">
+                                                            Year
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <select class="bs-select form-control" data-ng-model="burglarAlarm.year" name="year" ng-options="year for year in yearArray" required="">
+                                                            <option disabled="" value="">
+                                                                Please Select
+                                                            </option>
+                                                            <option value="{{year}}">
+                                                                {{year}}
+                                                            </option>
+                                                        </select>
+                                                        <div class="text-danger" ng-if="err.param =='year'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.year.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.year.$error.required">
+                                                                Please enter Replacement Year
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.replacementYear.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-replacementYear'">
+                                                            Replacement Year
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <select class="bs-select form-control" data-ng-model="burglarAlarm.replacement_year" name="replacementYear" ng-options="number for number in numbers" required="">
+                                                            <option disabled="" value="">
+                                                                Please Select
+                                                            </option>
+                                                            <option value="{{number}}">
+                                                                {{number}}
+                                                            </option>
+                                                        </select>
+                                                        <div class="text-danger" ng-if="err.param =='replacement_year'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.replacementYear.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.replacementYear.$error.required">
+                                                                Please enter Replacement Year
+                                                            </span>
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.replacementYear.$error.pattern">
+                                                                Invalid Year!
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <div class="mt-checkbox-inline col-md-9">
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.panic_alarm" name="panic_alarm" type="checkbox" value="true" /> Panic alarm
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.ir_detector" name="ir_detector" type="checkbox" value="true" /> IR-detector
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.glass_break_detector" name="glass_break_detector" type="checkbox" value="true" /> Glass break detector
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-checkbox-inline col-md-9">
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.magnetic_contact" name="magnetic_contact" type="checkbox" value="true" /> Magnetic contact
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.radar_detector" name ="radar_detector" type="checkbox" value="true" /> Radar detector
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.vibration_sensors" name="vibration_sensors" type="checkbox" value="ture" /> Vibration sensors
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-checkbox-inline col-md-9">
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.flash_light_indoor" name="flash_light_indoor" type="checkbox" value="true" /> Flash light indoor
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.flash_light_outdoor" name ="flash_light_outdoor" type="checkbox" value="true" /> Flash light outdoor
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.outdoor_siren" name="outdoor_siren" type="checkbox" value="ture" /> Outdoor siren
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-checkbox-inline col-md-9">
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.indoor_siren" name="indoor_siren" type="checkbox" value="true" /> Indoor siren
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.smoke_cloak" name ="smoke_cloak" type="checkbox" value="true" /> Smoke cloak
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="burglarAlarm.type.electric_fencing" name="electric_fencing" type="checkbox" value="ture" />Electric fencing
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-3">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.alarm_point.$invalid}">
+                                                    <div class="col-sm-12">
+                                                        <label class="control-label" mean-token="'sections'">
+                                                            Number of sections
+                                                            <span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <input class="form-control" data-ng-model="burglarAlarm.sections" name="sections" placeholder="Number of sections" type="number" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6 col-md-3">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.alarm_point.$invalid}">
+                                                    <div class="col-sm-12">
+                                                        <label class="control-label" mean-token="'alarm_point'">
+                                                            Number of alarm points
+                                                            <span>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <input class="form-control" data-ng-model="burglarAlarm.alarm_point" name="alarm_point" placeholder="Number of alarm points" type="number" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.responsiblePersonName.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-responsiblePersonName'">
+                                                            Responsible for system
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="burglarAlarm.system_responsible.name" name="responsiblePersonName" placeholder="Name" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='system_responsible.name'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.responsiblePersonName.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.responsiblePersonName.$error.required">
+                                                                Please enter Responsible person name
+                                                            </span>
+                                                        </div>                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.responsiblePersonEmail.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-responsiblePersonEmail'">
+                                                            Email
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-envelope">
+                                                                </i>
+                                                            </span>
+                                                            <input class="form-control" data-ng-model="burglarAlarm.system_responsible.email" name="responsiblePersonEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="Email" required="" type="email" />
+                                                        </div>
+                                                        <div class="text-danger" ng-if="err.param =='system_responsible.email'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.responsiblePersonEmail.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.responsiblePersonEmail.$error.required">
+                                                                Please enter Responsible person email
+                                                            </span>
+                                                            <span class="text-danger" data-ng-show="burglarAlarmForm.responsiblePersonEmail.$error.pattern">
+                                                                Please enter Valid Email
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.responsiblePersonContact.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-responsiblePersonContact'">
+                                                            Contact Number
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="burglarAlarm.system_responsible.contact_number" name="responsiblePersonContact" placeholder="Contact No." required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='system_responsible.contact_number'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.responsiblePersonContact.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.responsiblePersonContact.$error.required">
+                                                                Please enter Responsible person contact number
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.externalPersonName.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-externalPersonName'">
+                                                            Alarm Reciever
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="burglarAlarm.external_person.name" name="externalPersonName" placeholder="Name" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='external_person.name'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.externalPersonName.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.externalPersonName.$error.required">
+                                                                Please enter Alarm reciever person name
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.externalPersonEmail.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-externalPersonEmail'">
+                                                            Email
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-envelope">
+                                                                </i>
+                                                            </span>
+                                                            <input class="form-control" data-ng-model="burglarAlarm.external_person.email" name="externalPersonEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="Email" required="" type="email" />
+                                                        </div>
+                                                        <div class="text-danger" ng-if="err.param =='external_person.email'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.externalPersonEmail.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.externalPersonEmail.$error.required">
+                                                                Please enter Alarm reciever person email
+                                                            </span>
+                                                            <span class="text-danger" data-ng-show="burglarAlarmForm.externalPersonEmail.$error.pattern">
+                                                                Please enter Valid Email
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5 row">
+                                                    <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.externalPersonContact.$invalid}">
+                                                        <div class="col-md-11">
+                                                            <label class="control-label" mean-token="'create-externalPersonContact'">
+                                                                Contact Number
+                                                                <span aria-required="true" class="required">
+                                                                    *
+                                                                </span>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-11">
+                                                            <input class="form-control" data-ng-model="burglarAlarm.external_person.contact_number" name="externalPersonContact" placeholder="Contact No." required="" type="text" />
+                                                            <div class="text-danger" ng-if="err.param =='external_person.contact_number'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && burglarAlarmForm.externalPersonContact.$invalid">
+                                                                <span class="text-danger" ng-show="burglarAlarmForm.externalPersonContact.$error.required">
+                                                                    Please enter Alarm reciever person contact number
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 row">
+                                                    <div class="form-group">
+                                                        <div class="col-md-10">
+                                                            <label class="control-label" mean-token="'create-idNumber'">
+                                                                Id-number
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-10">
+                                                            <input class="form-control" data-ng-model="burglarAlarm.external_person.id_number" name="idNumber" placeholder="Id number"  type="text" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="mt-checkbox-inline">
+                                                    <label class="mt-checkbox">
+                                                        <input data-ng-model="burglarAlarm.automatic" type="checkbox" value="true" /> Automatic on/off
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="col-sm-12" mean-token="'create-idNumber'">
+                                                        Weekdays
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <div class="mt-radio-inline">
+                                                            <label class="mt-radio">
+                                                                <input data-ng-model="burglarAlarm.weekdays" name="weekdays" type="radio" value="true" /> On
+                                                                <span></span>
+                                                            </label>
+                                                            <label class="mt-radio">
+                                                                <input data-ng-checked="true" data-ng-model="burglarAlarm.weekdays" name="weekdays" type="radio" value="false" /> Off
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label class="col-sm-12 " mean-token="'create-idNumber'">
+                                                        Weekends and holidays
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <div class="mt-radio-inline">
+                                                            <label class="mt-radio">
+                                                                <input data-ng-model="burglarAlarm.holidays" name="holidays" type="radio" value="true" /> On
+                                                                <span></span>
+                                                            </label>
+                                                            <label class="mt-radio">
+                                                                <input data-ng-checked="true" data-ng-model="burglarAlarm.holidays" name="holidays" type="radio" value="false" /> Off
+                                                                <span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>
+                                                    <strong>
+                                                        Service agreements burglar alarm
+                                                    </strong>
+                                                </label>
+                                                <div class="mt-checkbox-inline ">
+                                                    <label class="mt-checkbox">
+                                                        <input data-ng-model="burglarAlarm.service_agreement.emergencyDuty" type="checkbox" value="true" /> Emergency duty & troubleshooting
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                                <div class="mt-checkbox-inline">
+                                                    <label class="mt-checkbox">
+                                                        <input data-ng-model="burglarAlarm.service_agreement.annualService" type="checkbox" value="true" /> Annual service & maintenance
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.serviceProvider.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-serviceProvider'">
+                                                            Provider
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="burglarAlarm.service_provider" name="serviceProvider" placeholder="Service Provider" ng-required="(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)"" type="text" data-ng-disabled="!(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)"/>
+                                                        <div class="text-danger" ng-if="err.param =='service_provider'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.serviceProvider.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.serviceProvider.$error.required">
+                                                                Please enter Service provider
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.contactPersonName.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-contactPersonName'">
+                                                            Contact person
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="burglarAlarm.contact_person.name" name="contactPersonName" placeholder="Name" ng-required="(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)" type="text" data-ng-disabled="!(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)" />
+                                                        <div class="text-danger" ng-if="err.param =='contact_person.name'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.contactPersonName.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.contactPersonName.$error.required">
+                                                                Please enter Contact person name
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.contactPersonEmail.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-contactPersonEmail'">
+                                                            E-mail
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-envelope">
+                                                                </i>
+                                                            </span>
+                                                            <input class="form-control" data-ng-model="burglarAlarm.contact_person.email" name="contactPersonEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="Email" ng-required="(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)" type="email" data-ng-disabled="!(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)" />
+                                                        </div>
+                                                        <div class="text-danger" ng-if="err.param =='contact_person.email'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.contactPersonEmail.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.contactPersonEmail.$error.required">
+                                                                Please enter Contact person email
+                                                            </span>
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.contactPersonEmail.$error.pattern">
+                                                                Please enter Valid Email
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.contactPersonContact.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-contactPersonContact'">
+                                                            Contact Number
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="burglarAlarm.contact_person.contact_number" name="contactPersonContact" placeholder="Contact No." ng-required="(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)" type="text" data-ng-disabled="!(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)" />
+                                                        <div class="text-danger" ng-if="err.param =='contact_person.contact_number'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.contactPersonContact.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.contactPersonContact.$error.required">
+                                                                Please enter Contact person contact number
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && burglarAlarmForm.costPerYear.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-costPerYear'">
+                                                            Cost Per Year
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="burglarAlarm.cost_per_year" name="costPerYear" placeholder="Cost/Year" ng-required="(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)" type="text" data-ng-disabled="!(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)" />
+                                                        <div class="text-danger" ng-if="err.param =='cost_per_year'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && burglarAlarmForm.costPerYear.$invalid">
+                                                            <span class="text-danger" ng-show="burglarAlarmForm.costPerYear.$error.required">
+                                                                Please enter Cost per year
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="btn dark" ng-if="!attachcontractalarm" ngf-select="attachContractAlarm($file)" data-ng-disabled="!(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)">
+                                                    Attach contract
+                                                </div>
+                                                <p ng-if="attachcontractalarm">
+                                                    <a href="" ng-click="downloadAttachedDocumentBurglarAlarm(attachcontractalarmcompletepath);"> 
+                                                    {{attachcontractalarm}}</a>
+                                                    <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachContractAlarm()" ng-if="attachcontractalarm">
+                                                    </i>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-costPerYear'">
+                                                            Contract is valid untill
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <div class="input-group" id="contractValidity">
+                                                            <input class="form-control" ng-keydown="restrictInput($event)" data-ng-model="burglarAlarm.contract_validity" name="costPerYear" placeholder="Cost/Year" type="text" data-ng-disabled="!(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)" />
+                                                            <span class="input-group-addon add-on pointerCursor"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-costPerYear'">
+                                                            Period of notice
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group" id="noticePeriod">
+                                                            <input ng-keydown="restrictInput($event)" class="form-control" name="noticePeriod" data-ng-model="burglarAlarm.notice_period" placeholder="Cost/Year" type="text"  data-ng-disabled="!(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)"/>
+                                                            <span class="input-group-addon add-on pointerCursor"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                         <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="mt-radio-list">
+                                                    <label class="mt-checkbox mt-checkbox-outline">
+                                                        <input data-ng-model="burglarAlarm.reminder" name="reminder" type="checkbox" data-ng-disabled="!(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)" /> Send reminder when the contract can be canceled
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="row">
+                                        <div class="col-md-12">
+												<div class="form-group" data-ng-if="burglarAlarm.reminder" ng-class="{'has-error' : submitted && burglarAlarmForm.contractPersonEmail.$invalid && burglarAlarm.reminder}">
+													<div class="col-md-12">
+														<label class="control-label" mean-token="'create-contractPersonEmail'"> Contract Person Email <span aria-required="true" class="required"> * </span>
+														</label>
+													</div>
+													<div class="col-md-5">
+														<div class="input-group">
+															<span class="input-group-addon"> <i
+																class="fa fa-envelope"> </i>
+															</span> <input class="form-control" data-ng-model="burglarAlarm.contractPersonEmail" name="contractPersonEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="Email" required="" type="email"> </input>
+														</div>
+														<div class="text-danger" ng-if="err.param =='contractPersonEmail' && burglarAlarm.reminder" ng-repeat="err in error.data">{{err.msg}}</div>
+														<div ng-show="submitted && burglarAlarmForm.contractPersonEmail.$invalid && burglarAlarm.reminder">
+															<span class="text-danger" ng-show="burglarAlarmForm.contractPersonEmail.$error.required"> Please enter contract person email </span> <span class="text-danger" data-ng-show="cameraForm.contractPersonEmail.$error.pattern">
+																Please enter Valid Email </span>
+														</div>
+													</div>
+												</div>
+											</div>
+											</div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="btn dark" ng-if="!attachorientationdrawings" ngf-select="attachOrientationDrawings($file)" data-ng-disabled="!(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)">
+                                                            Attach orientation drawings
+                                                        </div>
+                                                        <p ng-if="attachorientationdrawings">
+                                                            <a href="" ng-click="downloadAttachedDocumentBurglarAlarm(attachorientationdrawingscompletepath);"> 
+                                                            {{attachorientationdrawings}}</a>
+                                                            <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachOrientationDrawings()" ng-if="attachorientationdrawings">
+                                                            </i>
+                                                        </p>
+                                                        <div class="btn dark" ng-if="!attachusermanual" ngf-select="attachUserManual($file)" data-ng-disabled="!(burglarAlarm.service_agreement.emergencyDuty || burglarAlarm.service_agreement.annualService)">
+                                                            Add user manual
+                                                        </div>
+                                                        <p ng-if="attachusermanual">
+                                                            <a href="" ng-click="downloadAttachedDocumentBurglarAlarm(attachusermanualcompletepath);"> 
+                                                            {{attachusermanual}}</a>
+                                                            <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachUserManual()" ng-if="attachusermanual">
+                                                            </i>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions" style="clear: both;">
+                                            <div class="col-sm-12 text-right">
+                                                <button class="btn default" data-ng-click="cancelBurglarAlarm()" type="button">
+                                                    Cancel
+                                                </button>
+                                                <button class="btn dark" mean-token="'create-submit'" type="submit">
+                                                    Clone
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

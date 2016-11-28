@@ -1,0 +1,34 @@
+
+<ul ng-controller="SidebarController" class="page-sidebar-menu page-sidebar-menu-light page-header-fixed page-sidebar-menu-fixed sidebar-scroller" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+        
+			<li class="sidebar-toggler-wrapper hide">
+				<div class="sidebar-toggler">
+					<span></span>
+				</div>
+			</li>
+			<!-- <li class="sidebar-search-wrapper">
+					<form class="sidebar-search  " action="page_general_search_3.html" method="POST">
+							<a href="javascript:;" class="remove">
+									<i class="icon-close"></i>
+							</a>
+							<div class="input-group">
+									<input type="text" class="form-control" placeholder="Search...">
+									<span class="input-group-btn">
+											<a href="javascript:;" class="btn submit">
+													<i class="icon-magnifier"></i>
+											</a>
+									</span>
+							</div>
+					</form>
+			</li> -->
+			<li class="heading">
+				<h3 class="uppercase">Navigation</h3>
+			</li>
+			<li class="nav-item start" ng-class="{'active': feature.active}" ng-repeat="feature in features">
+				<a href="{{feature.url}}" class="nav-link nav-toggle">
+					<i class="fa {{feature.icon}}"></i>
+					<span class="title">{{feature.name}}</span>
+					<span class="selected"></span>
+				</a>
+			</li>
+</ul>

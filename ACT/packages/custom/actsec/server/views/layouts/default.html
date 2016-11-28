@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html data-ng-controller="StarterController" lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml" itemscope="itemscope" itemtype="http://schema.org/Product">
+	{% include '../includes/head.html' %}
+	<body ng-class="bodyClass" ng-cloak>
+		<div id="preloader" data-loading>
+			<div class="page-spinner-bar">
+				<div class="bounce1"></div>
+				<div class="bounce2"></div>
+				<div class="bounce3"></div>
+			</div>
+		</div>
+		<div ng-show="loggedin">
+			<div data-ng-include="'/actsec/views/system/header.html'" data-role="navigation"></div>
+			<div class="clearfix"> </div>
+			<div class="page-container">
+				{% include '../includes/sidebar.html' %}
+				<div class="page-content-wrapper">
+					<div class="page-content clearfix x-scroll">
+						<div data-ng-include="'/actsec/views/system/page-header.html'"></div>
+						{% block content %}{% endblock %}
+					</div>
+				</div>
+			</div>
+			<div class="page-footer">
+				<div class="page-footer-inner text-right"> 2016 &copy; Actsec</div>
+				<div class="scroll-to-top">
+					<i class="icon-arrow-up"></i>
+				</div>
+			</div>
+		</div>
+		<div ng-if="!loggedin">
+			{% block content %}{% endblock %}
+		</div>
+		{% include '../includes/foot.html' %}
+	</body>
+</html>

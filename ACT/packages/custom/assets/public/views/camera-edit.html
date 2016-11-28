@@ -1,0 +1,833 @@
+<section data-ng-controller="CameraController" data-ng-init="findOne(); initializeYear();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-body clearfix">
+                    <div data-ng-include="'/assets/views/cameraTabs.html'">
+                    </div>
+                    <div class="col-sm-12 row">
+                        <div class="portlet light bordered clearfix">
+                            <div class="form" style="left:0">
+                                <form class="form-horizontal" confirm-unsaved="" data-ng-submit="update(cameraForm.$valid)" name="cameraForm" novalidate="" role="form">
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.cameraProvider.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-cameraProvider'">
+                                                            Camera Provider
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="camera.camera_provider" name="cameraProvider" placeholder="Camera Provider" required="" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='camera_provider'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.cameraProvider.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.cameraProvider.$error.required">
+                                                                    Please enter Camera Provider
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.model.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-model'">
+                                                            Model
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="camera.model" name="model" placeholder="Model" required="" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='model'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.model.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.model.$error.required">
+                                                                    Please enter Model
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.year.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-year'">
+                                                            Year
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <select class="bs-select form-control" data-ng-model="camera.year" name="year" ng-options="year for year in yearArray" required="">
+                                                            <option disabled="" value="">
+                                                                Please Select
+                                                            </option>
+                                                            <option value="{{year}}">
+                                                                {{year}}
+                                                            </option>
+                                                        </select>
+                                                        <div class="text-danger" ng-if="err.param =='year'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && cameraForm.year.$invalid">
+                                                            <span class="text-danger" ng-show="cameraForm.year.$error.required">
+                                                                Please enter Year
+                                                            </span>
+                                                            <span class="text-danger" ng-show="cameraForm.year.$error.pattern">
+                                                                Invalid Year!
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.replacementYear.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-replacementYear'">
+                                                            Replacement Year
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <select class="bs-select form-control" data-ng-model="camera.replacement_year" name="replacementYear" ng-options="number for number in numbers" required="">
+                                                            <option disabled="" value="">
+                                                                Please Select
+                                                            </option>
+                                                            <option value="{{number}}">
+                                                                {{number}}
+                                                            </option>
+                                                        </select>
+                                                        <div class="text-danger" ng-if="err.param =='replacement_year'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && cameraForm.replacementYear.$invalid">
+                                                            <span class="text-danger" ng-show="cameraForm.replacementYear.$error.required">
+                                                                Please enter Replacement Year
+                                                            </span>
+                                                            <span class="text-danger" ng-show="cameraForm.replacementYear.$error.pattern">
+                                                                Invalid Year!
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group">
+                                                    <div class="mt-checkbox-inline col-md-9">
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="camera.usability.dayNight" type="checkbox" value="true">
+                                                                    Day & night
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="camera.usability.outdoor" type="checkbox" value="true">
+                                                                    Outdoor
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-radio">
+                                                                <input data-ng-model="camera.usability.rotation" name="rotation" type="radio" value="180">
+                                                                    180*
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-checkbox-inline col-md-9">
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="camera.usability.indoor" type="checkbox" value="true">
+                                                                    Indoor
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-checkbox">
+                                                                <input data-ng-model="camera.usability.ptz" type="checkbox" value="true">
+                                                                    PTZ
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label class="mt-radio">
+                                                                <input data-ng-model="camera.usability.rotation" name="rotation" type="radio" value="360">
+                                                                    360*
+                                                                    <span>
+                                                                    </span>
+                                                                </input>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.name.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-name'">
+                                                            Name of camera
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="camera.name" name="name" placeholder="Name" required="" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='name'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.name.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.name.$error.required">
+                                                                    Please enter Camera name
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.resolution.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-resolution'">
+                                                            Resolution
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <!-- what will be resolution format -->
+                                                        <input class="form-control" data-ng-model="camera.resolution" name="resolution" placeholder="Resolution" required="" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='resolution'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.resolution.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.resolution.$error.required">
+                                                                    Please enter Resolution
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.place.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-resolution'">
+                                                            Describe where the camera is placed
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <textarea class="form-control" data-ng-model="camera.place" name="place" placeholder="Place" required="" rows="3">
+                                                        </textarea>
+                                                        <div class="text-danger" ng-if="err.param =='place'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && cameraForm.place.$invalid">
+                                                            <span class="text-danger" ng-show="cameraForm.place.$error.required">
+                                                                Please enter Place where camera is installed
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="btn-group">
+                                                    <label>
+                                                        <strong>
+                                                            Photos
+                                                        </strong>
+                                                    </label>
+                                                    <form name="uploadCameraForm" novalidate="" role="form">
+                                                        <p ng-if="cameraPhotos.length > 0">
+                                                            <div ng-repeat="pic in cameraPhotos">
+                                                                <a href="" ng-click="downloadAttachedDocumentCameraSystem(cameraphotocompletepaths[$index]);">
+                                                                    {{pic}}
+                                                                </a>
+                                                                <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeCameraPlaced($index)" ng-if="cameraPhotos.length>0">
+                                                                </i>
+                                                            </div>
+                                                        </p>
+                                                        <button class="btn dark text-center"  ng-show="cameraphotocompletepaths.length<1" ngf-select="attachPhoto($files)">
+                                                            Attach Photo
+                                                        </button>
+                                                        <button class="btn dark text-center"  ng-show="cameraphotocompletepaths.length>=1" ngf-select="attachPhoto($files)">
+                                                            Attach more photos
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.purpose.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-purpose'">
+                                                            Describe the purpose with the camera
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <textarea class="form-control" data-ng-model="camera.purpose" name="purpose" placeholder="Purpose" required="" rows="3">
+                                                        </textarea>
+                                                        <div class="text-danger" ng-if="err.param =='purpose'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && cameraForm.purpose.$invalid">
+                                                            <span class="text-danger" ng-show="cameraForm.purpose.$error.required">
+                                                                Please enter purpose of camera
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.responsiblePersonName.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-responsiblePersonName'">
+                                                            Responsible for system
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="camera.system_responsible.name" name="responsiblePersonName" placeholder="Name" required="" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='system_responsible.name'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.responsiblePersonName.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.responsiblePersonName.$error.required">
+                                                                    Please enter Responsible person name
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.responsiblePersonEmail.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-responsiblePersonEmail'">
+                                                            Email
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="camera.system_responsible.email" name="responsiblePersonEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="Email" required="" type="email">
+                                                            <div class="text-danger" ng-if="err.param =='system_responsible.email'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.responsiblePersonEmail.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.responsiblePersonEmail.$error.required">
+                                                                    Please enter Responsible person email
+                                                                </span>
+                                                                <span class="text-danger" data-ng-show="cameraForm.responsiblePersonEmail.$error.pattern">
+                                                                    Please enter Valid Email
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.responsiblePersonContact.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-responsiblePersonContact'">
+                                                            Contact Number
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="camera.system_responsible.contact_number" name="responsiblePersonContact" placeholder="Contact No." required="" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='system_responsible.contact_number'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.responsiblePersonContact.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.responsiblePersonContact.$error.required">
+                                                                    Please enter Responsible person contact number
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.externalPersonModel.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-externalPersonModel'">
+                                                            Model
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="camera.external_person.model" name="externalPersonModel" placeholder="Model" required="" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='external_person.model'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.externalPersonModel.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.externalPersonModel.$error.required">
+                                                                    Please enter Model
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.externalPersonProvider.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-externalPersonProvider'">
+                                                            Provider
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="camera.external_person.provider" name="externalPersonProvider" placeholder="Provider" required="" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='external_person.provider'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.externalPersonProvider.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.externalPersonProvider.$error.required">
+                                                                    Please enter Provider
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.externalPersonEmail.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-externalPersonEmail'">
+                                                            Email
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="camera.external_person.email" name="externalPersonEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="Email" required="" type="email">
+                                                            <div class="text-danger" ng-if="err.param =='external_person.email'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.externalPersonEmail.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.externalPersonEmail.$error.required">
+                                                                    Please enter External person email
+                                                                </span>
+                                                                <span class="text-danger" data-ng-show="cameraForm.externalPersonEmail.$error.pattern">
+                                                                    Please enter Valid Email
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="row">
+                                                        <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.externalPersonContact.$invalid}">
+                                                            <div class="col-md-11">
+                                                                <label class="control-label" mean-token="'edit-externalPersonContact'">
+                                                                    Telephone 
+                                                                    <span aria-required="true" class="required">
+                                                                        *
+                                                                    </span>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-11">
+                                                                <input class="form-control" data-ng-model="camera.external_person.contact_number" name="externalPersonContact" placeholder="Telephone " required="" type="text">
+                                                                    <div class="text-danger" ng-if="err.param =='external_person.contact_number'" ng-repeat="err in error.data">
+                                                                        {{err.msg}}
+                                                                    </div>
+                                                                    <div ng-show="submitted && cameraForm.externalPersonContact.$invalid">
+                                                                        <span class="text-danger" ng-show="cameraForm.externalPersonContact.$error.required">
+                                                                            Please enter External person telephone 
+                                                                        </span>
+                                                                    </div>
+                                                                </input>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="form-group">
+                                                            <div class="col-md-8">
+                                                                <label class="control-label" mean-token="'edit-idNumber'">
+                                                                    Id-number
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" data-ng-model="camera.external_person.id_number" name="idNumber" placeholder="Id number" type="text">
+                                                                </input>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="mt-checkbox-inline">
+                                                    <label class="mt-checkbox">
+                                                        <input data-ng-model="camera.approval_by_country_board" type="checkbox" value="true">
+                                                            Registration & authorization is approved by the Country Board
+                                                            <span>
+                                                            </span>
+                                                        </input>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="btn dark" ng-if="!attachdocument" ngf-select="attachDocumentation($file)">
+                                                    Attach documentation
+                                                </div>
+                                                <p ng-if="attachdocument">
+                                                    <a href="" ng-click="downloadAttachedDocumentCameraSystem(attachdocumentcompletepath);">
+                                                        {{attachdocument}}
+                                                    </a>
+                                                    <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachDocument()" ng-if="attachdocument">
+                                                    </i>
+                                                </p>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <label>
+                                                    <strong>
+                                                        Service agreements camera system
+                                                    </strong>
+                                                </label>
+                                                <div class="mt-checkbox-inline col-md-9">
+                                                    <label class="mt-checkbox">
+                                                        <input data-ng-model="camera.service_agreement.emergencyDuty" type="checkbox" value="true">
+                                                            Emergency duty & troubleshooting
+                                                            <span>
+                                                            </span>
+                                                        </input>
+                                                    </label>
+                                                </div>
+                                                <div class="mt-checkbox-inline col-md-9">
+                                                    <label class="mt-checkbox">
+                                                        <input data-ng-model="camera.service_agreement.annualService" type="checkbox" value="true">
+                                                            Annual service & maintenance
+                                                            <span>
+                                                            </span>
+                                                        </input>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.serviceProvider.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-serviceProvider'">
+                                                            Provider
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-disabled="!(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" data-ng-model="camera.service_provider" name="serviceProvider" placeholder="Service Provider" ng-required="(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='service_provider'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.serviceProvider.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.serviceProvider.$error.required">
+                                                                    Please enter Service provider
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.contactPersonName.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-contactPersonName'">
+                                                            Contact person
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-disabled="!(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" data-ng-model="camera.contact_person.name" name="contactPersonName" placeholder="Name" ng-required="(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='contact_person.name'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.contactPersonName.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.contactPersonName.$error.required">
+                                                                    Please enter Contact person name
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.contactPersonEmail.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-contactPersonEmail'">
+                                                            E-mail
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-disabled="!(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" data-ng-model="camera.contact_person.email" name="contactPersonEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="Email" ng-required="(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" type="email">
+                                                            <div class="text-danger" ng-if="err.param =='contact_person.email'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.contactPersonEmail.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.contactPersonEmail.$error.required">
+                                                                    Please enter Contact person email
+                                                                </span>
+                                                                <span class="text-danger" ng-show="cameraForm.contactPersonEmail.$error.pattern">
+                                                                    Please enter Valid Email
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.contactPersonContact.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-contactPersonContact'">
+                                                            Contact Number
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-disabled="!(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" data-ng-model="camera.contact_person.contact_number" name="contactPersonContact" placeholder="Contact No." ng-required="(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='contact_person.contact_number'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.contactPersonContact.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.contactPersonContact.$error.required">
+                                                                    Please enter Contact person contact number
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-7">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && cameraForm.costPerYear.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'edit-costPerYear'">
+                                                            Cost Per Year
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-disabled="!(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" data-ng-model="camera.cost_per_year" name="costPerYear" placeholder="Cost/Year" ng-required="(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" type="text">
+                                                            <div class="text-danger" ng-if="err.param =='cost_per_year'" ng-repeat="err in error.data">
+                                                                {{err.msg}}
+                                                            </div>
+                                                            <div ng-show="submitted && cameraForm.costPerYear.$invalid">
+                                                                <span class="text-danger" ng-show="cameraForm.costPerYear.$error.required">
+                                                                    Please enter Cost per year
+                                                                </span>
+                                                            </div>
+                                                        </input>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="btn dark" ng-if="!attachcontract" ngf-select="attachContract($file)" data-ng-disabled="!(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)">
+                                                            Attach contract
+                                                        </div>
+                                                        <p ng-if="attachcontract">
+                                                            <a href="" ng-click="downloadAttachedDocumentCameraSystem(attachcontractcompletepath);">
+                                                                {{attachcontract}}
+                                                            </a>
+                                                            <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachContract()" ng-if="attachcontract">
+                                                            </i>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-costPerYear'">
+                                                            Contract is valid untill
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <div class="input-group" id="contractValidity">
+                                                            <input class="form-control" data-ng-disabled="!(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" data-ng-model="camera.contract_validity" name="contractvalidity" ng-keydown="restrictInput($event)" placeholder="contract validity" type="text">
+                                                            </input>
+                                                            <span class="input-group-addon add-on pointerCursor">
+                                                                <span class="glyphicon glyphicon-calendar">
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label">
+                                                            Notice Period
+                                                            <span aria-required="true" class="required">
+                                                                *
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <select class="form-control" data-ng-model="camera.contractnoticeperiod" data-ng-disabled="!(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" id="notice_period" name="notice_period" ng-required="(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)">
+                                                            <option value="">
+                                                                Select Period
+                                                            </option>
+                                                            <option>
+                                                                1 Week
+                                                            </option>
+                                                            <option>
+                                                                2 Week
+                                                            </option>
+                                                            <option>
+                                                                3 Week
+                                                            </option>
+                                                            <option>
+                                                                4 Week
+                                                            </option>
+                                                            <option>
+                                                                5 Week
+                                                            </option>
+                                                            <option>
+                                                                6 Week
+                                                            </option>
+                                                            <option>
+                                                                7 Week
+                                                            </option>
+                                                            <option>
+                                                                8 Week
+                                                            </option>
+                                                            <option>
+                                                                9 Week
+                                                            </option>
+                                                            <option>
+                                                                10 Week
+                                                            </option>
+                                                            <option>
+                                                                11 Week
+                                                            </option>
+                                                            <option>
+                                                                12 Week
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="mt-radio-list">
+                                                    <label class="mt-checkbox mt-checkbox-outline">
+                                                        <input data-ng-model="camera.contractreminder" name="reminder" type="checkbox" data-ng-disabled="!(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)"/> Send reminder when the contract can be canceled
+                                                        <span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+												<div class="form-group" data-ng-if="camera.contractreminder" ng-class="{'has-error' : submitted && cameraForm.contractPersonEmail.$invalid && camera.contractreminder}">
+													<div class="col-md-12">
+														<label class="control-label" mean-token="'create-contractPersonEmail'"> Contract Person Email <span aria-required="true" class="required"> * </span>
+														</label>
+													</div>
+													<div class="col-md-5">
+														<div class="input-group">
+															<span class="input-group-addon"> <i
+																class="fa fa-envelope"> </i>
+															</span> <input class="form-control" data-ng-model="camera.contractPersonEmail" name="contractPersonEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" placeholder="Email" required="" type="email"> </input>
+														</div>
+														<div class="text-danger" ng-if="err.param =='contractPersonEmail' && camera.contractreminder" ng-repeat="err in error.data">{{err.msg}}</div>
+														<div ng-show="submitted && cameraForm.contractPersonEmail.$invalid && camera.contractreminder">
+															<span class="text-danger" ng-show="cameraForm.contractPersonEmail.$error.required"> Please enter contract person email </span> <span class="text-danger" data-ng-show="cameraForm.contractPersonEmail.$error.pattern">
+																Please enter Valid Email </span>
+														</div>
+													</div>
+												</div>
+											</div>
+                                            <div class="col-sm-12">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="btn dark" data-ng-disabled="!(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" ng-if="!attachorientationdrawingscamera" ngf-select="attachOrientationDrawingsCamera($file)">
+                                                            Attach orientation drawings
+                                                        </div>
+                                                        <p ng-if="attachorientationdrawingscamera">
+                                                            <a href="" ng-click="downloadAttachedDocumentCameraSystem(attachorientationdrawingscameracompletepath);">
+                                                                {{attachorientationdrawingscamera}}
+                                                            </a>
+                                                            <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachOrientationDrawingsCamera()" ng-if="attachorientationdrawingscamera">
+                                                            </i>
+                                                        </p>
+                                                        <div class="btn dark" data-ng-disabled="!(camera.service_agreement.emergencyDuty || camera.service_agreement.annualService)" ng-if="!attachcameradocumentation" ngf-select="attachCameraDocumentation($file)">
+                                                            Add camera documentation
+                                                        </div>
+                                                        <p ng-if="attachcameradocumentation">
+                                                            <a href="" ng-click="downloadAttachedDocumentCameraSystem(attachcameradocumentationcompletepath);">
+                                                                {{attachcameradocumentation}}
+                                                            </a>
+                                                            <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachCameraDocumentation()" ng-if="attachcameradocumentation">
+                                                            </i>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-md-12 text-right">
+                                                    <button class="btn default" data-ng-click="cancelCamera()" type="button">
+                                                        Cancel
+                                                    </button>
+                                                    <button class="btn dark" mean-token="'create-submit'" type="submit">
+                                                        Update
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

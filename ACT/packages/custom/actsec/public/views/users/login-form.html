@@ -1,0 +1,21 @@
+<h1>Actsec Login</h1>
+<p>Please login with your email address and password to access the dashboard.</p>
+<form ng-submit="login.login()" class="login-form">
+    <div class="row">
+        <div class="col-xs-6">
+            <input class="form-control form-control-solid placeholder-no-fix form-group" type="text" required id="email_block" type="email" name="email" placeholder="Email Address" ng-model="login.user.email"/>
+        </div>
+        <div class="col-xs-6">
+            <input class="form-control form-control-solid placeholder-no-fix form-group" id="password_block" name="password" type="password" placeholder="Password" ng-model="login.user.password" required/>
+        </div>
+        <div class="col-xs-12 text-danger" ng-show="login.loginError">Login Error. Please check your credentials.</div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-right">
+            <div class="forgot-password">
+                <a href="/forgot-password" id="forget-password" class="forget-password">Forgot Password?</a>
+            </div>
+            <input class="btn green" type="submit" value="Sign In" />
+        </div>
+    </div>
+</form>

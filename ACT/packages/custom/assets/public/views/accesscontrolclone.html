@@ -1,0 +1,630 @@
+<section data-ng-controller="AssetsAccessControlController" data-ng-init="findOneAccessControl();initializeYear();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-body clearfix">
+                    <div data-ng-include="'/assets/views/accesscontrolTabs.html'">
+                    </div>
+                    <div class="col-sm-12 row">
+                        <div class="portlet light bordered clearfix">
+                            <div class="form" style="left: 0">
+                                <form class="form-horizontal" name="accesscontrolForm" novalidate="" role="form" confirm-unsaved>
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.accesscontrolProvider.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-accessControl_provider'">
+                                                            Provider
+                                                            <span aria-required="true" class="required">
+																* 
+															 </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.accessControl_provider" name="accesscontrolProvider" placeholder="Provider" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='accessControl_provider'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.accesscontrolProvider.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.accesscontrolProvider.$error.required">
+																Please enter the Provider </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 ">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.model.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-model'">
+                                                            Model
+                                                            <span aria-required="true" class="required">
+																*
+																 </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.model" name="model" placeholder="Model" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='model'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.model.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.model.$error.required">
+																Please enter Model </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.year.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-year'">
+                                                            Year
+                                                            <span aria-required="true" class="required">
+																* 
+																</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <select class="bs-select form-control" data-ng-model="accessControl.year" name="year" ng-options="year for year in yearArray" required="">
+                                                            <option disabled="" value="">Please Select</option>
+                                                            <option value="{{year}}">{{year}}</option>
+                                                        </select>
+                                                        <div class="text-danger" ng-if="err.param =='year'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.year.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.year.$error.required">
+																Please enter Year </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.replacementYear.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-replacementYear'">
+                                                            Replacement Year
+                                                            <span aria-required="true" class="required"> * </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <select class="bs-select form-control" data-ng-model="accessControl.replacement_year" name="replacementYear" ng-options="year for year in numbers" required="">
+                                                            <option disabled="" value="">Please Select</option>
+                                                            <option value="{{year}}">{{year}}</option>
+                                                        </select>
+                                                        <div class="text-danger" ng-if="err.param =='replacement_year'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.replacementYear.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.replacementYear.$error.required">
+																Please enter Replacement Year </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.accesscontrolReader.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-reader'">
+                                                            Reader
+                                                            <span aria-required="true" class="required">
+																* 
+																</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.reader" name="accesscontrolReader" placeholder="Reader" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='reader'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.accesscontrolReader.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.accesscontrolReader.$error.required">
+																Please enter the Reader </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.accesscontrollock.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-lock'">
+                                                            Lock
+                                                            <span aria-required="true" class="required">
+																* 
+																</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.lock" name="accesscontrollock" placeholder="Lock" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='lock'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.accesscontrollock.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.accesscontrollock.$error.required">
+																Please enter the lock </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.responsiblename.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-responsiblename'">
+                                                            Responsible for system <span aria-required="true" class="required"> * </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.system_responsible.name" name="responsiblename" placeholder="Name" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='system_responsible.name'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.responsiblename.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.responsiblename.$error.required">
+																Please enter the responsible name </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.responsibleemail.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-responsibleemail'"> Email <span aria-required="true" class="required"> * </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.system_responsible.email" name="responsibleemail" placeholder="Email" required="" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" />
+                                                        <div class="text-danger" ng-if="err.param =='system_responsible.email'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.responsibleemail.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.responsibleemail.$error.required">
+																Please enter the email </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.responsiblecontact.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-responsiblecontact'">
+                                                            Telephone <span aria-required="true" class="required">
+																* </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.system_responsible.contact_number" name="responsiblecontact" placeholder="Telephone" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='system_responsible.contact_number'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.responsiblecontact.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.responsiblecontact.$error.required">
+																Please enter the telephone number </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.externalmodel.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-externalname'">Model <span aria-required="true" class="required"> * </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.external_person.model" name="externalmodel" placeholder="Model" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='external_person.model'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.externalmodel.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.externalmodel.$error.required">
+																Please enter the model </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.externalprovider.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-externalprovider'"> Provider
+                                                            <span aria-required="true" class="required"> * </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.external_person.provider" name="externalprovider" placeholder="Provider" required="" type="text" />
+                                                        <div class="text-danger" ng-if="err.param =='external_person.provider'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.externalprovider.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.externalprovider.$error.required">
+																Please enter the provider </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <div class="row">
+                                                        <div class="form-group" ng-class="{'has-error' : submitted &amp;&amp; accesscontrolForm.externalemail.$invalid}">
+                                                            <div class="col-md-11">
+                                                                <label class="control-label" mean-token="'create-externalemail'"> Email <span aria-required="true" class="required"> * </span>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-11">
+                                                                <input class="form-control" data-ng-model="accessControl.external_person.email" name="externalemail" placeholder="Email" required="" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" />
+                                                                <div class="text-danger" ng-if="err.param =='external_person.email'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                                <div ng-show="submitted && accesscontrolForm.externalemail.$invalid">
+                                                                    <span class="text-danger" ng-show="accesscontrolForm.externalemail.$error.required">
+																		Please enter the email </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.externalcontact.$invalid}">
+                                                            <div class="col-md-8">
+                                                               <label class="control-label" mean-token="'create-externalemail'"> Telephone
+                                                                    <span aria-required="true" class="required"> * </span>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input class="form-control" data-ng-model="accessControl.external_person.contact_number" name="externalcontact" placeholder="Telephone" required="" type="text" />
+                                                                <div class="text-danger" ng-if="err.param =='external_person.contact_number'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                                <div ng-show="submitted && accesscontrolForm.externalcontact.$invalid">
+                                                                    <span class="text-danger" ng-show="accesscontrolForm.externalcontact.$error.required">
+																		Please enter the telephone number </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.readers.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-lock'">
+                                                            Readers <span aria-required="true" class="required">
+																* </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.readers" name="readers" placeholder="Readers" required="" type="number" />
+                                                        <div class="text-danger" ng-if="err.param =='readers'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.readers.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.readers.$error.required">
+																Please enter the readers </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.nodes.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-nodes'">
+                                                            Nodes <span aria-required="true" class="required">
+																* </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.nodes" name="nodes" placeholder="Nodes" required="" type="number" />
+                                                        <div class="text-danger" ng-if="err.param == 'nodes'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.nodes.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.nodes.$error.required">
+																Please enter the nodes </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.userlicense.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-userlicense'"> License <span aria-required="true" class="required"> * </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.user_licenses" name="userlicense" placeholder="License" required="" type="number" />
+                                                        <div class="text-danger" ng-if="err.param == 'user_licenses'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                        <div ng-show="submitted && accesscontrolForm.userlicense.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.userlicense.$error.required">
+																Please enter the user license </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+										  <div class="col-md-7">
+											<label> 
+											  <strong> Service agreements camera system </strong>
+											</label>
+											<div class="mt-checkbox-inline col-md-9">
+												<label class="mt-checkbox"> 
+												 <input data-ng-model="accessControl.service_agreement.emergencyDuty" type="checkbox" value="true"> Emergency duty & troubleshooting <span> </span> </input>
+												</label>
+											</div>
+											<div class="mt-checkbox-inline col-md-9">
+												<label class="mt-checkbox"> 
+												 <input data-ng-model="accessControl.service_agreement.annualService" type="checkbox" value="true"> Annual service & maintenance <span> </span> </input>
+												</label>
+											</div>
+										</div>
+									</div>
+                                        <div class="row">
+                                            <div class="col-md-6 ">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.serviceprovider.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-serviceprovider'"> Service Provider <span aria-required="true" class="required">
+																* </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.service_provider" name="serviceprovider" placeholder="Service Provider" ng-required="(accessControl.service_agreement.emergencyDuty || accessControl.service_agreement.annualService)" type="text" data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)" />
+                                                        <div class="text-danger" ng-if="err.param == 'service_provider'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && accesscontrolForm.serviceprovider.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.serviceprovider.$error.required">
+																Please enter the service provider </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 ">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.contactpersonname.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-contactpersonname'"> Contact Person <span aria-required="true" class="required">
+																* </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.contact_person.name" name="contactpersonname" placeholder="Name" ng-required="(accessControl.service_agreement.emergencyDuty || accessControl.service_agreement.annualService)" type="text" data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)" />
+                                                        <div class="text-danger" ng-if="err.param == 'contact_person.name'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && accesscontrolForm.contactpersonname.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.contactpersonname.$error.required">
+																Please enter the contact person name </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.contactpersonemail.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-contactpersonemail'"> E-mail
+                                                            <span aria-required="true" class="required"> * </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.contact_person.email" name="contactpersonemail" placeholder="Email" ng-required="(accessControl.service_agreement.emergencyDuty || accessControl.service_agreement.annualService)" type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$" data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)" />
+                                                        <div class="text-danger" ng-if="err.param == 'contact_person.email'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && accesscontrolForm.contactpersonemail.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.contactpersonemail.$error.required">
+																Please enter the contact person email </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 ">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.contactpersonphone.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-contactpersonphone'">
+                                                            Telephone number <span aria-required="true" class="required"> * </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.contact_person.contact_number" name="contactpersonphone" placeholder="Telephone" ng-required="(accessControl.service_agreement.emergencyDuty || accessControl.service_agreement.annualService)" type="text" data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)" />
+                                                        <div class="text-danger" ng-if="err.param == 'contact_person.contact_number'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && accesscontrolForm.contactpersonphone.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.contactpersonphone.$error.required">
+																Please enter the contact person number </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.costperyear.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-costperyear'"> Cost per year
+                                                            <span aria-required="true" class="required"> * </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.cost_per_year" name="costperyear" placeholder="Cost per year" ng-required="(accessControl.service_agreement.emergencyDuty || accessControl.service_agreement.annualService)" type="number"  data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)"/>
+                                                        <div class="text-danger" ng-if="err.param == 'cost_per_year'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-if="submitted && accesscontrolForm.costperyear.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.costperyear.$error.required">
+																Please enter the contact person number </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <div class="btn dark" ng-if="!attachcontractaccesscontrol" ngf-select="attachContractAccessControl($file)" data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)">
+                                                                    Attach contract
+                                                                </div>
+                                                                <p ng-if="attachcontractaccesscontrol">
+                                                                    <a href="" ng-click="downloadAttachedDocumentAccessControl(attachcontractaccesscontrolcompletepath);">
+																		{{attachcontractaccesscontrol}}</a> <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachContractAccessControl()" ng-if="attachcontractaccesscontrol"> </i>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-contract_validity'"> Contract is valid until </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <div class="input-group" id="contractValidity">
+                                                            <input ng-keydown="restrictInput($event)" class="form-control" data-ng-model="accessControl.contract_validity" name="contract_validity" placeholder="contract validity" type="text" data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)" />
+                                                            <span class="input-group-addon add-on pointerCursor"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                        </div>
+                                                        <div class="text-danger" ng-if="err.param == 'contract_validity'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div class="text-danger" ng-if="err.param == 'contract_validity'" ng-repeat="err in error.data">{{err.msg}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.notice_period.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label"> Notice Period <span aria-required="true" class="required"> * </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <select class="form-control" data-ng-model="accessControl.notice_period" name="notice_period" ng-required="(accessControl.service_agreement.emergencyDuty || accessControl.service_agreement.annualService)" data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)">
+                                                            <option value="" disabled>
+                                                                Select Period
+                                                            </option>
+                                                            <option>
+                                                                1 Week
+                                                            </option>
+                                                            <option>
+                                                                2 Weeks
+                                                            </option>
+                                                            <option>
+                                                                3 Weeks
+                                                            </option>
+                                                            <option>
+                                                                4 Weeks
+                                                            </option>
+                                                            <option>
+                                                                5 Weeks
+                                                            </option>
+                                                            <option>
+                                                                6 Weeks
+                                                            </option>
+                                                            <option>
+                                                                7 Weeks
+                                                            </option>
+                                                            <option>
+                                                                8 Weeks
+                                                            </option>
+                                                            <option>
+                                                                9 Weeks
+                                                            </option>
+                                                            <option>
+                                                                10 Weeks
+                                                            </option>
+                                                            <option>
+                                                                11 Weeks
+                                                            </option>
+                                                            <option>
+                                                                12 Weeks
+                                                            </option>
+                                                        </select>
+                                                        <div ng-if="submitted && accesscontrolForm.notice_period.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.notice_period.$error.required">
+																Please select notice period </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="mt-radio-list">
+													<label class="mt-checkbox mt-checkbox-outline"> <input data-ng-model="accessControl.contractreminder" name="reminder" type="checkbox" data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)"/> Send reminder when the contract can be canceled <span></span>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="form-group" data-ng-if="accessControl.contractreminder" ng-class="{'has-error' : submitted && accesscontrolForm.contractPersonEmail.$invalid && accessControl.contractreminder}">
+													<div class="col-md-12">
+														<label class="control-label" mean-token="'create-contractPersonEmail'"> Contract Person Email <span aria-required="true"
+															class="required"> * </span>
+														</label>
+													</div>
+													<div class="col-md-5">
+														<div class="input-group">
+															<span class="input-group-addon"> <i class="fa fa-envelope"> </i>
+															</span> <input class="form-control" data-ng-model="accessControl.contractPersonEmail" name="contractPersonEmail" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
+																placeholder="Email" required="" type="email"> </input>
+														</div>
+														<div class="text-danger" ng-if="err.param =='contractPersonEmail' && accessControl.contractreminder" ng-repeat="err in error.data">{{err.msg}}</div>
+														<div ng-show="submitted && accesscontrolForm.contractPersonEmail.$invalid && accessControl.contractreminder">
+															<span class="text-danger" ng-show="accesscontrolForm.contractPersonEmail.$error.required">
+																Please enter contract person email </span> <span class="text-danger" data-ng-show="cameraForm.contractPersonEmail.$error.pattern">
+																Please enter Valid Email </span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <div class="btn dark" ng-if="!attachorientationdrawingsaccesscontrol" ngf-select="attachOrientationDrawingsAccessControl($file)" data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)">
+                                                            Attach orientation drawings
+                                                        </div>
+                                                    <p ng-if="attachorientationdrawingsaccesscontrol">
+                                                       <a href="" ng-click="downloadAttachedDocumentAccessControl(attachorientationdrawingsaccesscontrolcompletepath);">
+                                                        {{attachorientationdrawingsaccesscontrol}}</a>
+                                                        <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachOrientationDrawingsAccessControl()" ng-if="attachorientationdrawingsaccesscontrol">
+                                                        </i>
+                                                    </p>
+                                                    <div class="btn dark" ng-if="!attachusermanualaccesscontrol" ngf-select="attachUserManualAccessControl($file)" data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)">
+                                                        Add user manual
+                                                    </div>
+                                                    <p ng-if="attachusermanualaccesscontrol">
+                                                        <a href="" ng-click="downloadAttachedDocumentAccessControl(attachusermanualaccesscontrolcompletepath);">
+                                                        {{attachusermanualaccesscontrol}}</a>
+                                                        <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeAttachUserManualAccessControl()" ng-if="attachusermanualaccesscontrol">
+                                                        </i>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 ">
+                                                <div class="form-group" ng-class="{'has-error' : submitted && accesscontrolForm.yearbudget.$invalid}">
+                                                    <div class="col-md-12">
+                                                        <label class="control-label" mean-token="'create-yearbudget'"> Year budget <span aria-required="true" class="required"> * </span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <input class="form-control" data-ng-model="accessControl.yearly_budget_cost" name="yearbudget" placeholder="Budget" ng-required="(accessControl.service_agreement.emergencyDuty || accessControl.service_agreement.annualService)" type="number" data-ng-disabled="!(accessControl.service_agreement.emergencyDuty ||accessControl.service_agreement.annualService)"/>
+                                                        <div class="text-danger" ng-if="err.param == 'yearly_budget_cost'" ng-repeat="err in error.data">
+                                                            {{err.msg}}
+                                                        </div>
+                                                        <div ng-show="submitted && accesscontrolForm.yearbudget.$invalid">
+                                                            <span class="text-danger" ng-show="accesscontrolForm.yearbudget.$error.required">
+																Please enter the year budget </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <div class="row">
+                                                <div class="col-md-12 text-right">
+                                                    <button class="btn default" data-ng-click="cancelAccessControl()" type="button">
+                                                        Cancel
+                                                    </button>
+                                                    <button class="btn dark" data-ng-click="createAccessControl(accesscontrolForm.$valid)" type="button">
+                                                        Clone
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

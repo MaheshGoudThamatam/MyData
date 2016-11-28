@@ -1,0 +1,68 @@
+<section data-ng-controller="incidentController" ng-init="getCompanyDetails()">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-title">
+                 <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group clearfix">
+                                <div class="col-md-8 col-md-offset-2 ">
+                                    <div class="input-group">
+                                        <input class="form-control form-control-60" readonly="" ng-model="url" placeholder="" type="text" />
+                                        <span class="incident input-group-addon">
+                                            <a class="font-red f28" ng-click="getTokenURL(company.token)">
+                                                <i class="fa fa-gear">
+                                                </i>
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <input class="form-control" placeholder="Search.." type="text" ng-model="tableFilter">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-md-12">
+                        <table class="table table-condensed table-bordered table-striped" ng-table="listincidents" data-ng-show="incidents.length > 0">
+                            <tr ng-repeat="row in $data | orderBy:'createdAt':true">
+                                <td data-title="'Incident Type'" sortable="'name'">
+                                    {{row.name}}
+                                </td>
+                                <td data-title="'Description'" sortable="'description'">
+                                    {{row.description}}
+                                </td>
+                                <td data-title="'Security Task'" sortable="'description'">
+                                    <a ng-click="redirectSecurityTask(row.securitytask)">
+                                        {{row.securitytask.task_name}}
+                                    </a>
+                                </td>
+                                <td data-title="'Download Attachment'"><a href="" ng-click="downloadAttachedIncident(row.photocompletepath);">{{row.photo}}</a></td>
+                                <td data-title="'Date'" sortable="'date'">
+                                    {{row.createdAt | date :"yyyy-MM-dd"}}
+                                </td>
+                            </tr>
+                            <tr data-ng-show="!$data.length">
+                                <td colspan="11">
+                                    No incident matched your filter condition.
+                                </td>
+                            </tr>
+                        </table>
+                        <div data-ng-show="!incidents.length>0">
+                            <label>
+                                No incidents Available
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

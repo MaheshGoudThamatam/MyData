@@ -1,0 +1,253 @@
+<div class="page-content-wrapper" data-ng-controller="ExternalTaskController" data-ng-init="findOne();">
+    <div class="col-md-offset-1 col-md-10 clearfix">
+        <div class="col-sm-12 mt20" ng-hide="loggedin">
+            <h3 class="page-title">
+                External Security Task
+            </h3>
+            <hr>
+            </hr>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="portlet light bordered clearfix">
+                    <div class="portlet-body">
+                        <form class="form-horizontal" data-ng-if="!subMittedForm" name="ExternalSecurityTaskForm" novalidate="" role="form">
+                            <div class="form-body">
+                                <div class="row" data-ng-if="externalsecuritytask.isUpdated">
+                                    <div class="row">
+                                        <div class="col-md-9 col-md-offset-3">
+                                            <div class="alert alert-info">
+                                                <strong>
+                                                    Info!
+                                                </strong>
+                                                {{status}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" data-ng-class="{'has-error' : submitted && ExternalSecurityTaskForm.task_name.$invalid}">
+                                        <label class="col-md-3 control-label">
+                                            Task Name
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" data-ng-model="externalsecuritytask.task_name" disabled="" name="task_name" placeholder="Task name " type="text">
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group" data-ng-class="{ 'has-error' : submitted && ExternalSecurityTaskForm.description.$invalid }">
+                                        <label class="col-md-3 control-label">
+                                            Description
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" data-ng-model="externalsecuritytask.description" disabled="" name="description" placeholder="Description" type="text">
+                                            </input>
+                                        </div>
+                                    </div>
+                                </div>
+								<div class="row">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">
+                                            Photo
+                                        </label>
+                                        <div class="col-md-9">
+                                           <a href="" ng-click="downloadPhoto(externalsecuritytask.attach_photo);"><p>{{photo}}</p></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" data-ng-if='externalsecuritytask.status != "APPROVED"'>
+                                    <div class="form-group" data-ng-class="{ 'has-error' : submitted && ExternalSecurityTaskForm.estimated_hours.$invalid }">
+                                        <label class="col-md-3 control-label">
+                                            Estimated Hours
+                                            <span aria-required="true" class="required">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" data-ng-model="externalsecuritytask.estimated_hours" min="1" name="estimated_hours" ng-disabled="externalsecuritytask.status == 'FOR_APPROVAL'" placeholder="Estimated Hours" required="" type="number"/>
+                                            <div class="text-danger" data-ng-if="err.param =='externalsecuritytask_hours'" data-ng-repeat="err in error.data">
+                                                {{err.msg}}
+                                            </div>
+                                            <div data-ng-show="submitted && ExternalSecurityTaskForm.estimated_hours.$invalid">
+                                                <span class="help-block" data-ng-show="ExternalSecurityTaskForm.estimated_hours.$error.required">
+                                                    Please enter estimated hours
+                                                </span>
+                                                <span class="help-block" data-ng-show="ExternalSecurityTaskForm.estimated_hours.$error.min">
+                                                    Estimated hour should be greater than zero
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error' : submitted && ExternalSecurityTaskForm.estimated_cost.$invalid }">
+                                        <label class="col-md-3 control-label">
+                                            Estimated Cost
+                                            <span aria-required="true" class="required">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <input class="form-control" data-ng-model="externalsecuritytask.estimated_cost" min="1" name="estimated_cost" ng-disabled="externalsecuritytask.status == 'FOR_APPROVAL'" placeholder="Estimated Cost" required="" type="number">
+                                                <div class="text-danger" data-ng-if="err.param =='estimated_cost'" data-ng-repeat="err in error.data">
+                                                    {{err.msg}}
+                                                </div>
+                                                <div data-ng-show="submitted && ExternalSecurityTaskForm.estimated_cost.$invalid">
+                                                    <span class="help-block" data-ng-show="ExternalSecurityTaskForm.estimated_cost.$error.required">
+                                                        Please enter estimated cost
+                                                    </span>
+                                                    <span class="help-block" data-ng-show="ExternalSecurityTaskForm.estimated_cost.$error.min">
+                                                        Estimate cost should be greater than zero
+                                                    </span>
+                                                </div>
+                                            </input>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" data-ng-class="{ 'has-error' : submitted && ExternalSecurityTaskForm.query.$invalid }">
+                                        <label class="col-md-3 control-label">
+                                            Questions(if any)
+                                        </label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" data-ng-model="externalsecuritytask.query" name="query" ng-disabled="externalsecuritytask.isUpdated" placeholder="Questions">
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">
+                                            Comments
+                                            <span aria-required="true" class="required">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div class="col-md-9">
+                                            <textarea class="form-control" data-ng-model="externalsecuritytask.commentEntered" name="commentEnter" placeholder="Comments" required="">
+                                            </textarea>
+                                            <div data-ng-show="submitted && ExternalSecurityTaskForm.commentEnter.$invalid">
+                                                <span class="help-block" data-ng-show="ExternalSecurityTaskForm.commentEnter.$error.required">
+                                                    Please enter comments
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">
+                                                Comments Listed
+                                            </label>
+                                            <div class="col-md-9">
+                                                <ul class="col-md-12 paddingleft0">
+                                                    <li data-ng-repeat="comments in externalsecuritytask.comments" ng-class="comments.userRole == CONFIG.roles.SECURITY_MANAGER ? 'list-group-item list-group-item-info clearfix' : 'list-group-item list-group-item-warning clearfix'">
+                                                        <span>
+                                                            {{comments.comments}}
+                                                        </span>
+                                                        <span class="badge badge-default">
+                                                            {{comments.name}}
+                                                        </span>
+                                                        <span class="badge badge-default">
+                                                            {{comments.dateEntered | date : format : timezone }}
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+									</div>
+                                    <div class="row" data-ng-if='externalsecuritytask.status == "APPROVED" && submittedApprovedForm'>
+                                        <div class="form-group" data-ng-class="{ 'has-error' : submitted && ExternalSecurityTaskForm.actual_hours.$invalid }">
+                                            <label class="col-md-3 control-label">
+                                                Actual Hours
+                                                <span aria-required="true" class="required">
+                                                    *
+                                                </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input class="form-control" data-ng-model="externalsecuritytask.actual_hours" min="1" name="actual_hours" ng-disabled="disabledData" placeholder="Actual Hours" required="" type="number">
+                                                    <div class="text-danger" data-ng-if="err.param =='externalsecuritytask_hours'" data-ng-repeat="err in error.data">
+                                                        {{err.msg}}
+                                                    </div>
+                                                    <div data-ng-show="submitted && ExternalSecurityTaskForm.actual_hours.$invalid">
+                                                        <span class="help-block" data-ng-show="ExternalSecurityTaskForm.actual_hours.$error.required">
+                                                            Please enter actual hours
+                                                        </span>
+                                                        <span class="help-block" data-ng-show="ExternalSecurityTaskForm.actual_hours.$error.min">
+                                                            Actual hours should be greater than zero.
+                                                        </span>
+                                                    </div>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" data-ng-class="{ 'has-error' : submitted && ExternalSecurityTaskForm.actual_cost.$invalid }">
+                                            <label class="col-md-3 control-label">
+                                                Actual Cost
+                                                <span aria-required="true" class="required">
+                                                    *
+                                                </span>
+                                            </label>
+                                            <div class="col-md-9">
+                                                <input class="form-control" data-ng-model="externalsecuritytask.actual_cost" min="1" name="actual_cost" ng-disabled="disabledData" placeholder="Actual Cost" required="" type="number">
+                                                    <div class="text-danger" data-ng-if="err.param =='externalsecuritytask_cost'" data-ng-repeat="err in error.data">
+                                                        {{err.msg}}
+                                                    </div>
+                                                    <div data-ng-show="submitted && ExternalSecurityTaskForm.actual_cost.$invalid">
+                                                        <span class="help-block" data-ng-show="ExternalSecurityTaskForm.actual_cost.$error.required">
+                                                            Please enter actual cost
+                                                        </span>
+                                                        <span class="help-block" data-ng-show="ExternalSecurityTaskForm.actual_cost.$error.min">
+                                                            Actual cost should be greater than zero
+                                                        </span>
+                                                    </div>
+                                                </input>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+										<div class="col-md-offset-3 col-md-9">
+											<div class="btn dark" ng-if="!attachInvoiceCost" ngf-select="attachCostInvoice($file)">Invoice</div>
+											<p ng-if="attachInvoiceCost"> {{attachInvoiceCost}} <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removeInvoice()" ng-if="attachInvoiceCost"> </i>
+											</p>
+										</div>
+									</div>
+                                        <div class="form-actions" ng-if="!disabledData">
+                                            <div class="row">
+                                                <div class="col-md-offset-4 col-md-8 text-right">
+                                                    <button class="btn dark" data-ng-click="approveOrdeclinetask(ExternalSecurityTaskForm.$valid,'APPROVED')" type="button">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" data-ng-if='externalsecuritytask.status !== "APPROVED" && !externalsecuritytask.isUpdated'>
+                                        <div class="form-actions">
+                                            <div class="col-md-offset-4 col-md-8 text-right">
+                                                <button class="btn dark" data-ng-click="approvalOfEstimates(ExternalSecurityTaskForm.$valid)" type="button">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                            </div>
+                            </form>
+                            </div>
+                        
+                        <div class="alert alert-success" data-ng-if="subMittedForm">
+                            <strong>
+                                Success!
+                            </strong>
+                            Data has been saved successfully. Thank you for your effort.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-footer" ng-hide="loggedin" style="bottom: 0; position: absolute; right: 0;">
+    <div class="page-footer-inner text-right">
+        2016 © Actsec
+    </div>
+    <div class="scroll-to-top">
+        <i class="icon-arrow-up">
+        </i>
+    </div>
+</div>

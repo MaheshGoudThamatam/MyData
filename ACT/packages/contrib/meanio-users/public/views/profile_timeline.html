@@ -1,0 +1,81 @@
+<div class="row" ng-controller="UserController" ng-init="getProfile(); getNotifications();">
+    <div class="col-md-12">
+        <div class="profile-sidebar" ng-include="'/users/views/profile_sidebar.html'"></div>
+        <div class="profile-content">
+            <div class="portlet light portlet-fit bordered" data-ng-controller="NotificationController" ng-init="notification();">
+                <div class="portlet-title">
+                    <div class="actions" ng-if="notify.length > 0">
+                        <div class="btn-group btn-group-devided" data-toggle="buttons">
+                            <button ng-click="readAll()" type="button" class="btn btn-primary btn-outline btn-circle btn-sm">Mark All Read</button>
+                        </div>
+                    </div>
+                </div>
+				<div class="portlet-body">
+					<div class="mt-timeline-2">
+						<div class="mt-timeline-line border-grey-steel"></div>
+						<ul class="mt-container">
+							<li class="mt-item"
+								ng-repeat="notif in notify | orderBy:'createdAt':true">
+								<div
+									class="mt-timeline-icon bg-red bg-font-red border-grey-steel"
+									ng-if="!notif.read">
+									<i class="{{notif.icon}}"></i>
+								</div>
+								<div class="mt-timeline-content" ng-if="!notif.read">
+									<div class="mt-content-container">
+										<div class="mt-title">
+											<p class="mt-content-title">{{notif.title}}</p>
+										</div>
+										<div class="mt-author">
+											<div class="mt-author-notes font-grey-mint">
+												<span am-time-ago="notif.createdAt" class="time"></span>
+											</div>
+										</div>
+										<div class="mt-content border-grey-salt">
+											<!-- <p>// TODO content</p> -->
+											<a ng-click="goNotif(notif)"
+												class="btn btn-circle red pull-right">&raquo;</a>
+										</div>
+									</div>
+								</div>
+								<div
+									class="mt-timeline-icon bg-blue bg-font-blue border-grey-steel"
+									ng-if="notif.read">
+									<i class="{{notif.icon}}"></i>
+								</div>
+								<div class="mt-timeline-content" ng-if="notif.read">
+									<div class="mt-content-container bg-white border-grey-steel">
+										<div class="mt-title">
+											<h4 class="mt-content-title">{{notif.title}}</h4>
+										</div>
+										<div class="mt-author">
+											<div class="mt-author-notes font-grey-mint">
+												<span am-time-ago="notif.createdAt" class="time"></span>
+											</div>
+										</div>
+										<div class="mt-content border-grey-steel">
+											<!-- <p>// TODO content</p> -->
+											<a ng-click="goNotif(notif)"
+												class="btn btn-circle btn-outline green-jungle pull-right">&raquo;</a>
+										</div>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+					<div class="actions" ng-if=" notify.length > 0 && notify.length >= 10">
+						<div class="btn-group btn-group-devided" data-toggle="buttons">
+							<button ng-click="readMore()" type="button" class="btn btn-primary btn-outline btn-circle btn-sm" >Read More</button>
+						</div>
+					</div>
+				</div>
+				<div class="portlet-body text-center" ng-if="notify.length <= 0">
+                    No notifications, yet.
+                </div>
+                 <div class="portlet-body text-center" data-ng-show="notify.length <=0">{{notifications}}
+                    <h4><b>No more notifications</b></h4>
+                </div>
+            </div>
+        </div>
+       </div>
+       </div>

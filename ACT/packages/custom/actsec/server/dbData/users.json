@@ -1,0 +1,20 @@
+{ 
+    "_id" : ObjectId("5636178a00ad77c81c6adea9"), 
+    "email" : "superadmin@actsec.se", 
+    "hashed_password" : "jzOLkyX+wlFCYrOf+MNiCPVFzI6QoFwKBeBT5jj3MagjRfcYOwjNDdR/okmQd1tuRZVJDPuIWUzTePUuD+lTEg==", 
+    "salt" : "iN4FncYuiVQqM15Z7v1VPA==", 
+    "firstname" : "Super", 
+    "lastname" : "Admin", 
+    "username" : "superadmin", 
+    "provider" : "local", 
+    "roles" : [
+        "authenticated", 
+        "admin"
+    ], 
+    "role" : ObjectId("57679c41ea599c8421988554"), 
+    "__v" : NumberInt(0), 
+    "active" : true, 
+    "createdAt" : ISODate("2016-07-01T11:09:13.967+0000"), 
+    "firstLogin" : false, 
+    "updatedAt" : ISODate("2016-07-01T11:09:13.967+0000")
+}

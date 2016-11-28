@@ -1,0 +1,12 @@
+.incidents-example span {
+    font-weight: bold;
+}
+
+.f28{
+	font-size: 28px;
+}
+
+.incident.input-group-addon{
+	border:none;
+	background-color: transparent;	
+}

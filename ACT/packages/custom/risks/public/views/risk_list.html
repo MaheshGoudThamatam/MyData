@@ -1,0 +1,51 @@
+<section data-ng-controller="RisksController" data-ng-init="list()">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-title">
+                    <div class="row">
+                        <div class="caption col-xs-2">
+                            <input class="form-control" placeholder="Search.." type="text" ng-model="tableFilter">
+                        </div>
+                        <div class="col-xs-10 btn-group ">
+                            <button class="btn blue  pull-right" data-ng-click="createRisk();" id="sample_editable_1_new">
+                                Add Risk <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body scrollx">
+                    <table data-ng-table="listRisk" class="table table-condensed table-bordered table-striped" data-ng-show="risks.length > 0">
+                        <tr data-ng-repeat="risk in $data">
+                            <td data-title="'Risk Name'" sortable="'name'">{{risk.name}}</td>
+                            <td data-title="'Risk Rating'" sortable="'riskRating'">{{risk.riskRating}}</td>
+                            <!-- <td data-title="'Active'" sortable="'isActive'">{{risk.isActive}}</td> -->
+                            <td data-title="'Actions'" class="col-sm-1 col-half">
+                                <div class="btn-group">
+                                    <a class="btn blue" href="javascript:;" data-toggle="dropdown" aria-expanded="false"> <i class="fa fa-wrench"></i> <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a href="javascript:;" data-ng-click="editRisk(risk._id)"> <i class="fa fa-pencil-square-o"></i> Edit
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" data-ng-click="deleteRisk(risk)"> <i class="fa fa-trash-o"></i> Delete
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-ng-show="!$data.length>0">
+                            <td colspan="11">No Risks matched your filter condition.</td>
+                        </tr>
+                    </table>
+                    <div data-ng-show="!risks.length>0">
+                        <label>No Risks Available</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

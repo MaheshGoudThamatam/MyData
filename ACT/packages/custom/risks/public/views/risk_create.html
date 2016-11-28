@@ -1,0 +1,123 @@
+<!-- BEGIN RISK FORM -->
+<section data-ng-controller="RisksController" data-ng-init="loadLocations();">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="form" style="left:0">
+                    <form name="riskForm" class="form-horizontal" role="form" data-ng-submit="create(riskForm.$valid)" novalidate confirm-unsaved>
+                        <div class="form-body">
+                            
+                            <div class="form-group" data-ng-class="{ 'has-error' : submitted && riskForm.location.$invalid }">
+                                <label mean-token="'create-locations'" class="col-md-3 control-label">Location</label>
+                                <div class="col-md-9">
+                                    <select name="location" data-ng-options="location as location.name for location in locations" data-ng-model="risk.location" data-ng-change="loadBuildings(risk.location._id)" class="form-control" required>
+                                        <option value="" disabled>Select Location</option>
+                                    </select>
+                                    <div data-ng-show="submitted && riskForm.location.$invalid">
+                                        <span class="help-block" data-ng-show="riskForm.location.$error.required">
+                                        Please select location</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{ 'has-error' : submitted && riskForm.building.$invalid }">
+                                <label mean-token="'create-locations'" class="col-md-3 control-label">Site</label>
+                                <div class="col-md-9">
+                                    <select name="building" data-ng-disabled="!buildings" data-ng-options="building as building.building_name for building in buildings" data-ng-model="risk.building" class="form-control" data-ng-change="loadUsers(risk.building._id)" required>
+                                        <option value="" disabled>Select Site</option>
+                                    </select>
+                                    <div data-ng-show="submitted && riskForm.building.$invalid">
+                                        <span class="help-block" data-ng-show="riskForm.building.$error.required">
+                                        Please select site</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{ 'has-error' : submitted && membersParticipating}">
+                                <label mean-token="'create-username'" class="col-md-3 control-label">Members Participating</label>
+                                <div class="col-md-9">
+                                    <tags-input data-ng-disabled="!usersMember" data-ng-model="members" name="members_participating" display-property="fullname" replace-spaces-with-dashes="false" placeholder="Begin typing the name of the user to select.." min-length="1" add-from-autocomplete-only="true" add-on-enter="true" on-tag-added="filterinputadded()" on-tag-removed="filterinputremoved()">
+                                        <auto-complete source="loadInput($query)" min-length="3" load-on-focus="true"> </auto-complete>
+                                    </tags-input>
+                                    <div data-ng-show="submitted && membersParticipating">
+                                        <span class="help-block">
+                                        Please choose at least one participating member</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{ 'has-error' : submitted && riskForm.name.$invalid }">
+                                <label mean-token="'create-name'" class="col-md-3 control-label">What is the risk?</label>
+                                <div class="col-md-9">
+                                    <input type="text" name="name" class="form-control" placeholder="What is the risk?" ng-model="risk.name" required>
+                                    <div class="text-danger" data-ng-repeat="err in error.data" data-ng-if="err.param =='name'">{{err.msg}}</div>
+                                    <div data-ng-show="submitted && riskForm.name.$invalid">
+                                        <span class="help-block" data-ng-show="riskForm.name.$error.required">
+                                        Please enter risk name</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{ 'has-error' : submitted && riskForm.description.$invalid }">
+                                <label mean-token="'create-description'" class="col-md-3 control-label">Explain the risk?</label>
+                                <div class="col-md-9">
+                                    <textarea name="description" class="form-control" placeholder="Explain the risk?" ng-model="risk.description" rows="3" required></textarea>
+                                    <div class="text-danger" data-ng-repeat="err in error.data" data-ng-if="err.param =='description'">{{err.msg}}</div>
+                                    <div data-ng-show="submitted && riskForm.description.$invalid">
+                                        <span class="help-block" data-ng-show="riskForm.description.$error.required">
+                                        Please enter the description</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{ 'has-error' : (submitted  || calculateError) && riskForm.likelihood.$invalid}">
+                                <label mean-token="'create-likelihood'" class="col-md-3 control-label">Likelihood</label>
+                                <div class="col-md-9">
+                                    <select name="likelihood" data-ng-model="risk.likelihood" data-ng-options="value for value in riskValues" class="form-control" required>
+                                        <option value="" disabled>Select Likelihood</option>
+                                    </select>
+                                    <div data-ng-show="(submitted || calculateError) && riskForm.likelihood.$invalid">
+                                        <span class="help-block" data-ng-show="riskForm.likelihood.$error.required">
+                                        Please select the likelihood</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" data-ng-class="{ 'has-error' : (submitted  || calculateError) && riskForm.consequence.$invalid}">
+                                <label mean-token="'create-consequence'" class="col-md-3 control-label">Consequence</label>
+                                <div class="col-md-9">
+                                    <select name="consequence" data-ng-model="risk.consequence" data-ng-options="value for value in riskValues" class="form-control" required>
+                                        <option value="" disabled>Select Consequence</option>
+                                    </select>
+                                    <div data-ng-show="(submitted || calculateError) && riskForm.likelihood.$invalid">
+                                        <span class="help-block" data-ng-show="riskForm.consequence.$error.required">
+                                        Please select the consequence</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-3 col-md-offset-3">
+                                    <button type="button" class="btn dark" data-ng-click="riskRate();">Evaluate Risk</button>
+                                    <div class="has-error" data-ng-show="submitted && !risk.riskRating">
+                                        <span class="help-block">
+                                        Please calculate the risk rating</span>
+                                    </div>
+                                </div>
+                                <div ng-if="riskRatingShow">
+                                    <label mean-token="'create-riskRating'" class="col-md-3 control-label">Risk Rating</label>
+                                    <div class="col-md-3">
+                                        <div name="riskRating" class="{{riskRatingClass}}" data-ng-bind="risk.riskRating"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions" style="clear: both;">
+                            <div class="col-sm-12 text-right">
+                                <button type="button" class="btn default" data-ng-click="cancel()">Cancel</button>
+                                <button type="submit" class="btn dark">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12">
+            <img class="img img-responsive" src="actsec/assets/img/riskMatrix.jpg">
+        </div>
+    </div>
+</section>
+<!-- END RISK FORM -->

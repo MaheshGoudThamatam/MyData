@@ -1,0 +1,11 @@
+{
+	"name": "actsec",
+	"version": "0.0.1",
+	"description": "A starter layout / theme package for MEAN",
+	"author": {
+		"name": "MEAN.io"
+	},
+	"mean": "0.6.0",
+	"dependencies": {},
+	"license": "MIT"
+}

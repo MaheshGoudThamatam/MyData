@@ -1,0 +1,221 @@
+<section data-ng-controller="PerformAuditController" data-ng-init="find();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-title">{{performAuditQuestions.audit.audit_category.name}}</div>
+                <div class="portlet-body">
+                    <div class="row col-md-offset-2 col-md-8">
+                        <form role="form" class="form-horizontal" name="performAuditForm" novalidate confirm-unsaved>
+                            <div class="col-xs-12" data-ng-repeat="performAuditQues in performAuditMaster.responses" ng-if="($index +1>=pageNo*5-4 && $index + 1<=pageNo*5)">
+                                <div class="portlet mt-element-ribbon light portlet-fit bordered">
+                                    <div class="ribbon ribbon-right ribbon-clip ribbon-shadow ribbon-border-dash-hor ribbon-color-default uppercase" >
+                                        <div class="ribbon-sub ribbon-clip ribbon-right"></div>
+                                        Question &emsp;{{$index + 1}} of {{totalAuditQues.questions.length}}
+                                    </div>
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class=" icon-layers font-dark"></i> <span class="caption-subject font-dark bold uppercase">{{performAuditQues.question}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix" ng-class="{'has-error' : submitted && performAuditForm.q{{performAuditQues.sequence}}.$invalid}">
+                                        <div class="col-xs-12">
+                                            <div class="col-xs-4 row">
+                                                <label class="mt-radio">
+                                                    <input type="radio" value="Yes" name="q{{performAuditQues.sequence}}" data-ng-model="performAuditMaster.responses[$index].answer" id="Choose_yes{{$index}}" required>Yes<span></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-4 row">
+                                                <label class="mt-radio">
+                                                    <input type="radio" value="No" name="q{{performAuditQues.sequence}}" data-ng-model="performAuditMaster.responses[$index].answer" data-toggle="modal" id="Choose_no{{$index}}" data-ng-change="radioChecked({{$index}})" ng-click="loadUsers();setQuestion($index); showModal(performAuditQues)" required>No<span></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-xs-4 row">
+                                                <label class="mt-radio">
+                                                    <input type="radio" value="NA" name="q{{performAuditQues.sequence}}" data-ng-model="performAuditMaster.responses[$index].answer" id="Choose_na{{$index}}" required>NA<span></span>
+                                                </label>
+                                            </div>
+                                            <div class="row col-xs-12">
+                                                <div ng-show="submitted && performAuditForm.q{{performAuditQues.sequence}}.$invalid">
+                                                    <span class="text-danger" ng-show="performAuditForm.q{{performAuditQues.sequence}}.$error.required">Please
+                                                        select any one option</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <ul class="pagination pagination-lg">
+                                    <li data-ng-hide="pageNo<=1">
+                                        <a href="" data-ng-click="prev()"> <i class="fa fa-angle-left"></i>
+                                        </a>
+                                    </li>
+                                    <li data-ng-repeat="pageNo in pageNums" data-ng-hide="performAuditMaster.responses.length <= 5" class="page p{{pageNo}}"><a href="" data-ng-click="currentPage(pageNo)">{{pageNo}}</a></li>
+                                    <li data-ng-hide="pageNo > 1 && pageNo*5 >= performAuditMaster.responses.length ||  performAuditMaster.responses.length <=5">
+                                        <a href="" data-ng-click="next()"> <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="form-actions" style="clear: both;" data-ng-if="pageNo >1 && pageNo*5 >= performAuditMaster.responses.length ||  performAuditMaster.responses.length <=5">
+                                <div class="col-sm-12 text-right">
+                                    <button type="button" class="btn default" data-ng-click="cancel();">Cancel</button>
+                                    <button type="submit" class="btn dark" data-ng-click="create(performAuditForm.$valid);">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <form role="form" class="form-horizontal" name="taskForm" novalidate>
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Security Task</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="clearfix">
+                                                <div class="col-sm-12">
+                                                    <div class="form-body">
+                                                        <div class="form-group" ng-class="{'has-error': submitted1 && taskForm.name.$invalid}">
+                                                            <label class="col-md-3">Name<span class="required"> * </span></label>
+                                                            <div class="col-md-9">
+                                                                <input name="name" type="text" class="form-control" placeholder="Name" ng-model="task.name" required>
+                                                                <div ng-show="submitted1 && taskForm.name.$invalid">
+                                                                    <span class="text-danger" ng-show="taskForm.name.$error.required">Please
+                                                        enter name</span>
+                                                                </div>
+                                                                <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='name'">{{err.msg}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" ng-class="{'has-error': submitted1 && taskForm.problemdescription.$invalid}">
+                                                            <label class="col-md-3">Problem Description<span class="required"> * </span></label>
+                                                            <div class="col-md-9">
+                                                                <textarea name="problemdescription" class="form-control" placeholder="Problem Description " rows="2" cols="1" ng-model="task.description" required>
+                                                                </textarea>
+                                                                <div ng-show="submitted1 && taskForm.problemdescription.$invalid">
+                                                                    <span class="text-danger" ng-show="taskForm.problemdescription.$error.required">Please
+                                                        enter description</span>
+                                                                </div>
+                                                                <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='description'">{{err.msg}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <div class="col-md-offset-3 col-md-6">
+                                                                <div class="mt-checkbox-inline ">
+                                                                    <label class="mt-checkbox">
+                                                                        <input type="checkbox" data-ng-model="task.directly" class="form-control">Fix Directly on Site<span></span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" ng-class="{'has-error': submitted1 && taskForm.responsible.$invalid}">
+                                                            <label class="col-md-3">Responsible<span class="required"> * </span></label>
+                                                            <div class="col-md-9">
+                                                                <select ng-if="!task.directly" class="bs-select form-control" name="responsible" data-ng-model="task.responsible" data-ng-options="user._id as user.firstname + ' ' +  user.lastname for user in userResponsible" required>
+                                                                    <option value="">Select user</option>
+                                                                </select>
+                                                                <select class="bs-select form-control" ng-if="task.directly" ng-disabled="true">
+                                                                    <option value="{{user._id}}">{{user.firstname + ' ' + user.lastname}}</option>
+                                                                </select>
+                                                                <div ng-show="submitted1 && taskForm.responsible.$invalid">
+                                                                    <span class="text-danger" ng-show="taskForm.responsible.$error.required">Please
+                                                        select responsible</span>
+                                                                </div>
+                                                                <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='responsible'">{{err.msg}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" ng-class="{'has-error': submitted1 && taskForm.responsible_followUp.$invalid}">
+                                                            <label class="col-md-3">Follow-Up<span class="required"> * </span></label>
+                                                            <div class="col-md-9">
+                                                                <select ng-if="!task.directly" class="bs-select form-control" name="responsible_followUp" data-ng-model="task.responsible_followUp" required>
+                                                                    <option value="">Select user</option>
+                                                                    <option value="{{users._id}}" data-ng-repeat="users in userFollowUp" data-ng-hide="users._id == task.responsible">{{users.firstname + ' ' + users.lastname}}</option>
+                                                                </select>
+                                                                <select class="bs-select form-control" ng-if="task.directly" ng-disabled="true">
+                                                                    <option value="{{user._id}}">{{user.firstname + ' ' + user.lastname}}</option>
+                                                                </select>
+                                                                <div ng-show="submitted1 && taskForm.responsible_followUp.$invalid">
+                                                                    <span class="text-danger" ng-show="taskForm.responsible_followUp.$error.required">Please
+                                                        select follow up</span>
+                                                                </div>
+                                                                <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='responsible_followUp'">{{err.msg}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" ng-class="{'has-error': submitted1 && taskForm.hour.$invalid}">
+                                                            <label class="col-md-3"> Hours<span class="required"> * </span></label>
+                                                            <div class="col-md-9">
+                                                                <input type="number" name="hour" data-ng-model="task.estimated_hour" class="form-control" placeholder="Hours" min="1" required />
+                                                                <div ng-show="submitted1 && taskForm.hour.$invalid">
+                                                                    <span class="text-danger" ng-show="taskForm.hour.$error.required">Please
+                                                        enter hour</span>
+                                                                </div>
+                                                                <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='estimated_hour'">{{err.msg}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" ng-class="{'has-error': submitted1 && taskForm.cost.$invalid}">
+                                                            <label class="col-md-3">Cost<span class="required"> * </span></label>
+                                                            <div class="col-md-9">
+                                                                <input type="number" class="form-control" name="cost" data-ng-model="task.cost" placeholder="Cost" min="0" required />
+                                                                <div ng-show="submitted1 && taskForm.cost.$invalid">
+                                                                    <span class="text-danger" ng-show="taskForm.cost.$error.required">Please enter cost</span>
+                                                                </div>
+                                                                <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='cost'">{{err.msg}}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="col-md-3"></label>
+                                                            <div class="col-md-7">
+                                                                <div class="btn-group">
+                                                                    <form name="uploadPerformAuditForm" novalidate="" role="form">
+                                                                        <button class="btn blue text-center" ng-if="!auditphoto" ngf-select="attachPhoto($file)">Upload Picture</button>
+                                                                        <p ng-if="auditphoto"><a href="" ng-click="downloadAttachedPerformAudit(auditSecurityPhoto);">{{auditphoto}}</a>
+                                                                            <i aria-hidden="true" class="fa fa-times text-danger" ng-click="removePerformAuditPlaced()" ng-if="auditphoto"></i></p>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="clearfix" ng-show="!task.directly">
+                                                            <div class="form-group">
+                                                                <label class="col-md-3">Fix Within<span class="required"> * </span></label>
+                                                                <div class="col-md-9">
+                                                                    <div class="mt-radio-inline">
+                                                                        <label class="mt-radio">
+                                                                            <input name="fixday" data-ng-model="task.fixday" type="radio" value="Immediately" ng-change="removeErr();"> immediately
+                                                                            <span></span>
+                                                                            </input>
+                                                                        </label>
+                                                                        <label class="mt-radio">
+                                                                            <input name="fixday" type="radio" value="7 days" data-ng-model="task.fixday" ng-change="removeErr();"> 7 days
+                                                                            <span></span>
+                                                                            </input>
+                                                                        </label>
+                                                                        <label class="mt-radio">
+                                                                            <input data-ng-model="task.fixday" name="fixday" type="radio" value="30 days" ng-change="removeErr();"> 30 days
+                                                                            <span></span>
+                                                                            </input>
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='fixday'">{{err.msg}}</div>
+                                                                    <div ng-show="radioErr" class="text-danger">Please select deadline</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn dark btn-outline" data-dismiss="modal" data-ng-click="resetRadio($index);">Close</button>
+                                            <button type="button" class="btn dark" data-ng-click="createTask(taskForm.$valid);">Save</button>{{$index}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

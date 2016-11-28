@@ -1,0 +1,127 @@
+<section data-ng-controller="TrainingController" data-ng-init="loadTraining();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-title">
+                    <div class="form" style="left:0">
+                        <form role="form" name="trainingForm" class="form-horizontal" novalidate confirm-unsaved> 
+                            <div class="form-body clearfix">
+                                <h3>New Training</h3>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-6 col-md-4 mb10" ng-class="{'has-error' : submitted && trainingForm.name.$invalid}">
+                                        <input type="text" class="form-control" placeholder="Training name" data-ng-model="training.training_name" name="name" required>
+                                        <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='training_name' && backendValidation">{{err.msg}}</div>
+                                        <div ng-show="submitted && trainingForm.name.$invalid">
+                                            <span class="text-danger" ng-show="trainingForm.name.$error.required">Please enter training name</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4  col-md-3 mb10" ng-class="{'has-error' : submitted && trainingForm.shortName.$invalid}">
+                                        <input type="text" class="form-control" placeholder="Short name for training" data-ng-model="training.shortName" name="shortName" ng-maxlength="4" ng-change="maxErr();" required>
+                                        <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='shortName'">{{err.msg}}</div>
+                                        <div ng-show="submitted && trainingForm.shortName.$invalid">
+                                            <span class="text-danger" ng-show="trainingForm.shortName.$error.required">Please enter short name for training </span>
+                                        </div>
+                                        <div class="text-danger" ng-show="maxLength">Length for short name of training should be less than 5</div>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-2 col-md-3 mb10">
+                                        <button mean-token="'create-submit'" type="submit" ng-click="createTraining(trainingForm.$valid);" class="btn dark">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="portlet-body scrollx">
+                    <div class="row mb20">
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-4">
+                                <input class="form-control" placeholder="Search.." type="text" ng-model="tableFilter">
+                            </div>
+                        </div>
+                    </div>
+                    <table ng-table="trainingTable" class="table table-condensed table-bordered table-striped" data-ng-show="trainingTables.length > 0">
+                        <tr ng-repeat="training in $data" data-ng-show="$data.length > 0">
+                            <td data-title="'Training Name'" sortable="'training_name'">{{training.training_name}}</td>
+                            <td data-title="'Short Name'" sortable="'shortName'">{{training.shortName}}</td>
+                            <td data-title="'Actions'" class="col-sm-1 col-half">
+                                <div class="btn-group">
+                                    <a class="btn blue" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-wrench"></i> <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a data-toggle="modal" data-target="#myModal" ng-click="findOne(training._id);">
+                                                <i class="fa fa-trash-o"></i> Edit </a>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="modal" data-ng-click="remove(training);">
+                                                <i class="fa fa-times"></i> Delete </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-ng-show="!$data.length">
+                            <td colspan="11">No Training matched your filter condition.</td>
+                        </tr>
+                    </table>
+                    <div data-ng-show="!trainingTables.length>0">
+                        <label>No Training Available</label>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button type="button" class="btn default" data-ng-click="back()">Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="basic" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Edit Training</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form" style="left:0">
+                        <form role="form" name="trainingEditForm" class="form-horizontal" novalidate>
+                            <div class="form-body">
+                                <div class="row mb10" ng-class="{'has-error' : submitted1 && trainingEditForm.name.$invalid}">
+                                    <div class="col-xs-12 ">
+                                        <label>Training name</label>
+                                        <input type="text" name="name" class="form-control" placeholder="Training name" data-ng-model="training.training_name" required>
+                                        <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='training_name' && backendValidation">{{err.msg}}</div>
+                                        <div ng-show="submitted1 && trainingEditForm.name.$invalid">
+                                            <span class="text-danger" ng-show="trainingEditForm.name.$error.required">Please enter training name</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" ng-class="{'has-error' : submitted1 && trainingEditForm.shortName.$invalid}">
+                                    <div class="col-xs-12 ">
+                                        <label>Short Training name</label>
+                                        <input type="text" class="form-control" name="shortName" placeholder="Short name for training" data-ng-model="training.shortName" ng-maxlength="4" ng-change="maxErr();"required>
+                                        <div class="text-danger" ng-repeat="err in error.data" ng-if="err.param =='shortName'">{{err.msg}}</div>
+                                        <div ng-show="submitted1 && trainingEditForm.shortName.$invalid">
+                                            <span class="text-danger" ng-show="trainingEditForm.shortName.$error.required">Please enter short name for training</span>
+                                        </div>
+                                        <div class="text-danger" ng-show="maxLength1">Length for short name of training should be less than 5</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn dark btn-outline" ng-click="close()">Close</button>
+                    <button type="button" class="btn dark" ng-click="editTraining(trainingEditForm.$valid);">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</section>

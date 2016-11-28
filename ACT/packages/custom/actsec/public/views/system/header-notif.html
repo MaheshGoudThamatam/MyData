@@ -1,0 +1,14 @@
+<li ng-repeat="notif in notifs">
+    <a ng-click="goNotif(notif);">
+        <span am-time-ago="notif.createdAt" class="time"></span>
+        <span class="details">
+            <span class="label label-sm label-icon label-success">
+                <i class="fa {{notif.icon}}"></i>
+            </span> <span ng-class="(notif.read) ? '' : 'bold notif-unread'">{{notif.title}}</span></span>
+        </a>
+    </li>
+    <li ng-hide="(notifs.length > 0)">
+        <a class="text-center" href="#">
+            <span class="details">No unread notifications!</span>
+        </a>
+    </li>

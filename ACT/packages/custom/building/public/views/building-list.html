@@ -1,0 +1,79 @@
+<section data-ng-controller="BuildingController" data-ng-init="findAll();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-title">
+                    <div class="row">
+                        <div class="form-group">
+                            <div class="col-md-2 col-sm-4">
+                                <input class="form-control" placeholder="Search.." type="text" ng-model="tableFilter">
+                            </div>
+                            <div class="col-xs-6 btn-group pull-right">
+                                <button class="btn blue  pull-right" data-ng-click="addBuilding();">
+                                New Site
+                                <i class="fa fa-plus">
+                                </i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body scrollx">
+                    <table ng-table="buildingTable" class="table table-condensed table-bordered table-striped" data-ng-show="buildingArray.length > 0">
+                        <tr ng-repeat="building in $data">
+							<td data-title="'Name'" sortable="'building_name'"><a data-ng-click="manageAssets(building);">{{building.building_name}}</a></td>
+							<td data-title="'City'" sortable="'city'">{{building.city}}</td>
+                            <td data-title="'Country'"  sortable="'country'">{{building.country}}</td>
+                            <td data-title="'Contact Number'"  sortable="'contact_number'">{{building.contact_number}}</td>
+                            <!-- <td data-title="'Active'" sortable="'active'">{{building.active}}</td> -->
+                            <td data-title="'Actions'" class="col-sm-1 col-half">
+                                <div class="btn-group">
+                                    <a class="btn blue" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-wrench"></i> <i class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li>
+                                            <a data-ng-click="editBuilding(building);">
+                                                <i class="fa fa-pencil-square-o"></i>Edit
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a data-ng-click="manageAssets(building);">
+                                                <i class="fa fa-tasks"></i>Manage Assets
+                                            </a>
+                                        </li>
+                                
+                                         <!-- Will be implemented later
+                                                                         
+                                            <li data-ng-if="building.active">
+                                                <a data-ng-click="softDelete(building);">
+                                                    <i class="fa fa-times"></i>Deactivate
+                                                </a>
+                                            </li>
+                                            <li data-ng-if="!building.active">
+                                                <a data-ng-click="softDelete(building);">
+                                                    <i class="fa fa-times"></i>Deactivate
+                                                </a>
+                                            </li> -->
+                                
+                                        <li>
+                                            <a data-ng-click="deleteBuilding(building);">
+                                                <i class="fa fa-trash-o"></i>Delete
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-ng-show="!$data.length">
+                            <td colspan = "11">No Sites matched your filter condition.</td>
+                        </tr>
+                    </table>
+                    <div data-ng-show="!buildingArray.length>0">
+                        <label>No Sites Available</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

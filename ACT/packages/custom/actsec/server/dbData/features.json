@@ -1,0 +1,128 @@
+{ 
+    "_id" : ObjectId("5776130637336f226c926338"), 
+    "name" : "Companies", 
+    "url" : "/company", 
+    "position" : NumberInt(10), 
+    "icon" : "fa-th", 
+    "system" : true
+}
+{ 
+    "_id" : ObjectId("57691cae83a789226440129f"), 
+    "icon" : "fa-briefcase", 
+    "name" : "Roles", 
+    "position" : NumberInt(50), 
+    "system" : false, 
+    "url" : "/roles"
+}
+{ 
+    "_id" : ObjectId("577612f637336f226c926336"), 
+    "icon" : "fa-users", 
+    "name" : "Users", 
+    "position" : NumberInt(40), 
+    "system" : false, 
+    "url" : "/users"
+}
+{ 
+    "_id" : ObjectId("5779f76f6acff4282876e342"), 
+    "icon" : "fa-map-marker", 
+    "name" : "Location", 
+    "position" : NumberInt(20), 
+    "system" : false, 
+    "url" : "/locations"
+}
+{ 
+    "_id" : ObjectId("5779f78a6acff4282876e344"), 
+    "icon" : "fa-building", 
+    "name" : "Sites", 
+    "position" : NumberInt(30), 
+    "system" : false, 
+    "url" : "/sites"
+}
+{ 
+    "_id" : ObjectId("5779f7cc6acff4282876e348"), 
+    "icon" : "fa-bullseye", 
+    "name" : "Risks", 
+    "position" : NumberInt(70), 
+    "system" : false, 
+    "url" : "/risks"
+}
+{ 
+    "_id" : ObjectId("5779f7df6acff4282876e34a"), 
+    "icon" : "fa-calendar", 
+    "name" : "Audits", 
+    "position" : NumberInt(80), 
+    "system" : false, 
+    "url" : "/audits"
+}
+{ 
+    "_id" : ObjectId("5779f7f86acff4282876e34c"), 
+    "icon" : "fa-tags", 
+    "name" : "Audit Categories", 
+    "position" : NumberInt(90), 
+    "system" : false, 
+    "url" : "/audit-category"
+}
+{ 
+    "_id" : ObjectId("5779f88a6acff4282876e352"), 
+    "icon" : "fa-book", 
+    "name" : "Trainings", 
+    "position" : NumberInt(120), 
+    "system" : false, 
+    "url" : "/trainings"
+}
+{ 
+    "_id" : ObjectId("577a43146acff4282876e355"), 
+    "icon" : "fa-home", 
+    "name" : "Dashboard", 
+    "position" : NumberInt(0), 
+    "system" : false, 
+    "url" : "/"
+}
+{ 
+    "_id" : ObjectId("5779f7af6acff4282876e346"), 
+    "icon" : "fa-tasks", 
+    "name" : "Security Tasks", 
+    "position" : NumberInt(60), 
+    "system" : false, 
+    "url" : "/securitytasks"
+}
+{ 
+    "_id" : ObjectId("57a869db6acff4188e7d0458"), 
+    "icon" : "fa-book", 
+    "name" : "Manage Trainings", 
+    "position" : NumberInt(130), 
+    "system" : false, 
+    "url" : "/trainings/manage-training"
+}
+{ 
+    "_id" : ObjectId("57a86b386acff4188e7d045a"), 
+    "icon" : "fa-paperclip", 
+    "name" : "Document Categories", 
+    "position" : NumberInt(150), 
+    "system" : false, 
+    "url" : "/document-category"
+}
+{ 
+    "_id" : ObjectId("57a86c1e6acff4188e7d045c"), 
+    "icon" : "fa-file-text", 
+    "name" : "Documents", 
+    "position" : NumberInt(140), 
+    "system" : false, 
+    "url" : "/documents"
+}
+{ 
+    "_id" : ObjectId("5779f8476acff4282876e34e"), 
+    "icon" : "fa-exclamation-triangle", 
+    "name" : "Incident Management", 
+    "position" : NumberInt(100), 
+    "system" : false, 
+    "url" : "/incidents"
+}
+{ 
+    "_id" : ObjectId("57bd76a89574d2339b2e1c14"), 
+    "icon" : "fa-money", 
+    "name" : "Budget", 
+    "position" : NumberInt(65), 
+    "system" : false, 
+    "url" : "/budget"
+}

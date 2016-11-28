@@ -1,0 +1,20 @@
+{ 
+    "_id" : ObjectId("57babbef9574d2339b2e1c08"), 
+    "incidenttype" : "Fire", 
+    "description" : "Report Fire-related incident"
+}
+{ 
+    "_id" : ObjectId("57babc2f9574d2339b2e1c0a"), 
+    "incidenttype" : "Perimeter", 
+    "description" : "Report Perimeter-related incident"
+}
+{ 
+    "_id" : ObjectId("57babff09574d2339b2e1c0e"), 
+    "incidenttype" : "Personal Safety", 
+    "description" : "Report Personal Safety incident"
+}
+{ 
+    "_id" : ObjectId("57bac00c9574d2339b2e1c10"), 
+    "incidenttype" : "Information Security", 
+    "description" : "Report Information Security incident"
+}

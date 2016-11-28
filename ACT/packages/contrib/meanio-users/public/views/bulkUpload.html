@@ -1,0 +1,128 @@
+<section data-ng-controller="UserController">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-body">
+                    <div class="caption row">
+                        <!-- <i class="icon-settings font-dark"></i> -->
+                        <span class="caption-subject font-dark sbold uppercase">
+                            Instructions
+                        </span>
+                    </div>
+                    <div class="row">
+                        <ol>
+                            <li>
+                                Please download the template by clicking
+                                <a ng-click="getTemplate()">
+                                    <strong>Download Template</strong>
+                                </a>
+                            </li>
+                            <li>
+                                All fields are mandatory in the template.
+                            </li>
+                            <li>
+                                Please don't change any values in the template headers.
+                            </li>
+                            <li>
+                                Values in userBuildings should be enterd with comma(,) separated.{{uploadBegins}}
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="col-md-12 text-center" ng-if="!uploadBegins">
+                        <div class="btn-group">
+                            <form name="uploadPictureForm" novalidate="" role="form">
+                                <button class="btn blue text-center" ngf-select="onUsersFileSelect($file)">
+                                    Select File
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        <div class="row" ng-if="resultUsersSet.length > 0">
+            <div class="col-sm-12">
+                <div class="portlet light bordered clearfix">
+                    <div class="portlet-title">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="col-sm-12">
+                                    <div class="caption pull-left">
+                                        <!-- <i class="icon-settings font-dark"></i> -->
+                                        <span class="caption-subject font-dark sbold uppercase">
+                                            Bulk Upload Result
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <table class="table table-condensed table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        First Name
+                                    </th>
+                                    <th class="text-center">
+                                        Last Name
+                                    </th>
+                                    <th class="text-center">
+                                        Email
+                                    </th>
+                                    <th class="text-center">
+                                        Sites
+                                    </th>
+                                    <th class="text-center">
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="successlist in resultUsersSet" ng-class="{'success' :(successlist.errors.length <= 0), 'danger':  (successlist.errors.length > 0)}">
+                                    <td>
+                                        {{successlist.firstname}}
+                                    </td>
+                                    <td>
+                                        {{successlist.lastname}}
+                                    </td>
+                                    <td>
+                                        {{successlist.email}}
+                                    </td>
+                                    <td>
+                                        {{successlist.userBuildings}}
+                                    </td>
+                                    <td ng-if="successlist.errors.length > 0">
+                                        <span ng-repeat="error in successlist.errors">
+                                            {{$index+1}}. {{error}}
+                                            <span ng-hide="$last">
+                                               <br>
+                                            </span>
+                                        </span>
+                                        <br>
+                                         <strong>User not added.</strong>
+                                    </td>
+
+                                    <td ng-if="successlist.errors.length <= 0">
+                                        <strong>User added.</strong>
+                                    </td>
+                                </tr>
+                                <tr data-ng-hide="resultUsersSet.success.length > 0">
+                                    <td colspan="8" ng-if="successlist.errors.length <= 0">
+                                        No error list found
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions" style="clear: both;">
+            <div class="col-sm-12 text-right">
+                <button class="btn default" ng-click="cancelRedirectList()" type="button">
+                    Back
+                </button>
+            </div>
+        </div>
+        </div>
+</section>

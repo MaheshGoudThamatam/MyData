@@ -1,0 +1,109 @@
+<section data-ng-controller="AuditController" data-ng-init="userLocation();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                 <div class="portlet-title">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="col-md-2">
+                                    <input class="form-control" ng-model="tableFilter" placeholder="Search.." type="text">
+                                    </input>
+                                </div>
+                                <div class="col-xs-6 btn-group pull-right">
+                                    <button class="btn blue  pull-right" id="sample_editable_1_new" data-ng-click="addAudit();">New Audit
+                                    <i class="fa fa-plus"> </i> </button>
+                                
+                                            <button class = "pull-right btn blue button-spacing" ng-click="completedAudit()">
+                                                Performed Audit
+                                            </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-offset-2 ">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label class="control-label">Locations<span class="required" aria-required="true"> * </span></label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="bs-select form-control" name="location" data-ng-model="audit.location" data-ng-change="userlocationBuilding(audit.location)" data-ng-options="location._id as location.name for location in locations">
+                                        <option value="" disabled>Select location</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <label class="control-label">Sites<span class="required" aria-required="true"> * </span></label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="bs-select form-control" name="building" data-ng-model="audit.building" data-ng-change="selectedBuilding(audit.building)" data-ng-options="building._id  as building.building_name for building in buildings">
+                                        <option value="" disabled>Select site</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body col-sm-offset-2 col-sm-8">
+                    <div class="mt-element-list" data-ng-if="audit.building">
+                        <div class="mt-list-container list-simple ext-1 group">
+                            <a class="list-toggle-container">
+                                <div class="list-toggle  uppercase audit-due">Over Due Audits</div>
+                            </a>
+                            <ul>
+                                <li class="mt-list-item audit-due-border" data-ng-repeat="audit in audits.overdueArray | orderBy:'date':false" data-ng-show="audits.overdueArray.length > 0">
+                                    <span class="list-datetime">{{audit.date|date :"d MMM "}}</span>
+                                    <span class="list-item-content" data-ng-click="performAudit(audit)">{{audit.name}} ({{audit.audit_category.name}}) </span>
+                                </li>
+                                <li class="mt-list-item audit-due-border" data-ng-show="!audits.overdueArray.length">
+                                    <span>No Overdue Audit</span></li>
+                            </ul>
+                            <a class="list-toggle-container">
+                                <div class="list-toggle uppercase audit-immedt">Immediately</div>
+                            </a>
+                            <ul>
+                                <li class="mt-list-item audit-immedt-border" data-ng-repeat="audit in audits.immediateArray | orderBy:'date':false" data-ng-show="audits.immediateArray.length > 0">
+                                    <span class="list-datetime">{{audit.date|date :"d MMM "}}</span>
+                                    <span class="list-item-content" data-ng-click="performAudit(audit)">{{audit.name}} ({{audit.audit_category.name}})</span>
+                                </li>
+                                <li class="mt-list-item audit-immedt-border" data-ng-show="!audits.immediateArray.length">
+                                    <span>No Immediate Audit</span></li>
+                            </ul>
+                            <a class="list-toggle-container">
+                                <div class="list-toggle done uppercase">With in 7 to 30 days</div>
+                            </a>
+                            <ul>
+                                <li class="mt-list-item done" data-ng-repeat="audit in audits.day7Array | orderBy:'date':false" data-ng-show="audits.day7Array.length > 0">
+                                    <span class="list-datetime">{{audit.date |date :"d MMM "}} 
+                                      <i class="glyphicon glyphicon-pencil" data-ng-click="editAudit(audit)"></i></span>
+                                    <span class="list-item-content" data-ng-click="performAudit(audit)">{{audit.name}} ({{audit.audit_category.name}})</span>
+                                </li>
+                                <li class="mt-list-item done" data-ng-show="!audits.day7Array.length">
+                                    <span>No Audit within 7 to 30 days</span></li>
+                            </ul>
+                            <a class="list-toggle-container">
+                                <div class="list-toggle uppercase audit-7day">More than 30 days</div>
+                            </a>
+                            <ul>
+                                <li class="mt-list-item audit-7day-border" data-ng-repeat="audit in audits.day30Array | orderBy:'date':false" data-ng-show="audits.day30Array.length > 0">
+                                    <span class="list-datetime">{{audit.date|date :"d MMM "}}
+                                    <i class="glyphicon glyphicon-pencil" data-ng-click="editAudit(audit)"></i></span>
+                                    <span class="list-item-content" data-ng-click="performAudit(audit)">{{audit.name}} ({{audit.audit_category.name}})</span>
+                                </li>
+                                <li class="mt-list-item audit-7day-border" data-ng-show="!audits.day30Array.length">
+                                    <span>No Audit more than 30 days</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

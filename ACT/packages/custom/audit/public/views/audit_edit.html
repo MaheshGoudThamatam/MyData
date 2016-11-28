@@ -1,0 +1,136 @@
+<section data-ng-controller="AuditController" data-ng-init="findOne(); loadSecurityManager(); allAuditCategory(); userLocation(); ">
+<div class="row">
+ <div class="col-sm-12">
+   <div class="col-md-12">
+     <div class="portlet light bordered clearfix">
+      <!-- input from section -->
+        <div class="portlet-body">
+            <form role="form" class="form-horizontal" name="auditForm"  novalidate confirm-unsaved>
+            <div class="form-body">
+            <div class="row">
+            <div class="col-md-4">
+               <div class="form-group" ng-class="{'has-error' : submitted && auditForm.location.$invalid}">
+                 <div class="col-md-12">
+                    <label class="control-label">Locations<span class="required" aria-required="true"> * </span></label>
+                  </div>
+                  <div class="col-md-9">
+                     <select class="bs-select form-control" name="location" data-ng-model="audit.location._id"  data-ng-change="userlocationBuilding(audit.location._id)" data-ng-options = "location._id as location.name for location in locations" required>
+                       <option value="" disabled>Select location</option>
+                     </select>
+                     <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='location'">{{err.msg}}</div>
+                     <div ng-show="submitted && auditForm.location.$invalid">
+                        <span class="text-danger" ng-show="auditForm.location.$error.required">Please select Location</span>
+                     </div>
+                  </div>
+                </div>
+             </div>
+             
+             <div class="col-md-4">
+               <div class="form-group" ng-class="{'has-error' : submitted && auditForm.building.$invalid}" >
+                 <div class="col-md-12">
+                    <label class="control-label">Buildings<span class="required" aria-required="true"> * </span></label>
+                  </div>
+                  <div class="col-md-9">
+                    <select class="bs-select form-control" name="building" data-ng-model="audit.building._id" data-ng-options = "building._id as building.building_name for building in buildings" required>
+                      <option value="" disabled>Select building</option>
+                    </select>
+                    <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='building'">{{err.msg}}</div>
+                    <div ng-show="submitted && auditForm.building.$invalid">
+                        <span class="text-danger" ng-show="auditForm.building.$error.required">Please select Building</span>
+                     </div>
+                  </div>
+                </div>
+             </div>
+             
+             </div>
+             <div class="row">
+             <div class="col-md-7">
+               <div class="form-group" ng-class="{'has-error' : submitted && auditForm.security_manager.$invalid}" >
+                  <div class="col-md-12">
+                     <label class="control-label">Security Managers<span class="required" aria-required="true"> * </span></label>
+                  </div>
+                  <div class="col-md-9">
+                       <select class="bs-select form-control" name="security_manager" data-ng-model="audit.security_manager._id" data-ng-options = "securityManager._id as securityManager.firstname + ' ' +  securityManager.lastname for securityManager in securityManagers" required>
+                        <option value="" disabled>Select manager</option>
+                        </select>
+                        <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='security_manager'">{{err.msg}}</div>
+                       <div ng-show="submitted && auditForm.security_manager.$invalid">
+                         <span class="text-danger" ng-show="auditForm.security_manager.$error.required">Please select Security Manager</span>
+                       </div>
+                  </div>
+                </div>
+                </div>
+             </div>
+             <div class="row">
+             <div class="col-md-7">
+                <div class="form-group" ng-class="{'has-error' : submitted && auditForm.name.$invalid}" >
+                 <div class="col-md-12">
+                  <label class="control-label">Name<span class="required" aria-required="true"> * </span></label>
+                 </div>
+                 <div class="col-md-9">
+                   <input type="text" name="name" data-ng-model="audit.name" class="form-control" placeholder="Name" required>
+                   <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='name'">{{err.msg}}</div>
+                   <div ng-show="submitted && auditForm.name.$invalid">
+                      <span class="text-danger" ng-show="auditForm.name.$error.required">Please enter Name</span>
+                   </div>
+                  </div>
+                 </div>
+             </div>
+             <div class="col-md-7">
+              <div class="form-group" ng-class="{'has-error' : submitted && auditForm.description.$invalid}" >
+                <div class="col-md-12">
+                 <label class="control-label">Description<span class="required" aria-required="true"> * </span></label>
+                 </div>
+                <div class="col-md-9">
+                 <textarea class="form-control" rows="3" name="description" data-ng-model="audit.description" placeholder="Description " required></textarea>
+                  <div class="text-danger" data-ng-repeat="err in error.data" ng-if="err.param =='description'">{{err.msg}}</div>
+                   <div ng-show="submitted && auditForm.description.$invalid">
+                      <span class="text-danger" ng-show="auditForm.description.$error.required">Please enter Description</span>
+                 </div>
+                </div>
+              </div>
+              </div>
+             </div>
+                <div class="row">
+                   <div class="col-xs-6">
+                       <label><strong>Selected Audit</strong></label>
+                   </div>
+                   <div class="col-xs-6">
+                       <label><strong>Date</strong></label>
+                   </div>
+               </div>  
+               
+               <div class="row">
+                   <div class="col-xs-6">
+                       <label class="mt-checkbox"> 
+                       <input type="checkbox" data-ng-model="audit.audit_category" data-ng-disabled="true" data-ng-checked="true">{{audit.audit_category.name}}<span></span>
+                       </label>
+                   </div>
+                   <div class="col-xs-6">
+                       <div class="form-group">
+                       <div class="input-group auditdatepicker">
+                           <input ng-keydown="restrictInput($event)" type="text" name="date" data-ng-model="audit.date">
+                           <span class="input-group-addon add-on pointerCursor"><span class="glyphicon glyphicon-calendar"></span></span>
+                        </div>
+                           <div class="text-danger" data-ng-repeat="err in error.data"
+                               ng-if="err.param =='audit_category.date'">{{err.msg}}</div>
+                       </div>
+                   </div>
+               </div>
+               
+               <div class="form-actions">
+                   <div class="row">
+                       <div class="col-md-12 text-right">
+                           <button type="button" class="btn default" data-ng-click="editAuditCancel()">Cancel</button>
+                           <button type="button" class="btn dark"  data-ng-click="update(auditForm.$valid)">Update</button>
+                       </div>
+                   </div>
+               </div>
+            </div>
+            </form>
+         </div>
+     </div>
+   </div>
+ </div>
+</div>
+</section>

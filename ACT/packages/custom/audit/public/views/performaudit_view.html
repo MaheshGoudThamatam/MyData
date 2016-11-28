@@ -1,0 +1,73 @@
+<section data-ng-controller="PerformAuditController" data-ng-init="findPerformedAudits();">
+	<div class="row">
+		<div class="col-sm-12" id="performedAudit">
+			<div class="portlet light bordered clearfix">
+				<div class="portlet-title">
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div class="pull-left">{{performAuditMaster.audit_category.name}}</div>
+                            <div class="form-group">
+                                <div class="col-xs-6 btn-dark pull-right">
+                                            <button class = "pull-right btn dark button-spacing" ng-click="generatePdf()">
+                                               Create PDF
+                                            </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="portlet-body">
+					<div class="row col-md-offset-2 col-md-8">
+						<form role="form" class="form-horizontal" name="performAuditForm"
+							novalidate confirm-unsaved>
+							<div class="col-xs-12"
+								data-ng-repeat="performAuditQues in performAuditMaster.questions">
+								<div
+									class="portlet mt-element-ribbon light portlet-fit bordered">
+									<div class="portlet-title">
+										<div class="caption">
+											<span class="caption-subject font-dark bold uppercase">{{$index
+												+ 1}}.&emsp;{{performAuditQues.audit_question}}</span>
+										</div>
+									</div>
+
+									<div class="clearfix">
+										<div class="col-xs-12">
+											<div class="col-xs-4 row">
+												<span data-ng-if="performAuditQues.answer === 'Yes'"><i
+													class="fa fa-check" aria-hidden="true" style="color: green">
+												</i>&emsp;Yes</span> <span
+													data-ng-if="performAuditQues.answer != 'Yes'"><i
+													class="fa fa-times" aria-hidden="true" style="color: red"></i>&emsp;Yes</span>
+											</div>
+											<div class="col-xs-4 row">
+												<span data-ng-if="performAuditQues.answer === 'No'"><i
+													class="fa fa-check" aria-hidden="true" style="color: green"></i>&emsp;No<a>
+														<i class="fa fa-external-link fa-lg" aria-hidden="true"
+														data-ng-click="securityTasklink()"></i>
+												</a></span> <span data-ng-if="performAuditQues.answer != 'No'"><i
+													class="fa fa-times" aria-hidden="true" style="color: red"></i>&emsp;No</span>
+											</div>
+											<div class="col-xs-4 row">
+												<span data-ng-if="performAuditQues.answer === 'NA'"><i
+													class="fa fa-check" aria-hidden="true" style="color: green"></i>&emsp;NA</span>
+												<span data-ng-if="performAuditQues.answer != 'NA'"><i
+													class="fa fa-times" aria-hidden="true" style="color: red"></i>&emsp;NA</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-actions" style="clear: both;">
+                                <div class="col-sm-12 text-right">
+                                    <button type="button" class="btn default" data-ng-click="back();">Back</button>
+                                </div>
+                            </div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

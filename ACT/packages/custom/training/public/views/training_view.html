@@ -1,0 +1,47 @@
+<section data-ng-controller="TrainingController" data-ng-init="fetchUser();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-title">
+                    <div class="form-group">
+                        <div class="col-xs-6 btn-group pull-right">
+                            <button class="btn blue  pull-right" ui-sref="Training_manage trainings">
+                                Manage Trainings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="portlet-body x-scroll">
+                    <table class="trainingTable table table-condensed table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="training-col-lg sorting_desc" tabindex="0" aria-controls="sample_1">Name</th>
+                                <th class="training-col-lg sorting_desc" tabindex="0" aria-controls="sample_1">E-mail</th>
+                                <th class="training-col-xs sorting_desc" tabindex="0" aria-controls="sample_1" data-ng-repeat="trainingTable in trainingTables" ng-init="$last ? bindPopover() : false">{{trainingTable.shortName}}
+                                    <a class="popovers" href="#" rel="popover" data-toggle="popover"  data-content="{{trainingTable.training_name}}">
+                                        <i class="fa fa-info-circle"></i>
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="user in users">
+                                <td>{{user.firstname}}</td>
+                                <td>{{user.email}}</td>
+                                <td data-ng-repeat="trainingTable in trainingTables">
+                                    <label class="mt-checkbox mt-checkbox-outline">
+                                        <input type="checkbox" class="checkboxes" ng-click="selectedTraining($event, user,trainingTable)" ng-checked="checkTraining(user, trainingTable)">
+                                        <span></span>
+                                    </label>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div data-ng-show="!trainingTables.length>0">
+                        <label>No Training Available</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

@@ -1,0 +1,74 @@
+<section data-ng-controller="PerformAuditController" data-ng-init="userLocation();">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div class="portlet-title">
+                <div class=row>
+                        <div class="col-md-3 col-sm-4">
+                            <div class="form-group clearfix">
+                                <div class="col-md-12">
+                                    <label class="control-label">Locations<span class="required" aria-required="true"> * </span></label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="bs-select form-control" name="location" data-ng-model="audit.location" data-ng-change="userlocationBuilding(audit.location)" data-ng-options="location._id as location.name for location in locations">
+                                        <option value="" disabled>Select location</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-4">
+                            <div class="form-group clearfix">
+                                <div class="col-md-12">
+                                    <label class="control-label">Sites<span class="required" aria-required="true"> * </span></label>
+                                </div>
+                                <div class="col-md-9">
+                                    <select class="bs-select form-control" name="building" data-ng-model="audit.building" data-ng-change="selectedBuilding(audit.building)" data-ng-options="building._id  as building.building_name for building in buildings">
+                                        <option value="" disabled>Select site</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="form-group clearfix">
+                            <div class="col-md-2 col-sm-4">
+                                <input class="form-control" placeholder="Search.." type="text"
+                                ng-model="tableFilter">
+                            </div>
+                            <button class="btn default pull-right" id="sample_editable_1_new" data-ng-click="backAuditList();">Back
+                                     </button>
+                        </div>
+                </div>
+                <div class="portlet-body scrollx">
+                    <table ng-table="auditsTable"
+                        class="table table-condensed table-bordered table-striped"
+                        data-ng-show="audits.length > 0">
+                        <tr ng-repeat="audit in $data">
+                            <td data-title="'Name'" sortable="'audit_name'">{{audit.audit.name}}</td>
+                            <td data-title="'PerformedBy'">{{audit.performedBy.firstname}}</td>
+                            <td data-title="'Performedon'">{{audit.performed.performed_At | date:"longDate"}}</td>
+                            <td data-title="'Actions'" class="col-sm-1 col-half">
+                                <div class="btn-group">
+                                    <a class="btn blue" href="javascript:;" data-toggle="dropdown"
+                                        aria-expanded="false"> <i class="fa fa-wrench"></i> <i
+                                        class="fa fa-angle-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a data-ng-click="performedAudit(audit)"> <i
+                                            class="fa fa-eye"></i>View
+                                        </a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr data-ng-show="!$data.length">
+                            <td colspan="11">No audits matched your filter condition.</td>
+                        </tr>
+                    </table>
+                    <div data-ng-show="!audits.length>0">
+                        <label>No audits available</label>
+                    </div>
+                </div>
+        </div>
+        </div>
+    </div>
+</section>

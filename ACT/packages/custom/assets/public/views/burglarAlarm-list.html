@@ -1,0 +1,77 @@
+<section ng-controller="BurglarAlarmController" ng-init="findAll()">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="portlet light bordered clearfix">
+                <div data-ng-include = "'/assets/views/burglarAlarm-tabs.html'"></div>
+				<div class="col-sm-12">
+					<div class="portlet-title">
+						<div class="row">
+						<div class="form-group">
+								<div class="col-md-2">
+									<input class="form-control" placeholder="Search.." type="text" ng-model="tableFilter">
+								</div>
+								<div class="col-xs-6 btn-group pull-right">
+									<button class="btn blue  pull-right" data-ng-click="addBurglarAlarm();">New Burglar alarm<i class="fa fa-plus"></i></button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="portlet-body scrollx">
+					<div class="col-sm-12">
+						<table ng-table="burglarAlarmTable" class="table table-condensed table-bordered table-striped"  data-ng-show="burglarAlarmArray.length > 0">
+							<tr ng-repeat="burglarAlarm in $data">
+								<td data-title="'Provider'" sortable="'burglarAlarm_provider'">{{burglarAlarm.burglarAlarm_provider}}</td>
+								<td data-title="'Model'" sortable="'model'">{{burglarAlarm.model}}</td>
+								<td data-title="'Service Provider'" sortable="'service_provider'">{{burglarAlarm.service_provider}}</td>
+								<!-- <td data-title="'Active'" sortable="'active'">{{burglarAlarm.active}}</td> -->
+								<td data-title="'Actions'" class="col-sm-1 col-half">
+					    			<div class="btn-group">
+					        			<a class="btn blue" href="javascript:;" data-toggle="dropdown" aria-expanded="false">
+					            			<i class="fa fa-wrench"></i> <i class="fa fa-angle-down"></i>
+					        			</a>
+					        			<ul class="dropdown-menu pull-right">
+					            			<li>
+					                			<a data-ng-click="editBurglarAlarm(burglarAlarm);">
+					                    			<i class="fa fa-pencil-square-o"></i>Edit
+					                			</a>
+					            			</li>
+					            			<!-- Will be implemented later -->
+					            			<!-- <li data-ng-if="burglarAlarm.active">
+					                			<a data-ng-click="softDelete(burglarAlarm);">
+					                    			<i class="fa fa-times"></i>Deactivate
+					                			</a>
+					            			</li>
+					            			<li data-ng-if="!burglarAlarm.active">
+					                			<a data-ng-click="softBurglarAlarm(burglarAlarm);">
+					                    			<i class="fa fa-times"></i>Activate
+					                			</a>
+					            			</li> -->
+					                		<li>
+					                    		<a data-ng-click="deleteBurglarAlarm(burglarAlarm);">
+					                        		<i class="fa fa-trash-o"></i>Delete
+					                    		</a>
+					                		</li>
+					                		<li>
+											     <a data-ng-click="cloneBurglarAlarm(burglarAlarm);"> <i
+													class="fa fa-clone"></i>Clone
+											</a>
+											</li>
+					            		</ul>
+					        		</div>
+								</td>
+							</tr>
+							<tr data-ng-show="!$data.length">
+								<td colspan = "11">No Burglar alarm matched your filter condition.</td>
+							</tr>
+						</table>
+						<div data-ng-show="!burglarAlarmArray.length>0">
+							<label>No Burglar alarm available</label>
+						</div>
+					</div>
+				</div>
+        	</div>
+    	</div>
+    </div>
+</section>

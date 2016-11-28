@@ -1,0 +1,5 @@
+<ng-map  scale-control="true" center="{{address}}" height="246px">
+	<marker ng-if="address" position="{{address}}" title="{{address.title}}" on-dragend="dragFn();" draggable="true"></marker>
+</ng-map>
+<small class="ng-binding">Note: You can drag/drop marker to exact position </small>
+<div class="text-danger" ng-if="mapError">Please enter address to see location in map.</div>

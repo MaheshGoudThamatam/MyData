@@ -1,0 +1,42 @@
+<div data-ng-controller="AssetsController" data-ng-init="initBuilding()">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-3">
+                <h5>
+                    <label>
+                        <strong>Location</strong>
+                    </label>
+                    <span>:{{location.name}}</span>
+                </h5>
+            </div>
+            <div class="col-sm-3">
+                <h5>
+                    <label>
+                        <strong>Site</strong>
+                    </label>
+                    <span>:{{building.building_name}}</span>
+                </h5>
+            </div>
+            <div class="col-md-6">
+                <button class="btn blue pull-right" type="button" data-ng-click="buildingList()">Site List</button>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="tabbable-custom col-sm-12">
+        <ul class="nav nav-tabs">
+            <li>
+                <a href="#" data-ng-click="cameraSystem();">Camera system</a>
+            </li>
+            <li>
+                <a href="#" data-ng-click="accessControl();">Access control</a>
+            </li>
+            <li>
+                <a href="#" data-ng-click="burglarAlarm();">Burglar alarm</a>
+            </li>
+            <li  class="active">
+                <a href="#" data-ng-click="guarding();">Guarding</a>
+            </li>
+        </ul>
+    </div>
+</div>

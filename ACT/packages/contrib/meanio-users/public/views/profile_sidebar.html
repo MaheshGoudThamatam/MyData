@@ -1,0 +1,25 @@
+<div class="portlet light profile-sidebar-portlet">
+    <div class="profile-userpic">
+    <img ng-src="{{profile.profileImage}}" class="img-responsive profileImage" alt=""> </div>
+    <div class="profile-usertitle">
+        <div class="profile-usertitle-name"> {{ profile.firstname + ' ' + profile.lastname }} </div>
+        <div class="profile-usertitle-job"> {{profile.role.name}} </div>
+    </div>
+    <div class="profile-usermenu">
+        <ul class="nav">
+            <li ng-class="(state.name == 'Profile_notifications') ? 'active' : ''">
+                <a href="/profile">
+                <i class="icon-microphone"></i> Notifications </a>
+            </li>
+            <li ng-class="(state.name == 'Profile_manage') ? 'active' : ''">
+                <a href="/profile/manage">
+                <i class="icon-settings"></i> Manage Account </a>
+            </li>
+            <!--// TODO if required in future//
+             <li ng-class="(state.name == 'Profile_help') ? 'active' : ''">
+                <a href="profile/help">
+                <i class="icon-question"></i> Help </a>
+            </li> -->
+        </ul>
+    </div>
+</div>
