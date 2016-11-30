@@ -303,15 +303,17 @@ angular.module('mean.booking',['datatables','ngResource']).controller('BookingCo
 		$scope.validateLoginPayBookNow = function(schedule, room, isAgreed,guest, specialNoteDesc,loggeduserDetail){
 			// console.log("in validate fn.");;
 			if(angular.isDefined(MeanUser.user.first_name)){
-			// console.log("in if condition");
-				if($rootScope.user.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
+				// console.log("in if condition");
+				/*if($rootScope.user.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){*/
+				if($rootScope.user.phone){	
 					$scope.userdtls = {};
 					//$scope.userdtls.phone = "";
 					$scope.validated = true;
 					$scope.loggedusers = MeanUser.user;
 					$scope.upadteUser($scope.loggeduser.phone, $scope.loggedusers, loggeduserDetail);
 					$scope.PayBoookNow(schedule,room,isAgreed,guest, specialNoteDesc, loggeduserDetail);
-				} else if($scope.loggeduser.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
+				/*} else if($scope.loggeduser.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){*/
+				} else if($scope.loggeduser.phone){
 					$scope.userdtls = {};
 					//$scope.userdtls.phone = "";
 					$scope.loggedusers = MeanUser.user;
@@ -333,13 +335,13 @@ angular.module('mean.booking',['datatables','ngResource']).controller('BookingCo
 						'userId':guest.email
 					}, function(response) {
 						if(response._id == undefined){
-							if(loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
+							/*if(loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){*/
 								$scope.emailError = false;
 								$scope.validated = true;
 								$scope.PayBoookNow(schedule,room,isAgreed,guest, specialNoteDesc, loggeduserDetail);
-							} else {
+							/*} else {
 								flash.setMessage(MESSAGES.ALL_ADDRESS_FIELDS_REQUIRED,MESSAGES.ERROR);
-							}
+							}*/
 						}
 						else{
 							$scope.emailError=true;
@@ -728,7 +730,8 @@ angular.module('mean.booking',['datatables','ngResource']).controller('BookingCo
 		$scope.loadBooking=function(){
 			$scope.dtOptions1 = DTOptionsBuilder.newOptions().withOption('order', []).withPaginationType('full_numbers').withDisplayLength(10);
 			$scope.dtColumnDefs1 = [
-			                   DTColumnDefBuilder.newColumnDef(0).notVisible(),
+			                   //DTColumnDefBuilder.newColumnDef(0).notVisible(),
+			                   DTColumnDefBuilder.newColumnDef(0),
 			                   DTColumnDefBuilder.newColumnDef(1),
 			                   DTColumnDefBuilder.newColumnDef(2),
 			                   DTColumnDefBuilder.newColumnDef(3),
@@ -739,8 +742,7 @@ angular.module('mean.booking',['datatables','ngResource']).controller('BookingCo
 			                   DTColumnDefBuilder.newColumnDef(8),
 			                   DTColumnDefBuilder.newColumnDef(9),
 			                   DTColumnDefBuilder.newColumnDef(10),
-			                   DTColumnDefBuilder.newColumnDef(11),
-			                   DTColumnDefBuilder.newColumnDef(12).notSortable()
+			                   DTColumnDefBuilder.newColumnDef(11).notSortable()
 			                   ];
 			window.alert = (function() {
 			    var nativeAlert = window.alert;
@@ -760,7 +762,8 @@ angular.module('mean.booking',['datatables','ngResource']).controller('BookingCo
 		$scope.loadPartnerBooking=function(){
 			$scope.dtOptions2 = DTOptionsBuilder.newOptions().withOption('order', []).withPaginationType('full_numbers').withDisplayLength(10);
 			$scope.dtColumnDefs2 = [
-			                   DTColumnDefBuilder.newColumnDef(0).notVisible(),
+			                   //DTColumnDefBuilder.newColumnDef(0).notVisible(),
+			                   DTColumnDefBuilder.newColumnDef(0),
 			                   DTColumnDefBuilder.newColumnDef(1),
 			                   DTColumnDefBuilder.newColumnDef(2),
 			                   DTColumnDefBuilder.newColumnDef(3),
@@ -768,8 +771,7 @@ angular.module('mean.booking',['datatables','ngResource']).controller('BookingCo
 			                   DTColumnDefBuilder.newColumnDef(5),
 			                   DTColumnDefBuilder.newColumnDef(6),
 			                   DTColumnDefBuilder.newColumnDef(7),
-			                   DTColumnDefBuilder.newColumnDef(8),
-			                   DTColumnDefBuilder.newColumnDef(9).notSortable(),
+			                   DTColumnDefBuilder.newColumnDef(8).notSortable(),
 			                   ];
 			window.alert = (function() {
 			    var nativeAlert = window.alert;
@@ -857,19 +859,20 @@ angular.module('mean.booking',['datatables','ngResource']).controller('BookingCo
 		    else {
 				$scope.dtOptions = DTOptionsBuilder.newOptions().withOption('order', []).withPaginationType('full_numbers').withDisplayLength(10);
 		    }
+			
 			$scope.dtColumnDefs = [
-			                   DTColumnDefBuilder.newColumnDef(0).notVisible(),
-			                   DTColumnDefBuilder.newColumnDef(1),
-			                   DTColumnDefBuilder.newColumnDef(2).withOption('sType', 'date'),
-			                   DTColumnDefBuilder.newColumnDef(3),
-			                   DTColumnDefBuilder.newColumnDef(4),
-			                   DTColumnDefBuilder.newColumnDef(5),
-			                   DTColumnDefBuilder.newColumnDef(6),
-			                   DTColumnDefBuilder.newColumnDef(7),
-			                   DTColumnDefBuilder.newColumnDef(8),
-			                   DTColumnDefBuilder.newColumnDef(9),
-			                   DTColumnDefBuilder.newColumnDef(10).notSortable()
-			               ];
+				                   //DTColumnDefBuilder.newColumnDef(0).notVisible(),
+				                   DTColumnDefBuilder.newColumnDef(0),
+				                   DTColumnDefBuilder.newColumnDef(1).withOption('sType', 'date'),
+				                   DTColumnDefBuilder.newColumnDef(2),
+				                   DTColumnDefBuilder.newColumnDef(3),
+				                   DTColumnDefBuilder.newColumnDef(4),
+				                   DTColumnDefBuilder.newColumnDef(5),
+				                   DTColumnDefBuilder.newColumnDef(6),
+				                   DTColumnDefBuilder.newColumnDef(7),
+				                   DTColumnDefBuilder.newColumnDef(8),
+				                   DTColumnDefBuilder.newColumnDef(9).notSortable()
+				               ];
 			window.alert = (function() {
 			    var nativeAlert = window.alert;
 			    return function(message) {
@@ -885,9 +888,14 @@ angular.module('mean.booking',['datatables','ngResource']).controller('BookingCo
 				'user' : MeanUser.user._id
 			},function(response) {
 				$scope.userBookings = response;
-				for (var i = 0; i < $scope.userBookings.length; i++) {
-					$scope.userBookings[i].bookingNewdate = new Date($scope.userBookings[i].bookingEndTime);
-				}
+				/*for (var i = 0; i < $scope.userBookings.length; i++) {
+					//$scope.userBookings[i].bookingNewdate = new Date($scope.userBookings[i].bookingEndTime);
+					if(($scope.userBookings[i].room.roomtype.name === 'Hot Desk') || ($scope.userBookings[i].room.roomtype.name === 'Training Room')){
+						$scope.userBookings[i].bookingNewdate = new Date($scope.userBookings[i].endDate + ' ' + $scope.userBookings[i].endTime);
+					} else {
+						$scope.userBookings[i].bookingNewdate = new Date($scope.userBookings[i].bookingEndTime);
+					}
+				}*/
 				// console.log($scope.userBookings);
 				$scope.loaderEnabled = false;
 

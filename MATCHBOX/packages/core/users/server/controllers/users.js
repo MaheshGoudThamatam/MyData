@@ -167,7 +167,7 @@ module.exports = function(MeanUser) {
                 console.log("**********");
                 var email = templates.confirmation_email(req, user, token);
                 mail.mailService(email, user.email);
-                sms.send(user.phone, 'Welcome to mymatchbox. Your account has been successfully created. An email has been forwarded to your registered email id.', function(status) {
+                sms.send(user.phone, 'Welcome to mymatchbox! Your account has been successfully created. An email has been forwarded to your registered email id.', function(status) {
                     logger.log('info', 'POST ' + req._parsedUrl.pathname + ' User registration SMS sent [' + user.phone + ']: ' + status);
                 });
                 res.json({
@@ -515,7 +515,6 @@ module.exports = function(MeanUser) {
                 'email': users.email
             }, function(err, user) {
                 if (user) {
-                    console.log(user);
                     var isFound = user.socialAccounts.filter(function(sAcc) {
                         return (sAcc.provider == users.provider);
                     });
@@ -539,6 +538,12 @@ module.exports = function(MeanUser) {
                         });
                     } else {
                         var social_obj = users;
+                        user.username = users.username;
+                         var name = users.username.split(' ');
+                         var full_name = name.split(',');
+                        user.first_name = full_name[0];
+                        user.last_name = full_name[1];
+                        user.phone = users.phone;
                         // user.socialAccounts.push(social_obj);
                         if (user.socialAccounts.push(social_obj)) {
                             user.save(function(err, user) {
@@ -569,7 +574,7 @@ module.exports = function(MeanUser) {
                     }
                 } else {
                     user = new User({
-                        first_name: users.name,
+                        first_name: users.first_name,
                         email: users.email || " ",
                         username: users.username || " ",
                         socialAccounts: users,
@@ -605,6 +610,23 @@ module.exports = function(MeanUser) {
                     });
                 }
             });
+        },
+        
+        updateProfile: function(req, res) {
+        	User.findOne({
+                _id: req.body._id
+            }).populate("role").exec(function(err, userObj) {
+                if (err) return next(err);
+                if (!userObj) return next(new Error('Failed to load User ' + id));
+                var user = userObj;
+                req.body.first_name = req.body.username;
+                user = _.extend(user, req.body);
+                user.save(function(err) {
+                	if (err) return next(err);
+                    res.jsonp(user);
+                });
+            });
         }
+        
     };
 }

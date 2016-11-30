@@ -11,9 +11,9 @@ function cloudinary() {
 	// configuration of the cloudinary
 	if (process.env.NODE_ENV == 'development') {
 		cloudinary.config({
-		    cloud_name : 'tarento',
-		    api_key : '828791761456674',
-		    api_secret : 'Jiuyc7ITzqcUaR4_WY8U_OxZ-g0'
+		    cloud_name : 'mymatchbox',
+		    api_key : '421454936319151',
+		    api_secret : 'eEOnZ1qr0eG1ChLy3vc5MmxMFjE'
 		});
 	} else {
 		cloudinary.config({
@@ -54,9 +54,9 @@ module.exports = function(util, app, auth, database) {
 		extension = extension.toLowerCase();
 		if (extension === '.jpg' || extension === '.jpeg' || extension === '.png') {
 			cloudinary.config({
-				cloud_name : 'tarento',
-			    api_key : '828791761456674',
-			    api_secret : 'Jiuyc7ITzqcUaR4_WY8U_OxZ-g0'
+				cloud_name : 'mymatchbox',
+			    api_key : '421454936319151',
+			    api_secret : 'eEOnZ1qr0eG1ChLy3vc5MmxMFjE'
 			});
 								
 			cloudinary.uploader.upload(image.path, function(result) {

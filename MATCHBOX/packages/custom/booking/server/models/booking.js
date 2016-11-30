@@ -17,6 +17,10 @@ var BookingSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'Rooms'
     },
+    bookedRooms: [{
+        type: Schema.ObjectId,
+        ref: 'Rooms'
+    }],
     status: {
         type: String,
         default: 'Failed'
@@ -191,7 +195,14 @@ var BookingSchema = new Schema({
     feature : {
         type : String,
 	    default : ""
-	}
+	},
+	reviewBooking : {
+    	type: Boolean
+	}/*,
+	isReviewed:{
+    	type: Boolean,
+		default: false
+	}*/
     
 });
 BookingSchema.plugin(deepPopulate, {
@@ -204,7 +215,7 @@ BookingSchema.plugin(deepPopulate, {
 BookingSchema.statics.load = function (id, callback) {
     this.findOne({
         _id: id
-    }).deepPopulate(['room','room.roomtype']).populate('user').populate('space').populate('partner').populate('room').populate('promoCode').populate('guestUser').exec(callback);
+    }).deepPopulate(['room','room.roomtype']).populate('user').populate('space').populate('partner').populate('room').populate('bookedRooms').populate('promoCode').populate('guestUser').exec(callback);
 };
 mongoose.model('Booking', BookingSchema);
 BookingSchema.plugin(autoIncrement.plugin, {

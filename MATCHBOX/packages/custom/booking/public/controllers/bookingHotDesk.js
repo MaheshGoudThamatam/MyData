@@ -220,11 +220,13 @@ angular.module('mean.booking').controller('BookingHotDeskController', ['$scope',
 						/*for(var k = 0; k < $scope.hotDeskList[i].relatedHotDeskIds.length; k++){
 							hotDeskListIds.push($scope.hotDeskList[i].relatedHotDeskIds[k]._id);
 						}*/
-						var hotDeskListIds = $scope.hotDeskList[i].relatedHotDeskIds;
-						var counter = 0;
-						for(var j = 0; j < hotDeskSeats; j++){
-							counter++;
-							$scope.loadSchedules(hotDeskListIds[j], hotDeskSeats, counter);
+						if(JSON.stringify($scope.hotDeskList[i]._id) === JSON.stringify($rootScope.roomsDetail._id)){
+							var hotDeskListIds = $scope.hotDeskList[i].relatedHotDeskIds;
+							var counter = 0;
+							for(var j = 0; j < hotDeskSeats; j++){
+								counter++;
+								$scope.loadSchedules(hotDeskListIds[j], hotDeskSeats, counter);
+							}	
 						}
 					}
 				} else {
@@ -351,9 +353,28 @@ angular.module('mean.booking').controller('BookingHotDeskController', ['$scope',
         	return time;
         }
         
+        $scope.distinctOutSchedule = function(distinctScheduleArray){
+        	var scheduleArray = [];
+    		console.log('------Sche------');
+        	for(var i = 0; i < distinctScheduleArray.length; i++){
+        		console.log(distinctScheduleArray[i]);
+	            var isDistinct = false;
+	            for(var j = 0; j < i; j++){
+	                if(JSON.stringify(distinctScheduleArray[i]) == JSON.stringify(distinctScheduleArray[j])){
+	                    isDistinct = true;
+	                    break;
+	                }
+	            }
+	            if(!isDistinct){
+	            	scheduleArray.push(distinctScheduleArray[i]);
+	            }
+	        }
+        	return scheduleArray;
+        }
+        
 		$scope.bookNow = false;
 		$scope.payBookNow = function(room, isAgreed, guest, specialNoteDesc, loggeduserDetail) {
-			var schedule = $scope.scheduleIndexArray; 
+			var schedule = $scope.distinctOutSchedule($scope.scheduleIndexArray); 
 			$rootScope.booking = {};
 			$rootScope.booking.roomPrice = {};
 			$rootScope.booking.room = room;
@@ -392,7 +413,7 @@ angular.module('mean.booking').controller('BookingHotDeskController', ['$scope',
 		    $rootScope.booking.specialNoteDescription = specialNoteDesc;
             $rootScope.booking.address = {};
 	        console.log(loggeduserDetail);
-             if(loggeduserDetail){
+            if(loggeduserDetail){
 				$rootScope.booking.address.address1 = loggeduserDetail.address1;
 				$rootScope.booking.address.address2 = loggeduserDetail.address2;
 				$rootScope.booking.address.city = loggeduserDetail.city;
@@ -438,7 +459,7 @@ angular.module('mean.booking').controller('BookingHotDeskController', ['$scope',
 
 		$scope.validateLoginPayBookNow = function(room, isAgreed,guest, specialNoteDesc,loggeduserDetail){
 			if(angular.isDefined(MeanUser.user.first_name)){
-				console.log($scope.loggeduser.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country);
+				//console.log($scope.loggeduser.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country);
 				if(MeanUser.user.phone){
 					$scope.userdtls = {};
 					//$scope.userdtls.phone = "";
@@ -446,7 +467,8 @@ angular.module('mean.booking').controller('BookingHotDeskController', ['$scope',
 					$scope.loggedusers = MeanUser.user;
 					$scope.upadteUser($scope.loggeduser.phone, $scope.loggedusers, loggeduserDetail);
 					$scope.payBookNow(room,isAgreed,guest, specialNoteDesc, loggeduserDetail);
-				} else if($scope.loggeduser.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
+				/*} else if($scope.loggeduser.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){*/
+				} else if($scope.loggeduser.phone){
 					$scope.userdtls = {};
 					//$scope.userdtls.phone = "";
 					$scope.loggedusers = MeanUser.user;
@@ -464,13 +486,13 @@ angular.module('mean.booking').controller('BookingHotDeskController', ['$scope',
 					'userId':guest.email
 				}, function(response) {
 					if(response._id == undefined){
-						if(loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
+						//if(loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
 							$scope.emailError = false;
 							$scope.validated = true;
 							$scope.payBookNow(room,isAgreed,guest, specialNoteDesc, loggeduserDetail);
-						} else {
+						/*} else {
 							flash.setMessage(MESSAGES.ALL_ADDRESS_FIELDS_REQUIRED,MESSAGES.ERROR);
-						}
+						}*/
 					} else {
 						$scope.emailError = true;
 					}

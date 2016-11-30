@@ -19,6 +19,10 @@ module.exports = function(Booking, app, auth, database) {
   	app.route('/api/booking/training')
   		.get(bookingTrainingCtrl.all)
   		.post(bookingTrainingCtrl.create);
+  	
+  	app.route('/api/android/booking/training')
+		.get(bookingTrainingCtrl.all)
+  		.post(bookingTrainingCtrl.createAndroid);
     
     app.route('/api/:scheduleId/booking/:bookingId')
     	.get(bookingTrainingCtrl.show)

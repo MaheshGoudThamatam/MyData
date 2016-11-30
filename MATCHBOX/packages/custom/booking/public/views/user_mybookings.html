@@ -52,7 +52,7 @@
 											<table datatable="ng"  class="table table-bordered row-border hover booking-table tableBookingPage" dt-options="dtOptions" dt-column-defs="dtColumnDefs" id="userBookingTable">
 												<thead>
 													<tr>
-													    <th class="text-center">ID</th>
+													    <!-- <th class="text-center">ID</th> -->
 														<th class="text-center">Booking ID</th>
 														<th class="text-center">Booking Date</th>
 														<th class="text-center">Room Name</th>
@@ -67,24 +67,37 @@
 												</thead>
 												<tbody>
 													<tr data-ng-repeat="userBooking in userBookings">
-														<td class="text-center">{{userBooking._id}}</td>
-														<td class="text-left">{{userBooking.bookingConfirmationId}}</td>
+														<!-- <td class="text-center">{{userBooking._id}}</td> -->
+														<td class="text-left">
+															<span data-ng-show="userBooking.bookingConfirmationId.length === 13">{{userBooking.bookingConfirmationId}}</span>
+															<span data-ng-hide="userBooking.bookingConfirmationId.length === 13">Unsuccessful</span></td>
                                                          <td class="text-right">{{userBooking.bookingDate|date:'dd MMM yy'}}</td>
 
 														<td class="text-left">{{userBooking.room.name}}</td>
 														<td class="text-left tdBookingAddress">{{userBooking.space.name}}</td>
 														<td class="text-left tdBookingAddress">{{userBooking.space.city}}</td>
-
-                                                         <td class="text-right">{{userBooking.bookingStartTime|date:'ha'}} - {{userBooking.bookingEndTime|date:'ha'}}</td>
-                                                         <td class="text-right tdBookingCost">&#8377;&nbsp;{{userBooking.price}}</td>
+                                                         <td class="text-right">{{userBooking.bookingStartTime|date:'hh:mm a'}} - {{userBooking.bookingEndTime|date:'hh:mm a'}}</td>
+                                                         <td class="text-right tdBookingCost">&#8377;&nbsp;{{userBooking.price | number:2}}</td>
                                                          <td class="text-left">{{userBooking.status}} </td>
 														<td class="text-right tdBookingBookedDate">{{userBooking.createdAt|date:'dd MMM yy'}}</td>
-                 <td class="text-center">
-	                 <a class="menu-toggler editIcon" ng-click="redirectAttendee(userBooking, BOOKING.URL_PATH.VIEWBOOKINGDETAILS)" title="View " ><i class="fa fa-eye" aria-hidden="true"></i></a>
-	                 <a ng-if="userBooking.reviewed" class="menu-toggler editIcon" ng-click="reviewdMessage();" title="Review "><i class="fa fa-comment-o" aria-hidden="true"></i></a>
-					<a ng-show="(!userBooking.reviewed) && (userBooking.bookingNewdate < currentDate)" style="color: red;" class="menu-toggler editIcon" ng-click="bookingreview(userBooking._id,BOOKING.URL_PATH.BOOKINGREVIEW)" title="Review "><i class="fa fa-comment-o" aria-hidden="true"></i></a>
-				</td>
-													</tr>
+														<td class="text-center">
+															<a class="menu-toggler editIcon" title="View "
+																ng-click="redirectAttendee(userBooking, BOOKING.URL_PATH.VIEWBOOKINGDETAILS)">
+																<i class="fa fa-eye" aria-hidden="true"></i></a>
+															<a ng-if="userBooking.reviewed" class="menu-toggler editIcon" 
+																ng-click="reviewdMessage();" title="Review ">
+																<i class="fa fa-comment-o" aria-hidden="true"></i></a> 
+															<!-- <a ng-show="(userBooking.status === 'Confirmed') && (!userBooking.reviewed) && (userBooking.bookingNewdate < currentDate)"
+																style="color: red;" class="menu-toggler editIcon"
+																ng-click="bookingreview(userBooking._id,BOOKING.URL_PATH.BOOKINGREVIEW)"
+																title="Review ">
+																<i class="fa fa-comment-o" aria-hidden="true"></i></a></td> -->
+															<a ng-show="(userBooking.reviewBooking)"
+																style="color: red;" class="menu-toggler editIcon"
+																ng-click="bookingreview(userBooking._id,BOOKING.URL_PATH.BOOKINGREVIEW)"
+																title="Review ">
+																<i class="fa fa-comment-o" aria-hidden="true"></i></a></td>
+												</tr>
 												</tbody> 
 											</table>
 										</div>

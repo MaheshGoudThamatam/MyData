@@ -11,7 +11,7 @@ var Space = new Module('space');
  * All MEAN packages require registration
  * Dependency injection is used to define required modules
  */
-Space.register(function(app, auth, database) {
+Space.register(function(app, auth, database, swagger) {
 
   //We enable routing. By default the Package Object is passed to the routes
   Space.routes(app, auth, database);
@@ -49,6 +49,9 @@ Space.register(function(app, auth, database) {
         //you now have the settings object
     });
     */
+
+  //Only use swagger.add if /docs and the corresponding files exists
+  swagger.add(__dirname);
 
   return Space;
 });

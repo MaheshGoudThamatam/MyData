@@ -11,7 +11,7 @@ var PromoCode = new Module('promo_code');
  * All MEAN packages require registration
  * Dependency injection is used to define required modules
  */
-PromoCode.register(function(app, auth, database) {
+PromoCode.register(function(app, auth, database, swagger) {
 
   //We enable routing. By default the Package Object is passed to the routes
   PromoCode.routes(app, auth, database);
@@ -25,7 +25,8 @@ PromoCode.register(function(app, auth, database) {
   });
   
   PromoCode.aggregateAsset('css', 'promoCode.css');
-
+  swagger.add(__dirname);
+  
   /**
     //Uncomment to use. Requires meanio@0.3.7 or above
     // Save settings with callback

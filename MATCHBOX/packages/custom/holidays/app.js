@@ -11,7 +11,7 @@ var Holidays = new Module('holidays');
  * All MEAN packages require registration
  * Dependency injection is used to define required modules
  */
-Holidays.register(function(app, auth, database) {
+Holidays.register(function(app, auth, database, swagger) {
 
   //We enable routing. By default the Package Object is passed to the routes
   Holidays.routes(app, auth, database);
@@ -26,7 +26,7 @@ Holidays.register(function(app, auth, database) {
   
   Holidays.aggregateAsset('css', 'holidays.css');
   Holidays.angularDependencies(['ui.calendar', 'ui.bootstrap']);
-
+  swagger.add(__dirname);
   /**
     //Uncomment to use. Requires meanio@0.3.7 or above
     // Save settings with callback

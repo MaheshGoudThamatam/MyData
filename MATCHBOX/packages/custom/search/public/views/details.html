@@ -183,7 +183,7 @@ hr {
 											style="text-transform: uppercase; font-size: 13px !important; padding: 12px !important;">
 									</div>
 								</div>
-								<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12" data-ng-hide="isHotDesk"
+								<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12" data-ng-hide="isHotDesk || isTrainingOrHotDesk"
 									style="width: 12% !important">
 									<div class="input-group peoples">
 										<div class="input-group-addon searchbord">
@@ -194,11 +194,22 @@ hr {
 											style="font-size: 17px !important;">
 									</div>
 								</div>
-								<div class="col-lg-1 col-md-1 col-sm-1 searchDetailLine"  data-ng-show="isTraining"
+								<!-- <div class="col-lg-1 col-md-1 col-sm-1 searchDetailLine"  data-ng-show="isTraining"
 									style="width: 1vw; margin-left: -27px; margin-top: 10px;">
 									<i class="fa fa-minus" aria-hidden="true"></i>
+								</div> -->
+								<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"  data-ng-show="isTrainingOrHotDesk && !isHotDesk"
+									style="width: 12% !important">
+									<div class="input-group peoples">
+										<div class="input-group-addon searchbord">
+											<i class="fa fa-users fa-2x"></i>
+										</div>
+										<input type="text" class="form-control"
+											value={{searchObj.capacity.min}}-{{searchObj.capacity.max}} ng-disabled="true"
+											style="font-size: 15px !important; padding: 11px !important;padding-left: 7px !important;">
+									</div>
 								</div>
-								<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"  data-ng-show="isTrainingOrHotDesk"
+								<div class="col-lg-2 col-md-4 col-sm-4 col-xs-12"  data-ng-show="isHotDesk"
 									style="width: 12% !important">
 									<div class="input-group peoples">
 										<div class="input-group-addon searchbord">
@@ -206,7 +217,7 @@ hr {
 										</div>
 										<input type="text" class="form-control"
 											value={{searchObj.capacity.max}} ng-disabled="true"
-											style="font-size: 17px !important;">
+											style="font-size: 15px !important; padding: 11px !important;padding-left: 7px !important;">
 									</div>
 								</div>
 								<div

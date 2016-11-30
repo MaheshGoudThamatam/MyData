@@ -20,7 +20,11 @@ function stringToBoolean(booleanString){
 	    return true;
 	} else if(booleanString === 'false'){
 		return false;
-	} else {
+	}  else if(booleanString === true){
+        return true;
+    } else if(booleanString === false){
+        return false;
+    } else {
 	    return null;
 	}
 }
@@ -293,11 +297,21 @@ module.exports = {
     				var temp = holidayMonth + "/" + holidayDate + "/" + holidayYear;
     				/*var isDateInRange = jQuery.inArray(temp, disabledDateList);*/
     				var isDateInRange = disabledDateList.indexOf(temp);
-    				if (isDateInRange == -1 && holidaystartDate.getDay() != 0) {
+    				
+    				/*if (isDateInRange == -1 && holidaystartDate.getDay() != 0) {
     					dates.push(holidayMonth + "/" + holidayDate + "/" + holidayYear);
     				} else if (isDateInRange != -1 && holidaystartDate.getDay() == 0) {
     					dates.push(holidayMonth + "/" + holidayDate + "/" + holidayYear);
+    				}*/
+    				
+    				if (isDateInRange != -1){
+
+    				} else if(holidaystartDate.getDay() == 0) {
+    								
+    				} else {
+    					dates.push(holidayMonth + "/" + holidayDate + "/" + holidayYear);
     				}
+
     			}
     			if (reqBody.excludeHoliday && !reqBody.excludeSunday) {
     				var temp = holidayMonth + "/" + holidayDate + "/" + holidayYear;

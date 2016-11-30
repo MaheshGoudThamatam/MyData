@@ -598,18 +598,17 @@ angular.module('mean.booking').controller('BookingTrainingController', ['$scope'
 
 		$scope.validateLoginPayBookNow = function(room, isAgreed,guest, specialNoteDesc,loggeduserDetail){
 			if(angular.isDefined(MeanUser.user.first_name)){
-				console.log(MeanUser.user);
-				console.log("rootscope user");
-				console.log($rootScope.user.phone);
-				console.log($scope.loggeduser.phone);
-				if($rootScope.user.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
+				
+				//if($rootScope.user.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
+				if($rootScope.user.phone){
 					$scope.userdtls = {};
 					//$scope.userdtls.phone = ""; 
 					$scope.validated = true;
 					$scope.loggedusers = MeanUser.user;
 					$scope.upadteUser($scope.loggeduser.phone, $scope.loggedusers, loggeduserDetail);
 					$scope.payBookNow(room,isAgreed,guest, specialNoteDesc, loggeduserDetail);
-				} else if($scope.loggeduser.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
+				//} else if($scope.loggeduser.phone && loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
+				} else if($scope.loggeduser.phone){
 					$scope.userdtls = {};
 					//$scope.userdtls.phone = "";
 					$scope.loggedusers = MeanUser.user;
@@ -627,13 +626,13 @@ angular.module('mean.booking').controller('BookingTrainingController', ['$scope'
 					'userId':guest.email
 				}, function(response) {
 					if(response._id == undefined){
-						if(loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
+						//if(loggeduserDetail.address1 && loggeduserDetail.address2 && loggeduserDetail.city && loggeduserDetail.state && loggeduserDetail.pinCode && loggeduserDetail.country){
 							$scope.emailError = false;
 							$scope.validated = true;
 							$scope.payBookNow(room,isAgreed,guest, specialNoteDesc, loggeduserDetail);
-						} else {
+						/*} else {
 							flash.setMessage(MESSAGES.ALL_ADDRESS_FIELDS_REQUIRED,MESSAGES.ERROR);
-						}
+						}*/
 					} else {
 						$scope.emailError = true;
 					}

@@ -52,5 +52,8 @@ angular.module('mean.users').config(function ($meanStateProvider, $httpProvider,
 			url : USERS.URL_PATH.USERCONFIRMATION,
 			templateUrl : USERS.FILE_PATH.USERCONFIRMATION,
 			
+		}).state(USERS.STATE.UNAUTHORIZED_PAGE, {
+			url : USERS.URL_PATH.UNAUTHORIZED_PAGE,
+			templateUrl : USERS.FILE_PATH.UNAUTHORIZED_PAGE,
 		});
 	});

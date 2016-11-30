@@ -153,10 +153,17 @@ module.exports = function (Payment) {
                 		console.log(bookingList.length);
                 	}
                 	
-                	var bookingObject = bookingList[0];
-                	var lastFiveDigit = bookingObject.bookingConfirmationId.slice(-5);
-                	lastFiveDigit = parseInt(lastFiveDigit) + 1;
-                	var lastFiveDigitString = lastFiveDigit.toString();
+                	var bookingObject, lastFiveDigit, lastFiveDigitString;
+                	bookingObject = bookingList[0];
+                	console.log(bookingObject);
+                	if(bookingObject){
+                    	lastFiveDigit = bookingObject.bookingConfirmationId.slice(-5);
+                    	lastFiveDigit = parseInt(lastFiveDigit) + 1;
+                	} else {
+                		lastFiveDigit = '1';
+                    	lastFiveDigit = parseInt(lastFiveDigit);
+                	}
+                	lastFiveDigitString = lastFiveDigit.toString();
                 	lastFiveDigitString = lastFiveDigitString.replace(/\d+/g, function(m){
                      	 return "0000".substr(m.length - 1) + m;
                     });
@@ -170,7 +177,7 @@ module.exports = function (Payment) {
 	                            error: 'Cannot save the Booking'
 	                        });
 	                    }
-	                    notify.addNotificationForBooking('Room is Booked', 'New'+ '		' + booking.room.roomtype.name + '	 ' + 'booked with'+'	'+ booking._id + '. '+'Click for details', booking , '/admin/bookings');
+	                    notify.addNotificationForBooking('Room is Booked', 'New'+ '		' + booking.room.roomtype.name + '	 ' + 'booked with'+'	'+ booking.bookingConfirmationId + '. '+'Click for details', booking , '/admin/bookings');
 	                    
 	                    if(booking.schedule){
 		                    ScheduleModel.load(booking.schedule, function (err, schedule) {
@@ -257,16 +264,23 @@ module.exports = function (Payment) {
 			                                 });
 			                            	 var emailGuest = templates.booking_email_guest(guestUser, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
 			                      			mailbooking.mailService(emailGuest,guestUser.email)
-			                      			var emailpartner = templates.booking_email_guest(partner, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
-			                 			mailbooking.mailService(emailpartner,partner.email)
+			                      			
+
+			                      			var emailpartner = templates.booking_email_partner_mail_guestUser(partner, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
+			                 				mailbooking.mailService(emailpartner,partner.email)
+			                            
+
+
 			                            }else{
 			                            	 sms.send(user.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
 			                                     logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
 			                                 });
 			                            	 var email = templates.booking_email(user, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
 			                      			mailbooking.mailService(email,user.email)
-			                      			var emailpartner = templates.booking_email(partner, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
-			                 			mailbooking.mailService(emailpartner,partner.email)
+			                      			
+
+			                      			var emailpartner = templates.booking_email_partner_mail(partner, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
+			                 				mailbooking.mailService(emailpartner,partner.email)
 			                            }
 
 		                 			
@@ -284,10 +298,10 @@ module.exports = function (Payment) {
 							                          }
 							                          else{
 							                        	  if(!user){
-							                        		  var emailTeam = templates.booking_email_guest(teamUser, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
+							                        		  var emailTeam = templates.booking_email_partner_mail_guestUser(teamUser, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
 									                   			mailbooking.mailService(emailTeam,teamUser.email)
 							                        	  }else{
-							                        		  var emailTeam = templates.booking_email(teamUser, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
+							                        		  var emailTeam = templates.booking_email_partner_mail(teamUser, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
 									                   			mailbooking.mailService(emailTeam,teamUser.email)
 							                        	  }
 							                        	  sms.send(teamUser.phone, 'A new  booking(' + booking.bookingConfirmationId + ') has been done in your Space. Kindly login to the site to check for details.', function(status) {
@@ -328,12 +342,12 @@ module.exports = function (Payment) {
 			                 			     async.eachSeries(emails, function(email, callback1) {
 			                 			    	var user_name = email.name;
 			        							var user_email = email.email_addr;
-			                                    if (!user) {
+			                                    if (user) {
 			                                        var emailadmin = templates.booking_email_admin({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
 			                                        //mailbooking.mailService(emailadmin, 'bookings@mymatchbox.in')
 			                                        mailbooking.mailService(emailadmin, user_email);
 			                                    } else {
-			                                        var emailadmin = templates.booking_email_admin({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
+			                                        var emailadmin = templates.booking_email_admin_guestUser({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
 			                                        //mailbooking.mailService(emailadmin, 'bookings@mymatchbox.in')
 			                                        mailbooking.mailService(emailadmin, user_email);
 			                                    }
@@ -508,7 +522,7 @@ module.exports = function (Payment) {
 		                                  });
 		                             	 var emailGuest = templates.booking_email_guest(guestUser, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
 		                       			 mailbooking.mailService(emailGuest,guestUser.email)
-		                       			 var emailpartner = templates.booking_email_guest(partner, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
+		                       			 var emailpartner = templates.booking_email_admin_guestUser(partner, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
 		                       			 mailbooking.mailService(emailpartner,partner.email)
 		                             }else{
 		                             	 sms.send(user.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
@@ -516,7 +530,7 @@ module.exports = function (Payment) {
 		                                  });
 		                             	 var email = templates.booking_email(user, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
 		                       			 mailbooking.mailService(email,user.email)
-		                       			 var emailpartner = templates.booking_email(partner, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
+		                       			 var emailpartner = templates.booking_email_admin(partner, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
 		                       			 mailbooking.mailService(emailpartner,partner.email)
 		                             }
 		                            
@@ -533,11 +547,11 @@ module.exports = function (Payment) {
 						                        	  return res.json(err);	
 						                          }
 						                          else{
-						                        	  if(!user){
-						                        		  var emailTeam = templates.booking_email_guest(teamUser, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
+						                        	  if(user){
+						                        		  var emailTeam = templates.booking_email_admin(teamUser, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
 								                   			mailbooking.mailService(emailTeam,teamUser.email)
 						                        	  }else{
-						                        		  var emailTeam = templates.booking_email(teamUser, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
+						                        		  var emailTeam = templates.booking_email_admin_guestUser(teamUser, room,space,booking,bookingsstartTime,bookingsendTime,roomType)
 								                   			mailbooking.mailService(emailTeam,teamUser.email)
 						                        	  }
 						                   			 sms.send(teamUser.phone, 'A new  booking(' + booking.bookingConfirmationId + ') has been done in your Space. Kindly login to the site to check for details.', function(status) {
@@ -581,12 +595,12 @@ module.exports = function (Payment) {
 		                 			     async.eachSeries(emails, function(email, callback1) {
 		                 			    	var user_name = email.name;
 		        							var user_email = email.email_addr;
-		                                    if (!user) {
+		                                    if (user) {
 		                                        var emailadmin = templates.booking_email_admin({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
 		                                        //mailbooking.mailService(emailadmin, 'bookings@mymatchbox.in')
 		                                        mailbooking.mailService(emailadmin, user_email);
 		                                    } else {
-		                                        var emailadmin = templates.booking_email_admin({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
+		                                        var emailadmin = templates.booking_email_admin_guestUser({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
 		                                        //mailbooking.mailService(emailadmin, 'bookings@mymatchbox.in')
 		                                        mailbooking.mailService(emailadmin, user_email);
 		                                    }
@@ -668,13 +682,27 @@ module.exports = function (Payment) {
                   		console.log(bookingList.length);
                   	}
                   	
-                  	var bookingObject = bookingList[0];
+                  	/*var bookingObject = bookingList[0];
                   	var lastFiveDigit = bookingObject.bookingConfirmationId.slice(-5);
                   	lastFiveDigit = parseInt(lastFiveDigit) + 1;
                   	var lastFiveDigitString = lastFiveDigit.toString();
                   	lastFiveDigitString = lastFiveDigitString.replace(/\d+/g, function(m){
-                       	 return "0000".substr(m.length - 1) + m;
-                      });
+                       	return "0000".substr(m.length - 1) + m;
+                    });*/
+                  	
+                  	var bookingObject, lastFiveDigit, lastFiveDigitString;
+                	bookingObject = bookingList[0];
+                	if(bookingObject){
+                    	lastFiveDigit = bookingObject.bookingConfirmationId.slice(-5);
+                    	lastFiveDigit = parseInt(lastFiveDigit) + 1;
+                	} else {
+                		lastFiveDigit = '1';
+                    	lastFiveDigit = parseInt(lastFiveDigit);
+                	}
+                	lastFiveDigitString = lastFiveDigit.toString();
+                	lastFiveDigitString = lastFiveDigitString.replace(/\d+/g, function(m){
+                     	 return "0000".substr(m.length - 1) + m;
+                    });
                   	 
                   	booking.bookingConfirmationId = bIDPattern.concat(lastFiveDigitString);
                   	 
@@ -685,7 +713,7 @@ module.exports = function (Payment) {
   	                            error: 'Cannot save the Booking'
   	                        });
   	                    }
-  	                    notify.addNotificationForBooking('Room is Booked', 'New'+ '		' + booking.room.roomtype.name + '	 ' + 'booked with'+'	'+ booking._id + '. '+'Click for details', booking , '/admin/bookings');
+  	                    notify.addNotificationForBooking('Room is Booked', 'New'+ '		' + booking.room.roomtype.name + '	 ' + 'booked with'+'	'+ booking.bookingConfirmationId + '. '+'Click for details', booking , '/admin/bookings');
   	                    
   	                    if(booking.schedule){
   		                    ScheduleModel.load(booking.schedule, function (err, schedule) {
@@ -846,12 +874,12 @@ module.exports = function (Payment) {
   			                 			     async.eachSeries(emails, function(email, callback1) {
   			                 			    	var user_name = email.name;
   			        							var user_email = email.email_addr;
-  			                                    if (!user) {
+  			                                    if (user) {
   			                                        var emailadmin = templates.booking_email_admin({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
   			                                        //mailbooking.mailService(emailadmin, 'bookings@mymatchbox.in')
   			                                        mailbooking.mailService(emailadmin, user_email);
   			                                    } else {
-  			                                        var emailadmin = templates.booking_email_admin({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
+  			                                        var emailadmin = templates.booking_email_admin_guestUser({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
   			                                        //mailbooking.mailService(emailadmin, 'bookings@mymatchbox.in')
   			                                        mailbooking.mailService(emailadmin, user_email);
   			                                    }
@@ -1103,12 +1131,12 @@ module.exports = function (Payment) {
   		                 			     async.eachSeries(emails, function(email, callback1) {
   		                 			    	var user_name = email.name;
   		        							var user_email = email.email_addr;
-  		                                    if (!user) {
+  		                                    if (user) {
   		                                        var emailadmin = templates.booking_email_admin({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
   		                                        //mailbooking.mailService(emailadmin, 'bookings@mymatchbox.in')
   		                                        mailbooking.mailService(emailadmin, user_email);
   		                                    } else {
-  		                                        var emailadmin = templates.booking_email_admin({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
+  		                                        var emailadmin = templates.booking_email_admin_guestUser({first_name: 'Admin'}, room, space, booking, bookingsstartTime, bookingsendTime, roomType);
   		                                        //mailbooking.mailService(emailadmin, 'bookings@mymatchbox.in')
   		                                        mailbooking.mailService(emailadmin, user_email);
   		                                    }
@@ -1159,16 +1187,31 @@ module.exports = function (Payment) {
                     }
                     var guestUser=booking.guestUser;
                     if(!user){
-                   	 sms.send(guestUser.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
-                            logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+
+                    if(booking.bookingConfirmationId.length > 13){
+						sms.send(guestUser.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+							logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New failure booking SMS sent [' + guestUser.phone + ']: ' + status);
                         });
-                   }else{
-                   	 sms.send(user.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
-                            logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
+					}
+
+                   	 // sms.send(guestUser.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
+                     //        logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+                     //    });
+                   }
+                   else{
+
+
+                   	if(booking.bookingConfirmationId.length > 13){
+						sms.send(user.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+							logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New failure booking SMS sent [' + user.phone + ']: ' + status);
                         });
+					}
+                   	 // sms.send(user.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
+                     //        logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
+                     //    });
                    }
                     
-                    notify.addNotificationForBooking('Payment Failed', 'Payment failed for: '+ booking._id + '.'  + 'Click here for more details', booking , '/admin/bookings');
+                    notify.addNotificationForBooking('Payment Failed', 'Payment failed for: '+ booking.bookingConfirmationId + '.'  + 'Click here for more details', booking , '/admin/bookings');
 	                    
                     if(booking.schedule){
                     	ScheduleModel.load(booking.schedule, function (err, schedule) {
@@ -1272,17 +1315,35 @@ module.exports = function (Payment) {
                     }
                     
                     var guestUser=booking.guestUser;
-                    if(!user){
-                   	 sms.send(guestUser.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
-                            logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+                   //  if(!user){
+                   // 	 sms.send(guestUser.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
+                   //          logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+                   //      });
+                   // }else{
+                   // 	 sms.send(user.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
+                   //          logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
+                   //      });
+                   // }
+
+                   if(!user){
+
+                    if(booking.bookingConfirmationId.length > 13){
+						sms.send(guestUser.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+							logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New failure booking SMS sent [' + guestUser.phone + ']: ' + status);
                         });
-                   }else{
-                   	 sms.send(user.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
-                            logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
+					}
+                   }
+                   else{
+
+
+                   	if(booking.bookingConfirmationId.length > 13){
+						sms.send(user.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+							logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New failure booking SMS sent [' + user.phone + ']: ' + status);
                         });
+					}
                    }
                     
-                    notify.addNotificationForBooking('Payment Failed', 'Payment failed for: '+ booking._id + '.'  + 'Click here for more details', booking , '/admin/bookings');
+                    notify.addNotificationForBooking('Payment Failed', 'Payment failed for: '+ booking.bookingConfirmationId + '.'  + 'Click here for more details', booking , '/admin/bookings');
 	                    
                     if(booking.schedule){
                     	ScheduleModel.load(booking.schedule, function (err, schedule) {
@@ -1386,17 +1447,35 @@ module.exports = function (Payment) {
                     }
                     
                     var guestUser=booking.guestUser;
-                    if(!user){
-                   	 sms.send(guestUser.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
-                            logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+                   //  if(!user){
+                   // 	 sms.send(guestUser.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
+                   //          logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+                   //      });
+                   // }else{
+                   // 	 sms.send(user.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
+                   //          logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
+                   //      });
+                   // }
+
+                   if(!user){
+
+                    if(booking.bookingConfirmationId.length > 13){
+						sms.send(guestUser.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+							logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New failure booking SMS sent [' + guestUser.phone + ']: ' + status);
                         });
-                   }else{
-                   	 sms.send(user.phone, 'Thank you for using mymatchbox! Your booking id (' + booking.bookingConfirmationId + ') is confirmed. An email has been forwarded to your registered email id.', function(status) {
-                            logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
+					}
+                   }
+                   else{
+
+
+                   	if(booking.bookingConfirmationId.length > 13){
+						sms.send(user.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+							logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New failure booking SMS sent [' + user.phone + ']: ' + status);
                         });
+					}
                    }
                     
-                    notify.addNotificationForBooking('Room is Booked', 'Booking done with Id : '+ booking._id, booking ,'/iui');
+                    notify.addNotificationForBooking('Room is Booked', 'Booking done with Id : '+ booking.bookingConfirmationId, booking ,'/iui');
                     ScheduleModel.load(booking.schedule, function (err, schedule) {
                         var currentAvail=schedule.currentAval;
                         var index = scheduler.findBlockedSlot(currentAvail, booking.bookingStartTime, booking.bookingEndTime);

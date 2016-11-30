@@ -11,7 +11,7 @@ var Role = new Module('role');
  * All MEAN packages require registration
  * Dependency injection is used to define required modules
  */
-Role.register(function(app, auth, database) {
+Role.register(function(app, auth, database, swagger) {
 
   //We enable routing. By default the Package Object is passed to the routes
   Role.routes(app, auth, database);
@@ -48,5 +48,8 @@ Role.register(function(app, auth, database) {
     });
     */
 
+  //Only use swagger.add if /docs and the corresponding files exists
+  swagger.add(__dirname);
+  
   return Role;
 });

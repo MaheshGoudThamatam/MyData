@@ -31,6 +31,18 @@ module.exports = function(Search) {
           });
 	  },
 	  
+	  /**
+	   * Load city by Name
+	   */
+	  cityName: function(req, res, next, id){
+		  AreaModel.loadByName(id, function (err, area) {
+              if (err) { return next(err); }
+              if (!area) { return next(new Error('Failed to load area ' + id)); }
+              req.area = area;
+              next();
+          });
+	  },
+	  
      /**
 	  * get a specific area
 	  */
@@ -383,6 +395,92 @@ module.exports = function(Search) {
 	        }
 	        res.status(200).json(city);
 	      });
+      },
+      
+      /**
+  	   * Update the localities with lat - long explicitly.
+  	   */
+      updateLocality : function(req, res) {
+    	  var user = req.user;
+          var area = req.area;
+          var localityName = req.query.localityName;
+          var loc = [];
+          
+          var geocodeObj = {};
+          var geocoderProvider = 'google';
+          var httpAdapter = 'https';
+          var extra = {
+       	      serverKey: 'AIzaSyA3mNMJvbJ6MJ3n4KJ4_I0MEDesB1SH4kE',   
+              formatter: null                           
+          };
+          var geocoder = require('node-geocoder')(geocoderProvider, httpAdapter, extra);
+          
+      	 async.waterfall([ function(done) {
+      		 
+      		 var address = localityName + ', ' + area.city + ', ' + 'India';
+      		 var subAddress = localityName;
+			 var result = subAddress.match(/\((.*)\)/);
+			 
+			 if(result){
+				 
+				 subAddress = result[1] + ', ' + area.city + ', ' + 'India';
+				 geocoder.geocode(subAddress).then(function(subResponse) {
+					 geocodeObj = subResponse[0];
+					 loc = [geocodeObj.longitude, geocodeObj.latitude];
+					 done(null, loc);
+	   	  	 
+	             }).catch(function(err) {
+	             	  res.status(400).send(err);
+	             });
+				 
+			 } else {
+				 res.status(400).json({
+	                ERR_MSG: "Unable to fetch latitude and longitude for the address"
+	            });
+			 }
+      		
+			 /* Warning: a promise was created in a handler but was not returned from it
+			 Can be handled with below code i.e by using return statment
+			 https://github.com/petkaantonov/bluebird/blob/master/docs/docs/warning-explanations.md */
+			 
+      		/*geocoder.geocode(address).then(function(response) {
+      			 console.log(response);
+      			 if(response.length <= 0){
+      				 var subAddress = localityName;
+      				 var result = subAddress.match(/\((.*)\)/);
+      				 subAddress = result[1] + ', ' + area.city + ', ' + 'India';
+      				
+      				 return geocoder.geocode(subAddress).then(function(subResponse) {
+      					 geocodeObj = subResponse[0];
+                	  	 loc = [geocodeObj.longitude, geocodeObj.latitude];
+                	  	 return done(null, loc);
+                	  	 
+      	             }).catch(function(err) {
+      	             	  res.status(400).send(err);
+      	             });
+      				
+      			 } else {
+             	  	 geocodeObj = response[0];
+             	  	 loc = [geocodeObj.longitude, geocodeObj.latitude];
+            	  	 done(null, loc);
+      			 }
+      			 
+             }).catch(function(err) {
+             	  res.status(400).send(err);
+             });*/
+			 
+		 }, function(loc, done) {
+	           done(null, loc);
+	    	    	  	
+		 } ], function(err, loc) {
+      		 if(err){
+      			res.status(400).send(err);
+      		 }
+ 	         res.status(200).json({
+ 	        	 location: loc
+ 	         });
+		 });
+          
       }
       
   };

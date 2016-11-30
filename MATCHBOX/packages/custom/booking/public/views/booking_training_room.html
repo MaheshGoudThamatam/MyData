@@ -38,7 +38,7 @@
 								<p>Booking Completed!</p></li>
 						</ul>
 					</div>
-					<div class="col-md-5 payment-details" style="margin-left: 4%;">
+					<div class="col-md-5 payment-details" ng-class="{'margin-top-3' : !authenticated}" style="margin-left: 4%;">
 						<div class="col-md-12 booking-details zC76 zero-padding" style="background: #f8f8f8;">
 							<div class="ur-booking-border your-booking">
 								<i class="fa fa-shopping-cart fa-font" aria-hidden="true"></i> <span
@@ -46,6 +46,8 @@
 									BOOKING</span>
 							</div>
 					 <div class="zqz" style="background: #ffffff;margin: 15px;">
+							
+<!-- 
 							<div class="time-padding">
 								<div class="col-md-6  zero-padding floatLeftLow">
 									<span class="searchBookingTitle">From</span>
@@ -74,7 +76,31 @@
 									<span class="time-weght">{{queryParams.end_time}}</span>
 								</div>
 							</div>
-							<div class="ur-booking-border time-padding paddingDivTagQ">
+							 -->
+
+							<table class="table bookingTableDetail" style="margin-left: 12px;">
+	                            <tr>
+	                                <td style="padding-top: 8px !important;" class="searchBookingTitle">From</td>
+	                                <td style="padding-top: 8px !important;" class="searchBookingTitle">To</td>
+	                            </tr>
+								 <tr>
+                                	<td class="time-weght">{{queryParams.from_date|date:'dd-MM-yyyy'}}</td>
+									<td class="time-weght">{{queryParams.end_date|date:'dd-MM-yyyy'}}</td>
+								</tr>
+								<tr>
+	                                <td class="searchBookingTitle">Start Time</td>
+	                                <td class="searchBookingTitle">End Time</td>
+	                        	</tr>
+								<tr>
+                                	<td class="time-weght">{{queryParams.start_time}}</td>
+									<td class="time-weght">{{queryParams.end_time}}</td>
+								</tr>
+							</table>
+
+
+
+
+							<div style="padding-top: 0px;" class="ur-booking-border time-padding paddingDivTagQ">
 								<div class="searchBookingTitle">Location</div>
 								<div>
 									<span class="time-weght" style="font-size: 16px;">
@@ -282,28 +308,30 @@
                                                                                                                 <span class="time-weght">{{user.first_name}}</span><br>
                                                                                                                 <span class="searchBookingTitle">Email :</span><br>
                                                                                                                 <span class="time-weght">{{user.email}}</span><br>
-                                                                                                                <span ng-show="user.address1" class="searchBookingTitle">Address :<br></span>
-										<span class="user-form field-input">
-											<input style="padding: 2px;" type="text" class="input-text" placeholder="Address Line 1" ng-model="loggeduser.address1" required>
-										</span><br>
-
-										<span class="user-form field-input">
-											<input style="padding: 2px;" type="text" class="input-text" placeholder="Address Line 2" ng-model="loggeduser.address2" required>
-										</span><br>
-										<span class="user-form field-input">
-											<input style="padding: 2px;" type="text" class="input-text" placeholder="City" ng-model="loggeduser.city" required>
-										</span><br>
-										<span class="user-form field-input">
-											<input style="padding: 2px;" type="text" class="input-text" placeholder="State" ng-model="loggeduser.state" required>
-										</span><br>
-										<span class="user-form field-input">
-											<input style="padding: 2px;" type="text" class="input-text" placeholder="Postal Code" ng-model="loggeduser.pinCode" required>
-										</span><br>
-										<span class="user-form field-input">
-											<input style="padding: 2px;" type="text" class="input-text" placeholder="Country" ng-model="loggeduser.country" required>
-										</span><br>
-										<span ng-show="!loggeduser.address1 || !loggeduser.city || !loggeduser.state || !loggeduser.pinCode || !loggeduser.country" class="err-msgclr">
-										*All fields are required<br/></span>
+                                                                                                                
+                                                                                                                <!-- <span ng-show="user.address1" class="searchBookingTitle">Address :<br></span>
+																												<span class="user-form field-input">
+																													<input style="padding: 2px;" type="text" class="input-text" placeholder="Address Line 1" ng-model="loggeduser.address1" required>
+																												</span><br>
+																		
+																												<span class="user-form field-input">
+																													<input style="padding: 2px;" type="text" class="input-text" placeholder="Address Line 2" ng-model="loggeduser.address2" required>
+																												</span><br>
+																												<span class="user-form field-input">
+																													<input style="padding: 2px;" type="text" class="input-text" placeholder="City" ng-model="loggeduser.city" required>
+																												</span><br>
+																												<span class="user-form field-input">
+																													<input style="padding: 2px;" type="text" class="input-text" placeholder="State" ng-model="loggeduser.state" required>
+																												</span><br>
+																												<span class="user-form field-input">
+																													<input style="padding: 2px;" type="text" class="input-text" placeholder="Postal Code" ng-model="loggeduser.pinCode" required>
+																												</span><br>
+																												<span class="user-form field-input">
+																													<input style="padding: 2px;" type="text" class="input-text" placeholder="Country" ng-model="loggeduser.country" required>
+																												</span><br>
+																												<span ng-show="!loggeduser.address1 || !loggeduser.city || !loggeduser.state || !loggeduser.pinCode || !loggeduser.country" class="err-msgclr">
+																												*All fields are required<br/></span> -->
+																												
                                                                                                                 <span class="searchBookingTitle">Phone :</span><br>
                                                                                                                 <span ng-show = "user.phone" class="time-weght">{{user.phone}}</span><br>
                                                                                                                 <span ng-show = "!user.phone" class="time-weght">
@@ -404,25 +432,25 @@
 																	<form>
 																		<div class="row">
 																			<div class="">
-																				<p>Continue As Guest</p>
+																				<p style="margin-bottom: -3px;">Continue As Guest</p>
 																				<div class="field-input">
-																					<input type="text" class="input-text"
+																					<input style="padding: 5px 0 !important;" type="text" class="input-text"
 																						data-ng-model="guest.first_name"
 																						placeholder="Name" required>
 																				</div>
 																				<div class="field-input">
-																					<input type="email" class="input-text"
+																					<input style="padding: 5px 0 !important;" type="email" class="input-text"
 																						data-ng-model="guest.email" placeholder="Email ID"
 																						required>
 																				</div>
 																				<div class="field-input">
-																					<input type="number" class="input-text"
+																					<input style="padding: 5px 0 !important;" type="number" class="input-text"
 																						data-ng-model="guest.phone"
 																						placeholder="Phone Number" required>
 																				</div>
 																				
 																				<!-- Insert address from user table display -->
-																				<span class="searchBookingTitle"><br></span>
+																				<!-- <span class="searchBookingTitle"><br></span>
 																				<span class="searchBookingTitle">Address :<br></span>
 																				<span class="user-form field-input">
 																					<input style="padding: 2px;" type="text" class="input-text" placeholder="Address Line 1" ng-model="loggeduser.address1" required>
@@ -444,7 +472,7 @@
 																					<input style="padding: 2px;" type="text" class="input-text" placeholder="Country" ng-model="loggeduser.country" required>
 																				</span><br>
 																				<span ng-show="!loggeduser.address1 || !loggeduser.city || !loggeduser.state || !loggeduser.pinCode || !loggeduser.country" class="err-msgclr">
-																					*All fields are required<br/></span>
+																					*All fields are required<br/></span> -->
 										
 																				<span ng-show="!guest.phone"
 																					class="err-msgclr">*Phone number required to proceed</span>

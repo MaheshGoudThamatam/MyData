@@ -313,7 +313,7 @@
 																						id="contact_details_1_contactNo"
 																						name="contact_details_1_contactNo" type="tel"
 																						style="padding-left: 4em !important;"
-																						data-ng-disabled="contactDetail" maxlength="10"
+																						data-ng-disabled="contactDetail"  minlength="10" maxlength="10"
 																						required>
 																				</div>
 																				<!-- <div class="col-xs-8">
@@ -595,7 +595,7 @@
 																	<!-- Postal Code -->
 																	<div class="col-md-6 row margin_left_45">
 																		<div class="append-icon margin_bottom_10">
-																			<input type="number"
+																			<input type="text" onkeypress="return isNumber(event)"
 																				name="registered_company_address_postal_code"
 																				class="form-control"
 																				data-ng-model="space.registered_company_address.postal_code"
@@ -837,6 +837,23 @@
 			<!-- End Banner Content -->
 		</div>
 	</div>
+	<script type='text/javascript'>
+            
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            /*
+                Uncomment to accept '+' in phone number field.
+            */
+                // if (charCode == 43) {
+                //     return true;
+                // }
+            return true;
+        }
+    </script>
 </section>
 <!--End Banner-->
 <script type="text/javascript" src="/system/assets/js/plugins.js"></script>

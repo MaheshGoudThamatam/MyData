@@ -649,13 +649,13 @@ function searchHotDesk(req, res, searchRadius, perPage, skipCount, locationArr){
 												            var isDistinct = false;
 												            dummyRoomObjI = roomlist[i].name.split('(');
 															roomI = dummyRoomObjI[0].trim();
-															/*roomI = roomlist[i].spaceId.name + roomI;*/
-															roomI = roomlist[i].spaceId.name;
+															roomI = roomlist[i].spaceId.name + roomI;
+															/*roomI = roomlist[i].spaceId.name;*/
 												            for(var j = 0; j < i; j++){
 												            	dummyRoomObjJ = roomlist[j].name.split('(');
 																roomJ = dummyRoomObjJ[0].trim();
-																/*roomJ = roomlist[j].spaceId.name + roomJ;*/
-																roomJ = roomlist[j].spaceId.name;
+																roomJ = roomlist[j].spaceId.name + roomJ;
+																/*roomJ = roomlist[j].spaceId.name;*/
 												                /*if(roomI.toUpperCase() === roomJ.toUpperCase()){
 												                    isDistinct = true;
 												                    break;
@@ -678,13 +678,14 @@ function searchHotDesk(req, res, searchRadius, perPage, skipCount, locationArr){
 														for(var i = 0; i < rooms.length; i++){
 												            dummyRoomObjI = rooms[i].name.split('(');
 															roomI = dummyRoomObjI[0].trim();
-															/*roomI = roomlist[i].spaceId.name + roomI;*/
-															roomI = roomlist[i].spaceId.name;
+															roomI = rooms[i].spaceId.name + roomI;
+															/*roomI = roomlist[i].spaceId.name;*/
+															relatedHotDeskIds = [];
 												            for(var j = 0; j < roomlist.length; j++){
 												            	dummyRoomObjJ = roomlist[j].name.split('(');
 																roomJ = dummyRoomObjJ[0].trim();
-																/*roomJ = roomlist[j].spaceId.name + roomJ;*/
-																roomJ = roomlist[j].spaceId.name;
+																roomJ = roomlist[j].spaceId.name + roomJ;
+																/*roomJ = roomlist[j].spaceId.name;*/
 												                /*if(roomI.toUpperCase() === roomJ.toUpperCase()){
 												                	relatedHotDeskIds.push(roomlist[j]._id);
 												                }*/
@@ -774,13 +775,13 @@ function searchHotDesk(req, res, searchRadius, perPage, skipCount, locationArr){
 												            var isDistinct = false;
 												            dummyRoomObjI = roomlist[i].name.split('(');
 															roomI = dummyRoomObjI[0].trim();
-															/*roomI = roomlist[i].spaceId.name + roomI;*/
-															roomI = roomlist[i].spaceId.name;
+															roomI = roomlist[i].spaceId.name + roomI;
+															/*roomI = roomlist[i].spaceId.name;*/
 												            for(var j = 0; j < i; j++){
 												            	dummyRoomObjJ = roomlist[j].name.split('(');
 																roomJ = dummyRoomObjJ[0].trim();
-																/*roomJ = roomlist[j].spaceId.name + roomJ;*/
-																roomJ = roomlist[j].spaceId.name;
+																roomJ = roomlist[j].spaceId.name + roomJ;
+																/*roomJ = roomlist[j].spaceId.name;*/
 												                /*if(roomI.toUpperCase() === roomJ.toUpperCase()){
 												                    isDistinct = true;
 												                    break;
@@ -803,13 +804,14 @@ function searchHotDesk(req, res, searchRadius, perPage, skipCount, locationArr){
 														for(var i = 0; i < rooms.length; i++){
 												            dummyRoomObjI = rooms[i].name.split('(');
 															roomI = dummyRoomObjI[0].trim();
-															/*roomI = roomlist[i].spaceId.name + roomI;*/
-															roomI = roomlist[i].spaceId.name;
+															roomI = rooms[i].spaceId.name + roomI;
+															/*roomI = roomlist[i].spaceId.name;*/
+															relatedHotDeskIds = [];
 												            for(var j = 0; j < roomlist.length; j++){
 												            	dummyRoomObjJ = roomlist[j].name.split('(');
 																roomJ = dummyRoomObjJ[0].trim();
-																/*roomJ = roomlist[j].spaceId.name + roomJ;*/
-																roomJ = roomlist[j].spaceId.name;
+																roomJ = roomlist[j].spaceId.name + roomJ;
+																/*roomJ = roomlist[j].spaceId.name;*/
 												                /*if(roomI.toUpperCase() === roomJ.toUpperCase()){
 												                	relatedHotDeskIds.push(roomlist[j]._id);
 												                }*/

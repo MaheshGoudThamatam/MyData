@@ -104,14 +104,25 @@
 .attendee-padding{
     padding-left: 15px !important; 
 }
-.bookingSummaryTable>tbody>tr>td {
+.bookingSummaryTable>tbody>tr>td , .bookingTableDetail>tbody>tr>td {
      border-top : none !important;
+}
+.bookingTableDetail>tbody>tr>td {
+    padding: 0 8px !important;
+}
+.bookingTableDetail {
+    margin-bottom: 0px !important;
 }
 .bookingSummaryTable td:nth-of-type(1) {
      color: #f37124;
      width: 50%;
 }
-
+.margin-top-3 {
+    margin-top: 3%;
+}
+.booking-display-none {
+    display: none;
+}
 .lateHrCharge{
     position: absolute;
     text-align: center;
@@ -282,6 +293,7 @@
     .bookingPageMyBookingBtn {
         width: 100% !important;
         float: none !important;
+        margin-left: 15% !important;
     }
     .bookingPageCancelBookingBtn {
         width: 100% !important;

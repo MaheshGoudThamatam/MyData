@@ -381,14 +381,24 @@ myApp.controller('SearchController', ['$scope', 'Global', 'SearchService', 'URLF
 					if(isAndroid) {
 						$('.app-banner').css({"display" : "inline"});
 					}
-					else {
-						$('.app-banner').css({"display" : "none"});
+					// else {
+					// 	$('.app-banner').css({"display" : "none"});
+					// }
+
+					var ios_ua = navigator.userAgent.toLowerCase();
+					var isPhone = ios_ua.indexOf("iphone") > -1;
+					if(isPhone) {
+						$('.app-banner').css({"display" : "inline"});
 					}
+					// else {
+					// 	$('.app-ios-banner').css({"display" : "none"});
+					// }
 				$('html, body').animate({scrollTop: '0px'}, 0);
 			}
 			else {
 				$(".roomTypeDropdown").remove();
 				$('.app-banner').css({"display" : "none"});
+				$('.app-ios-banner').css({"display" : "none"});
 				$('html, body').animate({scrollTop: '0px'}, 0);
 			}
 
@@ -406,6 +416,7 @@ myApp.controller('SearchController', ['$scope', 'Global', 'SearchService', 'URLF
 	$scope.closeAppBanner =  function () {
 		$('html, body').animate({scrollTop: '0px'}, 0);
 		$('.app-banner').css({"display" : "none"});
+		$('.app-ios-banner').css({"display" : "none"});
 	};
 
 	/*
@@ -1087,7 +1098,8 @@ myApp.controller('SearchController', ['$scope', 'Global', 'SearchService', 'URLF
 	}
 
 	$scope.getLatitudeLongitude = function(address) {
-		/*console.log($scope.address);*/
+		/*console.log($scope.address);
+		console.log($scope.cityRelatedLocalities);*/
 		if($scope.address.originalObject.loc && $scope.address.originalObject.loc.length > 0){
 			$scope.searchElements.lon = $scope.address.originalObject.loc[0];
 			$scope.searchElements.lat = $scope.address.originalObject.loc[1];
@@ -1104,29 +1116,61 @@ myApp.controller('SearchController', ['$scope', 'Global', 'SearchService', 'URLF
 				geocoder.geocode({
 					'address': address
 				}, function (results, status) {
+					
 					if (status == google.maps.GeocoderStatus.OK) {
 						/*console.log(results);
 						console.log("center" + results[0].geometry.bounds.getCenter());
 						console.log("lat" + results[0].geometry.location.lat());
 						console.log("lng" + results[0].geometry.location.lng());*/
+						
+						$scope.searchElements.lon = results[0].geometry.location.lng();
+						$scope.searchElements.lat = results[0].geometry.location.lat();
+						$rootScope.searchObj = angular.copy($scope.searchElements);
+						console.log($scope.searchElements);
+						
+						$scope.address.originalObject.loc = [];
+						$scope.address.originalObject.loc.push(results[0].geometry.location.lng());
+						$scope.address.originalObject.loc.push(results[0].geometry.location.lat());
+						var areasCrud = new SearchService.areas($scope.address);
+						areasCrud.$update({
+							localityId: $scope.address.originalObject._id,
+							areaId: $scope.cityRelatedLocalities._id
+						}, function(response){
+							console.log(response);
+						});
+						$scope.searchElements.timeZoneOffset = $scope.cityRelatedLocalities.timeZoneOffset;
+						$scope.searchService($scope.searchElements);
+						
+					} else {
+						
+						SearchService.updateLocality.get({
+							localityName: $scope.address.title + '',
+							cityName: $scope.cityRelatedLocalities.city
+						}, function(response){
+							console.log(response);
+						
+							$scope.searchElements.lon = response.location[0];
+							$scope.searchElements.lat = response.location[1];
+							$rootScope.searchObj = angular.copy($scope.searchElements);
+							console.log($scope.searchElements);
+							
+							$scope.address.originalObject.loc = [];
+							$scope.address.originalObject.loc.push(response.location[0]);
+							$scope.address.originalObject.loc.push(response.location[1]);
+							var areasCrud = new SearchService.areas($scope.address);
+							areasCrud.$update({
+								localityId: $scope.address.originalObject._id,
+								areaId: $scope.cityRelatedLocalities._id
+							}, function(response){
+								console.log(response);
+							});
+							$scope.searchElements.timeZoneOffset = $scope.cityRelatedLocalities.timeZoneOffset;
+							$scope.searchService($scope.searchElements);
+							
+						}, function(err){
+							flash.setMessage(MESSAGES.ADDRESS_LAT_LONG, MESSAGES.ERROR);
+						});
 					}
-					$scope.searchElements.lon = results[0].geometry.location.lng();
-					$scope.searchElements.lat = results[0].geometry.location.lat();
-					$rootScope.searchObj = angular.copy($scope.searchElements);
-					console.log($scope.searchElements);
-					
-					$scope.address.originalObject.loc = [];
-					$scope.address.originalObject.loc.push(results[0].geometry.location.lng());
-					$scope.address.originalObject.loc.push(results[0].geometry.location.lat());
-					var areasCrud = new SearchService.areas($scope.address);
-					areasCrud.$update({
-						localityId: $scope.address.originalObject._id,
-						areaId: $scope.cityRelatedLocalities._id
-					}, function(response){
-						console.log(response);
-					});
-					$scope.searchElements.timeZoneOffset = $scope.cityRelatedLocalities.timeZoneOffset;
-					$scope.searchService($scope.searchElements);
 				});
 			}
 		}
@@ -1182,17 +1226,41 @@ myApp.controller('SearchController', ['$scope', 'Global', 'SearchService', 'URLF
 	 * Search Meeting Room
 	 */
 	$scope.searchMeetingRoom = function(roomObj, roomType) {
+		console.log(roomObj);
+		var newTodayDate = new Date()
+				newTodayDate.setHours(0);newTodayDate.setMinutes(0);newTodayDate.setSeconds(0);
 		if(!angular.isUndefined(roomObj)){
 			if(roomType === 'Meeting Room'){
 				// roomObj.date = document.getElementById("date").value;
 				roomObj.date = document.getElementById("meetingRoomDate").value;
 				roomObj.startTime = $('#meetingcheckin').val();
 				roomObj.endTime = $('#meetingcheckout').val();
+					var searchDate = new Date(roomObj.date);
+					if(searchDate == newTodayDate.toString())
+						{
+							var tempfullDate = roomObj.date + " " + roomObj.startTime;
+							var fullDate = new Date(tempfullDate);
+							if(fullDate < new Date()){
+								flash.setMessage(MESSAGES.DATE_TIME_INVALID,MESSAGES.ERROR);
+								return;
+							}
+						}
+
 			}else if(roomType === 'Board Room'){
 				// roomObj.date = document.getElementById("boarddate").value;
 				roomObj.date = document.getElementById("boardRoomDate").value;
 				roomObj.startTime = $('#boardroomcheckin').val();
 				roomObj.endTime = $('#boardroomcheckout').val();
+				var searchDate = new Date(roomObj.date);
+					if(searchDate == newTodayDate.toString())
+						{
+							var tempfullDate = roomObj.date + " " + roomObj.startTime;
+							var fullDate = new Date(tempfullDate);
+							if(fullDate < new Date()){
+								flash.setMessage(MESSAGES.DATE_TIME_INVALID,MESSAGES.ERROR);
+								return;
+							}
+						}
 			}
 			
 			if ((roomObj.date == "") || !roomObj.capacity || (roomObj.startTime == "") || (roomObj.endTime == "") || (!$scope.address)

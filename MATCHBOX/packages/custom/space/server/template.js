@@ -14,7 +14,7 @@ module.exports = {
 		}
 		var email = {
 			body : {
-				greeting: 'Welcome,',
+				greeting: 'Welcome',
 				name : ' ' + user.first_name,
 				intro : partnerContactName + '	'+' has created your account.'+'<br>',
 				action : {
@@ -85,7 +85,7 @@ module.exports = {
 		
 		var email = {
 			body : {
-				name : '    ' + admin.first_name + '!',
+				name : 'Hi',
 				intro : 'Please take a moment to view the ' + spaceObj.name + ' space timing update.',
 				action : {
 					button : {

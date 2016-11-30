@@ -176,6 +176,7 @@ RoomsSchema.plugin(deepPopulate, {
 		'spaceId.space_type'
 	]
 });
+
 RoomsSchema.statics.load = function(id, callback) {
 	this.findOne({
 		_id: id

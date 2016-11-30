@@ -71,7 +71,7 @@ function updateSpaceRating(spaceId, reviewId) {
 					}
 				}
 			}]).exec(function(err, review) {
-				space.rating = review[0].avgRating;
+				space.rating = Math.round(review[0].avgRating);
 				space.save(function(err, updatedSpace) {
 					if(err) {
 						// Log the error. TODO: Replace console.log with logger.
@@ -1073,7 +1073,7 @@ module.exports = function(Rooms) {
 		if(!errors) {
 			req.assert('rating', 'Rating must be numeric.').isNumeric();
 		}
-		req.assert('title', 'Please enter the review title.').notEmpty();
+		//req.assert('title', 'Please enter the review title.').notEmpty();
 		errors = req.validationErrors();
 		if(!errors) {
 			errors = [];
@@ -1106,7 +1106,15 @@ module.exports = function(Rooms) {
 				if(err) {
 					return res.status(400).json(err);
 				}
-				res.json(review);
+				
+				ReviewModel.findOne({
+					space: review.space
+				}).populate('createdBy', '_id, first_name').populate('space', '_id').exec(function(err, review) {
+					if(err) {
+						res.status(400).json(err);
+					}
+					res.json(review);
+				});
 			});
 		});
 	},

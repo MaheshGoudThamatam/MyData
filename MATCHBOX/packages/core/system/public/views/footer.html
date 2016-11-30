@@ -1,21 +1,78 @@
+<style type="text/css">
+    img.app-icon-img {
+        height: 46px;
+        width: 140px;
+    }
+    footer {
+        overflow: hidden;
+    }
+    .pre-app-icon-banner img:hover {
+        opacity: 0.8;
+    }
+    .pre-app-icon-banner a:hover {
+        opacity: 0.8;
+    }
+    .post-app-icon-banner {
+        display: none;
+    }
+</style>
 <div class="container-fluid">
 <div class="row">
     <div class="col-xs-5 text-left footerLow">
-        <p class="copyright">
+        <p class="copyright footer-font-12">
             Copyright {{currentYear}} Purplepatch Software Pvt. Ltd. | All Rights Reserved
         </p>
     </div>
-    <div class="col-xs-7  text-right footer-media footerSecLow">
+    
+    <!-- PRE LAUNCH ICON BANNER -->
+    
+        <!-- Apply display none for the below div tag if app is live -->
+        <!-- IOS app link should be applied to next div since app is in development -->
+        <div class="col-xs-3 pre-app-icon-banner" style="margin-top: -0.3%;">
+                <!-- Android app PROD icon. -->
+                <a target="_blank" href="https://play.google.com/store/apps/details?id=com.mymatchbox">
+                    <img alt="Android App" class="app-icon-img" src="http://res.cloudinary.com/mymatchbox/image/upload/v1477542247/android-app-icon_siwsvc_casbzo.png">
+                </a>
+                <img class="app-icon-img" src="http://res.cloudinary.com/tarento/image/upload/v1475821507/ios-app-icon_ceqg1j.png">
+        </div>
+    
+    <!-- END OF PRE LAUNCH ICON BANNER -->
+
+    <!-- APP LIVE ICON BANNER -->
+
+        <!-- IOS link should be pre icon link since app is in development -->
+        <div class="col-xs-3 post-app-icon-banner">
+            <a href="#">
+                <img class="app-icon-img" src="http://res.cloudinary.com/tarento/image/upload/v1475824458/android-app-icon_siwsvc.png">
+            </a>
+            <a href="#">
+                <img class="app-icon-img" src="http://res.cloudinary.com/tarento/image/upload/v1475824640/ios-app-icon_ctxz0t.png">
+            </a>
+        </div>
+
+    <!-- END OF APP LIVE ICON BANNER -->
+    <div class="col-xs-4  text-right footer-media footerSecLow">
         <div class="ul-ft">
             <ul class="text-right">
-                <li><a title="" style="cursor: pointer;" ng-click="redirectAboutUs();">About Us</a></li>
+                <li><a class="footer-font-12" title="" style="cursor: pointer;" ng-click="redirectAboutUs();">About Us</a></li>
                 <!-- <li><a href="#" title="">Blog</a></li> -->
                 <!-- <li><a href="#" title="">FAQ</a></li> -->
-                <li><a style="cursor: pointer;" ng-click="redirectContactUs();" title="">Contact Us</a></li>
-                <li><a style="cursor: pointer;" ng-click="redirectPrivacyPolicy();" title="">Privacy Policy</a></li>
-                <li><a style="cursor: pointer;" ng-click="redirectToU();" title="">Terms of Use</a></li>
+                <li><a class="footer-font-12" style="cursor: pointer;" ng-click="redirectContactUs();" title="">Contact Us</a></li>
+                <li><a class="footer-font-12" style="cursor: pointer;" ng-click="redirectPrivacyPolicy();" title="">Privacy Policy</a></li>
+                <li><a class="footer-font-12" style="cursor: pointer;" ng-click="redirectToU();" title="">Terms of Use</a></li>
             </ul>
         </div>
     </div>
 </div>
 </div>
+
+<script type="text/javascript">
+
+    // Function to remove APP ICON banner for mobile devices.
+    $(document).ready(function() {
+        if( $(window).width() <= 415){
+            $('.pre-app-icon-banner').remove();
+            $('.post-app-icon-banner').remove();
+        }
+    });
+</script>

@@ -43,12 +43,17 @@ module.exports = function(MeanUser, app, auth, database, passport) {
       // update a user profile
       app.route('/api/user/:userId/update')
         .put(users.update);
-       app.route('/api/registerSocial/accounts').post(users.createSocial);
+      
+      app.route('/api/registerSocial/accounts').post(users.createSocial);
+      
       app.route('/api/forgot-password')
         .post(users.forgotpassword);
 
       app.route('/api/reset/:token')
         .post(users.resetpassword);
+      
+      app.route('/api/user/updateProfile')
+      	.post(users.updateProfile);
 
       // user email confirmation.
       app.route('/api/confirm/:token').get(users.confirmUser); 

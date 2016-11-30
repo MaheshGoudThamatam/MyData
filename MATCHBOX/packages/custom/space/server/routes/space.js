@@ -42,6 +42,7 @@ module.exports = function (Space, app, auth, database) {
 
 	app.route('/api/space/:spaceId/reviews')
 		.get(space.getSpaceReviews);
+	
 	app.route('/api/getSpaceRoomDetail/:roomId')
 		.get(space.getSpaceDetail);
 	

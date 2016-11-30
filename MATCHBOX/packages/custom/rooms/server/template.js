@@ -57,7 +57,7 @@ module.exports = {
 	  
 		var email = {
 			body : {
-				name : '    ' + admin.first_name + '!',
+				name : 'Hi',
 				intro : 'Please take a moment to view the ' + roomObj.name + ' room rate and timing updates.<br>'
 						+ '	' + '<br>' 
 						+ ' Rate Changes.<br>'

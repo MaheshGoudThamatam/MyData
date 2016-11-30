@@ -11,7 +11,7 @@ var Rooms = new Module('rooms');
  * All MEAN packages require registration
  * Dependency injection is used to define required modules
  */
-Rooms.register(function(app, auth, database) {
+Rooms.register(function(app, auth, database, swagger) {
 
   //We enable routing. By default the Package Object is passed to the routes
   Rooms.routes(app, auth, database);
@@ -49,6 +49,9 @@ Rooms.register(function(app, auth, database) {
         //you now have the settings object
     });
     */
+  
+  //Only use swagger.add if /docs and the corresponding files exists
+  swagger.add(__dirname);
 
   return Rooms;
 });

@@ -390,6 +390,307 @@ module.exports = function(Booking) {
             }
             });
         },
+        
+        createAndroid : function(req, res) {
+            var user = req.body.user;
+            
+        	RoomsSchemaModel.findOne({"_id": req.body.room}).populate("spaceId").populate("partner", "").populate('roomtype').exec(function (err, roomObj) {
+        		if (err) {
+        			return res.status(500).json({
+                        error: 'Cannot list the roomObj'
+        			});
+        		}
+	            req.body.roomPrice={};      
+	            var room = roomObj;
+	            var offsetTimeFromObject=config.zoneOffset.indiaOffset;
+	            var bookingDate=new Date(req.body.bookingStartTime);
+	            bookingDate=bookingDate.setMinutes(bookingDate.getMinutes() - offsetTimeFromObject );
+	            req.body.bookingDate=bookingDate;
+	            req.body.roomPrice.pricePerHour=room.pricePerhour;
+	            req.body.roomPrice.pricePerHalfday=room.pricePerhalfday;
+	            req.body.roomPrice.pricePerFullday=room.pricePerfullday;
+	            var partner;
+	            if(room.partner){
+	            	partner = room.partner;
+	            } else {
+	            	// Failed to load partner or partner has been deleted.
+	            	return res.status(500).json({
+	                	ERRBOOKING: 'Failed to load partner.',
+	                	ERRCODE: 1100
+        			});
+	            }
+	            
+	            if(partner.commissionPercentage && (partner.commissionPercentage.length > 0)){
+		            for(var i=0 ;i<partner.commissionPercentage.length;i++){
+		            	if(partner.commissionPercentage[i]._id.toString() == room.roomtype._id.toString()){
+		            		var commission=partner.commissionPercentage[i].commission;
+		            		var finalCommissionValue=req.body.price *(commission/100);
+				    	     var PartnerFinalPrice=req.body.price-finalCommissionValue;
+				    	     req.body.partnerAmount=PartnerFinalPrice;
+				    	     req.body.adminAmount=finalCommissionValue;
+		            	}
+		            	else{
+		            		console.log("No operations to perform");
+		            	}
+		            }
+	            } else {
+	            	return res.status(500).json({
+	                	ERRBOOKING: 'Partner doesnt have Commission Percentage',
+	                	ERRCODE: 1100
+	                });
+	            }
+	            var schedule = req.body.schedule;
+	            var currentAvail = schedule.currentAval;
+	            var bookingStart = stringToTimeStamp(req.body.bookingStartTime);
+	            var bookingEnd = stringToTimeStamp(req.body.bookingEndTime);
+	            /*
+	             * Adding 45Mins to booking end time and substracting 45mins from start time
+	             * 
+	             */
+	               var bookingStartTimeSubstract=new Date(req.body.bookingStartTime);
+	               var bookingStartTimeSubstractOne=new Date(bookingStartTimeSubstract);
+	               var finalBookingStartTime=stringToTimeStamp(bookingStartTimeSubstractOne.setMinutes(bookingStartTimeSubstract.getMinutes()-45));
+	
+	               console.log(finalBookingStartTime);
+	               //Adding 45Mins for end time
+	               var bookingEndTimeAdd=new Date(req.body.bookingEndTime);
+	               var bookingEndTimeAddOne=new Date(bookingEndTimeAdd);
+	               var finalBookingEndTime=stringToTimeStamp(bookingEndTimeAddOne.setMinutes(bookingEndTimeAdd.getMinutes()+45));
+	               
+	              /*
+	               * End of Adding 45Mins to booking end time and substracting 45mins from start time
+	               * 
+	               */ 
+	              
+	            var bookingStartOne = new Date(req.body.bookingStartTime);
+	            var starttimehours = bookingStartOne.getHours();
+	            var starttimeminutes = bookingStartOne.getMinutes();
+	            var bookingStartTimeNumber = starttimehours * 60 + starttimeminutes;
+	            var bookingEndOne = new Date(req.body.bookingEndTime);
+	            var endtimehours = bookingEndOne.getHours();
+	            var endtimeminutes = bookingEndOne.getMinutes();
+	            var bookingEndTimeNumber = endtimehours * 60 + endtimeminutes;
+	            var bookingEndHour = new Date(bookingEnd);
+	            var bookingEndHourTwo = new Date(bookingEndHour);
+	            bookingEndHourTwo.setMinutes(bookingEndHour.getMinutes() + 60);
+	            var bookingEndTimeFinal = stringToTimeStamp(bookingEndHourTwo);
+	            var bookinStartOne=new Date(req.body.bookingStartTime);
+	            var bookinStartTwo=new Date(bookinStartOne);
+	            bookinStartTwo.setMinutes(bookinStartOne.getMinutes() - 60);
+	            var bookingStartTimeFinal= stringToTimeStamp(bookinStartTwo);
+	            // req.body.bookingEndTime=bookingEndTimeFinal;
+	            req.body.day = req.body.schedule.day;
+			            /*
+			             * generating booking confirmation id
+			             * 
+			             */
+	                           var city='';
+	                           var year ='';
+	                           var roomType ='';
+	                           if(room.spaceId.city.match(RegExp('^Bangalore$', "i"))){
+	                        	   city='BNG';
+	                           }else if(room.spaceId.city.match(RegExp('^Pune$', "i"))){
+	                        	   city='PUN';
+	                           }else{
+	                        	   city='MUM';
+	                           }
+	                           
+	                           if(room.roomtype.name == 'Meeting Room'){
+	                        	   roomType='M';
+	                           } else{
+	                        	   roomType='B';
+	                           }
+	                           var date=new Date();
+	                           year= date.getFullYear();
+	                           var bookingid=city.concat(roomType);
+	                           bookingid=bookingid.concat(year);
+	                           req.body.bookingConfirmationId=bookingid;
+	                           
+			            /*
+			             * end of generating booking confirmation id
+			             * 
+			             */
+	
+	             
+	          var index = scheduler.findSlot(currentAvail, bookingStart, bookingEnd, schedule.isAllday);
+	          if (index >= 0) {
+	                var splittedSlot = scheduler.splitSlot(currentAvail[index], finalBookingStartTime, finalBookingEndTime);
+	                currentAvail.splice(index, 1);
+	                for (var i = splittedSlot.length - 1; i >= 0; i--) {
+	                    currentAvail.splice(index, 0, splittedSlot[i])
+	                }
+	                var scheduleOne = req.schedule;
+	                scheduleOne.currentAval = currentAvail;
+	                scheduleOne.save(function(err) {
+	                    if (err) {
+	                        return res.status(500).json({
+	                            error: 'Cannot update the schedule'
+	                        });
+	                    }
+	                });
+	                //saving guest user and booking creating user object
+	                async.waterfall([
+	                    function(done) {
+	                        if (user == undefined) {
+	                            /*UserModel.findOne({
+	                                "email": req.body.guest.email
+	                            }).exec(function(err, requireduserobject) {
+	                                if (err) {
+	                                    return res.status(500).json({
+	                                        error: 'Cannot list the  users'
+	                                    });
+	                                } else if (requireduserobject == undefined) {
+	                                    req.body.guest.isGuest = true;
+	                                    var guestUser = new UserModel(req.body.guest);
+	                                    guestUser.isPasswordUpdate = true;
+	                                    guestUser.isUserConfirmed = true;
+	                                    var token = randtoken.generate(8);
+	                                    guestUser.password = token;
+	                                    guestUser.save(function(err, userGuest) {
+	                                        if (err) {
+	                                            console.log(err);
+	                                        } else {
+	                                            var email = templates.confirmation_email_guest(req,userGuest,token);
+	                                  			mail.mailService(email,userGuest.email);
+	                                            
+	                                            done(null, userGuest);
+	                                        }
+	                                    });
+	                                } else {
+	                                    done(null, requireduserobject);
+	                                }
+	                            });*/
+	                        	var guest = new GuestModel(req.body.guest);
+	                            guest.save(function(err, guest) {
+	                                if (err) {
+	                                    return res.status(500).json({
+	                                        ERRBOOKING: 'Cannot save the guest',
+	                                        ERRCODE:1001
+	                                    });
+	                                }
+	                                else{
+	                                	req.body.guestUser=guest._id;
+	                                	done(null, guest);
+	                                }
+	                            });
+	                        } else {
+	                        	UserModel.findOne({"_id" : req.body.user._id}).exec(function(err, userObj) {
+	                                if (err) {
+	                                    return res.status(500).json({
+	                                        error: 'Cannot list the userObj'
+	                                    });
+	                                }
+		                        	var updatedUser = userObj;
+		                        	updatedUser = _.extend(updatedUser, req.body.user);
+		                        	updatedUser.save(function(err, updatedUserObj) {
+		                                if (err) {
+		                                    return res.status(500).json({
+		                                        ERRBOOKING: 'Cannot save the user',
+		                                        ERRCODE:1001,
+		                                        ERRMSG : err
+		                                    });
+		                                }
+		                                
+		                                req.body.address = {
+		                                    "address1" : updatedUser.address1, 
+		                                    "address2" : updatedUser.address2, 
+		                                    "city" : updatedUser.city, 
+		                                    "state" : updatedUser.state, 
+		                                    "pinCode" : updatedUser.pinCode, 
+		                                    "country" : updatedUser.country
+		                                },  
+		                            	req.body.user = updatedUserObj;
+		                                done(null, updatedUser);
+		                            });
+	                        	});
+	                        }
+	                    },
+	                    function(user, done) {
+	                        //req.body.user = user;
+	                        var booking = new BookingModel(req.body);
+	                        booking.save(function(err, bookedItem) {
+	                            if (err) {
+	                                return res.status(500).json({
+	                                    ERRBOOKING: 'Cannot save the Booking',
+	                                    ERRCODE:1001
+	                                });
+	                            }
+	
+	                            /**
+	                             * updating booking confirmation id
+	                             */
+	                            var s = booking.sequenceNumber.toString();
+	                            s = s.replace(/\d+/g, function(m){
+	                            	  return "0000".substr(m.length - 1) + m;
+	                            	});
+	                            //booking.bookingConfirmationId=booking.bookingConfirmationId.concat(s);
+	
+	                            booking.bookingConfirmationId = booking._id;
+	
+	                            
+	                            booking.status='Pending';
+	                            booking.save(function(err,bookingid){
+	                            	if (err) {
+	                                    return res.status(500).json({
+	                                        ERRBOOKING: 'Cannot save the Booking',
+	                                        ERRCODE:1001
+	                                    });
+	                                }	
+	                            	
+	                            	if(booking.promoCode){
+		                            	PromoCodeModel.findOne({
+		                            		_id: booking.promoCode
+		                            	}).exec(function(err, promoCodeObj){
+		                            		if (err) {
+		                                        return res.status(500).json({
+		                                            ERR: 'Cannot find the promo code : ' + err,
+		                                            ERRCODE: 2001
+		                                        });
+		                                    }
+		                            		if(promoCodeObj.maxCount){
+		                            			promoCodeObj.useCount = promoCodeObj.useCount + 1;
+		                            			promoCodeObj.save(function(err, promoCode){
+		                                        	if (err) {
+		                                                return res.status(500).json({
+		                                                    ERR: 'Cannot update the promo code : ' + err,
+		                                                    ERRCODE: 2002
+		                                                });
+		                                            }	
+		                            			});
+		                            		}
+		                            	});
+	                            	}
+	                            });
+	                            /**
+	                             * end of updating booking confirmation id
+	                             */
+	                            
+	                             var data;
+	                             if(booking.price && booking.price == 0){
+	                             	data = {
+	                                	txnid : booking._id,
+	                            		amount : booking.price
+	                            	};
+	                             } else {
+	                            	 data = payumoney.getPayUMoneyPayload(booking,user);
+	                             }
+	                             
+	                            res.json(data);
+	                            done();
+	                        });
+	                    }
+	                ], function(err) {
+	                    console.log(err);
+	                });
+	            } else {
+	                return res.status(200).json({
+	                	ERRBOOKING: 'Slot already booked',
+	                	ERRCODE:5001
+	                });
+	            }
+        	});
+        },
+        
         /**
          * Update an Booking
          */
@@ -518,6 +819,7 @@ module.exports = function(Booking) {
             }
             
         },
+        
         loadUserBookings: function(req, res) {
             var user = req.query.user;
             BookingModel.find({
@@ -528,9 +830,55 @@ module.exports = function(Booking) {
                         error: 'Cannot list the userBookings'
                     });
                 }
-                res.json(userBookings);
+                async.eachSeries(userBookings, function(userBooking, callback) {
+                	var currentTime = new Date();
+                	var bookingEndTime, bookingDate;
+                	if(userBooking.status === 'Confirmed'){
+						if((userBooking.room.roomtype.name === 'Hot Desk') || (userBooking.room.roomtype.name === 'Training Room')){
+							bookingEndTime = new Date(userBooking.endDate + ' ' + userBooking.endTime);
+							if(bookingEndTime < currentTime){
+								userBooking.reviewBooking = true;
+							} else {
+								userBooking.reviewBooking = false;
+							}
+							callback();
+						} else {
+							bookingDate = new Date(userBooking.bookingDate);
+							bookingEndTime = new Date(userBooking.bookingEndTime);
+
+							var month = bookingDate.getMonth() + 1; //months from 1-12
+							var day = bookingDate.getDate();
+							var year = bookingDate.getFullYear();
+
+							var bookedDate = year + "/" + month + "/" + day;
+							var bookedTime = bookingEndTime.getHours() + ':' + bookingEndTime.getMinutes();
+							
+							var bookingEndTime = new Date(bookedDate  + " " + bookedTime);
+
+							if(bookingEndTime < currentTime){
+								userBooking.reviewBooking = true;
+							} else {
+								userBooking.reviewBooking = false;
+							}
+							callback();
+						}
+                	} else {
+                		userBooking.reviewBooking = false;
+						callback();
+                	}
+					
+				}, function(err) {
+					if(err) {
+						return res.status(500).json({
+							error: err
+						});
+					} else {
+		                res.json(userBookings);
+					}
+				});
             });
         },
+        
         loadBookedSchedules: function(req, res) {
             if (req.query.bookedRoom) {
                 var bookedRoom = req.query.bookedRoom;
@@ -1126,7 +1474,7 @@ module.exports = function(Booking) {
                                                  role : { "$in" : [role._id] }
                                               }, function(err, users) {
                                                   async.each(users, function (user, callback) {
-                                                   notify.addNotificationURL('Cancelled',booking._id +'     '+ ' has been cancelled.Click here for more details', user,'/admin/bookings');
+                                                   notify.addNotificationURL('Cancelled',booking.bookingConfirmationId +'     '+ ' has been cancelled.Click here for more details', user,'/admin/bookings');
                                                   callback();
                                                 });
                                             });
@@ -1134,8 +1482,8 @@ module.exports = function(Booking) {
                               });
 
                               
-                           notify.addNotificationURL('Cancelled',booking._id +'		'+ ' has been cancelled.Click here for more details', booking.user,'/bookings/mybookings');
-                           notify.addNotificationURL('Cancelled',booking._id +'		'+ 'has been cancelled.Click here for more details', booking.partner,'/admin/bookings');
+                           notify.addNotificationURL('Cancelled',booking.bookingConfirmationId +'		'+ ' has been cancelled.Click here for more details', booking.user,'/bookings/mybookings');
+                           notify.addNotificationURL('Cancelled',booking.bookingConfirmationId +'		'+ 'has been cancelled.Click here for more details', booking.partner,'/admin/bookings');
                            schedule.save(function(err) {
                                 if (err) {
                                     return res.status(500).json({
@@ -1207,18 +1555,31 @@ module.exports = function(Booking) {
 		                 			mail.mailService(emailGuest,guestUser.email);
                                     var partnerEmailGuest = templates.booking_cancellation_partner_mail(booking.user, req,booking,bookingsstartTime,bookingsendTime, bookingMonth, bookingDate , bookingYear);
                                     mail.mailService(partnerEmailGuest,booking.partner.email);
-		                 			sms.send(guestUser.phone, 'Your booking id (' + booking.bookingConfirmationId + ') has been cancelled. An email has been forwarded to your registered email id.', function(status) {
-	                                    logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
-	                                });
+                                    if(booking.bookingConfirmationId.length > 13){
+                                        sms.send(guestUser.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+                                            logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+                                        });
+                                    }
+                                    else {
+                                        sms.send(guestUser.phone, 'Your booking id (' + booking.bookingConfirmationId + ') has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+                                            logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+                                        });
+                                    }
 	                            }else{
                                     var email = templates.booking_cancellation(booking.user, req,booking,bookingsstartTime,bookingsendTime, bookingMonth, bookingDate , bookingYear);
                                     mail.mailService(email,booking.user.email);
 	                            	var partnerEmail = templates.booking_cancellation_partner_mail(booking.user, req,booking,bookingsstartTime,bookingsendTime, bookingMonth, bookingDate , bookingYear);
 		                 			mail.mailService(partnerEmail,booking.partner.email);
-		                 			sms.send(booking.user.phone, 'Your booking id (' + booking.bookingConfirmationId + ') has been cancelled. An email has been forwarded to your registered email id.', function(status) {
-	                                    logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + booking.user.phone + ']: ' + status);
-	                                });
-		                 			
+                                    if(booking.bookingConfirmationId.length > 13){
+                                        sms.send(booking.user.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+                                            logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+                                        });
+                                    }
+                                    else {
+    		                 			sms.send(booking.user.phone, 'Your booking id (' + booking.bookingConfirmationId + ') has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+    	                                    logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + booking.user.phone + ']: ' + status);
+    	                                });
+                                    }		                 			
 		                 			 var emailConfig = config.email_config('cancelledBooking');
 		                 			 if(emailConfig.length > 0 ){
 		                 			     var confirmedBooking = emailConfig;
@@ -1469,15 +1830,15 @@ module.exports = function(Booking) {
                 				                                         role : { "$in" : [role._id] }
                 				                                    }, function(err, users) {
                 					                                	  async.each(users, function (user, callback) {
-                					                                		  notify.addNotificationURL('Cancelled',booking._id +'     '+ ' has been cancelled.Click here for more details', user,'/admin/bookings');
+                					                                		  notify.addNotificationURL('Cancelled',booking.bookingConfirmationId +'     '+ ' has been cancelled.Click here for more details', user,'/admin/bookings');
                 					                                		  callback();
                 					                                	  });
                 				                                    });
                 				                                }
                 				                           });
                 				                              
-                				                           notify.addNotificationURL('Cancelled',booking._id +'		'+ ' has been cancelled.Click here for more details', booking.user,'/bookings/mybookings');
-                				                           notify.addNotificationURL('Cancelled',booking._id +'		'+ ' has been cancelled.Click here for more details', booking.partner,'/admin/bookings');
+                				                           notify.addNotificationURL('Cancelled',booking.bookingConfirmationId +'		'+ ' has been cancelled.Click here for more details', booking.user,'/bookings/mybookings');
+                				                           notify.addNotificationURL('Cancelled',booking.bookingConfirmationId +'		'+ ' has been cancelled.Click here for more details', booking.partner,'/admin/bookings');
                 				                           schedule.save(function(err) {
                 				                                if (err) {
                 				                                    return res.status(500).json({
@@ -1534,10 +1895,16 @@ module.exports = function(Booking) {
                 				                                var email = templates.booking_cancellation(booking.user, req,booking,bookingsstartTime,bookingsendTime);
                 					                 			mail.mailService(email,booking.user.email);
                 					                 			var user = booking.user;
-                					                 			sms.send(user.phone, 'Your booking id (' + booking.bookingConfirmationId + ') has been cancelled. An email has been forwarded to your registered email id.', function(status) {
-                				                                    logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
-                				                                });
-                					                 			
+                                                                if(booking.bookingConfirmationId.length > 13){
+                                                                    sms.send(user.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+                                                                        logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+                                                                    });
+                                                                }
+                                                                else {
+                    					                 			sms.send(user.phone, 'Your booking id (' + booking.bookingConfirmationId + ') has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+                    				                                    logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
+                    				                                });
+                					                 			}
                 				                            });
                 				                        });
                 				                    });
@@ -2007,7 +2374,7 @@ module.exports = function(Booking) {
 				                                         role : { "$in" : [role._id] }
 				                                    }, function(err, users) {
 					                                	  async.each(users, function (user, callback) {
-					                                		  notify.addNotificationURL('Cancelled',booking._id +'     '+ ' has been cancelled.Click here for more details', user,'/admin/bookings');
+					                                		  notify.addNotificationURL('Cancelled',booking.bookingConfirmationId +'     '+ ' has been cancelled.Click here for more details', user,'/admin/bookings');
 					                                		  callback();
 					                                	  });
 				                                    });
@@ -2069,9 +2436,16 @@ module.exports = function(Booking) {
 				                                var email = templates.booking_cancellation(booking.user, req,booking,bookingsstartTime,bookingsendTime);
 					                 			mail.mailService(email,booking.user.email);
 					                 			var user = booking.user;
-					                 			sms.send(user.phone, 'Your booking id (' + booking.bookingConfirmationId + ') has been cancelled. An email has been forwarded to your registered email id.', function(status) {
-				                                    logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
-				                                });
+                                                if(booking.bookingConfirmationId.length > 13){
+                                                    sms.send(user.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+                                                        logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+                                                    });
+                                                }
+                                                else {
+    					                 			sms.send(user.phone, 'Your booking id (' + booking.bookingConfirmationId + ') has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+    				                                    logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
+    				                                });
+                                                }
 					                 			
 				                            });
 				                        });
@@ -2405,15 +2779,15 @@ module.exports = function(Booking) {
                                                                          role : { "$in" : [role._id] }
                                                                     }, function(err, users) {
                                                                           async.each(users, function (user, callback) {
-                                                                              notify.addNotificationURL('Cancelled',booking._id +'     '+ ' has been cancelled.Click here for more details', user,'/admin/bookings');
+                                                                              notify.addNotificationURL('Cancelled',booking.bookingConfirmationId +'     '+ ' has been cancelled.Click here for more details', user,'/admin/bookings');
                                                                               callback();
                                                                           });
                                                                     });
                                                                 }
                                                            });
                                                               
-                                                           notify.addNotificationURL('Cancelled',booking._id +'     '+ ' has been cancelled.Click here for more details', booking.user,'/bookings/mybookings');
-                                                           notify.addNotificationURL('Cancelled',booking._id +'     '+ ' has been cancelled.Click here for more details', booking.partner,'/admin/bookings');
+                                                           notify.addNotificationURL('Cancelled',booking.bookingConfirmationId +'     '+ ' has been cancelled.Click here for more details', booking.user,'/bookings/mybookings');
+                                                           notify.addNotificationURL('Cancelled',booking.bookingConfirmationId +'     '+ ' has been cancelled.Click here for more details', booking.partner,'/admin/bookings');
                                                            schedule.save(function(err) {
                                                                 if (err) {
                                                                     // return res.status(500).json({
@@ -2470,13 +2844,27 @@ module.exports = function(Booking) {
                                                                     var bookingsendTime =  endtimehrs + ':' + endtimemins + ' PM';
                                                                 }
                                                                 
-                                                                var email = templates.booking_cancellation(booking.user, req,booking,bookingsstartTime,bookingsendTime);
-                                                                mail.mailService(email,booking.user.email);
-                                                                var user = booking.user;
-                                                                sms.send(user.phone, 'Your booking id (' + booking.bookingConfirmationId + ') has been cancelled. An email has been forwarded to your registered email id.', function(status) {
-                                                                    // logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
-                                                                    console.log('BOOKING FAILURE CRON :: New booking SMS sent - '+user.phone+'Status'+status);
-                                                                });
+                                                                var loggedUser;
+                                                                if(!booking.user){
+                                                                    loggedUser = booking.guestUser;
+                                                                    var emailGuest = templates.booking_cancellation_guest(loggedUser, req,booking,bookingsstartTime,bookingsendTime);
+                                                                    mail.mailService(emailGuest,loggedUser.email);
+                                                                } else {
+                                                                    loggedUser = booking.user;
+                                                                    var email = templates.booking_cancellation(booking.user, req,booking,bookingsstartTime,bookingsendTime);
+                                                                    mail.mailService(email,booking.user.email);
+                                                                }
+                                                                if(booking.bookingConfirmationId.length > 13){
+                                                                    sms.send(loggedUser.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+                                                                        logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + guestUser.phone + ']: ' + status);
+                                                                    });
+                                                                }
+                                                                else {
+                                                                    sms.send(loggedUser.phone, 'Your booking id (' + booking.bookingConfirmationId + ') has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+                                                                        // logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
+                                                                        console.log('BOOKING FAILURE CRON :: New booking SMS sent - '+loggedUser.phone+'Status'+status);
+                                                                    });
+                                                                }
                                                                 
                                                             });
                                                         });
@@ -2564,13 +2952,29 @@ module.exports = function(Booking) {
                                                      }
                                                         // console.log("after schedule update................");
                                                      var guestUser=booking.guestUser;
+                                                     var userSMSObj;
                                                      if(!booking.user){
+                                                        userSMSObj = guestUser;
                                                         var emailGuest = templates.booking_cancellation_guest(guestUser, req,booking,bookingsstartTime,bookingsendTime);
                                                         mail.mailService(emailGuest,guestUser.email);
                                                      }else{
+                                                        userSMSObj = booking.user;
                                                         var email = templates.booking_cancellation(booking.user, req,booking,bookingsstartTime,bookingsendTime);
                                                         mail.mailService(email,booking.user.email);
                                                      }
+                                                    
+                                                    if(booking.bookingConfirmationId.length > 13){
+                                                        sms.send(userSMSObj.phone, 'Your booking has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+                                                            // logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + userSMSObj.phone + ']: ' + status);
+                                                            console.log('BOOKING FAILURE CRON :: New booking SMS sent - '+userSMSObj.phone+'Status'+status);
+                                                        });
+                                                    }
+                                                    else {
+                                                        sms.send(userSMSObj.phone, 'Your booking id (' + booking.bookingConfirmationId + ') has been cancelled. An email has been forwarded to your registered email id.', function(status) {
+                                                            // logger.log('info', 'POST ' + req._parsedUrl.pathname + ' New booking SMS sent [' + user.phone + ']: ' + status);
+                                                            console.log('BOOKING FAILURE CRON :: New booking SMS sent - '+userSMSObj.phone+'Status'+status);
+                                                        });
+                                                    }
                                                      
                                                      // Email to Admins
                                                      var emailConfig = config.email_config('cancelledBooking');
@@ -2746,6 +3150,63 @@ module.exports = function(Booking) {
                 }
             });
             console.log('-----------------------BOOKING FAILURE CRON :: Function ended.------------------------');
+         },
+         
+         
+         /**
+          * CRON to update a boolean flag for Confirmed and Completed
+          * Bookings so as to Review.
+          */
+         bookingReviewCron : function(){
+        	 console.log('Booking Review Cron');
+        	 var query = {
+        		 status : 'Confirmed'
+        	 };
+        	 BookingModel.find(query)
+        	 	.deepPopulate(['room','room.roomtype'])
+        	 	.populate('room').populate('bookedRooms')
+        	 	.exec( function(err, bookings) {
+        	 		
+	                 if (err) console.log(err);
+	                 if (!bookings) console.log(new Error('Failed to load bookings'));
+	                 
+	                 async.each(bookings, function(booking, callback) {
+	                	 var bookingEndTime;
+	                	 var currentTime;
+	                	 if((booking.room.roomtype.name === 'Hot Desk') && (booking.room.roomtype.name === 'Training Room')){
+	                		 bookingEndTime = new Date(booking.endDate + ' ' + booking.endTime);
+		                	 currentTime = new Date();
+		                	 if(bookingEndTime < currentTime){
+				                 booking.isReviewed = true;
+				                 booking.save(function(err, booking){
+		                             if (err) {
+		                            	 console.log(err);
+		                             }   
+		                             callback();
+		                         });
+			                 } else {
+			                	 callback();
+			                 }
+	                	 } else {
+	                		 bookingEndTime = new Date(booking.bookingEndTime);
+		                	 currentTime = new Date();
+		                	 if(bookingEndTime < currentTime){
+				                 booking.isReviewed = true;
+				                 booking.save(function(err, booking){
+		                             if (err) {
+		                            	 console.log(err);
+		                             }   
+		                             callback();
+		                         });
+			                 } else {
+			                	 callback();
+			                 }
+	                	 }
+		                 
+	                 }, function(err) {
+	                	 if (err) console.log(err);
+	                 });
+             });
          },
          
     };

@@ -41,8 +41,8 @@
 								<select ng-model="contactDetail.enquiryType" name="enquiryType" class="custom_dropdown selectRole" required>
 									<option selected="selected" disabled="disabled" value="">Select One</option>
 									<option value="Booking">Booking</option>
-									<option value="FeedbackOrCompl">Feedback / Complaints</option>
-									<option value="ListSpace">List Space</option>
+									<option value="Feedback Or Complaints">Feedback / Complaints</option>
+									<option value="List Space">List Space</option>
 								</select>
 								<div ng-show="submitted && contactUsForm.enquiryType.$invalid">
 									<span class="err-msg errorText validaion-color"
@@ -119,7 +119,7 @@
 						<script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script>
 						<div class="field-input">
 						<div class="form-group" ng-class="{ 'has-error' : submitted && !captchaResponse }">
-							<div vc-recaptcha key="'6LdaFCYTAAAAAGABIelgcHnB18bdS4lq9hgFZgM6'" on-success="setResponse(response)"></div>
+							<div vc-recaptcha key="'6LcjGAoUAAAAAMdHNGntlhIj-oVABIjKun3r5TPU'" on-success="setResponse(response)"></div>
 						<div ng-show="submitted && !captchaResponse">
 									<span class="err-msg errorText validaion-color"
 										ng-show="!captchaResponse">Please verify captcha</span>

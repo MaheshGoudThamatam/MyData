@@ -18,7 +18,7 @@ module.exports = {
 		var produnctInfo = 'Booking for room';
 		var firstname = user.first_name;
 		var email = user.email;
-		var phone =user.phone;
+		var phone = user.phone;
 		var service_provider =config.payUMoney.service_provider;
 		var string = marchentKey + '|' + txnid + '|' + amount + '|'
 				+ produnctInfo + '|' + firstname + '|' + email + '|||||||||||'

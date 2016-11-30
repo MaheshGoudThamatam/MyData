@@ -29,7 +29,7 @@ Swagger.register(function(app, auth, database) {
     var model = require(path + '/docs/models');
     swagger.addModels(model);
 
-    console.log('loading docs for: ' + path);
+    console.log('Loading docs for -:- ' + path);
 
     require(path + '/docs/services')
       .load(swagger, {
@@ -72,11 +72,20 @@ Swagger.register(function(app, auth, database) {
   // });
 
   app.get('/api/docs', function(req, res, next) {    
-    Swagger.render('index', {endpoint:'/api/swagger/docs'}, function (err, html) {
-      //Rendering a view from the Package server/views
-      if (err) return res.send(500,err);
-       res.send(html);
-    });
+     var hostnameURL = config.hostname;
+      if((hostnameURL.indexOf('mymatchbox.in') > -1)) {
+            // res.send(401);
+            var redirectUrl = '/unauthorized/redirect'+'?nord';
+            res.redirect(redirectUrl);
+      }
+      else
+      {
+         Swagger.render('index', {endpoint:'/api/swagger/docs'}, function (err, html) {
+          //Rendering a view from the Package server/views
+          if (err) return res.send(500,err);
+           res.send(html);
+        });
+      }
   
     //res.redirect('/swagger/views/index.html');
   });

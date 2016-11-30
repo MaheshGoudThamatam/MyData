@@ -368,7 +368,7 @@ li > a.border-white:hover{
         line-height: 48px !important;
     }
     .meetingRoomDateHg {
-        height: 48px;
+        /*height: 48px;*/
     }
     .daterangepicker.dropdown-menu.single {
         top: 100px !important;
@@ -733,6 +733,14 @@ li > a.border-white:hover{
 /* 1280 x 800 */
 
 @media only screen and (max-width: 1359px) and (min-width: 1200px) {
+    .pre-app-icon-banner {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    .footer-font-12 {
+        font-size: 12px;
+    }
+
     .registerPageFirefox {
         margin-top: -5% !important;
         -moz-transform: scale(0.85,0.85);
@@ -1036,6 +1044,9 @@ li > a.border-white:hover{
 
 /* 1440 x 900 */
 @media only screen and (min-device-height : 900px) and (max-device-height : 901px) and (min-device-width : 1440px) and (max-device-width : 1441px) and (orientation : landscape) {
+    .cancelSection {
+        width: 130% !important;
+    }
     .hotelNameListPage {
         min-height: 40px;
         max-width: 85%;
@@ -1292,6 +1303,10 @@ li > a.border-white:hover{
     .hotel-places div {
         font-size: 15px;
     }*/
+    .cancelSection {
+        width: 140% !important;
+        margin-left: -6%;
+    }
     .hotelNameListPage {
         min-height: 40px;
         max-width: 85%;
@@ -1880,6 +1895,17 @@ li > a.border-white:hover{
     }
 
 /* ---------------------------------------------- */
+    .fxC .daterangepicker.dropdown-menu.single {
+        width: 81% !important;
+    }
+    .fxC .range_inputs {
+        margin-top: -58%;
+        position: absolute !important;
+        margin-left: 25%;
+    }
+    .fxC .ranges {
+        margin-top: 60% !important;
+    }
     .closeBtnLow {
         margin-bottom: 15%;
     }
@@ -2007,6 +2033,12 @@ li > a.border-white:hover{
         zoom: 60% !important;
         left: 10% !important;
         width: 85% !important;
+    }
+    button.btn.holidayBtn.enableHoliday {
+        width: 85% !important;
+    }
+    button.btn.weekendBtn.enableSunday {
+        width: 85%;
     }
     .range_inputs {
         margin-top: -70%;
@@ -2938,6 +2970,9 @@ select {
     transition: all 200ms ease-in !important;
 }
 @media only screen and (max-device-width: 1359px) and (min-device-width: 1200px) {
+    .cancelSection {
+        width: 112% !important;
+    }
     .sfC .dropdown-menu.pull-right {
         height: 25vw !important;
         width: 25vw !important;
@@ -3034,7 +3069,7 @@ input[id=hotdeskcheckin]:focus, input[id=boardroomcheckin]:focus, input[id=board
 .iti-flag {
     background-image: url("http://res.cloudinary.com/tarento/image/upload/v1473842473/flags_nvm2sd.png") !important;
 }
-.app-banner {
+.app-banner, .app-ios-banner {
     height: 100vh;
     background-color: red;
     position: fixed;
@@ -3049,4 +3084,23 @@ input[id=hotdeskcheckin]:focus, input[id=boardroomcheckin]:focus, input[id=board
     background-color: rgba(255, 255, 255, 0.8);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     display: none;
+}
+.payment-step li.step-select-failed span:after {
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: url(../../../../system/assets/img/custom/icon-check-payment-failed.png) no-repeat 50% 50%;
+    content: '';
+    display: block;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    position: absolute;
+}
+.margin-top-search-1 {
+    margin-top: 1% !important;
 }

@@ -32,22 +32,32 @@
 					<div class="step">
 						<ul class="payment-step text-center clearfix">
 							<li class="step-select"><span>1</span>
-								<p>Choose Your Room</p></li>
+								<p>Choose Your Room</p>
+							</li>
 							<li class="step-select"><span>2</span>
-								<p>Your Booking &amp; Payment Details</p></li>
-							<li class="step-select"><span>3</span>
-								<p>Booking Completed!</p></li>
+								<p>Your Booking &amp; Payment Details</p>
+							</li>
+							<li data-ng-show="bookingDetail.bookingConfirmationId.length === 13" class="step-select"><span>3</span>
+								<p>Booking Completed!</p>
+							</li>
+							<li data-ng-show="bookingDetail.bookingConfirmationId.length > 13" class="step-select-failed"><span></span>
+								<p>{{bookingDetail.status}}</p>
+							</li>
 						</ul>
 					</div>
 					<div class="col-md-5 payment-details booking-summary-margin" style="margin-left: 4%;">
 						<div class="col-md-12 booking-details zC93 zero-padding" style="background: #f8f8f8;">
 							<div class="ur-booking-border your-booking">
-								<i class="fa fa-shopping-cart fa-font" aria-hidden="true"></i> <span
-									class="booking-details-ur" style="margin-left: 5%;">BOOKING ID: {{bookingDetail.bookingConfirmationId}}</span>
+								<i class="fa fa-shopping-cart fa-font" aria-hidden="true"></i> 
+								<span data-ng-show="bookingDetail.bookingConfirmationId.length === 13" class="booking-details-ur" style="margin-left: 5%;">BOOKING ID: {{bookingDetail.bookingConfirmationId}}</span>
+								<span data-ng-show="bookingDetail.bookingConfirmationId.length > 13" class="booking-details-ur" style="margin-left: 5%;">BOOKING ID: N/A</span>
 							</div>
 							
 							<div class="zqz" style="background: #ffffff;margin: 15px;">
-							<div class="time-padding">
+							
+
+
+							<!-- <div class="time-padding">
 								<div class="col-md-6  zero-padding">
 									<div class="searchBookingTitle">From</div>
 								</div>
@@ -74,24 +84,44 @@
 								<div class="col-md-6">
 									<span class="time-weght">{{bookingDetail.endTime}}</span>
 								</div>
-							</div>
-							<div class="ur-booking-border time-padding">
+							</div> -->
+							
+							<table class="table bookingTableDetail" style="margin-left: 12px;">
+								<tr>
+									<td style="padding-top: 8px !important;" class="searchBookingTitle">From</td>
+									<td style="padding-top: 8px !important;" class="searchBookingTitle">To</td>
+								</tr>
+								<tr>
+									<td class="time-weght">{{bookingDetail.bookingStartTime|date:'dd/MM/yyyy'}}</td>
+									<td class="time-weght">{{bookingDetail.bookingEndTime|date:'dd/MM/yyyy'}}</td>
+								</tr>
+								<tr>
+									<td class="searchBookingTitle">Start Time</td>
+									<td class="searchBookingTitle">End Time</td>
+								</tr>
+								<tr>
+									<td class="time-weght">{{bookingDetail.startTime}}</td>
+									<td class="time-weght">{{bookingDetail.endTime}}</td>
+								</tr>
+							</table>
+
+							<div style="padding-top: 0px;" class="ur-booking-border time-padding">
 								<div class="searchBookingTitle">Location</div>
 								<div>
 									<span class="time-weght"> {{bookingDetail.room.name}}</span><br>
 									<span class="time-weght">{{bookingDetail.space.name}}</span><br>
 									<span class="time-weght">{{bookingDetail.space.address1}}
 										{{bookingDetail.space.address2}} {{bookingDetail.space.city}}</span><br>
-									<span class="time-weght" ng-if="bookingDetail.space.contact_details_1.contactNo && bookingDetail.space.contact_details_2.contactNo">
+									<span class="time-weght" ng-if="bookingDetail.space.contact_details_1.contactNo && bookingDetail.space.contact_details_2.contactNo  && bookingDetail.bookingConfirmationId.length === 13">
 										Contact : {{bookingDetail.space.contact_details_1.contactNo}}&nbsp;/&nbsp;{{bookingDetail.space.contact_details_2.contactNo}}
 									</span>
-									<span class="time-weght" ng-if="!bookingDetail.space.contact_details_1.contactNo && bookingDetail.space.contact_details_2.contactNo">
+									<span class="time-weght" ng-if="!bookingDetail.space.contact_details_1.contactNo && bookingDetail.space.contact_details_2.contactNo && bookingDetail.bookingConfirmationId.length === 13">
 										Contact : {{bookingDetail.space.contact_details_2.contactNo}}
 									</span>
-									<span class="time-weght" ng-if="bookingDetail.space.contact_details_1.contactNo && !bookingDetail.space.contact_details_2.contactNo">
+									<span class="time-weght" ng-if="bookingDetail.space.contact_details_1.contactNo && !bookingDetail.space.contact_details_2.contactNo && bookingDetail.bookingConfirmationId.length === 13">
 										Contact : {{bookingDetail.space.contact_details_1.contactNo}}
 									</span>
-									<span class="time-weght" ng-if="!bookingDetail.space.contact_details_1.contactNo && !bookingDetail.space.contact_details_2.contactNo">
+									<span class="time-weght" ng-if="!bookingDetail.space.contact_details_1.contactNo && !bookingDetail.space.contact_details_2.contactNo && bookingDetail.bookingConfirmationId.length === 13">
 										Contact : N/A
 									</span>
 								</div>
@@ -263,12 +293,12 @@
 																							<span class="searchBookingTitle">Phone :</span><br> <span
 																								class="time-weght">{{bookingDetail.guestUser.phone}}</span><br>
 																							
-																							<span class="searchBookingTitle" ng-if="bookingDetail.address">Address :</span><br> 
-																							<span class="time-weght">{{bookingDetail.address.address1}}
+																							<!-- <span class="searchBookingTitle" ng-if="bookingDetail.address">Address :</span><br> 
+																							<span class="time-weght" ng-if="bookingDetail.address">{{bookingDetail.address.address1}}
 																							,{{bookingDetail.address.address2}},<br/>{{bookingDetail.address.city}},
 																							{{bookingDetail.address.state}}-{{bookingDetail.address.pinCode}},<br/>
 																							{{bookingDetail.address.country}}
-																							</span><br>
+																							</span><br> -->
 
 																						</div>
 																					</div>
@@ -290,12 +320,12 @@
 																							<span class="searchBookingTitle">Phone :</span><br> <span
 																								class="time-weght">{{bookingDetail.user.phone}}</span><br>
 
-																							<span class="searchBookingTitle" ng-if="bookingDetail.address">Address :</span><br> 
-																							<span class="time-weght">{{bookingDetail.address.address1}}
+																							<!-- <span class="searchBookingTitle" ng-if="bookingDetail.address">Address :</span><br> 
+																							<span class="time-weght" ng-if="bookingDetail.address">{{bookingDetail.address.address1}}
 																							,{{bookingDetail.address.address2}},<br/>{{bookingDetail.address.city}},
 																							{{bookingDetail.address.state}}-{{bookingDetail.address.pinCode}},<br/>
 																							{{bookingDetail.address.country}}
-																							</span><br>
+																							</span><br> -->
 
 																						</div>
 																					</div>
@@ -314,27 +344,27 @@
 								</div>
 							</div>
 						</div>
-                        <div class="col-xs-12" ng-if="authenticated">
+                        <div class="col-xs-12 cancelSection " ng-if="authenticated">
                             	<!-- <div class="field-input"
                                     ng-hide="bookingDetail.status == 'Failed' ||  bookingDetail.status == 'Cancelled' || isLess || found || isAdmin()"
                                     align="right">
                                     <button class="awe-btn awe-default1 forgotPwdButton"
                                         ng-click="cancelBooking(bookingDetail)">Cancel Booking</button>
                                 </div> -->
-                                <div class="col-xs-8 field-input"
-                                    ng-hide="bookingDetail.status == 'Failed' ||  bookingDetail.status == 'Cancelled' || isLess || isPartner || isBackOffice || isFrontOffice"
-                                    align="right" style="padding: 0;">
+                                <div class="col-xs-6 field-input"
+                                    ng-hide="bookingDetail.status == 'TimedOut' || bookingDetail.status == 'Failed' ||  bookingDetail.status == 'Cancelled' || isLess || isPartner || isBackOffice || isFrontOffice"
+                                    align="right" style="padding: 0;z-index: 999999999;">
                                     <button class="awe-btn awe-default1 forgotPwdButton"
                                         ng-click="cancelBooking(bookingDetail)">Cancel Booking</button>
                                 </div>
                             
-                            <div class="col-xs-6 bookingPageMyBookingBtn" data-ng-if="isBookedBy">
+                            <div class="col-xs-6 bookingPageMyBookingBtn" style="z-index: 99999999;" data-ng-if="isBookedBy">
                                 <div class="field-input" align="left">
                                     <button type="submit" class="awe-btn arrow-right "
                                         data-ng-click="redirectBack()">My Bookings</button>
                                 </div>
                             </div>
-                            <div class="col-xs-4 bookingPageMyBookingBtn" data-ng-if="!isBookedBy">
+                            <div class="col-xs-6 bookingPageMyBookingBtn" style="z-index: 99999999;" data-ng-if="!isBookedBy">
                                 <div class="field-input" align="left">
                                     <button type="submit" class="awe-btn arrow-right "
                                         data-ng-click="redirectBackAdminBooking()">Bookings</button>
@@ -502,7 +532,7 @@
 						</div>
 					</div> -->
 
-					<div class="col-md-12" style="margin-bottom: 5%;margin-left: 4%;width: 83%;">
+					<div data-ng-show="bookingDetail.bookingConfirmationId.length === 13" class="col-md-12" style="margin-bottom: 5%;margin-left: 4%;width: 83%;">
 						<p>
 							<b>Important:</b>
 						</p>
@@ -528,7 +558,7 @@
 	</div>
 	
 	<!-- Modal -->
-    <div class="modal fade" id="cancelBookingModel" role="dialog">
+    <div class="modal fade" id="cancelBookingModel" role="dialog" style="z-index: 99999999;">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">
@@ -586,7 +616,7 @@
     </div>
 
 <!-- Modal for Admin Cancellation for booking from dashboard -->
-    <div class="modal fade" id="cancelBookingAdminModel" role="dialog">
+    <div class="modal fade" id="cancelBookingAdminModel" role="dialog" style="z-index: 99999999;">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content">

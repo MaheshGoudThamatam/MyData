@@ -34,7 +34,12 @@ module.exports = function (Search, app, auth, database) {
 		.get(area.getCity)
 		.put(area.updateCity);
 	
+	app.route('/api/city/:cityName/location/lat-long')
+		.get(area.updateLocality);
+	
 	app.param('cityId', area.city);
+	app.param('areaId', area.area);
+	app.param('cityName', area.cityName);
 	
  };
 

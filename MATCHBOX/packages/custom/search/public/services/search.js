@@ -25,6 +25,11 @@ angular.module('mean.search').factory('SearchService', [ '$resource',
 		        query: { method: 'GET', isArray: true }
 		    }),
 		    
+		    updateLocality : $resource('/api/city/:cityName/location/lat-long', {cityName : '@cityName'}, {
+		        update: { method: 'PUT' },
+		        query: { method: 'GET', isArray: true }
+		    }),
+		    
 		};
 	}
 ]);

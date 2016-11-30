@@ -7,6 +7,7 @@ angular.module('mean.users').constant('USERS', {
         RESET_PASSWORD: '/reset/:tokenId',
         CHANGE_PASSWORD : '/change-password',
         USERCONFIRMATION : '/user/confirmation',
+        UNAUTHORIZED_PAGE : '/unauthorized/redirect',
       },
 
     FILE_PATH: {
@@ -17,6 +18,7 @@ angular.module('mean.users').constant('USERS', {
         RESET_PASSWORD: 'users/views/reset-password.html',
         CHANGE_PASSWORD : 'users/views/change-password.html',
         USERCONFIRMATION : 'users/views/userConfirmation.html',
+        UNAUTHORIZED_PAGE : 'users/views/unauthorized_page.html',
     },
     
     STATE: {
@@ -27,5 +29,6 @@ angular.module('mean.users').constant('USERS', {
         RESET_PASSWORD: 'reset-password',
         CHANGE_PASSWORD : 'change-password',
         USERCONFIRMATION : 'user confirmation',
+        UNAUTHORIZED_PAGE : 'unauthorized page',
     }
 });

@@ -89,4 +89,6 @@ angular.module('mean.system').constant('MESSAGES', {
     PLEASE_FILL_DATA : 'Please fill the required fields',
     URL_TIME_CHANGE : 'Please have a valid date and time',
     BOOKING_OBJECT : 'Booking object is unavailable',
+    ADDRESS_LAT_LONG: "Can't track the latitude and longitude for the address",
+    DATE_TIME_INVALID : "Please check date and time.",
 });

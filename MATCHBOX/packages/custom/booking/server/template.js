@@ -96,7 +96,7 @@ module.exports = {
 						}
 					}
 				},
-				outro : 'Did you know that first time users receive Rs.200 off on their first booking? Register now for the best deals in Temporary Offices.'
+				outro : 'Did you know that first time users receive &#8377;&nbsp;200 off on their first booking? Register now for the best deals in Temporary Offices.'
 			},
 			subject : booking.user.first_name + ' '
 					+ 'has invited you for a meeting'
@@ -106,7 +106,7 @@ module.exports = {
 	confirmation_email_guest : function(req, user, token) {
 		var email = {
 			body : {
-				name : user.first_name + '	' + '!',
+				name : user.first_name +' ',
 				intro : 'Thank you for registering with mymatchbox, your permanent solution for temporary office space'
 						+ '	' + '!',
 				action : {
@@ -278,6 +278,297 @@ module.exports = {
 
 		return email;
 	},
+	booking_email_partner_mail : function(actor, room, space, booking, bookingsstartTime,
+			bookingsendTime, roomType) {
+		if (roomType == 'Meeting Room' || roomType == 'Board Room') {
+			var newURL = '/booking/success?booking_id=';
+		}
+		if (roomType == 'Hot Desk' || roomType == 'Training Room') {
+			var newURL = '/booking/success/trainingRoom?booking_id=';
+			var bookingsstartTime = booking.startTime;
+			var bookingsendTime = booking.endTime;
+		}
+		var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+				"Sep", "Oct", "Nov", "Dec" ];
+		var bookingNewDate = new Date(booking.bookingDate);
+		var bookingMonth = months[bookingNewDate.getMonth()];
+		var bookingDate = bookingNewDate.getDate();
+		var bookingYear = bookingNewDate.getFullYear();
+
+		var email = {
+			body : {
+
+				name : '	' + actor.first_name + ',' + ' A new' + ' ' + roomType
+						+ '	 ' + 'has been booked',
+				action : {
+					button : {
+						color : 'green',
+						text : 'View Booking',
+						link : config.hostname + newURL + booking._id + '&nord'
+					}
+				},
+				table : {
+					data : [
+							{
+								'Booking Details' : 'Space',
+								'' : space.name
+							},
+							{
+								'Booking Details' : 'Room Name',
+								'' : room.name
+							},
+							{
+								'Booking Details' : 'Room Address',
+								'' : space.address1 + '\n' + space.address2
+										+ '\n' + space.city + '<br>'
+							},
+							{
+								'Booking Details' : 'Booking Date',
+								'' : bookingDate + ' ' + bookingMonth + ', '
+										+ bookingYear
+							}, 
+							{
+								'Booking Details' : 'Booking From',
+								'' : bookingsstartTime
+							}, 
+							{
+								'Booking Details' : 'Booking To',
+								'' : bookingsendTime
+							}, 
+							{
+								'Booking Details' : 'Booked By',
+								'' : booking.user.first_name
+							} ],
+					columns : {
+						// Optionally, customize the column widths
+						customWidth : {
+							item : '20%',
+							description : '20%'
+						},
+						// Optionally, change column text alignment
+						customAlignment : {
+							description : 'right'
+						}
+					}
+				}
+			},
+			subject : 'New Booking has been made -' + ' ' + ' '
+					+ booking.bookingConfirmationId
+		}
+
+		if (booking.isWalkin) {
+			email.body.table.data.splice(6, 1);
+		}
+
+		if (roomType == 'Hot Desk' && booking.feature != 'Event Calendar') {
+			email.body.table.data.splice(1, 1);
+			var relatedBookedRooms = '';
+			for (var i = 0; i < booking.relatedBookedRooms.length; i++) {
+				if (relatedBookedRooms === '') {
+					relatedBookedRooms = booking.relatedBookedRooms[i].name;
+				} else {
+					relatedBookedRooms = relatedBookedRooms + ', '
+							+ booking.relatedBookedRooms[i].name;
+				}
+			}
+			var relatedRoomsBooked = {
+				'Booking Details' : 'Room Names',
+				'' : relatedBookedRooms
+			}
+			var relatedRoomsBookedCapacity = {
+				'Booking Details' : 'No. of Desks',
+				'' : booking.relatedBookedRooms.length
+			}
+			email.body.table.data.push(1, 0, relatedRoomsBooked);
+			email.body.table.data.push(2, 0, relatedRoomsBookedCapacity);
+		}
+
+		if (roomType == 'Hot Desk' || roomType == 'Training Room') {
+			if (roomType == 'Hot Desk') {
+				//email.body.table.data.splice(4, 1);
+				email.body.table.data.splice(2, 1);
+			} else {
+				//email.body.table.data.splice(3, 1);
+				email.body.table.data.splice(2, 1);
+			}
+			var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+							"Sep", "Oct", "Nov", "Dec" ];
+			
+			var bookingNewDate = new Date(booking.fromDate);
+			var bookingMonth = months[bookingNewDate.getMonth()];
+			var bookingDate = bookingNewDate.getDate();
+			var bookingYear = bookingNewDate.getFullYear();
+			
+			var bookingEndNewDate = new Date(booking.endDate);
+			var bookingEndMonth = months[bookingEndNewDate.getMonth()];
+			var bookingEndDate = bookingEndNewDate.getDate();
+			var bookingEndYear = bookingEndNewDate.getFullYear();
+			
+			var bookingFromDate = {
+				'Booking Details' : 'Booking From Date',
+				'' : bookingDate + ' ' + bookingMonth + ', '+ bookingYear
+			}
+			var bookingEndDate = {
+				'Booking Details' : 'Booking End Date',
+				'' : bookingEndDate + ' ' + bookingEndMonth + ', '+ bookingEndYear
+			}
+			if (roomType == 'Hot Desk') {
+				email.body.table.data.push(4, 0, bookingFromDate);
+				email.body.table.data.push(5, 0, bookingEndDate);
+			} else {
+				email.body.table.data.push(3, 0, bookingFromDate);
+				email.body.table.data.push(4, 0, bookingEndDate);
+			}
+		}
+
+		return email;
+	},
+	
+	booking_email_partner_mail_guestUser : function(actor, room, space, booking, bookingsstartTime,
+			bookingsendTime, roomType) {
+		if (roomType == 'Meeting Room' || roomType == 'Board Room') {
+			var newURL = '/booking/success?booking_id=';
+		}
+		if (roomType == 'Hot Desk' || roomType == 'Training Room') {
+			var newURL = '/booking/success/trainingRoom?booking_id=';
+			var bookingsstartTime = booking.startTime;
+			var bookingsendTime = booking.endTime;
+		}
+		var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+				"Sep", "Oct", "Nov", "Dec" ];
+		var bookingNewDate = new Date(booking.bookingDate);
+		var bookingMonth = months[bookingNewDate.getMonth()];
+		var bookingDate = bookingNewDate.getDate();
+		var bookingYear = bookingNewDate.getFullYear();
+
+		var email = {
+			body : {
+
+				name : '	' + actor.first_name + ',' + ' A new' + ' ' + roomType
+						+ '	 ' + 'has been booked',
+				action : {
+					button : {
+						color : 'green',
+						text : 'View Booking',
+						link : config.hostname + newURL + booking._id + '&nord'
+					}
+				},
+				table : {
+					data : [
+							{
+								'Booking Details' : 'Space',
+								'' : space.name
+							},
+							{
+								'Booking Details' : 'Room Name',
+								'' : room.name
+							},
+							{
+								'Booking Details' : 'Room Address',
+								'' : space.address1 + '\n' + space.address2
+										+ '\n' + space.city + '<br>'
+							},
+							{
+								'Booking Details' : 'Booking Date',
+								'' : bookingDate + ' ' + bookingMonth + ', '
+										+ bookingYear
+							}, 
+							{
+								'Booking Details' : 'Booking From',
+								'' : bookingsstartTime
+							}, 
+							{
+								'Booking Details' : 'Booking To',
+								'' : bookingsendTime
+							}, 
+							{
+								'Booking Details' : 'Booked By',
+								'' : booking.guestUser.first_name
+							} ],
+					columns : {
+						// Optionally, customize the column widths
+						customWidth : {
+							item : '20%',
+							description : '20%'
+						},
+						// Optionally, change column text alignment
+						customAlignment : {
+							description : 'right'
+						}
+					}
+				}
+			},
+			subject : 'New Booking has been made -' + ' ' + ' '
+					+ booking.bookingConfirmationId
+		}
+
+		if (booking.isWalkin) {
+			email.body.table.data.splice(6, 1);
+		}
+
+		if (roomType == 'Hot Desk' && booking.feature != 'Event Calendar') {
+			email.body.table.data.splice(1, 1);
+			var relatedBookedRooms = '';
+			for (var i = 0; i < booking.relatedBookedRooms.length; i++) {
+				if (relatedBookedRooms === '') {
+					relatedBookedRooms = booking.relatedBookedRooms[i].name;
+				} else {
+					relatedBookedRooms = relatedBookedRooms + ', '
+							+ booking.relatedBookedRooms[i].name;
+				}
+			}
+			var relatedRoomsBooked = {
+				'Booking Details' : 'Room Names',
+				'' : relatedBookedRooms
+			}
+			var relatedRoomsBookedCapacity = {
+				'Booking Details' : 'No. of Desks',
+				'' : booking.relatedBookedRooms.length
+			}
+			email.body.table.data.push(1, 0, relatedRoomsBooked);
+			email.body.table.data.push(2, 0, relatedRoomsBookedCapacity);
+		}
+
+		if (roomType == 'Hot Desk' || roomType == 'Training Room') {
+			if (roomType == 'Hot Desk') {
+				//email.body.table.data.splice(4, 1);
+				email.body.table.data.splice(2, 1);
+			} else {
+				//email.body.table.data.splice(3, 1);
+				email.body.table.data.splice(2, 1);
+			}
+			var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+							"Sep", "Oct", "Nov", "Dec" ];
+			
+			var bookingNewDate = new Date(booking.fromDate);
+			var bookingMonth = months[bookingNewDate.getMonth()];
+			var bookingDate = bookingNewDate.getDate();
+			var bookingYear = bookingNewDate.getFullYear();
+			
+			var bookingEndNewDate = new Date(booking.endDate);
+			var bookingEndMonth = months[bookingEndNewDate.getMonth()];
+			var bookingEndDate = bookingEndNewDate.getDate();
+			var bookingEndYear = bookingEndNewDate.getFullYear();
+			
+			var bookingFromDate = {
+				'Booking Details' : 'Booking From Date',
+				'' : bookingDate + ' ' + bookingMonth + ', '+ bookingYear
+			}
+			var bookingEndDate = {
+				'Booking Details' : 'Booking End Date',
+				'' : bookingEndDate + ' ' + bookingEndMonth + ', '+ bookingEndYear
+			}
+			if (roomType == 'Hot Desk') {
+				email.body.table.data.push(4, 0, bookingFromDate);
+				email.body.table.data.push(5, 0, bookingEndDate);
+			} else {
+				email.body.table.data.push(3, 0, bookingFromDate);
+				email.body.table.data.push(4, 0, bookingEndDate);
+			}
+		}
+
+		return email;
+	},
 	
 	booking_email_admin : function(actor, room, space, booking, bookingsstartTime,
 			bookingsendTime, roomType) {
@@ -339,6 +630,152 @@ module.exports = {
 							{
 								'Booking Details' : 'Booked By',
 								'' : booking.user.first_name
+							} ],
+					columns : {
+						// Optionally, customize the column widths
+						customWidth : {
+							item : '20%',
+							description : '20%'
+						},
+						// Optionally, change column text alignment
+						customAlignment : {
+							description : 'right'
+						}
+					}
+				}
+			},
+			subject : 'New Booking has been made -' + ' ' + ' '
+					+ booking.bookingConfirmationId
+		}
+
+		if (booking.isWalkin) {
+			email.body.table.data.splice(6, 1);
+		}
+
+		if (roomType == 'Hot Desk' && booking.feature != 'Event Calendar') {
+			email.body.table.data.splice(1, 1);
+			var relatedBookedRooms = '';
+			for (var i = 0; i < booking.relatedBookedRooms.length; i++) {
+				if (relatedBookedRooms === '') {
+					relatedBookedRooms = booking.relatedBookedRooms[i].name;
+				} else {
+					relatedBookedRooms = relatedBookedRooms + ', '
+							+ booking.relatedBookedRooms[i].name;
+				}
+			}
+			var relatedRoomsBooked = {
+				'Booking Details' : 'Room Names',
+				'' : relatedBookedRooms
+			}
+			var relatedRoomsBookedCapacity = {
+				'Booking Details' : 'No. of Desks',
+				'' : booking.relatedBookedRooms.length
+			}
+			email.body.table.data.push(1, 0, relatedRoomsBooked);
+			email.body.table.data.push(2, 0, relatedRoomsBookedCapacity);
+		}
+
+		if (roomType == 'Hot Desk' || roomType == 'Training Room') {
+			if (roomType == 'Hot Desk') {
+				//email.body.table.data.splice(4, 1);
+				email.body.table.data.splice(2, 1);
+			} else {
+				//email.body.table.data.splice(3, 1);
+				email.body.table.data.splice(2, 1);
+			}
+			var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+							"Sep", "Oct", "Nov", "Dec" ];
+			
+			var bookingNewDate = new Date(booking.fromDate);
+			var bookingMonth = months[bookingNewDate.getMonth()];
+			var bookingDate = bookingNewDate.getDate();
+			var bookingYear = bookingNewDate.getFullYear();
+			
+			var bookingEndNewDate = new Date(booking.endDate);
+			var bookingEndMonth = months[bookingEndNewDate.getMonth()];
+			var bookingEndDate = bookingEndNewDate.getDate();
+			var bookingEndYear = bookingEndNewDate.getFullYear();
+			
+			var bookingFromDate = {
+				'Booking Details' : 'Booking From Date',
+				'' : bookingDate + ' ' + bookingMonth + ', '+ bookingYear
+			}
+			var bookingEndDate = {
+				'Booking Details' : 'Booking End Date',
+				'' : bookingEndDate + ' ' + bookingEndMonth + ', '+ bookingEndYear
+			}
+			if (roomType == 'Hot Desk') {
+				email.body.table.data.push(4, 0, bookingFromDate);
+				email.body.table.data.push(5, 0, bookingEndDate);
+			} else {
+				email.body.table.data.push(3, 0, bookingFromDate);
+				email.body.table.data.push(4, 0, bookingEndDate);
+			}
+		}
+
+		return email;
+	},
+	
+	booking_email_admin_guestUser : function(actor, room, space, booking, bookingsstartTime,
+			bookingsendTime, roomType) {
+		if (roomType == 'Meeting Room' || roomType == 'Board Room') {
+			var newURL = '/booking/success?booking_id=';
+		}
+		if (roomType == 'Hot Desk' || roomType == 'Training Room') {
+			var newURL = '/booking/success/trainingRoom?booking_id=';
+			var bookingsstartTime = booking.startTime;
+			var bookingsendTime = booking.endTime;
+		}
+		var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+				"Sep", "Oct", "Nov", "Dec" ];
+		var bookingNewDate = new Date(booking.bookingDate);
+		var bookingMonth = months[bookingNewDate.getMonth()];
+		var bookingDate = bookingNewDate.getDate();
+		var bookingYear = bookingNewDate.getFullYear();
+
+		var email = {
+			body : {
+
+				name : '	' + actor.first_name + ',' + ' A new' + ' ' + roomType
+						+ '	 ' + 'has been booked',
+				action : {
+					button : {
+						color : 'green',
+						text : 'View Booking',
+						link : config.hostname + newURL + booking._id + '&nord'
+					}
+				},
+				table : {
+					data : [
+							{
+								'Booking Details' : 'Space',
+								'' : space.name
+							},
+							{
+								'Booking Details' : 'Room Name',
+								'' : room.name
+							},
+							{
+								'Booking Details' : 'Room Address',
+								'' : space.address1 + '\n' + space.address2
+										+ '\n' + space.city + '<br>'
+							},
+							{
+								'Booking Details' : 'Booking Date',
+								'' : bookingDate + ' ' + bookingMonth + ', '
+										+ bookingYear
+							}, 
+							{
+								'Booking Details' : 'Booking From',
+								'' : bookingsstartTime
+							}, 
+							{
+								'Booking Details' : 'Booking To',
+								'' : bookingsendTime
+							}, 
+							{
+								'Booking Details' : 'Booked By',
+								'' : booking.guestUser.first_name
 							} ],
 					columns : {
 						// Optionally, customize the column widths
@@ -643,8 +1080,8 @@ module.exports = {
 	booking_cancellation_guest : function(guestUser, req, booking,
 			bookingsstartTime, bookingsendTime, bookingMonth, bookingDate,
 			bookingYear) {
-		if (booking.room.roomType.name == 'Hot Desk'
-				|| booking.room.roomType.name == 'Training Room') {
+		if (booking.room.roomtype.name == 'Hot Desk'
+				|| booking.room.roomtype.name == 'Training Room') {
 			var bookingsstartTime = booking.startTime;
 		}
 		if (booking.reasondescription != 'N/A') {

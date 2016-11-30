@@ -70,10 +70,10 @@ module.exports = {
   confirmation_email : function(req,user,token){
     var promoApplicable = true;
     if(promoApplicable){
-      var promoCodeMessage = 'Please use our promotion code <b>200OFF</b> to avail a discount of &#8377;&nbsp;200 on your first booking. Terms and Conditions apply.'+
+      var promoCodeMessage = 'Please use our promotion code <b>PROMO200</b> to avail a discount of &#8377;&nbsp;200 on your first booking. Terms and Conditions apply.'+
         '<ul><li style="font-size:12px !important;">Cannot be combined with any other offer/promotion.</li></ul>'+
         '<ul><li style="font-size:12px !important;">In the want of cancellation/no-show, the promo code shall be considered as lapsed.</li></ul>'+
-        '<ul><li style="font-size:12px !important;">Valid for single use only till 31st October 2016.</li></ul>';
+        '<ul><li style="font-size:12px !important;">Valid for single use only till 31<sup>st</sup> December 2016.</li></ul>';
     }
     else{
       var promoCodeMessage = '';
@@ -94,6 +94,46 @@ module.exports = {
               signature: 'Thank you'
           },
           subject:'Confirmation mail'
+      }
+  return email;
+  },
+  errMail : function(logData, logErrTitle, logErrDate ,mailName, hostnameURL){
+
+    var txt = logData.toString();
+    var newTxt = txt.split('(');
+    var pathArr = [];
+    for (var i = 1; i < newTxt.length; i++) {
+    var pathLine = newTxt[i].split(')')[0].fontcolor("red");
+    if(pathLine.indexOf('packages') > 0 )
+      pathArr.push(pathLine);
+    }
+    var txtLine = '';
+    for (var i = 0; i < pathArr.length; i++) {
+        txtLine = '<br/>' + pathArr[i] + '<br/>' + txtLine;
+    }
+    if (txtLine.length <= 0)
+      txtLine = 'N/A';
+  var email = {
+          body: {
+              name: ' '+mailName,
+              intro: 'LOG REPORT'+'<br/>'
+              + '<p style="text-align:center !important"><b>Reason</p>'+logErrTitle+'</b>'
+              + '<br/><br/><p style="text-align:center !important"><b>File(s)</p>'+'<br/>'
+              + txtLine
+              + '<b><p style="text-align:center !important">at</p>'+logErrDate+'</b>'
+              +'<p><br/>'+logData+'</p>',
+              action: {
+                  instructions: '',
+                  button: {
+                      color: 'green',
+                      text: 'Redirect to site',
+                      link: hostnameURL
+                  }
+              },
+              outro: '<b>Need assistance? Contact us on : admin@mymatchbox.in or call us on '+config.support.phone+'</b>',
+              signature: 'Thank you for using mymatchbox'
+          },
+          subject:'******* MMB alerts *******'
       }
   return email;
   },

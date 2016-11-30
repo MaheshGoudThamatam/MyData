@@ -184,6 +184,7 @@ module.exports = function (Booking) {
 			
 			var bookingStart, bookingEnd;
 			var bookingList = [];
+			var bookedRooms = [];
 			var counter = 0, countWeekDays = 0, slotNotAvailable = false;
 
 			var betweenDates = [], scheduleCurrentAvailable = [];
@@ -277,7 +278,8 @@ module.exports = function (Booking) {
 								_id: scheduleObj._id,
 								currentAvail: currentAvail
 							});
-							
+
+							bookedRooms.push(scheduleObj.room);
 						} else {
 							slotNotAvailable = true;
 						}
@@ -296,6 +298,7 @@ module.exports = function (Booking) {
 							});
 						} else {
 							//done(null, bookingList);
+							req.body.bookedRooms = bookedRooms;
 							done(null, scheduleTrainingList, scheduleCurrentAvailable);
 						}
 					}
@@ -477,6 +480,395 @@ module.exports = function (Booking) {
 
 		},
 		
+		createAndroid : function(req, res) {
+			var user = req.user;
+	    	var userObj;
+			var room = req.body.room;
+			var partner;
+			if(req.body.feature && req.body.feature === 'Event Calendar'){
+				partner = req.body.partner;
+			} else {
+				partner = req.body.room.spaceId.partner;
+			}
+			
+            if(partner.commissionPercentage && (partner.commissionPercentage.length > 0)){
+				for (var i = 0; i < partner.commissionPercentage.length; i++) {
+					if (partner.commissionPercentage[i]._id.toString() == room.roomtype._id.toString()) {
+						var commission = partner.commissionPercentage[i].commission;
+						var finalCommissionValue = req.body.price * (commission / 100);
+						var PartnerFinalPrice = req.body.price - finalCommissionValue;
+						req.body.partnerAmount = PartnerFinalPrice;
+						req.body.adminAmount = finalCommissionValue;
+					} else {
+						console.log("No operations to perform");
+					}
+				}
+            } else {
+	        	return res.status(500).json({
+	            	ERRBOOKING: 'Partner doesnt have Commission Percentage',
+	            	ERRCODE: 1100
+	            });
+	        }
+			
+			var scheduleTrainingList = req.body.scheduleTraining;
+			
+			req.body.scheduleTraining = [];
+			var fromDate = req.body.fromDate;
+			var endDate = req.body.endDate;
+			var timeZoneOffset;
+			if (req.body.timeZoneOffset) {    // Need to be implemented in app side, right now its for India only
+				timeZoneOffset = parseInt(req.body.timeZoneOffset);
+			} else {
+				timeZoneOffset = -330;
+			}
+			//delete req.body.fromDate;
+			//delete req.body.endDate;
+			delete req.body.timeZoneOffset;
+			
+			var bookingFrom = req.body.bookingFrom;
+			var bookingTo = req.body.bookingTo;
+			var bookingStartTime = req.body.bookingStartTime;
+			var bookingEndTime = req.body.bookingEndTime;
+			
+			req.body.startTime = bookingStartTime;
+			req.body.endTime = bookingEndTime;
+			req.body.timeZoneOffset = timeZoneOffset;
+			
+			req.body.bookingStartTime = new Date(fromDate + " " + bookingStartTime);
+			req.body.bookingEndTime = new Date(endDate + " " + bookingEndTime);
+			req.body.bookingDate = new Date(fromDate + " " + bookingStartTime);
+			
+			var bookingStart, bookingEnd;
+			var bookingList = [];
+			var bookedRooms = [];
+			var counter = 0, countWeekDays = 0, slotNotAvailable = false;
+
+			var betweenDates = [], scheduleCurrentAvailable = [];
+			betweenDates = scheduler.dateRangeWithTime(bookingFrom, bookingTo, bookingStartTime, bookingEndTime);
+			
+			/*
+			 * generating booking confirmation id
+			 */
+				var city = '';
+				var year = '';
+				var roomType = '';
+				if (room.spaceId.city.match(RegExp('^Bangalore$', "i"))) {
+					city = 'BNG';
+				} else if (room.spaceId.city.match(RegExp('^Pune$', "i"))) {
+					city = 'PUN';
+				} else {
+					city = 'MUM';
+				}
+					roomType = 'T';
+				
+				var date = new Date();
+				year = date.getFullYear();
+				var bookingid = city.concat(roomType);
+				bookingid = bookingid.concat(year);
+				req.body.bookingConfirmationId = bookingid;
+                   
+            /*
+			 * end of generating booking confirmation id
+			 */
+			async.waterfall([ function(done) {
+				
+				async.each(scheduleTrainingList, function(scheduleObj, callback) {
+					
+			    	var currentAvail = scheduleObj.currentAval;
+					if(currentAvail.length > 0){
+				    	//var scheduleObjDate = new Date(scheduleObj.date);
+				    	var scheduleObjDate = new Date(currentAvail[0].startTime);
+				    	scheduleObjDate = scheduleObjDate.setMinutes(scheduleObjDate.getMinutes() - timeZoneOffset);
+				    	scheduleObjDate = new Date(scheduleObjDate);
+
+				    	/*if(scheduleObj.isAllday){
+					    	scheduleObjDate.setDate(scheduleObjDate.getDate() - 1);
+				    	}*/
+				    	console.log(scheduleObjDate);
+				    	
+				    	// Using 'scheduler' 'customizeTimeForDate'
+				    	var offsetStartTime = new Date(scheduler.customizeTimeForDate(scheduleObjDate, bookingStartTime));
+				    	offsetStartTime = offsetStartTime.setMinutes(offsetStartTime.getMinutes() + timeZoneOffset);
+				    	var startDateTime = new Date(offsetStartTime);
+				    	
+				    	var offsetEndTime = new Date(scheduler.customizeTimeForDate(scheduleObjDate, bookingEndTime));
+				    	offsetEndTime = offsetEndTime.setMinutes(offsetEndTime.getMinutes() + timeZoneOffset);
+				    	var endDateTime = new Date(offsetEndTime);
+				    	
+				    	bookingStart = stringToTimeStamp(startDateTime);
+				    	bookingEnd = stringToTimeStamp(endDateTime);
+				    	
+				    	// Adding 45Mins to booking end time and substracting 45mins from start time
+			             
+			               var bookingStartTimeSubstract = new Date(startDateTime);
+			               var bookingStartTimeSubstractOne = new Date(bookingStartTimeSubstract);
+			               var finalBookingStartTime = stringToTimeStamp(bookingStartTimeSubstractOne.setMinutes(bookingStartTimeSubstract.getMinutes()-45));
+			               console.log(finalBookingStartTime);
+			               
+			               //Adding 45Mins for end time
+			               var bookingEndTimeAdd = new Date(endDateTime);
+			               var bookingEndTimeAddOne = new Date(bookingEndTimeAdd);
+			               var finalBookingEndTime = stringToTimeStamp(bookingEndTimeAddOne.setMinutes(bookingEndTimeAdd.getMinutes()+45));
+			               
+			            // End of Adding 45Mins to booking end time and substracting 45mins from start time
+				    	
+				    	/*bookingStart = stringToTimeStamp(scheduler.customizeTimeAndDate(scheduleObjDate, bookingStartTime));
+				    	bookingEnd = stringToTimeStamp(scheduler.customizeTimeAndDate(scheduleObjDate, bookingEndTime));*/
+				    	
+			            req.body.bookingStartTimeNumber = bookingStart;
+			            req.body.bookingEndTimeNumber = bookingEnd;
+			            
+						var index = scheduler.findSlot(currentAvail, bookingStart, bookingEnd, scheduleObj.isAllday);
+						if (index >= 0) {
+							var bookingEndHour = new Date(bookingEnd);
+			                var bookingEndHourTwo = new Date(bookingEndHour);
+			                bookingEndHourTwo.setMinutes( bookingEndHour.getMinutes() + 60 );
+			                var bookingEndTimeFinal = stringToTimeStamp(bookingEndHourTwo);
+			                
+							var splittedSlot = scheduler.splitSlot(currentAvail[index], finalBookingStartTime, finalBookingEndTime);
+							currentAvail.splice(index, 1);
+							for (var i = splittedSlot.length - 1; i >= 0; i--) {
+								currentAvail.splice(index, 0, splittedSlot[i]);
+							}
+							scheduleCurrentAvailable.push({
+								_id: scheduleObj._id,
+								currentAvail: currentAvail
+							});
+							bookedRooms.push(scheduleObj.room);
+						} else {
+							slotNotAvailable = true;
+						}
+					}
+					callback();
+				}, function(err) {
+					if(err) {
+						return res.status(500).json({
+							error: 'Error while booking. ' + err
+						});
+					} else {
+						if(slotNotAvailable){
+							return res.status(400).json({
+								ERRBOOKING: 'Slot already booked',
+			                	ERRCODE:5001
+							});
+						} else {
+							//done(null, bookingList);
+							req.body.bookedRooms = bookedRooms;
+							done(null, scheduleTrainingList, scheduleCurrentAvailable);
+						}
+					}
+				});
+
+			}, function (scheduleTrainingList, scheduleCurrentAvailable, done) {
+				async.eachSeries(scheduleTrainingList, function(scheduleObj, callback1) {
+					async.eachSeries(scheduleCurrentAvailable, function(scheduleCurrentAvailableObj, callback2) {
+						
+						if(JSON.stringify(scheduleObj._id) === JSON.stringify(scheduleCurrentAvailableObj._id)){
+							ScheduleModel.findOne({_id: scheduleObj._id}, function(err, scheduleObject){
+								if(err){
+									return res.status(500).json({
+										msg: 'Cannot update the schedule',
+										error : err
+									});
+								}
+								scheduleObject.currentAval = scheduleCurrentAvailableObj.currentAvail;
+								scheduleObject.save(function(err) {
+									if (err) {
+										return res.status(500).json({
+											error : 'Cannot update the schedule'
+										});
+									}
+									counter++;
+									req.body.scheduleTraining.push(scheduleObject._id);
+									callback2();
+								});
+							});
+						} else {
+							callback2();
+						}
+					}, function(err) {
+						if(err) {
+							return res.status(500).json({
+								error: 'Error for inner loop. ' + err
+							});
+						} else {
+							callback1();
+						}
+					});
+				}, function(err) {
+					if(err) {
+						return res.status(500).json({
+							error: 'Error for outer loop. ' + err
+						});
+					} else {
+						bookingList = req.body.scheduleTraining;
+						done(null, bookingList);
+					}
+				});
+				
+            }, function (bookingList, done) {
+				if (user == undefined) {
+               	 	/*UserModel.findOne({"email": req.body.guest.email}).exec(function (err, requireduserobject) {
+                        if (err) {
+                            return res.status(500).json({
+                                error: 'Cannot list the  users'
+                            });
+                        } else if(requireduserobject == undefined) {
+                       	 	req.body.guest.isGuest = true;
+                            req.body.scheduleTraining = bookingList;
+                            var guestUser = new UserModel(req.body.guest);
+                            guestUser.isPasswordUpdate = true;
+                            guestUser.isUserConfirmed = true;
+                            var token = randtoken.generate(8);
+                            guestUser.password = token;
+                            guestUser.save(function(err, userGuest) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    var mailOptions = {
+                                        to: userGuest.email,
+                                        from: config.emailFrom
+                                    };
+                                    mailOptions = templates.confirmation_email_guest(userGuest, req, token, mailOptions);
+                                    sendMail(mailOptions);
+                                    var email = templates.confirmation_email_guest(req, userGuest,token)
+                          			mail.mailService(email, userGuest.email)
+                                    done(null, userGuest, bookingList);
+                                }
+                            });
+                        }  else {
+                       	 	done(null, requireduserobject);
+                        }
+                    });*/
+					var guest = new GuestModel(req.body.guest);
+                    guest.save(function(err, guest) {
+                        if (err) {
+                            return res.status(500).json({
+                                ERRBOOKING: 'Cannot save the guest',
+                                ERRCODE:1001
+                            });
+                        }
+                        else{
+                        	req.body.guestUser=guest._id;
+                        	done(null, guest);
+                        }
+                    });
+                }
+                else {
+                	UserModel.findOne({"_id" : req.body.user._id}).exec(function(err, userObj) {
+                        if (err) {
+                            return res.status(500).json({
+                                error: 'Cannot list the userObj'
+                            });
+                        }
+                    	var updatedUser = userObj;
+                    	updatedUser = _.extend(updatedUser, req.body.user);
+                    	updatedUser.save(function(err, updatedUserObj) {
+                            if (err) {
+                                return res.status(500).json({
+                                    ERRBOOKING: 'Cannot save the user',
+                                    ERRCODE:1001,
+                                    ERRMSG : err
+                                });
+                            }
+                            req.body.address = {
+                                "address1" : updatedUser.address1, 
+                                "address2" : updatedUser.address2, 
+                                "city" : updatedUser.city, 
+                                "state" : updatedUser.state, 
+                                "pinCode" : updatedUser.pinCode, 
+                                "country" : updatedUser.country
+                            }, 
+                        	req.body.user = updatedUserObj;
+                            done(null, updatedUser);
+                        });
+                	});
+                }
+
+            }, function (user, bookingList, done) {
+                
+                //req.body.day = scheduleObj.day;
+                var booking = new BookingModel(req.body);
+                booking.save(function (err, bookedItem) {
+                	if (err) {
+                        return res.status(500).json({
+                        	ERRBOOKING : 'Cannot save the Booking',
+                            ERRCODE : 1001,
+                            ERRMSG : err
+                        });
+                    }
+
+                	if(booking.promoCode){
+	                	PromoCodeModel.findOne({
+	                		_id: booking.promoCode
+	                	}).exec(function(err, promoCodeObj){
+	                		if (err) {
+	                            return res.status(500).json({
+	                                ERR: 'Cannot find the promo code : ' + err,
+	                                ERRCODE: 2001
+	                            });
+	                        }
+	                		if(promoCodeObj.maxCount){
+	                			promoCodeObj.useCount = promoCodeObj.useCount + 1;
+	                			promoCodeObj.save(function(err, promoCode){
+	                            	if (err) {
+	                                    return res.status(500).json({
+	                                        ERR: 'Cannot update the promo code : ' + err,
+	                                        ERRCODE: 2002
+	                                    });
+	                                }	
+	                			});
+	                		}
+	                	});
+                	}
+                	
+                    // updating booking confirmation id
+                	var s=booking.sequenceNumber.toString();
+                    s = s.replace(/\d+/g, function(m){
+                    	  return "0000".substr(m.length - 1) + m;
+                    	});
+                    //booking.bookingConfirmationId=booking.bookingConfirmationId.concat(s);
+                    
+                    booking.bookingConfirmationId = booking._id;
+                    booking.status='Pending';
+                    booking.save(function(err,bookingid){
+                    	if (err) {
+                            return res.status(500).json({
+                                ERRBOOKING: 'Cannot save the Booking',
+                                ERRCODE : 1001,
+                                ERRMSG : err
+                            });
+                        }	
+                    });
+                    // end of updating booking confirmation id
+                    
+                	/*sendMailTemplate(user, room);
+                    sendMailTemplate(partner, room);*/
+                    
+                    var data;
+                    if(booking.price && booking.price == 0){
+                    	data = {
+	                       	txnid : booking._id,
+	                   		amount : booking.price
+                    	};
+                    } else {
+                   	 	data = payumoney.getPayUMoneyPayload(booking,user);
+                    }
+                    
+                    res.json(data);
+                    //done(null, data);
+                });
+	        } ], function(err, result) {
+				if(err) {
+					return res.status(500).json({
+						error: 'Error while booking Hot desk. ' + err
+					});
+				} 
+				//res.json(result);
+			});
+
+		},
+		
 		/**
 		 * Booking Training Room by Back Office.
 		 */
@@ -560,6 +952,7 @@ module.exports = function (Booking) {
 			
 			var bookingStart, bookingEnd;
 			var bookingList = [];
+			var bookedRooms = [];
 			var counter = 0, countWeekDays = 0, slotNotAvailable = false;
 
 			var betweenDates = [], scheduleCurrentAvailable = [];
@@ -639,7 +1032,8 @@ module.exports = function (Booking) {
 								_id: scheduleObj._id,
 								currentAvail: currentAvail
 							});
-							
+
+							bookedRooms.push(scheduleObj.room);
 						} else {
 							slotNotAvailable = true;
 						}
@@ -657,6 +1051,7 @@ module.exports = function (Booking) {
 							});
 						} else {
 							//done(null, bookingList);
+							req.body.bookedRooms = bookedRooms;
 							done(null, scheduleTrainingList, scheduleCurrentAvailable);
 						}
 					}

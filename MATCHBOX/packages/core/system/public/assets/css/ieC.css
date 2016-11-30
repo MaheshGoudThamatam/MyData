@@ -43,7 +43,9 @@
     font-weight: bolder;
     padding-right: 1.5em;
 }
-
+.ieC .form-field.field-destination.col-xs-2, .ieC .form-field.field-destination.col-xs-2 input, .ieC .form-field.field-destination.col-xs-4, .ieC .form-field.field-destination.col-xs-4 input  {
+	height: 40px !important;
+}
 /* End - IE 10 CSS */
 /* Index page bottom white issue */
 .ieC #wrap section.banner {

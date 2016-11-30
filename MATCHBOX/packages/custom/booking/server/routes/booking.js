@@ -15,8 +15,10 @@ module.exports = function(Booking, app, auth, database) {
 
 	app.route('/api/booking/loadUserBookingMobile')
 	.get(bookingCtrl.loadRequiredUserMobile); 
+	
 	app.route('/api/booking/bookedRoom')
 	   .get(bookingCtrl.bookedSchedule);
+	
 	app.route('/api/booking/loadRequiredRoomType')
 		.get(bookingCtrl.loadRequiredRoomType);
 
@@ -48,8 +50,16 @@ module.exports = function(Booking, app, auth, database) {
 
 	app.route('/api/:scheduleId/booking')
 		.post(bookingCtrl.create);
+	
+	app.route('/api/android/:scheduleId/booking')
+		.post(bookingCtrl.createAndroid);
 
 	app.route('/api/:scheduleId/booking/:bookingId')
+		.get(bookingCtrl.show)
+		.put(bookingCtrl.update)
+		.delete(bookingCtrl.destroy);
+	
+	app.route('/api/android/:scheduleId/booking/:bookingId')
 		.get(bookingCtrl.show)
 		.put(bookingCtrl.update)
 		.delete(bookingCtrl.destroy);

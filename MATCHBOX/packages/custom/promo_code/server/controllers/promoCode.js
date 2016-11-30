@@ -56,6 +56,7 @@ module.exports = function(Rooms) {
 		   * Load Space Type
 		   */
 		  promoCode: function(req, res, next, id){
+		  	console.log(id);
 			  PromoCodeModel.load(id, function (err, promoCode) {
 	              if (err) { return next(err); }
 	               if (!promoCode) { 

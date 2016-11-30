@@ -32,7 +32,7 @@
 											<table datatable="ng"  class="table table-bordered row-border hover booking-table" dt-options="dtOptions1" dt-column-defs="dtColumnDefs1">
 												<thead>
 													<tr>
-													   <th class="text-center">ID</th>
+													   <!-- <th class="text-center">ID</th> -->
 													   <th class="text-center">Booking ID</th>
 														<th class="text-center">Booking Date</th>
 														<th class="text-center">Room Name</th>
@@ -49,9 +49,12 @@
 												</thead>
 												<tbody>
 													<tr data-ng-repeat="booking in bookings">
-														<td class="text-left">{{booking._id}}</td>
-														<td class="text-left">{{booking.bookingConfirmationId}}</td>
-                                                         <td class="text-right">{{booking.bookingDate|date:'dd MMM yy'}}</td>
+														<!-- <td class="text-left">{{booking._id}}</td> -->
+														<!-- <td class="text-left">{{booking.bookingConfirmationId}}</td> -->
+														<td class="text-left">
+														<span data-ng-show="booking.bookingConfirmationId.length === 13">{{booking.bookingConfirmationId}}</span>
+														<span data-ng-hide="booking.bookingConfirmationId.length === 13">Unsuccessful</span></td>
+                                                        <td class="text-right">{{booking.bookingDate|date:'dd MMM yy'}}</td>
 														<td class="text-left">{{booking.room.name}}</td>
 														<td class="text-left">{{booking.space.name}}</td>
 														<td class="text-left">{{booking.space.city}}</td>
@@ -61,7 +64,7 @@
                                                          	<span data-ng-show="!booking.guestUser">{{booking.user.first_name}}</span>
                                                          </td>
                                                          <td class="text-left">{{booking.status}}</td>
-                                                         <td class="text-right">&#8377;&nbsp;{{booking.price}}</td>
+                                                         <td class="text-right">&#8377;&nbsp;{{booking.price | number:2}}</td>
                                                          <td class="text-right">&#8377;&nbsp;{{booking.adminAmount | number:2}}</td>
 
 													    <td class="text-right">{{booking.createdAt|date:'dd MMM yy'}}</td>
@@ -85,7 +88,7 @@
 											<table datatable="ng"  class="table table-bordered row-border hover booking-table" dt-options="dtOptions2" dt-column-defs="dtColumnDefs2">
 													<thead>
 													<tr>
-													    <th class="text-center">ID</th>
+													    <!-- <th class="text-center">ID</th> -->
 													    <th class="text-center">Booked Date</th>
 														<th class="text-center">Room Name</th>
 														<th class="text-center">Space</th>
@@ -99,7 +102,7 @@
 												</thead>
 												<tbody>
 													<tr data-ng-repeat="partnerBooking in partnerBookings" >
-														<td class="text-left">{{partnerBooking._id}}</td>
+														<!-- <td class="text-left">{{partnerBooking._id}}</td> -->
 														<td class="text-right">{{partnerBooking.createdAt|date:'dd MMM yy'}}</td>
 														<td class="text-left">{{partnerBooking.room.name}}</td>
 														<td class="text-left">{{partnerBooking.space.name}}</td>
@@ -109,7 +112,7 @@
                                                          </td>
                                                          <td class="text-right">{{partnerBooking.bookingDate|date:'dd MMM yy'}}</td>
                                                          <td class="text-left">{{partnerBooking.status}}</td>
-                                                         <td class="text-right">&#8377;&nbsp;{{partnerBooking.price}}</td>
+                                                         <td class="text-right">&#8377;&nbsp;{{partnerBooking.price | number:2}}</td>
                                                          <td class="text-right" >&#8377;&nbsp;{{ partnerBooking.partnerAmount| number:2}}</td>
                                                          <td class="text-center"><a class="editIcon" ng-click="redirectAttendee(partnerBooking,BOOKING.URL_PATH.VIEWATTENDEES)" title="View Attendees" ><i class="fa fa-eye"></i></a></td>
 													</tr>

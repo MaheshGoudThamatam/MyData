@@ -1,3 +1,13 @@
+<style type="text/css">
+    @media only screen and (min-width: 320px) and (max-width: 415px) {
+        .fxC .promoCodeHover {
+            font-size: 11px;
+            margin-left: -5%;
+            margin-top: 0.5em;
+            width: 70%;
+        }
+    }
+</style>
 <section class="banner" data-ng-controller="SearchController"
 	ng-init="init();meetingRoomTimeUI();hotDeskTimeUI();virtualOfficetimeUI();boardRoomTimeUI();trainingRoomTimeUI();loadHoliday();findScreenSize();">
 <!-- 	<div class="appError">
@@ -15,7 +25,13 @@
 		<div class="roomTypeDropdown">
 		<div class="app-banner">
 			<!-- <h2>Download App...</h2> -->
-			<img src="http://res.cloudinary.com/tarento/image/upload/v1474635049/playstore-soon_g5hm7w.png" style="height: 10vh;width: 50vw;top: 50vh;left: 25vw;position: absolute;">
+			<div style="margin-top: 50%;">
+
+			  <a target="_blank" href="https://play.google.com/store/apps/details?id=com.mymatchbox">
+                    <img  style="height: 10.5vh;width: 50vw;top: 28vh;left: 25vw;float: left;border-right: 2px solid white;" alt="Android App" class="app-icon-img" src="http://res.cloudinary.com/mymatchbox/image/upload/v1477542247/android-app-icon_siwsvc_casbzo.png">
+                </a>
+				<img src="http://res.cloudinary.com/tarento/image/upload/v1475821507/ios-app-icon_ceqg1j.png" style="height: 9.9vh;width: 50vw;top: 28vh;left: 25vw;float: left;">
+			</div>
 			<!-- Enable if link to APP store is available -->
 			<div class="text-center col-xs-12" style="top: 75%;display: none;">
 				<a style="" class="awe-btn awe-default" href="/">Cancel</a>
@@ -23,11 +39,29 @@
 			</div>
 			<!-- End -->
 			<!-- Temporary icon link display -->
-			<div class="text-center col-xs-12" style="top: 75%;">
-				<a style="" class="awe-btn awe-default" ng-click="closeAppBanner();">Close</a>
+			<div class="text-center col-xs-12" style="top: 10%;">
+				<a style="border: 0.2em solid #dc8282 !important;color: #dc8282 !important;" class="awe-btn awe-default" ng-click="closeAppBanner();">Close</a>
 			</div>
 			<!-- End -->
 		</div>
+
+		<div class="app-ios-banner">
+			<!-- <h2>Download App...</h2> -->
+			<img src="http://res.cloudinary.com/tarento/image/upload/v1475821507/ios-app-icon_ceqg1j.png" style="height: 10vh;width: 50vw;top: 28vh;left: 25vw;position: absolute;">
+			<!-- Enable if link to APP store is available -->
+			<div class="text-center col-xs-12" style="top: 75%;display: none;">
+				<a style="" class="awe-btn awe-default" href="/">Cancel</a>
+				<a  class="awe-btn arrow-right" style="padding-right: 10px !important;" ng-click="">Continue</a>
+			</div>
+			<!-- End -->
+			<!-- Temporary icon link display -->
+			<div class="text-center col-xs-12" style="top: 50%;">
+				<a style="border: 0.2em solid #dc8282 !important;color: #dc8282 !important;" class="awe-btn awe-default" ng-click="closeAppBanner();">Close</a>
+			</div>
+			<!-- End -->
+		</div>
+
+
 			<div class="text-center" style="height: 10%;width: 50%;margin-left: 22vw;margin-top: -20%;">
 				<a href="/" title="" ng-click="redirectPage();"> <img class="img img-responsive" src="/system/assets/img/logo/logo.png" alt=""></a>
 			</div>

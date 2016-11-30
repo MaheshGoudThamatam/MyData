@@ -48,4 +48,10 @@ AreaSchema.statics.load = function(id, callback) {
 	}).exec(callback);
 };
 
+AreaSchema.statics.loadByName = function(id, callback) {
+	this.findOne({
+		city: id
+	}).exec(callback);
+};
+
 mongoose.model('Area', AreaSchema);

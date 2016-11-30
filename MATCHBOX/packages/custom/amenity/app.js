@@ -11,7 +11,7 @@ var Amenity = new Module('amenity');
  * All MEAN packages require registration
  * Dependency injection is used to define required modules
  */
-Amenity.register(function(app, auth, database) {
+Amenity.register(function(app, auth, database, swagger) {
 
   //We enable routing. By default the Package Object is passed to the routes
   Amenity.routes(app, auth, database);
@@ -47,6 +47,9 @@ Amenity.angularDependencies(['toastr']);
         //you now have the settings object
     });
     */
+
+  //Only use swagger.add if /docs and the corresponding files exists
+  swagger.add(__dirname);
 
   return Amenity;
 });

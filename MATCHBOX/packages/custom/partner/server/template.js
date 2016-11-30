@@ -5,8 +5,8 @@ module.exports = {
   partner_email :function(user, req,token){
 	  var email = {
 	          body: {
-	          	  greeting: 'Welcome,',
-	              name:	 ' ' + user.first_name,
+	          	  greeting: 'Welcome, '+ user.first_name,
+	              // name:	 ' ' + user.first_name,
 	              intro: 'Thank you for partnering with mymatchbox!' + '<br>',
 	              action: {
 	                  instructions: 'Please click below to get started.',

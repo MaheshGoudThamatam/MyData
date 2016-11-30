@@ -19,7 +19,7 @@ templates = require('../template'),
 randtoken = require('rand-token'),
 Mailgen = require('mailgen'),
 async = require('async'),
-mail = require('../../../../core/system/server/services/mailService.js'),
+mail = require('../../../../custom/partner/server/services/partnermail_service.js'),
  _ = require('lodash');
 
 var BookingModel = mongoose.model('Booking'), 

@@ -1,0 +1,31 @@
+<style type="text/css">
+	body {
+    	overflow: hidden;
+	}
+</style>
+<div style="background-size: cover; background-image: url("http://mymatchbox.in/01.jpg");">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<img alt="Bootstrap Image Preview" src="/system/assets/img/logo/logo.png"  class="logo-matchbox" />
+				<br/><h1 class="text-confirm">Thank you...</h1><br/>
+				<h3 style="color: #d72128;" class="text-confirm"><b>But you are not authorized to view this page.</b></h3>
+				<h5 class="text-confirm">You will be redirected after <span id="lblCount"></span>&nbsp;seconds.</h5>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function () {
+        var seconds = 10;
+        $("#lblCount").html(seconds);
+        setInterval(function () {
+            seconds--;
+            $("#lblCount").html(seconds);
+            if (seconds == 0) {
+                $("#dvCountDown").hide();
+                window.location = "/";
+            }
+        }, 1000);
+    });
+</script>

@@ -299,7 +299,7 @@ myAppCalendar.controller('CalendarSchedulerController', ['$scope', '$rootScope',
         };
         
         $scope.checkServiceTax = function(){
-        	if($rootScope.requiredRoomResource.spaceId.service_tax && $rootScope.requiredRoomResource.spaceId.service_tax.trim().length > 0) {
+        	if($rootScope.requiredRoomResource.space.service_tax && $rootScope.requiredRoomResource.space.service_tax.trim().length > 0) {
 				$scope.serviceTax_applicable = true;
 				$scope.serviceTax_value = 15;
 			} else {
