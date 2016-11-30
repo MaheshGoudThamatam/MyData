@@ -1,0 +1,54 @@
+.tarentoDirectives-example h1 {
+  background-color: purple
+}
+/*css file for nested-list directive start*/
+ul {
+  list-style-type: none;
+  padding-left:20px;
+    
+  li:before {
+     display: inline-block;
+     width: 10px;
+  }    
+}
+.collapsed ul {
+  display: none;
+}
+li.collapsed:before {
+  display: inline-block;
+  width: 10px;
+}  
+li a:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+.list-ul {
+    border-left: 1px solid gray;
+    margin-left:25px;
+}
+.list-ul::before {
+    content: "";
+    display: inline-block;
+    width: 15px;
+    height: 20px;
+    position: relative;
+    left: 0em;
+    top: 1em;
+    border-top: 1px solid gray;
+    margin-top: 20px;
+
+}
+.foldercolor{
+    color:#EDD863;
+}
+.listname{
+  margin-left: 6px;   
+}
+.list{
+  list-style-type: disc;
+}
+.listnameRight{
+  margin-right: 6px;    
+}
+
+/*css file for nested-list directive end*/
